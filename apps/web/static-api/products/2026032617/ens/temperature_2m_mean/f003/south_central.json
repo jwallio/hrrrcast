@@ -1,0 +1,40 @@
+{
+  "bbox": [
+    -109.0,
+    24.0,
+    -87.0,
+    39.0
+  ],
+  "display_path": "2026032617/ens/temperature_2m_mean/f003/south_central",
+  "domain_id": "south_central",
+  "ensemble_mode": "mean",
+  "forecast_hour": 3,
+  "long_name": "Ensemble mean of 2 m temperature from all processed members.",
+  "member": "ens",
+  "netcdf_path": "data\\processed\\products\\2026032617\\ens\\temperature_2m_mean\\f003\\south_central.nc",
+  "notes": "Ensemble mean of 2 m temperature from all processed members.",
+  "overlay_id": "temperature_2m_mean",
+  "preview_url": "./products/2026032617/ens/temperature_2m_mean/f003/south_central.preview.png",
+  "run_id": "2026032617",
+  "shape": [
+    569,
+    766
+  ],
+  "source_members": [
+    "m00",
+    "m01",
+    "m02",
+    "m03",
+    "m04",
+    "m05"
+  ],
+  "source_overlay_id": "temperature_2m",
+  "static_export": true,
+  "stats": {
+    "max": 313.3450012207031,
+    "min": 278.260009765625
+  },
+  "status": "built",
+  "units": "K",
+  "variable_name": "TEMPERATURE_2M_MEAN"
+}

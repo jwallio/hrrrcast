@@ -35,6 +35,7 @@ http://127.0.0.1:8080/
 - overlay filter plus group filter for curated, ensemble, and native overlays
 - domain presets and baselayer switching
 - shareable URL state
+- static Pages mode backed by exported JSON and preview imagery in `apps/web/static-api/`
 
 ## URL State
 
@@ -71,6 +72,7 @@ http://127.0.0.1:8080/?run=2026032617&member=m00&fhr=0&proj=conus&overlay=temper
 - Only processed products appear as enabled overlays for a selected run/member/hour or ensemble mode.
 - Native HRRRCast fields now appear alongside the curated overlays. Use the overlay filter to find them quickly.
 - Ensemble-derived products are surfaced under the synthetic member id `ens`, but the UI presents them through the `ensemble` view mode.
-- A GitHub Pages deploy can host the frontend shell, but it still needs reachable `catalogApi` and `tileApi` query parameters because Pages cannot run the Python APIs.
+- GitHub Pages now serves a static exported dataset from `apps/web/static-api/` by default.
+- Local development still uses the live Python APIs unless you force static mode with `?static=true`.
 - `archive=false` prefers ready runs only.
 - The legend is display-oriented; raw product units still live in the metadata responses.

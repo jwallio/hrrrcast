@@ -1,0 +1,40 @@
+{
+  "bbox": [
+    -125.0,
+    29.0,
+    -102.0,
+    42.0
+  ],
+  "display_path": "2026032617/ens/temperature_2m_spread/f003/southwest",
+  "domain_id": "southwest",
+  "ensemble_mode": "spread",
+  "forecast_hour": 3,
+  "long_name": "Ensemble standard deviation of 2 m temperature from all processed members.",
+  "member": "ens",
+  "netcdf_path": "data\\processed\\products\\2026032617\\ens\\temperature_2m_spread\\f003\\southwest.nc",
+  "notes": "Ensemble standard deviation of 2 m temperature from all processed members.",
+  "overlay_id": "temperature_2m_spread",
+  "preview_url": "./products/2026032617/ens/temperature_2m_spread/f003/southwest.preview.png",
+  "run_id": "2026032617",
+  "shape": [
+    592,
+    765
+  ],
+  "source_members": [
+    "m00",
+    "m01",
+    "m02",
+    "m03",
+    "m04",
+    "m05"
+  ],
+  "source_overlay_id": "temperature_2m",
+  "static_export": true,
+  "stats": {
+    "max": 2.2058024406433105,
+    "min": 0.009999603033065796
+  },
+  "status": "built",
+  "units": "K",
+  "variable_name": "TEMPERATURE_2M_SPREAD"
+}

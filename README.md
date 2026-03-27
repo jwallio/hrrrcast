@@ -11,6 +11,7 @@ Current capabilities:
 - native HRRRCast field catalog exposed as overlays in addition to curated derived products
 - shareable URL state for run, member, forecast hour, domain, baselayer, overlay, view mode, and archive mode
 - local cache warming and stack health checks
+- GitHub Pages static export for the latest-ready ensemble snapshot
 
 ## Current Stack
 
@@ -164,6 +165,12 @@ Register an hourly Task Scheduler job:
 powershell -NoProfile -ExecutionPolicy Bypass -File scripts/register_refresh_task.ps1 -Profile core_operational
 ```
 
+Export the current latest-ready run for GitHub Pages:
+
+```powershell
+python scripts/export_static_pages_data.py --clean --member ens
+```
+
 Smoke-check the local services:
 
 ```powershell
@@ -209,6 +216,7 @@ http://127.0.0.1:8080/?run=2026032617&member=m00&fhr=0&proj=conus&overlay=temper
 - The operational sync and refresh workflows now default to the full discovered ensemble member set. Use `--member` only when you intentionally want a single-member build.
 - The web app now supports `member`, `ensemble`, and `compare` viewing modes, plus overlay-group filtering for curated, ensemble, and native layers.
 - Windows scheduler helper scripts are available under `scripts/run_refresh_latest_ready.ps1` and `scripts/register_refresh_task.ps1`.
+- GitHub Pages currently serves a static export of the latest-ready ensemble snapshot from `apps/web/static-api/`.
 - The one-command refresh workflow now discovers the newest run, updates `latest.json`, syncs the latest ready profile, and can optionally run health checks.
 
 ## References

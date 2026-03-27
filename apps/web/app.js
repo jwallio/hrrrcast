@@ -1,8 +1,10 @@
 const query = new URLSearchParams(window.location.search);
 
 const isLocalHost = ["127.0.0.1", "localhost"].includes(window.location.hostname);
-const catalogBase = query.get("catalogApi") || (isLocalHost ? "http://127.0.0.1:8000" : "");
-const tileBase = query.get("tileApi") || (isLocalHost ? "http://127.0.0.1:8001" : "");
+const forceStaticMode = query.get("static") === "true";
+const staticMode = forceStaticMode || (!isLocalHost && !query.get("catalogApi") && !query.get("tileApi"));
+const catalogBase = query.get("catalogApi") || (staticMode ? "./static-api" : "http://127.0.0.1:8000");
+const tileBase = query.get("tileApi") || (staticMode ? "./static-api" : "http://127.0.0.1:8001");
 
 const backgroundSources = {
   plain_ocean: {
@@ -107,27 +109,15 @@ init().catch((error) => {
 });
 
 async function init() {
-  if (!catalogBase || !tileBase) {
-    els.catalogBaseLabel.textContent = "set via ?catalogApi=";
-    els.tileBaseLabel.textContent = "set via ?tileApi=";
-    els.mapTitle.textContent = "API Endpoints Required";
-    els.mapSubtitle.textContent =
-      "Hosted viewer mode needs query parameters for the catalog and tile APIs.";
-    els.runStatusText.textContent =
-      "Add ?catalogApi=https://your-api.example.com&tileApi=https://your-tile-api.example.com to the URL.";
-    setAssetStatus("No API endpoints configured for hosted viewer mode.", "warning");
-    return;
-  }
-
-  els.catalogBaseLabel.textContent = catalogBase.replace(/^https?:\/\//, "");
-  els.tileBaseLabel.textContent = tileBase.replace(/^https?:\/\//, "");
+  els.catalogBaseLabel.textContent = staticMode ? "bundled static export" : catalogBase.replace(/^https?:\/\//, "");
+  els.tileBaseLabel.textContent = staticMode ? "bundled static export" : tileBase.replace(/^https?:\/\//, "");
 
   const [domainsConfig, layersConfig, runsPayload, productIndex, latestReadyPayload] = await Promise.all([
-    fetchJson(`${catalogBase}/api/domains`),
-    fetchJson(`${catalogBase}/api/layers`),
-    fetchJson(`${catalogBase}/api/runs`),
-    fetchJson(`${tileBase}/api/products-index`),
-    fetchJson(`${catalogBase}/api/runs/latest-ready`).catch(() => null),
+    fetchJson(domainsUrl()),
+    fetchJson(layersUrl()),
+    fetchJson(runsUrl()),
+    fetchJson(productsIndexUrl()),
+    fetchJson(latestReadyUrl()).catch(() => null),
   ]);
 
   appState.domainsConfig = domainsConfig;
@@ -435,6 +425,10 @@ async function syncSelectionState({ preserveUrl = true } = {}) {
   const fallbackMembers = runRecord.members || [];
   const effectiveMemberOptions = standardMemberOptions.length > 0 ? standardMemberOptions : fallbackMembers;
   appState.modeNotice = "";
+  if ((appState.viewMode === "member" || appState.viewMode === "compare") && standardMemberOptions.length === 0 && hasEnsembleProducts) {
+    appState.viewMode = "ensemble";
+    appState.modeNotice = "Only ensemble products are published for this hosted dataset, so the viewer switched to ensemble mode.";
+  }
   if (appState.viewMode === "ensemble" && !hasEnsembleProducts) {
     appState.viewMode = "member";
     if (appState.overlayGroup === "ensemble") {
@@ -564,52 +558,22 @@ async function refreshOverlay() {
   const primaryMember = currentPrimaryMember();
   removeOverlayLayers(map);
   try {
-    const metadata = await fetchJson(
-      `${tileBase}/api/products/${appState.run}/${primaryMember}/${appState.overlay}/${appState.fhr}/${domainId}`
-    );
-    const tileTemplate = `${tileBase}/tiles/${appState.run}/${primaryMember}/${appState.overlay}/${appState.fhr}/${domainId}/{z}/{x}/{y}.png`;
-    map.addSource("overlay-primary", {
-      type: "raster",
-      tiles: [tileTemplate],
-      tileSize: 256,
-      bounds: metadata.bbox,
-    });
-    map.addLayer({
-      id: "overlay-primary-layer",
-      type: "raster",
-      source: "overlay-primary",
-      paint: {
-        "raster-opacity": appState.viewMode === "compare" ? 0.78 : 0.82,
-        "raster-fade-duration": 0,
-      },
-    });
+    const metadata = await fetchJson(productMetadataUrl(appState.run, primaryMember, appState.overlay, appState.fhr, domainId));
+    addPrimaryOverlay(map, metadata, primaryMember, domainId);
 
     let subtitleMode = primaryMember;
     let compareNote = "";
-    let assetPathText = metadata.netcdf_path;
+    let assetPathText = metadata.display_path || metadata.netcdf_path;
     if (appState.viewMode === "compare" && appState.compareMember) {
       const compareMetadata = await fetchJson(
-        `${tileBase}/api/products/${appState.run}/${appState.compareMember}/${appState.overlay}/${appState.fhr}/${domainId}`
+        productMetadataUrl(appState.run, appState.compareMember, appState.overlay, appState.fhr, domainId)
       );
-      const compareTileTemplate = `${tileBase}/tiles/${appState.run}/${appState.compareMember}/${appState.overlay}/${appState.fhr}/${domainId}/{z}/{x}/{y}.png`;
-      map.addSource("overlay-compare", {
-        type: "raster",
-        tiles: [compareTileTemplate],
-        tileSize: 256,
-        bounds: compareMetadata.bbox,
-      });
-      map.addLayer({
-        id: "overlay-compare-layer",
-        type: "raster",
-        source: "overlay-compare",
-        paint: {
-          "raster-opacity": appState.compareOpacity,
-          "raster-fade-duration": 0,
-        },
-      });
+      addCompareOverlay(map, compareMetadata, domainId);
       subtitleMode = `${appState.member} vs ${appState.compareMember}`;
       compareNote = ` Compare layer opacity ${Math.round(appState.compareOpacity * 100)}%.`;
-      assetPathText = `${metadata.netcdf_path} | compare ${compareMetadata.netcdf_path}`;
+      assetPathText = `${metadata.display_path || metadata.netcdf_path} | compare ${
+        compareMetadata.display_path || compareMetadata.netcdf_path
+      }`;
     } else if (appState.viewMode === "ensemble") {
       subtitleMode = "ensemble";
       compareNote = metadata.notes ? ` ${metadata.notes}` : "";
@@ -634,6 +598,67 @@ async function refreshOverlay() {
     );
     renderLegend();
   }
+}
+
+function addPrimaryOverlay(map, metadata, primaryMember, domainId) {
+  if (staticMode) {
+    map.addSource("overlay-primary", {
+      type: "image",
+      url: metadata.preview_url || previewImageUrl(appState.run, primaryMember, appState.overlay, appState.fhr, domainId),
+      coordinates: imageCoordinatesForBbox(metadata.bbox),
+    });
+    map.addLayer({
+      id: "overlay-primary-layer",
+      type: "raster",
+      source: "overlay-primary",
+      paint: {
+        "raster-opacity": appState.viewMode === "compare" ? 0.78 : 0.82,
+        "raster-fade-duration": 0,
+      },
+    });
+    return;
+  }
+  map.addSource("overlay-primary", {
+    type: "raster",
+    tiles: [tileTemplateUrl(appState.run, primaryMember, appState.overlay, appState.fhr, domainId)],
+    tileSize: 256,
+    bounds: metadata.bbox,
+  });
+  map.addLayer({
+    id: "overlay-primary-layer",
+    type: "raster",
+    source: "overlay-primary",
+    paint: {
+      "raster-opacity": appState.viewMode === "compare" ? 0.78 : 0.82,
+      "raster-fade-duration": 0,
+    },
+  });
+}
+
+function addCompareOverlay(map, metadata, domainId) {
+  if (staticMode) {
+    map.addSource("overlay-compare", {
+      type: "image",
+      url: metadata.preview_url || previewImageUrl(appState.run, appState.compareMember, appState.overlay, appState.fhr, domainId),
+      coordinates: imageCoordinatesForBbox(metadata.bbox),
+    });
+  } else {
+    map.addSource("overlay-compare", {
+      type: "raster",
+      tiles: [tileTemplateUrl(appState.run, appState.compareMember, appState.overlay, appState.fhr, domainId)],
+      tileSize: 256,
+      bounds: metadata.bbox,
+    });
+  }
+  map.addLayer({
+    id: "overlay-compare-layer",
+    type: "raster",
+    source: "overlay-compare",
+    paint: {
+      "raster-opacity": appState.compareOpacity,
+      "raster-fade-duration": 0,
+    },
+  });
 }
 
 function removeOverlayLayers(map) {
@@ -915,8 +940,18 @@ function updateUrl() {
   } else {
     params.delete("overlayFilter");
   }
-  params.set("catalogApi", catalogBase);
-  params.set("tileApi", tileBase);
+  if (!staticMode) {
+    params.set("catalogApi", catalogBase);
+    params.set("tileApi", tileBase);
+  } else {
+    params.delete("catalogApi");
+    params.delete("tileApi");
+  }
+  if (forceStaticMode) {
+    params.set("static", "true");
+  } else {
+    params.delete("static");
+  }
   history.replaceState({}, "", `${window.location.pathname}?${params.toString()}`);
 }
 
@@ -971,6 +1006,51 @@ async function fetchJson(url) {
     throw new Error(`${response.status} ${response.statusText} for ${url}`);
   }
   return response.json();
+}
+
+function domainsUrl() {
+  return staticMode ? `${catalogBase}/domains.json` : `${catalogBase}/api/domains`;
+}
+
+function layersUrl() {
+  return staticMode ? `${catalogBase}/layers.json` : `${catalogBase}/api/layers`;
+}
+
+function runsUrl() {
+  return staticMode ? `${catalogBase}/runs.json` : `${catalogBase}/api/runs`;
+}
+
+function latestReadyUrl() {
+  return staticMode ? `${catalogBase}/latest-ready.json` : `${catalogBase}/api/runs/latest-ready`;
+}
+
+function productsIndexUrl() {
+  return staticMode ? `${tileBase}/products-index.json` : `${tileBase}/api/products-index`;
+}
+
+function productMetadataUrl(runId, member, overlayId, fhrToken, domainId) {
+  return staticMode
+    ? `${tileBase}/products/${runId}/${member}/${overlayId}/${fhrToken}/${domainId}.json`
+    : `${tileBase}/api/products/${runId}/${member}/${overlayId}/${fhrToken}/${domainId}`;
+}
+
+function previewImageUrl(runId, member, overlayId, fhrToken, domainId) {
+  return staticMode
+    ? `${tileBase}/products/${runId}/${member}/${overlayId}/${fhrToken}/${domainId}.preview.png`
+    : `${tileBase}/api/products/${runId}/${member}/${overlayId}/${fhrToken}/${domainId}/preview.png`;
+}
+
+function tileTemplateUrl(runId, member, overlayId, fhrToken, domainId) {
+  return `${tileBase}/tiles/${runId}/${member}/${overlayId}/${fhrToken}/${domainId}/{z}/{x}/{y}.png`;
+}
+
+function imageCoordinatesForBbox(bbox) {
+  return [
+    [bbox[0], bbox[3]],
+    [bbox[2], bbox[3]],
+    [bbox[2], bbox[1]],
+    [bbox[0], bbox[1]],
+  ];
 }
 
 function lookupOverlayEntry(overlayId) {

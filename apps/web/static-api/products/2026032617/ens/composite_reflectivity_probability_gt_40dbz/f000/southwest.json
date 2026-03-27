@@ -1,0 +1,43 @@
+{
+  "bbox": [
+    -125.0,
+    29.0,
+    -102.0,
+    42.0
+  ],
+  "display_path": "2026032617/ens/composite_reflectivity_probability_gt_40dbz/f000/southwest",
+  "domain_id": "southwest",
+  "ensemble_mode": "probability",
+  "forecast_hour": 0,
+  "long_name": "Probability that composite reflectivity exceeds 40 dBZ.",
+  "member": "ens",
+  "netcdf_path": "data\\processed\\products\\2026032617\\ens\\composite_reflectivity_probability_gt_40dbz\\f000\\southwest.nc",
+  "notes": "Probability that composite reflectivity exceeds 40 dBZ.",
+  "overlay_id": "composite_reflectivity_probability_gt_40dbz",
+  "preview_url": "./products/2026032617/ens/composite_reflectivity_probability_gt_40dbz/f000/southwest.preview.png",
+  "run_id": "2026032617",
+  "shape": [
+    592,
+    765
+  ],
+  "source_members": [
+    "m00",
+    "m01",
+    "m02",
+    "m03",
+    "m04",
+    "m05"
+  ],
+  "source_overlay_id": "composite_reflectivity",
+  "static_export": true,
+  "stats": {
+    "max": 0.0,
+    "min": 0.0
+  },
+  "status": "built",
+  "threshold": 40.0,
+  "threshold_raw": 40.0,
+  "threshold_units": "dBZ",
+  "units": "%",
+  "variable_name": "COMPOSITE_REFLECTIVITY_PROBABILITY_GT_40DBZ"
+}
