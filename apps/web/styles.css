@@ -402,18 +402,13 @@ input[type="range"] {
   position: relative;
   min-height: 100vh;
   background: #dde2e8;
-  isolation: isolate;
-  transform: translateZ(0);
-  backface-visibility: hidden;
-  contain: layout paint;
+  overflow: hidden;
+  contain: paint;
 }
 
 #map {
   position: absolute;
   inset: 0;
-  transform: translateZ(0);
-  backface-visibility: hidden;
-  will-change: transform;
 }
 
 .map-overlay {
@@ -605,17 +600,33 @@ input[type="range"] {
   }
 
   .map-stage {
-    min-height: 68vh;
+    display: flex;
+    flex-direction: column;
+    min-height: auto;
+    overflow: visible;
+    background: transparent;
+  }
+
+  #map {
+    position: relative;
+    inset: auto;
+    flex: 0 0 58vh;
+    min-height: 52vh;
+    background: #dde2e8;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   }
 
   .map-overlay {
+    position: static;
+    inset: auto;
+    gap: 10px;
     padding: 12px;
+    background: var(--panel);
+    box-shadow: var(--shadow);
   }
 
   .map-topbar {
-    position: relative;
-    flex-direction: column;
-    align-items: stretch;
+    display: block;
   }
 
   .summary-strip {
@@ -625,18 +636,27 @@ input[type="range"] {
   .summary-pill {
     padding: 7px 10px;
     font-size: 0.7rem;
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: none;
+    backdrop-filter: none;
   }
 
   #timeline-slider {
     min-height: 34px;
   }
 
-  .map-topbar {
-    display: none;
+  .map-top-stack {
+    width: 100%;
+    gap: 10px;
   }
 
-  .map-title-block {
-    max-width: min(100%, 24rem);
+  .map-title-block,
+  .asset-status {
+    max-width: none;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: none;
+    backdrop-filter: none;
   }
 }
 
@@ -664,17 +684,12 @@ input[type="range"] {
   }
 
   .map-stage {
-    min-height: 72vh;
+    min-height: auto;
   }
 
-  .map-overlay {
-    justify-content: space-between;
-  }
-
-  .map-title-block,
-  .asset-status {
-    padding: 10px 12px;
-    border-radius: 14px;
+  #map {
+    flex-basis: 54vh;
+    min-height: 46vh;
   }
 
   .map-subtitle,

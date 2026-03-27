@@ -44,6 +44,39 @@ const remoteGeoJson = {
     "https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson",
 };
 
+const REGION_STATES = {
+  southeast: [
+    "Alabama",
+    "Arkansas",
+    "Florida",
+    "Georgia",
+    "Louisiana",
+    "Mississippi",
+    "North Carolina",
+    "South Carolina",
+    "Tennessee",
+  ],
+  northeast: [
+    "Connecticut",
+    "Delaware",
+    "Maine",
+    "Maryland",
+    "Massachusetts",
+    "New Hampshire",
+    "New Jersey",
+    "New York",
+    "Pennsylvania",
+    "Rhode Island",
+    "Vermont",
+    "Virginia",
+    "West Virginia",
+  ],
+  south_central: ["Kansas", "Missouri", "New Mexico", "Oklahoma", "Texas"],
+  northwest: ["Idaho", "Montana", "Oregon", "Washington", "Wyoming"],
+  southwest: ["Arizona", "California", "Colorado", "Nevada", "New Mexico", "Utah"],
+  carolinas: ["North Carolina", "South Carolina"],
+};
+
 const MOBILE_PANEL_BREAKPOINT = 820;
 const OVERLAY_ALIASES = {
   pressure_surface: "surface_pressure",
@@ -210,16 +243,19 @@ function buildMap() {
     center: domain.viewport.center,
     zoom: domain.viewport.zoom,
     hash: false,
+    attributionControl: true,
   });
   map.addControl(new maplibregl.NavigationControl({ showCompass: false }), "top-right");
   map.on("load", () => {
     appState.loaded = true;
     addReferenceSources(map);
     updateBoundaryStyles();
+    updateDomainHighlight();
     refreshOverlay().catch((error) => {
       console.error(error);
       setAssetStatus(`Overlay refresh failed: ${error.message}`, "error");
     });
+    window.requestAnimationFrame(() => map.resize());
   });
   appState.map = map;
 }
@@ -260,6 +296,43 @@ function addReferenceSources(map) {
   map.addSource("countries-source", {
     type: "geojson",
     data: remoteGeoJson.countries,
+  });
+  map.addLayer({
+    id: "domain-fill-layer",
+    type: "fill",
+    source: "states-source",
+    layout: {
+      visibility: "none",
+    },
+    filter: ["==", ["get", "name"], ""],
+    paint: {
+      "fill-color": "#f28c45",
+      "fill-opacity": 0.08,
+    },
+  });
+  map.addLayer({
+    id: "domain-outline-layer",
+    type: "line",
+    source: "states-source",
+    layout: {
+      visibility: "none",
+    },
+    filter: ["==", ["get", "name"], ""],
+    paint: {
+      "line-width": [
+        "interpolate",
+        ["linear"],
+        ["zoom"],
+        3,
+        1.6,
+        5,
+        2.2,
+        7,
+        3,
+      ],
+      "line-color": "#f28c45",
+      "line-opacity": 0.95,
+    },
   });
   map.addLayer({
     id: "countries-layer",
@@ -416,12 +489,14 @@ function bindResponsiveUi() {
     }
     appState.panelCollapsed = !appState.panelCollapsed;
     updatePanelUi();
+    requestMapResize();
   });
   window.addEventListener("resize", () => {
     if (!isMobileViewport()) {
       appState.panelCollapsed = false;
     }
     updatePanelUi();
+    requestMapResize();
   });
 }
 
@@ -875,6 +950,22 @@ function updateBoundaryStyles() {
   els.countryStyleSelect.value = appState.countryLayer;
 }
 
+function updateDomainHighlight() {
+  if (!appState.map || !appState.loaded) {
+    return;
+  }
+  const stateNames = REGION_STATES[appState.proj] || [];
+  const visible = stateNames.length > 0;
+  const filter = visible
+    ? ["match", ["get", "name"], ["literal", stateNames], true, false]
+    : ["==", ["get", "name"], ""];
+
+  appState.map.setFilter("domain-fill-layer", filter);
+  appState.map.setFilter("domain-outline-layer", filter);
+  appState.map.setLayoutProperty("domain-fill-layer", "visibility", visible ? "visible" : "none");
+  appState.map.setLayoutProperty("domain-outline-layer", "visibility", visible ? "visible" : "none");
+}
+
 function setLineStyle(layerId, layerSetting, palette) {
   const map = appState.map;
   const hidden = layerSetting === "none";
@@ -890,6 +981,7 @@ function moveToDomain() {
   const domain = getDomain(appState.proj);
   els.domainLabel.textContent = domain.label;
   if (appState.map) {
+    updateDomainHighlight();
     const bbox = domain.viewport?.bbox;
     if (Array.isArray(bbox) && bbox.length === 4) {
       appState.map.fitBounds(
@@ -901,6 +993,7 @@ function moveToDomain() {
           padding: domainFitPadding(),
           duration: 850,
           essential: true,
+          maxZoom: domain.viewport.zoom + 0.4,
         }
       );
       return;
@@ -916,8 +1009,17 @@ function moveToDomain() {
 
 function domainFitPadding() {
   return isMobileViewport()
-    ? { top: 18, right: 18, bottom: 18, left: 18 }
+    ? { top: 12, right: 12, bottom: 12, left: 12 }
     : { top: 28, right: 28, bottom: 28, left: 28 };
+}
+
+function requestMapResize() {
+  if (!appState.map) {
+    return;
+  }
+  window.requestAnimationFrame(() => {
+    appState.map.resize();
+  });
 }
 
 function renderLegend(metadata = null) {
