@@ -32,6 +32,7 @@
     "m08"
   ],
   "source_overlay_id": "composite_reflectivity",
+  "source_overlay_ids": [],
   "static_export": true,
   "stats": {
     "max": 100.0,

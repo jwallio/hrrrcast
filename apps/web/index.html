@@ -96,8 +96,19 @@
           <label class="field">
             <span>Group</span>
             <select id="overlay-group-select">
+              <option value="featured">Featured</option>
               <option value="all">All</option>
               <option value="curated">Curated</option>
+              <option value="severe">Severe</option>
+              <option value="surface">Surface</option>
+              <option value="upper_air">Upper Air</option>
+              <option value="clouds">Clouds</option>
+              <option value="wind">Wind</option>
+              <option value="precipitation">Precipitation</option>
+              <option value="radar">Radar</option>
+              <option value="moisture">Moisture</option>
+              <option value="synoptic">Synoptic</option>
+              <option value="winter">Winter</option>
               <option value="ensemble">Ensemble</option>
               <option value="native">Native</option>
             </select>
@@ -180,10 +191,23 @@
       <main class="map-stage">
         <div id="map"></div>
         <div class="map-overlay">
-          <div class="map-title-block">
-            <p class="eyebrow">Viewer State</p>
-            <h2 id="map-title">Loading</h2>
-            <p id="map-subtitle" class="map-subtitle"></p>
+          <div class="map-top-stack">
+            <div class="map-topbar">
+              <button id="mobile-panel-toggle" class="secondary-button mobile-panel-toggle" type="button">
+                Show Controls
+              </button>
+              <div class="summary-strip">
+                <span id="summary-run" class="summary-pill">Run</span>
+                <span id="summary-member" class="summary-pill">Member</span>
+                <span id="summary-hour" class="summary-pill">Hour</span>
+                <span id="summary-overlay" class="summary-pill summary-pill-wide">Overlay</span>
+              </div>
+            </div>
+            <div class="map-title-block">
+              <p class="eyebrow">Viewer State</p>
+              <h2 id="map-title">Loading</h2>
+              <p id="map-subtitle" class="map-subtitle"></p>
+            </div>
           </div>
           <div id="asset-status" class="asset-status">Loading processed assets...</div>
         </div>

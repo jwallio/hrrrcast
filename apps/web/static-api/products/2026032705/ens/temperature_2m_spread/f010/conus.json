@@ -32,6 +32,7 @@
     "m08"
   ],
   "source_overlay_id": "temperature_2m",
+  "source_overlay_ids": [],
   "static_export": true,
   "stats": {
     "max": 4.336949348449707,

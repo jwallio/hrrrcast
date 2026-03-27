@@ -20,7 +20,7 @@
     "baselayer": "plain_ocean",
     "countryLayer": "countries_brown",
     "member": "ens",
-    "overlayGroup": "ensemble",
+    "overlayGroup": "featured",
     "stateLayer": "states_brown",
     "viewMode": "ensemble",
     "weatherOverlay": "temperature_2m_mean"
@@ -5833,6 +5833,7 @@
   "weatherOverlays": [
     {
       "family": "radar",
+      "featured": true,
       "group": "curated",
       "id": "composite_reflectivity",
       "label": "Composite Reflectivity",
@@ -5866,6 +5867,7 @@
     },
     {
       "family": "surface",
+      "featured": true,
       "group": "curated",
       "id": "temperature_2m",
       "label": "2 m Temperature",
@@ -6130,41 +6132,8 @@
       }
     },
     {
-      "family": "surface",
-      "group": "curated",
-      "id": "pressure_surface",
-      "label": "Pressure at Surface",
-      "native": false,
-      "priority": "next",
-      "renderMode": "raster",
-      "style": {
-        "colors": [
-          "#203268",
-          "#7dacd6",
-          "#f5f5f5",
-          "#e29e54",
-          "#872620"
-        ],
-        "labels": [
-          "850",
-          "900",
-          "950",
-          "1000",
-          "1050"
-        ],
-        "palette": "pressure",
-        "range": [
-          85000.0,
-          105000.0
-        ],
-        "rawUnits": "Pa",
-        "transform": "pa_to_hpa",
-        "type": "continuous",
-        "units": "hPa"
-      }
-    },
-    {
       "family": "precipitation",
+      "featured": true,
       "group": "curated",
       "id": "qpf",
       "label": "Accumulated Precipitation",
@@ -6248,6 +6217,7 @@
     },
     {
       "family": "severe",
+      "featured": true,
       "group": "curated",
       "id": "cape",
       "label": "Surface CAPE",
@@ -6934,6 +6904,7 @@
     },
     {
       "family": "upper_air",
+      "featured": true,
       "group": "curated",
       "id": "height_500mb",
       "label": "500 mb Height",
@@ -7244,6 +7215,7 @@
     },
     {
       "family": "upper_air",
+      "featured": true,
       "group": "curated",
       "id": "wind_500mb",
       "label": "500 mb Wind Speed",
@@ -7412,6 +7384,7 @@
     },
     {
       "family": "severe",
+      "featured": true,
       "group": "curated",
       "id": "helicity_0_1km",
       "label": "0 to 1 km Helicity",
@@ -7726,6 +7699,7 @@
     },
     {
       "family": "ensemble",
+      "featured": true,
       "group": "ensemble",
       "id": "temperature_2m_mean",
       "label": "Ensemble Mean 2 m Temperature",
@@ -7794,6 +7768,7 @@
     },
     {
       "family": "ensemble",
+      "featured": true,
       "group": "ensemble",
       "id": "qpf_probability_gt_0p10",
       "label": "QPF Probability > 0.10 in",
@@ -7860,6 +7835,7 @@
     },
     {
       "family": "ensemble",
+      "featured": true,
       "group": "ensemble",
       "id": "composite_reflectivity_probability_gt_40dbz",
       "label": "Reflectivity Probability > 40 dBZ",
@@ -7893,9 +7869,144 @@
     },
     {
       "family": "ensemble",
+      "featured": true,
       "group": "ensemble",
       "id": "cape_probability_gt_1000",
       "label": "CAPE Probability > 1000 J/kg",
+      "native": false,
+      "priority": "ensemble",
+      "renderMode": "raster",
+      "style": {
+        "colors": [
+          "#141428",
+          "#3a66ac",
+          "#55be78",
+          "#f0d649",
+          "#d15329"
+        ],
+        "labels": [
+          "0",
+          "25",
+          "50",
+          "75",
+          "100"
+        ],
+        "palette": "severe",
+        "range": [
+          0.0,
+          100.0
+        ],
+        "rawUnits": "%",
+        "type": "continuous",
+        "units": "%"
+      }
+    },
+    {
+      "family": "ensemble",
+      "featured": true,
+      "group": "ensemble",
+      "id": "helicity_0_1km_probability_gt_100",
+      "label": "0 to 1 km Helicity Probability > 100",
+      "native": false,
+      "priority": "ensemble",
+      "renderMode": "raster",
+      "style": {
+        "colors": [
+          "#141428",
+          "#3a66ac",
+          "#55be78",
+          "#f0d649",
+          "#d15329"
+        ],
+        "labels": [
+          "0",
+          "25",
+          "50",
+          "75",
+          "100"
+        ],
+        "palette": "severe",
+        "range": [
+          0.0,
+          100.0
+        ],
+        "rawUnits": "%",
+        "type": "continuous",
+        "units": "%"
+      }
+    },
+    {
+      "family": "ensemble",
+      "group": "ensemble",
+      "id": "helicity_0_3km_probability_gt_250",
+      "label": "0 to 3 km Helicity Probability > 250",
+      "native": false,
+      "priority": "ensemble",
+      "renderMode": "raster",
+      "style": {
+        "colors": [
+          "#141428",
+          "#3a66ac",
+          "#55be78",
+          "#f0d649",
+          "#d15329"
+        ],
+        "labels": [
+          "0",
+          "25",
+          "50",
+          "75",
+          "100"
+        ],
+        "palette": "severe",
+        "range": [
+          0.0,
+          100.0
+        ],
+        "rawUnits": "%",
+        "type": "continuous",
+        "units": "%"
+      }
+    },
+    {
+      "family": "ensemble",
+      "group": "ensemble",
+      "id": "shear_0_1km_probability_gt_20kt",
+      "label": "0 to 1 km Shear Probability > 20 kt",
+      "native": false,
+      "priority": "ensemble",
+      "renderMode": "raster",
+      "style": {
+        "colors": [
+          "#141428",
+          "#3a66ac",
+          "#55be78",
+          "#f0d649",
+          "#d15329"
+        ],
+        "labels": [
+          "0",
+          "25",
+          "50",
+          "75",
+          "100"
+        ],
+        "palette": "severe",
+        "range": [
+          0.0,
+          100.0
+        ],
+        "rawUnits": "%",
+        "type": "continuous",
+        "units": "%"
+      }
+    },
+    {
+      "family": "ensemble",
+      "featured": true,
+      "group": "ensemble",
+      "id": "shear_0_6km_probability_gt_40kt",
+      "label": "0 to 6 km Shear Probability > 40 kt",
       "native": false,
       "priority": "ensemble",
       "renderMode": "raster",

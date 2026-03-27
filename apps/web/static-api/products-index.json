@@ -12,7 +12,19 @@
                 "composite_reflectivity_probability_gt_40dbz": [
                   "conus"
                 ],
+                "helicity_0_1km_probability_gt_100": [
+                  "conus"
+                ],
+                "helicity_0_3km_probability_gt_250": [
+                  "conus"
+                ],
                 "qpf_probability_gt_0p10": [
+                  "conus"
+                ],
+                "shear_0_1km_probability_gt_20kt": [
+                  "conus"
+                ],
+                "shear_0_6km_probability_gt_40kt": [
                   "conus"
                 ],
                 "temperature_2m_mean": [
@@ -34,7 +46,19 @@
                 "composite_reflectivity_probability_gt_40dbz": [
                   "conus"
                 ],
+                "helicity_0_1km_probability_gt_100": [
+                  "conus"
+                ],
+                "helicity_0_3km_probability_gt_250": [
+                  "conus"
+                ],
                 "qpf_probability_gt_0p10": [
+                  "conus"
+                ],
+                "shear_0_1km_probability_gt_20kt": [
+                  "conus"
+                ],
+                "shear_0_6km_probability_gt_40kt": [
                   "conus"
                 ],
                 "temperature_2m_mean": [
@@ -56,7 +80,19 @@
                 "composite_reflectivity_probability_gt_40dbz": [
                   "conus"
                 ],
+                "helicity_0_1km_probability_gt_100": [
+                  "conus"
+                ],
+                "helicity_0_3km_probability_gt_250": [
+                  "conus"
+                ],
                 "qpf_probability_gt_0p10": [
+                  "conus"
+                ],
+                "shear_0_1km_probability_gt_20kt": [
+                  "conus"
+                ],
+                "shear_0_6km_probability_gt_40kt": [
                   "conus"
                 ],
                 "temperature_2m_mean": [
@@ -78,7 +114,19 @@
                 "composite_reflectivity_probability_gt_40dbz": [
                   "conus"
                 ],
+                "helicity_0_1km_probability_gt_100": [
+                  "conus"
+                ],
+                "helicity_0_3km_probability_gt_250": [
+                  "conus"
+                ],
                 "qpf_probability_gt_0p10": [
+                  "conus"
+                ],
+                "shear_0_1km_probability_gt_20kt": [
+                  "conus"
+                ],
+                "shear_0_6km_probability_gt_40kt": [
                   "conus"
                 ],
                 "temperature_2m_mean": [
@@ -100,7 +148,19 @@
                 "composite_reflectivity_probability_gt_40dbz": [
                   "conus"
                 ],
+                "helicity_0_1km_probability_gt_100": [
+                  "conus"
+                ],
+                "helicity_0_3km_probability_gt_250": [
+                  "conus"
+                ],
                 "qpf_probability_gt_0p10": [
+                  "conus"
+                ],
+                "shear_0_1km_probability_gt_20kt": [
+                  "conus"
+                ],
+                "shear_0_6km_probability_gt_40kt": [
                   "conus"
                 ],
                 "temperature_2m_mean": [
@@ -122,7 +182,19 @@
                 "composite_reflectivity_probability_gt_40dbz": [
                   "conus"
                 ],
+                "helicity_0_1km_probability_gt_100": [
+                  "conus"
+                ],
+                "helicity_0_3km_probability_gt_250": [
+                  "conus"
+                ],
                 "qpf_probability_gt_0p10": [
+                  "conus"
+                ],
+                "shear_0_1km_probability_gt_20kt": [
+                  "conus"
+                ],
+                "shear_0_6km_probability_gt_40kt": [
                   "conus"
                 ],
                 "temperature_2m_mean": [
@@ -144,7 +216,19 @@
                 "composite_reflectivity_probability_gt_40dbz": [
                   "conus"
                 ],
+                "helicity_0_1km_probability_gt_100": [
+                  "conus"
+                ],
+                "helicity_0_3km_probability_gt_250": [
+                  "conus"
+                ],
                 "qpf_probability_gt_0p10": [
+                  "conus"
+                ],
+                "shear_0_1km_probability_gt_20kt": [
+                  "conus"
+                ],
+                "shear_0_6km_probability_gt_40kt": [
                   "conus"
                 ],
                 "temperature_2m_mean": [
@@ -166,7 +250,19 @@
                 "composite_reflectivity_probability_gt_40dbz": [
                   "conus"
                 ],
+                "helicity_0_1km_probability_gt_100": [
+                  "conus"
+                ],
+                "helicity_0_3km_probability_gt_250": [
+                  "conus"
+                ],
                 "qpf_probability_gt_0p10": [
+                  "conus"
+                ],
+                "shear_0_1km_probability_gt_20kt": [
+                  "conus"
+                ],
+                "shear_0_6km_probability_gt_40kt": [
                   "conus"
                 ],
                 "temperature_2m_mean": [
@@ -188,7 +284,19 @@
                 "composite_reflectivity_probability_gt_40dbz": [
                   "conus"
                 ],
+                "helicity_0_1km_probability_gt_100": [
+                  "conus"
+                ],
+                "helicity_0_3km_probability_gt_250": [
+                  "conus"
+                ],
                 "qpf_probability_gt_0p10": [
+                  "conus"
+                ],
+                "shear_0_1km_probability_gt_20kt": [
+                  "conus"
+                ],
+                "shear_0_6km_probability_gt_40kt": [
                   "conus"
                 ],
                 "temperature_2m_mean": [
@@ -210,7 +318,19 @@
                 "composite_reflectivity_probability_gt_40dbz": [
                   "conus"
                 ],
+                "helicity_0_1km_probability_gt_100": [
+                  "conus"
+                ],
+                "helicity_0_3km_probability_gt_250": [
+                  "conus"
+                ],
                 "qpf_probability_gt_0p10": [
+                  "conus"
+                ],
+                "shear_0_1km_probability_gt_20kt": [
+                  "conus"
+                ],
+                "shear_0_6km_probability_gt_40kt": [
                   "conus"
                 ],
                 "temperature_2m_mean": [
@@ -232,7 +352,19 @@
                 "composite_reflectivity_probability_gt_40dbz": [
                   "conus"
                 ],
+                "helicity_0_1km_probability_gt_100": [
+                  "conus"
+                ],
+                "helicity_0_3km_probability_gt_250": [
+                  "conus"
+                ],
                 "qpf_probability_gt_0p10": [
+                  "conus"
+                ],
+                "shear_0_1km_probability_gt_20kt": [
+                  "conus"
+                ],
+                "shear_0_6km_probability_gt_40kt": [
                   "conus"
                 ],
                 "temperature_2m_mean": [
@@ -254,7 +386,19 @@
                 "composite_reflectivity_probability_gt_40dbz": [
                   "conus"
                 ],
+                "helicity_0_1km_probability_gt_100": [
+                  "conus"
+                ],
+                "helicity_0_3km_probability_gt_250": [
+                  "conus"
+                ],
                 "qpf_probability_gt_0p10": [
+                  "conus"
+                ],
+                "shear_0_1km_probability_gt_20kt": [
+                  "conus"
+                ],
+                "shear_0_6km_probability_gt_40kt": [
                   "conus"
                 ],
                 "temperature_2m_mean": [
@@ -276,7 +420,19 @@
                 "composite_reflectivity_probability_gt_40dbz": [
                   "conus"
                 ],
+                "helicity_0_1km_probability_gt_100": [
+                  "conus"
+                ],
+                "helicity_0_3km_probability_gt_250": [
+                  "conus"
+                ],
                 "qpf_probability_gt_0p10": [
+                  "conus"
+                ],
+                "shear_0_1km_probability_gt_20kt": [
+                  "conus"
+                ],
+                "shear_0_6km_probability_gt_40kt": [
                   "conus"
                 ],
                 "temperature_2m_mean": [
@@ -298,7 +454,19 @@
                 "composite_reflectivity_probability_gt_40dbz": [
                   "conus"
                 ],
+                "helicity_0_1km_probability_gt_100": [
+                  "conus"
+                ],
+                "helicity_0_3km_probability_gt_250": [
+                  "conus"
+                ],
                 "qpf_probability_gt_0p10": [
+                  "conus"
+                ],
+                "shear_0_1km_probability_gt_20kt": [
+                  "conus"
+                ],
+                "shear_0_6km_probability_gt_40kt": [
                   "conus"
                 ],
                 "temperature_2m_mean": [
@@ -320,7 +488,19 @@
                 "composite_reflectivity_probability_gt_40dbz": [
                   "conus"
                 ],
+                "helicity_0_1km_probability_gt_100": [
+                  "conus"
+                ],
+                "helicity_0_3km_probability_gt_250": [
+                  "conus"
+                ],
                 "qpf_probability_gt_0p10": [
+                  "conus"
+                ],
+                "shear_0_1km_probability_gt_20kt": [
+                  "conus"
+                ],
+                "shear_0_6km_probability_gt_40kt": [
                   "conus"
                 ],
                 "temperature_2m_mean": [
@@ -342,7 +522,19 @@
                 "composite_reflectivity_probability_gt_40dbz": [
                   "conus"
                 ],
+                "helicity_0_1km_probability_gt_100": [
+                  "conus"
+                ],
+                "helicity_0_3km_probability_gt_250": [
+                  "conus"
+                ],
                 "qpf_probability_gt_0p10": [
+                  "conus"
+                ],
+                "shear_0_1km_probability_gt_20kt": [
+                  "conus"
+                ],
+                "shear_0_6km_probability_gt_40kt": [
                   "conus"
                 ],
                 "temperature_2m_mean": [
@@ -364,7 +556,19 @@
                 "composite_reflectivity_probability_gt_40dbz": [
                   "conus"
                 ],
+                "helicity_0_1km_probability_gt_100": [
+                  "conus"
+                ],
+                "helicity_0_3km_probability_gt_250": [
+                  "conus"
+                ],
                 "qpf_probability_gt_0p10": [
+                  "conus"
+                ],
+                "shear_0_1km_probability_gt_20kt": [
+                  "conus"
+                ],
+                "shear_0_6km_probability_gt_40kt": [
                   "conus"
                 ],
                 "temperature_2m_mean": [
@@ -386,7 +590,19 @@
                 "composite_reflectivity_probability_gt_40dbz": [
                   "conus"
                 ],
+                "helicity_0_1km_probability_gt_100": [
+                  "conus"
+                ],
+                "helicity_0_3km_probability_gt_250": [
+                  "conus"
+                ],
                 "qpf_probability_gt_0p10": [
+                  "conus"
+                ],
+                "shear_0_1km_probability_gt_20kt": [
+                  "conus"
+                ],
+                "shear_0_6km_probability_gt_40kt": [
                   "conus"
                 ],
                 "temperature_2m_mean": [
@@ -408,7 +624,19 @@
                 "composite_reflectivity_probability_gt_40dbz": [
                   "conus"
                 ],
+                "helicity_0_1km_probability_gt_100": [
+                  "conus"
+                ],
+                "helicity_0_3km_probability_gt_250": [
+                  "conus"
+                ],
                 "qpf_probability_gt_0p10": [
+                  "conus"
+                ],
+                "shear_0_1km_probability_gt_20kt": [
+                  "conus"
+                ],
+                "shear_0_6km_probability_gt_40kt": [
                   "conus"
                 ],
                 "temperature_2m_mean": [

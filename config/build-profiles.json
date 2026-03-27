@@ -16,7 +16,6 @@
         "ptype",
         "mslp",
         "surface_pressure",
-        "pressure_surface",
         "qpf",
         "pwat",
         "cape",
@@ -83,7 +82,6 @@
         "ptype",
         "mslp",
         "surface_pressure",
-        "pressure_surface",
         "qpf",
         "pwat",
         "cape",
@@ -148,7 +146,13 @@
         "temperature_2m",
         "qpf",
         "cape",
-        "wind_10m"
+        "wind_10m",
+        "helicity_0_1km",
+        "helicity_0_3km",
+        "shear_u_0_1km",
+        "shear_v_0_1km",
+        "shear_u_0_6km",
+        "shear_v_0_6km"
       ],
       "includeEnsembleDerived": true,
       "domains": [
@@ -170,7 +174,6 @@
         "ptype",
         "mslp",
         "surface_pressure",
-        "pressure_surface",
         "qpf",
         "pwat",
         "cape",

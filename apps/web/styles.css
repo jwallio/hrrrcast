@@ -49,6 +49,10 @@ body {
   overflow-y: auto;
 }
 
+.control-panel.collapsed {
+  display: none;
+}
+
 .control-panel::after {
   content: "";
   position: absolute;
@@ -410,9 +414,53 @@ input[type="range"] {
   inset: 0;
   pointer-events: none;
   display: flex;
+  flex-direction: column;
   align-items: flex-start;
   justify-content: space-between;
   padding: 24px;
+}
+
+.map-top-stack {
+  display: grid;
+  gap: 12px;
+  width: min(100%, 58rem);
+}
+
+.map-topbar {
+  pointer-events: auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.summary-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.summary-pill {
+  border-radius: 999px;
+  background: rgba(11, 18, 27, 0.78);
+  color: var(--text);
+  padding: 8px 12px;
+  font-size: 0.76rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  box-shadow: 0 16px 40px rgba(4, 9, 15, 0.18);
+  backdrop-filter: blur(10px);
+}
+
+.summary-pill-wide {
+  max-width: min(24rem, 58vw);
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.mobile-panel-toggle {
+  display: none;
 }
 
 .map-title-block,
@@ -472,7 +520,6 @@ input[type="range"] {
   }
 
   .map-overlay {
-    flex-direction: column;
     gap: 12px;
   }
 
@@ -481,13 +528,48 @@ input[type="range"] {
   }
 }
 
-@media (max-width: 640px) {
-  body {
-    min-height: 100dvh;
+@media (max-width: 820px) {
+  .mobile-panel-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .control-panel {
     padding: 14px 12px 20px;
+  }
+
+  .map-stage {
+    min-height: 68vh;
+  }
+
+  .map-overlay {
+    padding: 12px;
+  }
+
+  .map-topbar {
+    position: relative;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .summary-strip {
+    gap: 6px;
+  }
+
+  .summary-pill {
+    padding: 7px 10px;
+    font-size: 0.7rem;
+  }
+
+  #timeline-slider {
+    min-height: 34px;
+  }
+}
+
+@media (max-width: 640px) {
+  body {
+    min-height: 100dvh;
   }
 
   .grid-two {
@@ -509,11 +591,10 @@ input[type="range"] {
   }
 
   .map-stage {
-    min-height: 62vh;
+    min-height: 72vh;
   }
 
   .map-overlay {
-    padding: 12px;
     justify-content: space-between;
   }
 
@@ -526,6 +607,10 @@ input[type="range"] {
   .map-subtitle,
   .asset-status {
     font-size: 0.84rem;
+  }
+
+  .summary-pill-wide {
+    max-width: min(100%, 100%);
   }
 
   .panel-group {

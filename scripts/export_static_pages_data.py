@@ -24,7 +24,7 @@ from services.shared.store import (  # noqa: E402
 
 
 DEFAULT_OUTPUT_DIR = ROOT / "apps" / "web" / "static-api"
-DEFAULT_MEMBERS = ["ens", "m00", "m01"]
+DEFAULT_MEMBERS = ["ens", "m00"]
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -37,7 +37,7 @@ def build_parser() -> argparse.ArgumentParser:
         help="Member ids to export. Repeat to include multiple members. Defaults to ens, m00, and m01 when available.",
     )
     parser.add_argument("--output-dir", default=str(DEFAULT_OUTPUT_DIR))
-    parser.add_argument("--max-preview-dimension", type=int, default=640)
+    parser.add_argument("--max-preview-dimension", type=int, default=512)
     parser.add_argument("--clean", action="store_true", help="Delete the output directory before export.")
     return parser
 

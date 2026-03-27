@@ -7,7 +7,7 @@
     "weatherOverlay": "temperature_2m_mean",
     "member": "ens",
     "viewMode": "ensemble",
-    "overlayGroup": "ensemble"
+    "overlayGroup": "featured"
   },
   "baselayers": [
     {
@@ -54,14 +54,16 @@
       "label": "Composite Reflectivity",
       "family": "radar",
       "renderMode": "raster",
-      "priority": "mvp"
+      "priority": "mvp",
+      "featured": true
     },
     {
       "id": "temperature_2m",
       "label": "2 m Temperature",
       "family": "surface",
       "renderMode": "raster",
-      "priority": "mvp"
+      "priority": "mvp",
+      "featured": true
     },
     {
       "id": "dewpoint_2m",
@@ -113,18 +115,12 @@
       "priority": "next"
     },
     {
-      "id": "pressure_surface",
-      "label": "Pressure at Surface",
-      "family": "surface",
-      "renderMode": "raster",
-      "priority": "next"
-    },
-    {
       "id": "qpf",
       "label": "Accumulated Precipitation",
       "family": "precipitation",
       "renderMode": "raster",
-      "priority": "mvp"
+      "priority": "mvp",
+      "featured": true
     },
     {
       "id": "pwat",
@@ -145,7 +141,8 @@
       "label": "Surface CAPE",
       "family": "severe",
       "renderMode": "raster",
-      "priority": "next"
+      "priority": "next",
+      "featured": true
     },
     {
       "id": "cin_surface",
@@ -292,7 +289,8 @@
       "label": "500 mb Height",
       "family": "upper_air",
       "renderMode": "raster",
-      "priority": "next"
+      "priority": "next",
+      "featured": true
     },
     {
       "id": "height_700mb",
@@ -362,7 +360,8 @@
       "label": "500 mb Wind Speed",
       "family": "upper_air",
       "renderMode": "raster",
-      "priority": "next"
+      "priority": "next",
+      "featured": true
     },
     {
       "id": "wind_700mb",
@@ -397,7 +396,8 @@
       "label": "0 to 1 km Helicity",
       "family": "severe",
       "renderMode": "raster",
-      "priority": "next"
+      "priority": "next",
+      "featured": true
     },
     {
       "id": "helicity_0_3km",
@@ -468,7 +468,8 @@
       "family": "ensemble",
       "renderMode": "raster",
       "priority": "ensemble",
-      "group": "ensemble"
+      "group": "ensemble",
+      "featured": true
     },
     {
       "id": "temperature_2m_spread",
@@ -484,7 +485,8 @@
       "family": "ensemble",
       "renderMode": "raster",
       "priority": "ensemble",
-      "group": "ensemble"
+      "group": "ensemble",
+      "featured": true
     },
     {
       "id": "wind_10m_probability_gt_25kt",
@@ -500,7 +502,8 @@
       "family": "ensemble",
       "renderMode": "raster",
       "priority": "ensemble",
-      "group": "ensemble"
+      "group": "ensemble",
+      "featured": true
     },
     {
       "id": "cape_probability_gt_1000",
@@ -508,7 +511,42 @@
       "family": "ensemble",
       "renderMode": "raster",
       "priority": "ensemble",
+      "group": "ensemble",
+      "featured": true
+    },
+    {
+      "id": "helicity_0_1km_probability_gt_100",
+      "label": "0 to 1 km Helicity Probability > 100",
+      "family": "ensemble",
+      "renderMode": "raster",
+      "priority": "ensemble",
+      "group": "ensemble",
+      "featured": true
+    },
+    {
+      "id": "helicity_0_3km_probability_gt_250",
+      "label": "0 to 3 km Helicity Probability > 250",
+      "family": "ensemble",
+      "renderMode": "raster",
+      "priority": "ensemble",
       "group": "ensemble"
+    },
+    {
+      "id": "shear_0_1km_probability_gt_20kt",
+      "label": "0 to 1 km Shear Probability > 20 kt",
+      "family": "ensemble",
+      "renderMode": "raster",
+      "priority": "ensemble",
+      "group": "ensemble"
+    },
+    {
+      "id": "shear_0_6km_probability_gt_40kt",
+      "label": "0 to 6 km Shear Probability > 40 kt",
+      "family": "ensemble",
+      "renderMode": "raster",
+      "priority": "ensemble",
+      "group": "ensemble",
+      "featured": true
     }
   ]
 }

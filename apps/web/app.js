@@ -44,7 +44,13 @@ const remoteGeoJson = {
     "https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson",
 };
 
+const MOBILE_PANEL_BREAKPOINT = 820;
+const OVERLAY_ALIASES = {
+  pressure_surface: "surface_pressure",
+};
+
 const els = {
+  controlPanel: document.querySelector(".control-panel"),
   runSelect: document.getElementById("run-select"),
   viewModeSelect: document.getElementById("view-mode-select"),
   memberSelect: document.getElementById("member-select"),
@@ -79,6 +85,11 @@ const els = {
   animationSpeedSelect: document.getElementById("animation-speed-select"),
   legendPanel: document.getElementById("legend-panel"),
   legendUnits: document.getElementById("legend-units"),
+  mobilePanelToggle: document.getElementById("mobile-panel-toggle"),
+  summaryRun: document.getElementById("summary-run"),
+  summaryMember: document.getElementById("summary-member"),
+  summaryHour: document.getElementById("summary-hour"),
+  summaryOverlay: document.getElementById("summary-overlay"),
 };
 
 const appState = {
@@ -108,6 +119,7 @@ const appState = {
   isAnimating: false,
   compareOpacity: 0.45,
   modeNotice: "",
+  panelCollapsed: false,
 };
 
 init().catch((error) => {
@@ -136,7 +148,7 @@ async function init() {
   appState.archive = parseBoolean(query.get("archive"), false);
   appState.proj = query.get("proj") || domainsConfig.defaultDomain;
   appState.background = query.get("background") || layersConfig.defaults.baselayer;
-  appState.overlay = query.get("overlay") || layersConfig.defaults.weatherOverlay;
+  appState.overlay = canonicalOverlayId(query.get("overlay") || layersConfig.defaults.weatherOverlay);
   appState.viewMode = query.get("mode") || layersConfig.defaults.viewMode || "member";
   appState.stateLayer = query.get("state") || layersConfig.defaults.stateLayer;
   appState.countryLayer = query.get("country") || layersConfig.defaults.countryLayer;
@@ -150,17 +162,21 @@ async function init() {
     : 0.45;
   appState.overlayFilter = query.get("overlayFilter") || "";
   appState.overlayGroup = query.get("overlayGroup") || layersConfig.defaults.overlayGroup || "all";
+  appState.panelCollapsed = isMobileViewport();
 
   const defaultRun = selectDefaultRun();
   appState.run = query.get("run") || defaultRun;
 
   buildMap();
   bindControls();
+  bindResponsiveUi();
   populateBackgroundButtons();
   populateDomainButtons();
   populateRunSelect();
   renderLegend();
   updateAnimationUi();
+  updatePanelUi();
+  updateSummaryStrip();
   els.overlayFilterInput.value = appState.overlayFilter;
   els.overlayGroupSelect.value = appState.overlayGroup;
   els.viewModeSelect.value = appState.viewMode;
@@ -343,6 +359,34 @@ function bindControls() {
   });
 }
 
+function bindResponsiveUi() {
+  els.mobilePanelToggle.addEventListener("click", () => {
+    if (!isMobileViewport()) {
+      return;
+    }
+    appState.panelCollapsed = !appState.panelCollapsed;
+    updatePanelUi();
+  });
+  window.addEventListener("resize", () => {
+    if (!isMobileViewport()) {
+      appState.panelCollapsed = false;
+    }
+    updatePanelUi();
+  });
+}
+
+function updatePanelUi() {
+  const mobile = isMobileViewport();
+  els.controlPanel.classList.toggle("collapsed", mobile && appState.panelCollapsed);
+  els.mobilePanelToggle.classList.toggle("hidden", !mobile);
+  els.mobilePanelToggle.textContent = mobile && appState.panelCollapsed ? "Show Controls" : "Hide Controls";
+  els.mobilePanelToggle.setAttribute("aria-expanded", String(!(mobile && appState.panelCollapsed)));
+}
+
+function isMobileViewport() {
+  return window.innerWidth <= MOBILE_PANEL_BREAKPOINT;
+}
+
 function getVisibleRuns() {
   const readyRuns = appState.runs.filter((run) => run.status === "ready");
   if (!appState.archive && readyRuns.length > 0) {
@@ -421,6 +465,7 @@ async function syncSelectionState({ preserveUrl = true } = {}) {
   if (!runRecord) {
     throw new Error("No runs are available from the catalog API.");
   }
+  appState.overlay = canonicalOverlayId(appState.overlay);
   appState.run = runRecord.run_id;
   els.runSelect.value = appState.run;
   setRunStatus(runRecord);
@@ -483,6 +528,7 @@ async function syncSelectionState({ preserveUrl = true } = {}) {
   els.timelineReadout.textContent = appState.fhr.toUpperCase();
 
   populateOverlayButtons(fhIndex[appState.fhr]?.overlays || {});
+  updateSummaryStrip();
   moveToDomain();
   updateAnimationUi();
   if (effectiveFhrs.length < 2) {
@@ -517,13 +563,14 @@ function syncCompareControls(memberOptions) {
 
 function populateOverlayButtons(builtOverlayMap) {
   const configured = appState.layersConfig.weatherOverlays;
-  const builtOverlays = Object.keys(builtOverlayMap);
+  const builtOverlays = Array.from(new Set(Object.keys(builtOverlayMap).map((overlayId) => canonicalOverlayId(overlayId))));
   if (!builtOverlays.includes(appState.overlay)) {
-    appState.overlay = builtOverlays[0] || configured[0]?.id || "temperature_2m";
+    const firstBuiltConfigured = configured.find((overlay) => builtOverlays.includes(overlay.id));
+    appState.overlay = firstBuiltConfigured?.id || builtOverlays[0] || configured[0]?.id || "temperature_2m";
   }
   const fragment = document.createDocumentFragment();
   const filteredConfigured = configured.filter((overlay) => matchesOverlayFilter(overlay, appState.overlayFilter));
-  const visibleConfigured = filteredConfigured.length > 0 ? filteredConfigured : configured;
+  const visibleConfigured = sortVisibleOverlays(filteredConfigured.length > 0 ? filteredConfigured : configured, builtOverlays);
   for (const overlay of visibleConfigured) {
     const isBuilt = builtOverlays.includes(overlay.id);
     fragment.appendChild(
@@ -536,6 +583,7 @@ function populateOverlayButtons(builtOverlayMap) {
           }
           appState.overlay = overlay.id;
           populateOverlayButtons(builtOverlayMap);
+          updateSummaryStrip();
           await refreshOverlay();
           updateUrl();
         },
@@ -594,6 +642,7 @@ async function refreshOverlay() {
       `${buildAssetSummary(metadata, appState.overlay, domainId)}${compareNote}`,
       "ok"
     );
+    updateSummaryStrip();
     renderLegend(metadata);
   } catch (error) {
     els.assetPath.textContent = "No processed asset found for this combination";
@@ -603,6 +652,7 @@ async function refreshOverlay() {
       `No processed tile asset exists for ${appState.overlay} / ${domainId} / ${currentPrimaryMember()} / ${appState.fhr.toUpperCase()}.`,
       "warning"
     );
+    updateSummaryStrip();
     renderLegend();
   }
 }
@@ -845,7 +895,7 @@ function currentPrimaryMember() {
 }
 
 function matchesOverlayFilter(overlay, rawFilter) {
-  if (appState.overlayGroup !== "all" && (overlay.group || "curated") !== appState.overlayGroup) {
+  if (!matchesOverlayGroup(overlay)) {
     return false;
   }
   if (!rawFilter) {
@@ -856,6 +906,36 @@ function matchesOverlayFilter(overlay, rawFilter) {
     .filter(Boolean)
     .map((value) => String(value).toLowerCase());
   return haystacks.some((value) => value.includes(filter));
+}
+
+function matchesOverlayGroup(overlay) {
+  const group = appState.overlayGroup;
+  if (group === "all") {
+    return true;
+  }
+  if (group === "featured") {
+    return Boolean(overlay.featured);
+  }
+  if (group === "curated" || group === "ensemble" || group === "native") {
+    return (overlay.group || "curated") === group;
+  }
+  return overlay.family === group;
+}
+
+function sortVisibleOverlays(overlays, builtOverlayIds) {
+  return [...overlays].sort((left, right) => {
+    const leftFeatured = left.featured ? 1 : 0;
+    const rightFeatured = right.featured ? 1 : 0;
+    if (leftFeatured !== rightFeatured) {
+      return rightFeatured - leftFeatured;
+    }
+    const leftBuilt = builtOverlayIds.includes(left.id) ? 1 : 0;
+    const rightBuilt = builtOverlayIds.includes(right.id) ? 1 : 0;
+    if (leftBuilt !== rightBuilt) {
+      return rightBuilt - leftBuilt;
+    }
+    return left.label.localeCompare(right.label);
+  });
 }
 
 function setRunStatus(runRecord) {
@@ -929,7 +1009,7 @@ function updateUrl() {
   params.set("mode", appState.viewMode);
   params.set("fhr", appState.fhr.slice(1));
   params.set("proj", appState.proj);
-  params.set("overlay", appState.overlay);
+  params.set("overlay", canonicalOverlayId(appState.overlay));
   params.set("overlayGroup", appState.overlayGroup);
   params.set("background", appState.background);
   params.set("state", appState.stateLayer);
@@ -981,7 +1061,8 @@ function normalizeFhrToken(value) {
 }
 
 function labelForOverlay(overlayId) {
-  return lookupOverlayEntry(overlayId)?.label || overlayId;
+  const canonicalId = canonicalOverlayId(overlayId);
+  return lookupOverlayEntry(canonicalId)?.label || canonicalId;
 }
 
 function labelForDomain(domainId) {
@@ -1095,7 +1176,8 @@ function imageCoordinatesForBbox(bbox) {
 }
 
 function lookupOverlayEntry(overlayId) {
-  return appState.layersConfig?.weatherOverlays?.find((overlay) => overlay.id === overlayId) || null;
+  const canonicalId = canonicalOverlayId(overlayId);
+  return appState.layersConfig?.weatherOverlays?.find((overlay) => overlay.id === canonicalId) || null;
 }
 
 function resolveOverlayStyle(overlayId, metadata = null) {
@@ -1150,4 +1232,18 @@ function determinePrecision(value, style) {
     return 0;
   }
   return Math.abs(value) >= 100 ? 0 : 2;
+}
+
+function canonicalOverlayId(overlayId) {
+  if (!overlayId) {
+    return overlayId;
+  }
+  return OVERLAY_ALIASES[overlayId] || overlayId;
+}
+
+function updateSummaryStrip() {
+  els.summaryRun.textContent = appState.run || "Run";
+  els.summaryMember.textContent = `Member ${currentPrimaryMember() || "--"}`;
+  els.summaryHour.textContent = appState.fhr ? appState.fhr.toUpperCase() : "Hour";
+  els.summaryOverlay.textContent = labelForOverlay(appState.overlay || "overlay");
 }

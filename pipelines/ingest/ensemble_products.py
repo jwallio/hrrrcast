@@ -21,8 +21,9 @@ ENSEMBLE_MEMBER_ID = "ens"
 @dataclass(frozen=True)
 class EnsembleProductSpec:
     overlay_id: str
-    source_overlay_id: str
+    source_overlay_id: str | None
     mode: str
+    source_overlay_ids: tuple[str, ...] = ()
     threshold: float | None = None
     threshold_units: str | None = None
     threshold_raw: float | None = None
@@ -77,6 +78,44 @@ ENSEMBLE_PRODUCT_SPECS: dict[str, EnsembleProductSpec] = {
         threshold_units="J/kg",
         threshold_raw=1000.0,
         notes="Probability that surface CAPE exceeds 1000 J/kg.",
+    ),
+    "helicity_0_1km_probability_gt_100": EnsembleProductSpec(
+        overlay_id="helicity_0_1km_probability_gt_100",
+        source_overlay_id="helicity_0_1km",
+        mode="probability",
+        threshold=100.0,
+        threshold_units="m2/s2",
+        threshold_raw=100.0,
+        notes="Probability that 0 to 1 km storm-relative helicity exceeds 100 m2/s2.",
+    ),
+    "helicity_0_3km_probability_gt_250": EnsembleProductSpec(
+        overlay_id="helicity_0_3km_probability_gt_250",
+        source_overlay_id="helicity_0_3km",
+        mode="probability",
+        threshold=250.0,
+        threshold_units="m2/s2",
+        threshold_raw=250.0,
+        notes="Probability that 0 to 3 km storm-relative helicity exceeds 250 m2/s2.",
+    ),
+    "shear_0_1km_probability_gt_20kt": EnsembleProductSpec(
+        overlay_id="shear_0_1km_probability_gt_20kt",
+        source_overlay_id=None,
+        source_overlay_ids=("shear_u_0_1km", "shear_v_0_1km"),
+        mode="vector_probability",
+        threshold=20.0,
+        threshold_units="kt",
+        threshold_raw=10.2889,
+        notes="Probability that 0 to 1 km bulk shear magnitude exceeds 20 kt.",
+    ),
+    "shear_0_6km_probability_gt_40kt": EnsembleProductSpec(
+        overlay_id="shear_0_6km_probability_gt_40kt",
+        source_overlay_id=None,
+        source_overlay_ids=("shear_u_0_6km", "shear_v_0_6km"),
+        mode="vector_probability",
+        threshold=40.0,
+        threshold_units="kt",
+        threshold_raw=20.5778,
+        notes="Probability that 0 to 6 km bulk shear magnitude exceeds 40 kt.",
     ),
 }
 
@@ -180,28 +219,27 @@ def build_single_ensemble_product(
     spec: EnsembleProductSpec,
     product_dir: str | Path,
 ) -> dict[str, object]:
-    source_metadata = [load_member_metadata(run_id, member, spec.source_overlay_id, forecast_hour, domain_id, product_dir) for member in members]
-    paths = [Path(item["netcdf_path"]) for item in source_metadata]
-    source_datasets = [xr.open_dataset(path) for path in paths]
+    metadata_sets, stacked, units = load_member_stack(
+        run_id=run_id,
+        forecast_hour=forecast_hour,
+        domain_id=domain_id,
+        members=members,
+        spec=spec,
+        product_dir=product_dir,
+    )
     try:
-        arrays = []
-        for source_dataset in source_datasets:
-            variable_name = list(source_dataset.data_vars)[0]
-            data_array = source_dataset[variable_name]
-            if "time" in data_array.dims:
-                data_array = data_array.isel(time=0)
-            arrays.append(data_array.load())
-
-        stacked = xr.concat(arrays, dim="member").assign_coords(member=np.asarray(members, dtype=object))
         if spec.mode == "mean":
             derived = stacked.mean(dim="member").astype(np.float32)
             variable_name = f"{sanitize_id(spec.overlay_id).upper()}"
-            units = arrays[0].attrs.get("units")
         elif spec.mode == "spread":
             derived = stacked.std(dim="member").astype(np.float32)
             variable_name = f"{sanitize_id(spec.overlay_id).upper()}"
-            units = arrays[0].attrs.get("units")
         elif spec.mode == "probability":
+            threshold_raw = float(spec.threshold_raw if spec.threshold_raw is not None else spec.threshold or 0.0)
+            derived = (stacked >= threshold_raw).mean(dim="member").astype(np.float32) * 100.0
+            variable_name = f"{sanitize_id(spec.overlay_id).upper()}"
+            units = "%"
+        elif spec.mode == "vector_probability":
             threshold_raw = float(spec.threshold_raw if spec.threshold_raw is not None else spec.threshold or 0.0)
             derived = (stacked >= threshold_raw).mean(dim="member").astype(np.float32) * 100.0
             variable_name = f"{sanitize_id(spec.overlay_id).upper()}"
@@ -216,13 +254,14 @@ def build_single_ensemble_product(
             }
         )
         derived_dataset = derived.to_dataset(name=variable_name)
-        if "latitude" in source_datasets[0].variables:
-            derived_dataset["latitude"] = source_datasets[0]["latitude"].load()
-        if "longitude" in source_datasets[0].variables:
-            derived_dataset["longitude"] = source_datasets[0]["longitude"].load()
+        first_dataset = metadata_sets[0]["dataset"]
+        if "latitude" in first_dataset.variables:
+            derived_dataset["latitude"] = first_dataset["latitude"].load()
+        if "longitude" in first_dataset.variables:
+            derived_dataset["longitude"] = first_dataset["longitude"].load()
     finally:
-        for source_dataset in source_datasets:
-            source_dataset.close()
+        for payload in metadata_sets:
+            payload["dataset"].close()
 
     output_dir = Path(product_dir) / run_id / ENSEMBLE_MEMBER_ID / spec.overlay_id / f"f{forecast_hour:03d}"
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -230,7 +269,7 @@ def build_single_ensemble_product(
     derived_dataset.to_netcdf(netcdf_path)
     dataset_variable_name = list(derived_dataset.data_vars)[0]
     values = derived_dataset[dataset_variable_name].values
-    first_meta = source_metadata[0]
+    first_meta = metadata_sets[0]["metadata"]
     metadata = {
         "run_id": run_id,
         "member": ENSEMBLE_MEMBER_ID,
@@ -248,6 +287,7 @@ def build_single_ensemble_product(
             "max": float(np.nanmax(values)),
         },
         "source_overlay_id": spec.source_overlay_id,
+        "source_overlay_ids": list(spec.source_overlay_ids),
         "source_members": members,
         "ensemble_mode": spec.mode,
         "status": "built",
@@ -285,6 +325,82 @@ def load_member_metadata(
             f"Missing processed member asset for {run_id}/{member}/{overlay_id}/f{forecast_hour:03d}/{domain_id}"
         )
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def load_member_stack(
+    run_id: str,
+    forecast_hour: int,
+    domain_id: str,
+    members: list[str],
+    spec: EnsembleProductSpec,
+    product_dir: str | Path,
+) -> tuple[list[dict[str, object]], xr.DataArray, str | None]:
+    if spec.mode == "vector_probability":
+        return load_vector_member_stack(
+            run_id=run_id,
+            forecast_hour=forecast_hour,
+            domain_id=domain_id,
+            members=members,
+            spec=spec,
+            product_dir=product_dir,
+        )
+    source_overlay_id = spec.source_overlay_id
+    if not source_overlay_id:
+        raise ValueError(f"Ensemble product {spec.overlay_id} is missing a source overlay id.")
+    payloads: list[dict[str, object]] = []
+    arrays = []
+    units: str | None = None
+    for member in members:
+        metadata = load_member_metadata(run_id, member, source_overlay_id, forecast_hour, domain_id, product_dir)
+        dataset = xr.open_dataset(Path(metadata["netcdf_path"]))
+        variable_name = list(dataset.data_vars)[0]
+        data_array = dataset[variable_name]
+        if "time" in data_array.dims:
+            data_array = data_array.isel(time=0)
+        loaded = data_array.load()
+        units = loaded.attrs.get("units", units)
+        arrays.append(loaded)
+        payloads.append({"metadata": metadata, "dataset": dataset})
+    stacked = xr.concat(arrays, dim="member").assign_coords(member=np.asarray(members, dtype=object))
+    return payloads, stacked, units
+
+
+def load_vector_member_stack(
+    run_id: str,
+    forecast_hour: int,
+    domain_id: str,
+    members: list[str],
+    spec: EnsembleProductSpec,
+    product_dir: str | Path,
+) -> tuple[list[dict[str, object]], xr.DataArray, str | None]:
+    if len(spec.source_overlay_ids) != 2:
+        raise ValueError(f"Vector ensemble product {spec.overlay_id} requires exactly two source overlays.")
+    u_overlay_id, v_overlay_id = spec.source_overlay_ids
+    payloads: list[dict[str, object]] = []
+    magnitudes = []
+    units: str | None = None
+    for member in members:
+        u_metadata = load_member_metadata(run_id, member, u_overlay_id, forecast_hour, domain_id, product_dir)
+        v_metadata = load_member_metadata(run_id, member, v_overlay_id, forecast_hour, domain_id, product_dir)
+        u_dataset = xr.open_dataset(Path(u_metadata["netcdf_path"]))
+        v_dataset = xr.open_dataset(Path(v_metadata["netcdf_path"]))
+        u_variable = list(u_dataset.data_vars)[0]
+        v_variable = list(v_dataset.data_vars)[0]
+        u_array = u_dataset[u_variable]
+        v_array = v_dataset[v_variable]
+        if "time" in u_array.dims:
+            u_array = u_array.isel(time=0)
+        if "time" in v_array.dims:
+            v_array = v_array.isel(time=0)
+        u_loaded = u_array.load()
+        v_loaded = v_array.load()
+        units = u_loaded.attrs.get("units", units)
+        magnitude = np.hypot(u_loaded, v_loaded).astype(np.float32)
+        magnitudes.append(magnitude)
+        payloads.append({"metadata": u_metadata, "dataset": u_dataset})
+        payloads.append({"metadata": v_metadata, "dataset": v_dataset})
+    stacked = xr.concat(magnitudes, dim="member").assign_coords(member=np.asarray(members, dtype=object))
+    return payloads, stacked, units
 
 
 def load_manifest(run_id: str, manifest_path: str | Path | None) -> dict[str, object]:
