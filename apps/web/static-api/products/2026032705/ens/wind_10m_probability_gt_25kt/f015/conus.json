@@ -14,7 +14,7 @@
   "netcdf_path": "data\\processed\\products\\2026032705\\ens\\wind_10m_probability_gt_25kt\\f015\\conus.nc",
   "notes": "Probability that 10 m wind speed exceeds 25 kt.",
   "overlay_id": "wind_10m_probability_gt_25kt",
-  "preview_url": "./products/2026032705/ens/wind_10m_probability_gt_25kt/f015/conus.preview.png",
+  "preview_url": "./static-api/products/2026032705/ens/wind_10m_probability_gt_25kt/f015/conus.preview.png",
   "run_id": "2026032705",
   "shape": [
     1059,

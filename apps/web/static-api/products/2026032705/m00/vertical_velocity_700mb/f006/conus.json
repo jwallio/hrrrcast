@@ -1,0 +1,56 @@
+{
+  "bbox": [
+    -127.0,
+    23.0,
+    -66.0,
+    50.0
+  ],
+  "clipped_grib_path": "data\\processed\\products\\2026032705\\m00\\vertical_velocity_700mb\\f006\\conus.grib2",
+  "display_path": "2026032705/m00/vertical_velocity_700mb/f006/conus",
+  "domain_id": "conus",
+  "field_key": "VVEL:700 mb",
+  "forecast_hour": 6,
+  "long_name": "Vertical Velocity (Pressure)",
+  "member": "m00",
+  "native": false,
+  "netcdf_path": "data\\processed\\products\\2026032705\\m00\\vertical_velocity_700mb\\f006\\conus.nc",
+  "overlay_id": "vertical_velocity_700mb",
+  "preview_url": "./static-api/products/2026032705/m00/vertical_velocity_700mb/f006/conus.preview.png",
+  "run_id": "2026032705",
+  "shape": [
+    1,
+    1059,
+    1799
+  ],
+  "static_export": true,
+  "stats": {
+    "max": 11.989999771118164,
+    "min": -11.970000267028809
+  },
+  "style": {
+    "colors": [
+      "#234c8c",
+      "#7aa6d8",
+      "#f2f2f2",
+      "#e8a16d",
+      "#8d2d2a"
+    ],
+    "labels": [
+      "-2",
+      "-1",
+      "0",
+      "1",
+      "2"
+    ],
+    "palette": "diverging",
+    "range": [
+      -2.0,
+      2.0
+    ],
+    "rawUnits": "Pa/s",
+    "type": "continuous",
+    "units": "Pa/s"
+  },
+  "units": "Pa/s",
+  "variable_name": "VVEL_700mb"
+}

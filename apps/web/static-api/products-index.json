@@ -423,6 +423,3392 @@
               }
             }
           }
+        },
+        "m00": {
+          "forecast_hours": {
+            "f000": {
+              "overlays": {
+                "cape": [
+                  "conus"
+                ],
+                "ceiling": [
+                  "conus"
+                ],
+                "cin_surface": [
+                  "conus"
+                ],
+                "cloud_cover_high": [
+                  "conus"
+                ],
+                "cloud_cover_low": [
+                  "conus"
+                ],
+                "cloud_cover_mid": [
+                  "conus"
+                ],
+                "cloud_cover_total": [
+                  "conus"
+                ],
+                "composite_reflectivity": [
+                  "conus"
+                ],
+                "dewpoint_2m": [
+                  "conus"
+                ],
+                "gust_surface": [
+                  "conus"
+                ],
+                "height_0c_isotherm": [
+                  "conus"
+                ],
+                "height_500mb": [
+                  "conus"
+                ],
+                "height_700mb": [
+                  "conus"
+                ],
+                "height_850mb": [
+                  "conus"
+                ],
+                "helicity_0_1km": [
+                  "conus"
+                ],
+                "helicity_0_3km": [
+                  "conus"
+                ],
+                "land_mask": [
+                  "conus"
+                ],
+                "mslp": [
+                  "conus"
+                ],
+                "pressure_surface": [
+                  "conus"
+                ],
+                "ptype": [
+                  "conus"
+                ],
+                "pwat": [
+                  "conus"
+                ],
+                "qpf": [
+                  "conus"
+                ],
+                "relative_vorticity_0_1km": [
+                  "conus"
+                ],
+                "relative_vorticity_0_2km": [
+                  "conus"
+                ],
+                "rh_0c_isotherm": [
+                  "conus"
+                ],
+                "rh_2m": [
+                  "conus"
+                ],
+                "shear_u_0_1km": [
+                  "conus"
+                ],
+                "shear_u_0_6km": [
+                  "conus"
+                ],
+                "shear_v_0_1km": [
+                  "conus"
+                ],
+                "shear_v_0_6km": [
+                  "conus"
+                ],
+                "specific_humidity_2m": [
+                  "conus"
+                ],
+                "specific_humidity_700mb": [
+                  "conus"
+                ],
+                "specific_humidity_850mb": [
+                  "conus"
+                ],
+                "storm_motion_u": [
+                  "conus"
+                ],
+                "storm_motion_v": [
+                  "conus"
+                ],
+                "surface_pressure": [
+                  "conus"
+                ],
+                "temperature_2m": [
+                  "conus"
+                ],
+                "temperature_700mb": [
+                  "conus"
+                ],
+                "temperature_850mb": [
+                  "conus"
+                ],
+                "temperature_925mb": [
+                  "conus"
+                ],
+                "temperature_potential_2m": [
+                  "conus"
+                ],
+                "u_wind_0c_isotherm": [
+                  "conus"
+                ],
+                "u_wind_10m": [
+                  "conus"
+                ],
+                "u_wind_500mb": [
+                  "conus"
+                ],
+                "u_wind_80m": [
+                  "conus"
+                ],
+                "v_wind_0c_isotherm": [
+                  "conus"
+                ],
+                "v_wind_10m": [
+                  "conus"
+                ],
+                "v_wind_500mb": [
+                  "conus"
+                ],
+                "v_wind_80m": [
+                  "conus"
+                ],
+                "vertical_velocity_500mb": [
+                  "conus"
+                ],
+                "vertical_velocity_700mb": [
+                  "conus"
+                ],
+                "visibility": [
+                  "conus"
+                ],
+                "wind_0c_isotherm": [
+                  "conus"
+                ],
+                "wind_10m": [
+                  "conus"
+                ],
+                "wind_500mb": [
+                  "conus"
+                ],
+                "wind_700mb": [
+                  "conus"
+                ],
+                "wind_850mb": [
+                  "conus"
+                ],
+                "wind_speed_80m": [
+                  "conus"
+                ]
+              }
+            },
+            "f001": {
+              "overlays": {
+                "cape": [
+                  "conus"
+                ],
+                "ceiling": [
+                  "conus"
+                ],
+                "cin_surface": [
+                  "conus"
+                ],
+                "cloud_cover_high": [
+                  "conus"
+                ],
+                "cloud_cover_low": [
+                  "conus"
+                ],
+                "cloud_cover_mid": [
+                  "conus"
+                ],
+                "cloud_cover_total": [
+                  "conus"
+                ],
+                "composite_reflectivity": [
+                  "conus"
+                ],
+                "dewpoint_2m": [
+                  "conus"
+                ],
+                "gust_surface": [
+                  "conus"
+                ],
+                "height_0c_isotherm": [
+                  "conus"
+                ],
+                "height_500mb": [
+                  "conus"
+                ],
+                "height_700mb": [
+                  "conus"
+                ],
+                "height_850mb": [
+                  "conus"
+                ],
+                "helicity_0_1km": [
+                  "conus"
+                ],
+                "helicity_0_3km": [
+                  "conus"
+                ],
+                "land_mask": [
+                  "conus"
+                ],
+                "mslp": [
+                  "conus"
+                ],
+                "pressure_surface": [
+                  "conus"
+                ],
+                "ptype": [
+                  "conus"
+                ],
+                "pwat": [
+                  "conus"
+                ],
+                "qpf": [
+                  "conus"
+                ],
+                "relative_vorticity_0_1km": [
+                  "conus"
+                ],
+                "relative_vorticity_0_2km": [
+                  "conus"
+                ],
+                "rh_0c_isotherm": [
+                  "conus"
+                ],
+                "rh_2m": [
+                  "conus"
+                ],
+                "shear_u_0_1km": [
+                  "conus"
+                ],
+                "shear_u_0_6km": [
+                  "conus"
+                ],
+                "shear_v_0_1km": [
+                  "conus"
+                ],
+                "shear_v_0_6km": [
+                  "conus"
+                ],
+                "specific_humidity_2m": [
+                  "conus"
+                ],
+                "specific_humidity_700mb": [
+                  "conus"
+                ],
+                "specific_humidity_850mb": [
+                  "conus"
+                ],
+                "storm_motion_u": [
+                  "conus"
+                ],
+                "storm_motion_v": [
+                  "conus"
+                ],
+                "surface_pressure": [
+                  "conus"
+                ],
+                "temperature_2m": [
+                  "conus"
+                ],
+                "temperature_700mb": [
+                  "conus"
+                ],
+                "temperature_850mb": [
+                  "conus"
+                ],
+                "temperature_925mb": [
+                  "conus"
+                ],
+                "temperature_potential_2m": [
+                  "conus"
+                ],
+                "u_wind_0c_isotherm": [
+                  "conus"
+                ],
+                "u_wind_10m": [
+                  "conus"
+                ],
+                "u_wind_500mb": [
+                  "conus"
+                ],
+                "u_wind_80m": [
+                  "conus"
+                ],
+                "v_wind_0c_isotherm": [
+                  "conus"
+                ],
+                "v_wind_10m": [
+                  "conus"
+                ],
+                "v_wind_500mb": [
+                  "conus"
+                ],
+                "v_wind_80m": [
+                  "conus"
+                ],
+                "vertical_velocity_500mb": [
+                  "conus"
+                ],
+                "vertical_velocity_700mb": [
+                  "conus"
+                ],
+                "visibility": [
+                  "conus"
+                ],
+                "wind_0c_isotherm": [
+                  "conus"
+                ],
+                "wind_10m": [
+                  "conus"
+                ],
+                "wind_500mb": [
+                  "conus"
+                ],
+                "wind_700mb": [
+                  "conus"
+                ],
+                "wind_850mb": [
+                  "conus"
+                ],
+                "wind_speed_80m": [
+                  "conus"
+                ]
+              }
+            },
+            "f002": {
+              "overlays": {
+                "cape": [
+                  "conus"
+                ],
+                "ceiling": [
+                  "conus"
+                ],
+                "cin_surface": [
+                  "conus"
+                ],
+                "cloud_cover_high": [
+                  "conus"
+                ],
+                "cloud_cover_low": [
+                  "conus"
+                ],
+                "cloud_cover_mid": [
+                  "conus"
+                ],
+                "cloud_cover_total": [
+                  "conus"
+                ],
+                "composite_reflectivity": [
+                  "conus"
+                ],
+                "dewpoint_2m": [
+                  "conus"
+                ],
+                "gust_surface": [
+                  "conus"
+                ],
+                "height_0c_isotherm": [
+                  "conus"
+                ],
+                "height_500mb": [
+                  "conus"
+                ],
+                "height_700mb": [
+                  "conus"
+                ],
+                "height_850mb": [
+                  "conus"
+                ],
+                "helicity_0_1km": [
+                  "conus"
+                ],
+                "helicity_0_3km": [
+                  "conus"
+                ],
+                "land_mask": [
+                  "conus"
+                ],
+                "mslp": [
+                  "conus"
+                ],
+                "pressure_surface": [
+                  "conus"
+                ],
+                "ptype": [
+                  "conus"
+                ],
+                "pwat": [
+                  "conus"
+                ],
+                "qpf": [
+                  "conus"
+                ],
+                "relative_vorticity_0_1km": [
+                  "conus"
+                ],
+                "relative_vorticity_0_2km": [
+                  "conus"
+                ],
+                "rh_0c_isotherm": [
+                  "conus"
+                ],
+                "rh_2m": [
+                  "conus"
+                ],
+                "shear_u_0_1km": [
+                  "conus"
+                ],
+                "shear_u_0_6km": [
+                  "conus"
+                ],
+                "shear_v_0_1km": [
+                  "conus"
+                ],
+                "shear_v_0_6km": [
+                  "conus"
+                ],
+                "specific_humidity_2m": [
+                  "conus"
+                ],
+                "specific_humidity_700mb": [
+                  "conus"
+                ],
+                "specific_humidity_850mb": [
+                  "conus"
+                ],
+                "storm_motion_u": [
+                  "conus"
+                ],
+                "storm_motion_v": [
+                  "conus"
+                ],
+                "surface_pressure": [
+                  "conus"
+                ],
+                "temperature_2m": [
+                  "conus"
+                ],
+                "temperature_700mb": [
+                  "conus"
+                ],
+                "temperature_850mb": [
+                  "conus"
+                ],
+                "temperature_925mb": [
+                  "conus"
+                ],
+                "temperature_potential_2m": [
+                  "conus"
+                ],
+                "u_wind_0c_isotherm": [
+                  "conus"
+                ],
+                "u_wind_10m": [
+                  "conus"
+                ],
+                "u_wind_500mb": [
+                  "conus"
+                ],
+                "u_wind_80m": [
+                  "conus"
+                ],
+                "v_wind_0c_isotherm": [
+                  "conus"
+                ],
+                "v_wind_10m": [
+                  "conus"
+                ],
+                "v_wind_500mb": [
+                  "conus"
+                ],
+                "v_wind_80m": [
+                  "conus"
+                ],
+                "vertical_velocity_500mb": [
+                  "conus"
+                ],
+                "vertical_velocity_700mb": [
+                  "conus"
+                ],
+                "visibility": [
+                  "conus"
+                ],
+                "wind_0c_isotherm": [
+                  "conus"
+                ],
+                "wind_10m": [
+                  "conus"
+                ],
+                "wind_500mb": [
+                  "conus"
+                ],
+                "wind_700mb": [
+                  "conus"
+                ],
+                "wind_850mb": [
+                  "conus"
+                ],
+                "wind_speed_80m": [
+                  "conus"
+                ]
+              }
+            },
+            "f003": {
+              "overlays": {
+                "cape": [
+                  "conus"
+                ],
+                "ceiling": [
+                  "conus"
+                ],
+                "cin_surface": [
+                  "conus"
+                ],
+                "cloud_cover_high": [
+                  "conus"
+                ],
+                "cloud_cover_low": [
+                  "conus"
+                ],
+                "cloud_cover_mid": [
+                  "conus"
+                ],
+                "cloud_cover_total": [
+                  "conus"
+                ],
+                "composite_reflectivity": [
+                  "conus"
+                ],
+                "dewpoint_2m": [
+                  "conus"
+                ],
+                "gust_surface": [
+                  "conus"
+                ],
+                "height_0c_isotherm": [
+                  "conus"
+                ],
+                "height_500mb": [
+                  "conus"
+                ],
+                "height_700mb": [
+                  "conus"
+                ],
+                "height_850mb": [
+                  "conus"
+                ],
+                "helicity_0_1km": [
+                  "conus"
+                ],
+                "helicity_0_3km": [
+                  "conus"
+                ],
+                "land_mask": [
+                  "conus"
+                ],
+                "mslp": [
+                  "conus"
+                ],
+                "pressure_surface": [
+                  "conus"
+                ],
+                "ptype": [
+                  "conus"
+                ],
+                "pwat": [
+                  "conus"
+                ],
+                "qpf": [
+                  "conus"
+                ],
+                "relative_vorticity_0_1km": [
+                  "conus"
+                ],
+                "relative_vorticity_0_2km": [
+                  "conus"
+                ],
+                "rh_0c_isotherm": [
+                  "conus"
+                ],
+                "rh_2m": [
+                  "conus"
+                ],
+                "shear_u_0_1km": [
+                  "conus"
+                ],
+                "shear_u_0_6km": [
+                  "conus"
+                ],
+                "shear_v_0_1km": [
+                  "conus"
+                ],
+                "shear_v_0_6km": [
+                  "conus"
+                ],
+                "specific_humidity_2m": [
+                  "conus"
+                ],
+                "specific_humidity_700mb": [
+                  "conus"
+                ],
+                "specific_humidity_850mb": [
+                  "conus"
+                ],
+                "storm_motion_u": [
+                  "conus"
+                ],
+                "storm_motion_v": [
+                  "conus"
+                ],
+                "surface_pressure": [
+                  "conus"
+                ],
+                "temperature_2m": [
+                  "conus"
+                ],
+                "temperature_700mb": [
+                  "conus"
+                ],
+                "temperature_850mb": [
+                  "conus"
+                ],
+                "temperature_925mb": [
+                  "conus"
+                ],
+                "temperature_potential_2m": [
+                  "conus"
+                ],
+                "u_wind_0c_isotherm": [
+                  "conus"
+                ],
+                "u_wind_10m": [
+                  "conus"
+                ],
+                "u_wind_500mb": [
+                  "conus"
+                ],
+                "u_wind_80m": [
+                  "conus"
+                ],
+                "v_wind_0c_isotherm": [
+                  "conus"
+                ],
+                "v_wind_10m": [
+                  "conus"
+                ],
+                "v_wind_500mb": [
+                  "conus"
+                ],
+                "v_wind_80m": [
+                  "conus"
+                ],
+                "vertical_velocity_500mb": [
+                  "conus"
+                ],
+                "vertical_velocity_700mb": [
+                  "conus"
+                ],
+                "visibility": [
+                  "conus"
+                ],
+                "wind_0c_isotherm": [
+                  "conus"
+                ],
+                "wind_10m": [
+                  "conus"
+                ],
+                "wind_500mb": [
+                  "conus"
+                ],
+                "wind_700mb": [
+                  "conus"
+                ],
+                "wind_850mb": [
+                  "conus"
+                ],
+                "wind_speed_80m": [
+                  "conus"
+                ]
+              }
+            },
+            "f004": {
+              "overlays": {
+                "cape": [
+                  "conus"
+                ],
+                "ceiling": [
+                  "conus"
+                ],
+                "cin_surface": [
+                  "conus"
+                ],
+                "cloud_cover_high": [
+                  "conus"
+                ],
+                "cloud_cover_low": [
+                  "conus"
+                ],
+                "cloud_cover_mid": [
+                  "conus"
+                ],
+                "cloud_cover_total": [
+                  "conus"
+                ],
+                "composite_reflectivity": [
+                  "conus"
+                ],
+                "dewpoint_2m": [
+                  "conus"
+                ],
+                "gust_surface": [
+                  "conus"
+                ],
+                "height_0c_isotherm": [
+                  "conus"
+                ],
+                "height_500mb": [
+                  "conus"
+                ],
+                "height_700mb": [
+                  "conus"
+                ],
+                "height_850mb": [
+                  "conus"
+                ],
+                "helicity_0_1km": [
+                  "conus"
+                ],
+                "helicity_0_3km": [
+                  "conus"
+                ],
+                "land_mask": [
+                  "conus"
+                ],
+                "mslp": [
+                  "conus"
+                ],
+                "pressure_surface": [
+                  "conus"
+                ],
+                "ptype": [
+                  "conus"
+                ],
+                "pwat": [
+                  "conus"
+                ],
+                "qpf": [
+                  "conus"
+                ],
+                "relative_vorticity_0_1km": [
+                  "conus"
+                ],
+                "relative_vorticity_0_2km": [
+                  "conus"
+                ],
+                "rh_0c_isotherm": [
+                  "conus"
+                ],
+                "rh_2m": [
+                  "conus"
+                ],
+                "shear_u_0_1km": [
+                  "conus"
+                ],
+                "shear_u_0_6km": [
+                  "conus"
+                ],
+                "shear_v_0_1km": [
+                  "conus"
+                ],
+                "shear_v_0_6km": [
+                  "conus"
+                ],
+                "specific_humidity_2m": [
+                  "conus"
+                ],
+                "specific_humidity_700mb": [
+                  "conus"
+                ],
+                "specific_humidity_850mb": [
+                  "conus"
+                ],
+                "storm_motion_u": [
+                  "conus"
+                ],
+                "storm_motion_v": [
+                  "conus"
+                ],
+                "surface_pressure": [
+                  "conus"
+                ],
+                "temperature_2m": [
+                  "conus"
+                ],
+                "temperature_700mb": [
+                  "conus"
+                ],
+                "temperature_850mb": [
+                  "conus"
+                ],
+                "temperature_925mb": [
+                  "conus"
+                ],
+                "temperature_potential_2m": [
+                  "conus"
+                ],
+                "u_wind_0c_isotherm": [
+                  "conus"
+                ],
+                "u_wind_10m": [
+                  "conus"
+                ],
+                "u_wind_500mb": [
+                  "conus"
+                ],
+                "u_wind_80m": [
+                  "conus"
+                ],
+                "v_wind_0c_isotherm": [
+                  "conus"
+                ],
+                "v_wind_10m": [
+                  "conus"
+                ],
+                "v_wind_500mb": [
+                  "conus"
+                ],
+                "v_wind_80m": [
+                  "conus"
+                ],
+                "vertical_velocity_500mb": [
+                  "conus"
+                ],
+                "vertical_velocity_700mb": [
+                  "conus"
+                ],
+                "visibility": [
+                  "conus"
+                ],
+                "wind_0c_isotherm": [
+                  "conus"
+                ],
+                "wind_10m": [
+                  "conus"
+                ],
+                "wind_500mb": [
+                  "conus"
+                ],
+                "wind_700mb": [
+                  "conus"
+                ],
+                "wind_850mb": [
+                  "conus"
+                ],
+                "wind_speed_80m": [
+                  "conus"
+                ]
+              }
+            },
+            "f005": {
+              "overlays": {
+                "cape": [
+                  "conus"
+                ],
+                "ceiling": [
+                  "conus"
+                ],
+                "cin_surface": [
+                  "conus"
+                ],
+                "cloud_cover_high": [
+                  "conus"
+                ],
+                "cloud_cover_low": [
+                  "conus"
+                ],
+                "cloud_cover_mid": [
+                  "conus"
+                ],
+                "cloud_cover_total": [
+                  "conus"
+                ],
+                "composite_reflectivity": [
+                  "conus"
+                ],
+                "dewpoint_2m": [
+                  "conus"
+                ],
+                "gust_surface": [
+                  "conus"
+                ],
+                "height_0c_isotherm": [
+                  "conus"
+                ],
+                "height_500mb": [
+                  "conus"
+                ],
+                "height_700mb": [
+                  "conus"
+                ],
+                "height_850mb": [
+                  "conus"
+                ],
+                "helicity_0_1km": [
+                  "conus"
+                ],
+                "helicity_0_3km": [
+                  "conus"
+                ],
+                "land_mask": [
+                  "conus"
+                ],
+                "mslp": [
+                  "conus"
+                ],
+                "pressure_surface": [
+                  "conus"
+                ],
+                "ptype": [
+                  "conus"
+                ],
+                "pwat": [
+                  "conus"
+                ],
+                "qpf": [
+                  "conus"
+                ],
+                "relative_vorticity_0_1km": [
+                  "conus"
+                ],
+                "relative_vorticity_0_2km": [
+                  "conus"
+                ],
+                "rh_0c_isotherm": [
+                  "conus"
+                ],
+                "rh_2m": [
+                  "conus"
+                ],
+                "shear_u_0_1km": [
+                  "conus"
+                ],
+                "shear_u_0_6km": [
+                  "conus"
+                ],
+                "shear_v_0_1km": [
+                  "conus"
+                ],
+                "shear_v_0_6km": [
+                  "conus"
+                ],
+                "specific_humidity_2m": [
+                  "conus"
+                ],
+                "specific_humidity_700mb": [
+                  "conus"
+                ],
+                "specific_humidity_850mb": [
+                  "conus"
+                ],
+                "storm_motion_u": [
+                  "conus"
+                ],
+                "storm_motion_v": [
+                  "conus"
+                ],
+                "surface_pressure": [
+                  "conus"
+                ],
+                "temperature_2m": [
+                  "conus"
+                ],
+                "temperature_700mb": [
+                  "conus"
+                ],
+                "temperature_850mb": [
+                  "conus"
+                ],
+                "temperature_925mb": [
+                  "conus"
+                ],
+                "temperature_potential_2m": [
+                  "conus"
+                ],
+                "u_wind_0c_isotherm": [
+                  "conus"
+                ],
+                "u_wind_10m": [
+                  "conus"
+                ],
+                "u_wind_500mb": [
+                  "conus"
+                ],
+                "u_wind_80m": [
+                  "conus"
+                ],
+                "v_wind_0c_isotherm": [
+                  "conus"
+                ],
+                "v_wind_10m": [
+                  "conus"
+                ],
+                "v_wind_500mb": [
+                  "conus"
+                ],
+                "v_wind_80m": [
+                  "conus"
+                ],
+                "vertical_velocity_500mb": [
+                  "conus"
+                ],
+                "vertical_velocity_700mb": [
+                  "conus"
+                ],
+                "visibility": [
+                  "conus"
+                ],
+                "wind_0c_isotherm": [
+                  "conus"
+                ],
+                "wind_10m": [
+                  "conus"
+                ],
+                "wind_500mb": [
+                  "conus"
+                ],
+                "wind_700mb": [
+                  "conus"
+                ],
+                "wind_850mb": [
+                  "conus"
+                ],
+                "wind_speed_80m": [
+                  "conus"
+                ]
+              }
+            },
+            "f006": {
+              "overlays": {
+                "cape": [
+                  "conus"
+                ],
+                "ceiling": [
+                  "conus"
+                ],
+                "cin_surface": [
+                  "conus"
+                ],
+                "cloud_cover_high": [
+                  "conus"
+                ],
+                "cloud_cover_low": [
+                  "conus"
+                ],
+                "cloud_cover_mid": [
+                  "conus"
+                ],
+                "cloud_cover_total": [
+                  "conus"
+                ],
+                "composite_reflectivity": [
+                  "conus"
+                ],
+                "dewpoint_2m": [
+                  "conus"
+                ],
+                "gust_surface": [
+                  "conus"
+                ],
+                "height_0c_isotherm": [
+                  "conus"
+                ],
+                "height_500mb": [
+                  "conus"
+                ],
+                "height_700mb": [
+                  "conus"
+                ],
+                "height_850mb": [
+                  "conus"
+                ],
+                "helicity_0_1km": [
+                  "conus"
+                ],
+                "helicity_0_3km": [
+                  "conus"
+                ],
+                "land_mask": [
+                  "conus"
+                ],
+                "mslp": [
+                  "conus"
+                ],
+                "pressure_surface": [
+                  "conus"
+                ],
+                "ptype": [
+                  "conus"
+                ],
+                "pwat": [
+                  "conus"
+                ],
+                "qpf": [
+                  "conus"
+                ],
+                "relative_vorticity_0_1km": [
+                  "conus"
+                ],
+                "relative_vorticity_0_2km": [
+                  "conus"
+                ],
+                "rh_0c_isotherm": [
+                  "conus"
+                ],
+                "rh_2m": [
+                  "conus"
+                ],
+                "shear_u_0_1km": [
+                  "conus"
+                ],
+                "shear_u_0_6km": [
+                  "conus"
+                ],
+                "shear_v_0_1km": [
+                  "conus"
+                ],
+                "shear_v_0_6km": [
+                  "conus"
+                ],
+                "specific_humidity_2m": [
+                  "conus"
+                ],
+                "specific_humidity_700mb": [
+                  "conus"
+                ],
+                "specific_humidity_850mb": [
+                  "conus"
+                ],
+                "storm_motion_u": [
+                  "conus"
+                ],
+                "storm_motion_v": [
+                  "conus"
+                ],
+                "surface_pressure": [
+                  "conus"
+                ],
+                "temperature_2m": [
+                  "conus"
+                ],
+                "temperature_700mb": [
+                  "conus"
+                ],
+                "temperature_850mb": [
+                  "conus"
+                ],
+                "temperature_925mb": [
+                  "conus"
+                ],
+                "temperature_potential_2m": [
+                  "conus"
+                ],
+                "u_wind_0c_isotherm": [
+                  "conus"
+                ],
+                "u_wind_10m": [
+                  "conus"
+                ],
+                "u_wind_500mb": [
+                  "conus"
+                ],
+                "u_wind_80m": [
+                  "conus"
+                ],
+                "v_wind_0c_isotherm": [
+                  "conus"
+                ],
+                "v_wind_10m": [
+                  "conus"
+                ],
+                "v_wind_500mb": [
+                  "conus"
+                ],
+                "v_wind_80m": [
+                  "conus"
+                ],
+                "vertical_velocity_500mb": [
+                  "conus"
+                ],
+                "vertical_velocity_700mb": [
+                  "conus"
+                ],
+                "visibility": [
+                  "conus"
+                ],
+                "wind_0c_isotherm": [
+                  "conus"
+                ],
+                "wind_10m": [
+                  "conus"
+                ],
+                "wind_500mb": [
+                  "conus"
+                ],
+                "wind_700mb": [
+                  "conus"
+                ],
+                "wind_850mb": [
+                  "conus"
+                ],
+                "wind_speed_80m": [
+                  "conus"
+                ]
+              }
+            },
+            "f007": {
+              "overlays": {
+                "cape": [
+                  "conus"
+                ],
+                "ceiling": [
+                  "conus"
+                ],
+                "cin_surface": [
+                  "conus"
+                ],
+                "cloud_cover_high": [
+                  "conus"
+                ],
+                "cloud_cover_low": [
+                  "conus"
+                ],
+                "cloud_cover_mid": [
+                  "conus"
+                ],
+                "cloud_cover_total": [
+                  "conus"
+                ],
+                "composite_reflectivity": [
+                  "conus"
+                ],
+                "dewpoint_2m": [
+                  "conus"
+                ],
+                "gust_surface": [
+                  "conus"
+                ],
+                "height_0c_isotherm": [
+                  "conus"
+                ],
+                "height_500mb": [
+                  "conus"
+                ],
+                "height_700mb": [
+                  "conus"
+                ],
+                "height_850mb": [
+                  "conus"
+                ],
+                "helicity_0_1km": [
+                  "conus"
+                ],
+                "helicity_0_3km": [
+                  "conus"
+                ],
+                "land_mask": [
+                  "conus"
+                ],
+                "mslp": [
+                  "conus"
+                ],
+                "pressure_surface": [
+                  "conus"
+                ],
+                "ptype": [
+                  "conus"
+                ],
+                "pwat": [
+                  "conus"
+                ],
+                "qpf": [
+                  "conus"
+                ],
+                "relative_vorticity_0_1km": [
+                  "conus"
+                ],
+                "relative_vorticity_0_2km": [
+                  "conus"
+                ],
+                "rh_0c_isotherm": [
+                  "conus"
+                ],
+                "rh_2m": [
+                  "conus"
+                ],
+                "shear_u_0_1km": [
+                  "conus"
+                ],
+                "shear_u_0_6km": [
+                  "conus"
+                ],
+                "shear_v_0_1km": [
+                  "conus"
+                ],
+                "shear_v_0_6km": [
+                  "conus"
+                ],
+                "specific_humidity_2m": [
+                  "conus"
+                ],
+                "specific_humidity_700mb": [
+                  "conus"
+                ],
+                "specific_humidity_850mb": [
+                  "conus"
+                ],
+                "storm_motion_u": [
+                  "conus"
+                ],
+                "storm_motion_v": [
+                  "conus"
+                ],
+                "surface_pressure": [
+                  "conus"
+                ],
+                "temperature_2m": [
+                  "conus"
+                ],
+                "temperature_700mb": [
+                  "conus"
+                ],
+                "temperature_850mb": [
+                  "conus"
+                ],
+                "temperature_925mb": [
+                  "conus"
+                ],
+                "temperature_potential_2m": [
+                  "conus"
+                ],
+                "u_wind_0c_isotherm": [
+                  "conus"
+                ],
+                "u_wind_10m": [
+                  "conus"
+                ],
+                "u_wind_500mb": [
+                  "conus"
+                ],
+                "u_wind_80m": [
+                  "conus"
+                ],
+                "v_wind_0c_isotherm": [
+                  "conus"
+                ],
+                "v_wind_10m": [
+                  "conus"
+                ],
+                "v_wind_500mb": [
+                  "conus"
+                ],
+                "v_wind_80m": [
+                  "conus"
+                ],
+                "vertical_velocity_500mb": [
+                  "conus"
+                ],
+                "vertical_velocity_700mb": [
+                  "conus"
+                ],
+                "visibility": [
+                  "conus"
+                ],
+                "wind_0c_isotherm": [
+                  "conus"
+                ],
+                "wind_10m": [
+                  "conus"
+                ],
+                "wind_500mb": [
+                  "conus"
+                ],
+                "wind_700mb": [
+                  "conus"
+                ],
+                "wind_850mb": [
+                  "conus"
+                ],
+                "wind_speed_80m": [
+                  "conus"
+                ]
+              }
+            },
+            "f008": {
+              "overlays": {
+                "cape": [
+                  "conus"
+                ],
+                "ceiling": [
+                  "conus"
+                ],
+                "cin_surface": [
+                  "conus"
+                ],
+                "cloud_cover_high": [
+                  "conus"
+                ],
+                "cloud_cover_low": [
+                  "conus"
+                ],
+                "cloud_cover_mid": [
+                  "conus"
+                ],
+                "cloud_cover_total": [
+                  "conus"
+                ],
+                "composite_reflectivity": [
+                  "conus"
+                ],
+                "dewpoint_2m": [
+                  "conus"
+                ],
+                "gust_surface": [
+                  "conus"
+                ],
+                "height_0c_isotherm": [
+                  "conus"
+                ],
+                "height_500mb": [
+                  "conus"
+                ],
+                "height_700mb": [
+                  "conus"
+                ],
+                "height_850mb": [
+                  "conus"
+                ],
+                "helicity_0_1km": [
+                  "conus"
+                ],
+                "helicity_0_3km": [
+                  "conus"
+                ],
+                "land_mask": [
+                  "conus"
+                ],
+                "mslp": [
+                  "conus"
+                ],
+                "pressure_surface": [
+                  "conus"
+                ],
+                "ptype": [
+                  "conus"
+                ],
+                "pwat": [
+                  "conus"
+                ],
+                "qpf": [
+                  "conus"
+                ],
+                "relative_vorticity_0_1km": [
+                  "conus"
+                ],
+                "relative_vorticity_0_2km": [
+                  "conus"
+                ],
+                "rh_0c_isotherm": [
+                  "conus"
+                ],
+                "rh_2m": [
+                  "conus"
+                ],
+                "shear_u_0_1km": [
+                  "conus"
+                ],
+                "shear_u_0_6km": [
+                  "conus"
+                ],
+                "shear_v_0_1km": [
+                  "conus"
+                ],
+                "shear_v_0_6km": [
+                  "conus"
+                ],
+                "specific_humidity_2m": [
+                  "conus"
+                ],
+                "specific_humidity_700mb": [
+                  "conus"
+                ],
+                "specific_humidity_850mb": [
+                  "conus"
+                ],
+                "storm_motion_u": [
+                  "conus"
+                ],
+                "storm_motion_v": [
+                  "conus"
+                ],
+                "surface_pressure": [
+                  "conus"
+                ],
+                "temperature_2m": [
+                  "conus"
+                ],
+                "temperature_700mb": [
+                  "conus"
+                ],
+                "temperature_850mb": [
+                  "conus"
+                ],
+                "temperature_925mb": [
+                  "conus"
+                ],
+                "temperature_potential_2m": [
+                  "conus"
+                ],
+                "u_wind_0c_isotherm": [
+                  "conus"
+                ],
+                "u_wind_10m": [
+                  "conus"
+                ],
+                "u_wind_500mb": [
+                  "conus"
+                ],
+                "u_wind_80m": [
+                  "conus"
+                ],
+                "v_wind_0c_isotherm": [
+                  "conus"
+                ],
+                "v_wind_10m": [
+                  "conus"
+                ],
+                "v_wind_500mb": [
+                  "conus"
+                ],
+                "v_wind_80m": [
+                  "conus"
+                ],
+                "vertical_velocity_500mb": [
+                  "conus"
+                ],
+                "vertical_velocity_700mb": [
+                  "conus"
+                ],
+                "visibility": [
+                  "conus"
+                ],
+                "wind_0c_isotherm": [
+                  "conus"
+                ],
+                "wind_10m": [
+                  "conus"
+                ],
+                "wind_500mb": [
+                  "conus"
+                ],
+                "wind_700mb": [
+                  "conus"
+                ],
+                "wind_850mb": [
+                  "conus"
+                ],
+                "wind_speed_80m": [
+                  "conus"
+                ]
+              }
+            },
+            "f009": {
+              "overlays": {
+                "cape": [
+                  "conus"
+                ],
+                "ceiling": [
+                  "conus"
+                ],
+                "cin_surface": [
+                  "conus"
+                ],
+                "cloud_cover_high": [
+                  "conus"
+                ],
+                "cloud_cover_low": [
+                  "conus"
+                ],
+                "cloud_cover_mid": [
+                  "conus"
+                ],
+                "cloud_cover_total": [
+                  "conus"
+                ],
+                "composite_reflectivity": [
+                  "conus"
+                ],
+                "dewpoint_2m": [
+                  "conus"
+                ],
+                "gust_surface": [
+                  "conus"
+                ],
+                "height_0c_isotherm": [
+                  "conus"
+                ],
+                "height_500mb": [
+                  "conus"
+                ],
+                "height_700mb": [
+                  "conus"
+                ],
+                "height_850mb": [
+                  "conus"
+                ],
+                "helicity_0_1km": [
+                  "conus"
+                ],
+                "helicity_0_3km": [
+                  "conus"
+                ],
+                "land_mask": [
+                  "conus"
+                ],
+                "mslp": [
+                  "conus"
+                ],
+                "pressure_surface": [
+                  "conus"
+                ],
+                "ptype": [
+                  "conus"
+                ],
+                "pwat": [
+                  "conus"
+                ],
+                "qpf": [
+                  "conus"
+                ],
+                "relative_vorticity_0_1km": [
+                  "conus"
+                ],
+                "relative_vorticity_0_2km": [
+                  "conus"
+                ],
+                "rh_0c_isotherm": [
+                  "conus"
+                ],
+                "rh_2m": [
+                  "conus"
+                ],
+                "shear_u_0_1km": [
+                  "conus"
+                ],
+                "shear_u_0_6km": [
+                  "conus"
+                ],
+                "shear_v_0_1km": [
+                  "conus"
+                ],
+                "shear_v_0_6km": [
+                  "conus"
+                ],
+                "specific_humidity_2m": [
+                  "conus"
+                ],
+                "specific_humidity_700mb": [
+                  "conus"
+                ],
+                "specific_humidity_850mb": [
+                  "conus"
+                ],
+                "storm_motion_u": [
+                  "conus"
+                ],
+                "storm_motion_v": [
+                  "conus"
+                ],
+                "surface_pressure": [
+                  "conus"
+                ],
+                "temperature_2m": [
+                  "conus"
+                ],
+                "temperature_700mb": [
+                  "conus"
+                ],
+                "temperature_850mb": [
+                  "conus"
+                ],
+                "temperature_925mb": [
+                  "conus"
+                ],
+                "temperature_potential_2m": [
+                  "conus"
+                ],
+                "u_wind_0c_isotherm": [
+                  "conus"
+                ],
+                "u_wind_10m": [
+                  "conus"
+                ],
+                "u_wind_500mb": [
+                  "conus"
+                ],
+                "u_wind_80m": [
+                  "conus"
+                ],
+                "v_wind_0c_isotherm": [
+                  "conus"
+                ],
+                "v_wind_10m": [
+                  "conus"
+                ],
+                "v_wind_500mb": [
+                  "conus"
+                ],
+                "v_wind_80m": [
+                  "conus"
+                ],
+                "vertical_velocity_500mb": [
+                  "conus"
+                ],
+                "vertical_velocity_700mb": [
+                  "conus"
+                ],
+                "visibility": [
+                  "conus"
+                ],
+                "wind_0c_isotherm": [
+                  "conus"
+                ],
+                "wind_10m": [
+                  "conus"
+                ],
+                "wind_500mb": [
+                  "conus"
+                ],
+                "wind_700mb": [
+                  "conus"
+                ],
+                "wind_850mb": [
+                  "conus"
+                ],
+                "wind_speed_80m": [
+                  "conus"
+                ]
+              }
+            },
+            "f010": {
+              "overlays": {
+                "cape": [
+                  "conus"
+                ],
+                "ceiling": [
+                  "conus"
+                ],
+                "cin_surface": [
+                  "conus"
+                ],
+                "cloud_cover_high": [
+                  "conus"
+                ],
+                "cloud_cover_low": [
+                  "conus"
+                ],
+                "cloud_cover_mid": [
+                  "conus"
+                ],
+                "cloud_cover_total": [
+                  "conus"
+                ],
+                "composite_reflectivity": [
+                  "conus"
+                ],
+                "dewpoint_2m": [
+                  "conus"
+                ],
+                "gust_surface": [
+                  "conus"
+                ],
+                "height_0c_isotherm": [
+                  "conus"
+                ],
+                "height_500mb": [
+                  "conus"
+                ],
+                "height_700mb": [
+                  "conus"
+                ],
+                "height_850mb": [
+                  "conus"
+                ],
+                "helicity_0_1km": [
+                  "conus"
+                ],
+                "helicity_0_3km": [
+                  "conus"
+                ],
+                "land_mask": [
+                  "conus"
+                ],
+                "mslp": [
+                  "conus"
+                ],
+                "pressure_surface": [
+                  "conus"
+                ],
+                "ptype": [
+                  "conus"
+                ],
+                "pwat": [
+                  "conus"
+                ],
+                "qpf": [
+                  "conus"
+                ],
+                "relative_vorticity_0_1km": [
+                  "conus"
+                ],
+                "relative_vorticity_0_2km": [
+                  "conus"
+                ],
+                "rh_0c_isotherm": [
+                  "conus"
+                ],
+                "rh_2m": [
+                  "conus"
+                ],
+                "shear_u_0_1km": [
+                  "conus"
+                ],
+                "shear_u_0_6km": [
+                  "conus"
+                ],
+                "shear_v_0_1km": [
+                  "conus"
+                ],
+                "shear_v_0_6km": [
+                  "conus"
+                ],
+                "specific_humidity_2m": [
+                  "conus"
+                ],
+                "specific_humidity_700mb": [
+                  "conus"
+                ],
+                "specific_humidity_850mb": [
+                  "conus"
+                ],
+                "storm_motion_u": [
+                  "conus"
+                ],
+                "storm_motion_v": [
+                  "conus"
+                ],
+                "surface_pressure": [
+                  "conus"
+                ],
+                "temperature_2m": [
+                  "conus"
+                ],
+                "temperature_700mb": [
+                  "conus"
+                ],
+                "temperature_850mb": [
+                  "conus"
+                ],
+                "temperature_925mb": [
+                  "conus"
+                ],
+                "temperature_potential_2m": [
+                  "conus"
+                ],
+                "u_wind_0c_isotherm": [
+                  "conus"
+                ],
+                "u_wind_10m": [
+                  "conus"
+                ],
+                "u_wind_500mb": [
+                  "conus"
+                ],
+                "u_wind_80m": [
+                  "conus"
+                ],
+                "v_wind_0c_isotherm": [
+                  "conus"
+                ],
+                "v_wind_10m": [
+                  "conus"
+                ],
+                "v_wind_500mb": [
+                  "conus"
+                ],
+                "v_wind_80m": [
+                  "conus"
+                ],
+                "vertical_velocity_500mb": [
+                  "conus"
+                ],
+                "vertical_velocity_700mb": [
+                  "conus"
+                ],
+                "visibility": [
+                  "conus"
+                ],
+                "wind_0c_isotherm": [
+                  "conus"
+                ],
+                "wind_10m": [
+                  "conus"
+                ],
+                "wind_500mb": [
+                  "conus"
+                ],
+                "wind_700mb": [
+                  "conus"
+                ],
+                "wind_850mb": [
+                  "conus"
+                ],
+                "wind_speed_80m": [
+                  "conus"
+                ]
+              }
+            },
+            "f011": {
+              "overlays": {
+                "cape": [
+                  "conus"
+                ],
+                "ceiling": [
+                  "conus"
+                ],
+                "cin_surface": [
+                  "conus"
+                ],
+                "cloud_cover_high": [
+                  "conus"
+                ],
+                "cloud_cover_low": [
+                  "conus"
+                ],
+                "cloud_cover_mid": [
+                  "conus"
+                ],
+                "cloud_cover_total": [
+                  "conus"
+                ],
+                "composite_reflectivity": [
+                  "conus"
+                ],
+                "dewpoint_2m": [
+                  "conus"
+                ],
+                "gust_surface": [
+                  "conus"
+                ],
+                "height_0c_isotherm": [
+                  "conus"
+                ],
+                "height_500mb": [
+                  "conus"
+                ],
+                "height_700mb": [
+                  "conus"
+                ],
+                "height_850mb": [
+                  "conus"
+                ],
+                "helicity_0_1km": [
+                  "conus"
+                ],
+                "helicity_0_3km": [
+                  "conus"
+                ],
+                "land_mask": [
+                  "conus"
+                ],
+                "mslp": [
+                  "conus"
+                ],
+                "pressure_surface": [
+                  "conus"
+                ],
+                "ptype": [
+                  "conus"
+                ],
+                "pwat": [
+                  "conus"
+                ],
+                "qpf": [
+                  "conus"
+                ],
+                "relative_vorticity_0_1km": [
+                  "conus"
+                ],
+                "relative_vorticity_0_2km": [
+                  "conus"
+                ],
+                "rh_0c_isotherm": [
+                  "conus"
+                ],
+                "rh_2m": [
+                  "conus"
+                ],
+                "shear_u_0_1km": [
+                  "conus"
+                ],
+                "shear_u_0_6km": [
+                  "conus"
+                ],
+                "shear_v_0_1km": [
+                  "conus"
+                ],
+                "shear_v_0_6km": [
+                  "conus"
+                ],
+                "specific_humidity_2m": [
+                  "conus"
+                ],
+                "specific_humidity_700mb": [
+                  "conus"
+                ],
+                "specific_humidity_850mb": [
+                  "conus"
+                ],
+                "storm_motion_u": [
+                  "conus"
+                ],
+                "storm_motion_v": [
+                  "conus"
+                ],
+                "surface_pressure": [
+                  "conus"
+                ],
+                "temperature_2m": [
+                  "conus"
+                ],
+                "temperature_700mb": [
+                  "conus"
+                ],
+                "temperature_850mb": [
+                  "conus"
+                ],
+                "temperature_925mb": [
+                  "conus"
+                ],
+                "temperature_potential_2m": [
+                  "conus"
+                ],
+                "u_wind_0c_isotherm": [
+                  "conus"
+                ],
+                "u_wind_10m": [
+                  "conus"
+                ],
+                "u_wind_500mb": [
+                  "conus"
+                ],
+                "u_wind_80m": [
+                  "conus"
+                ],
+                "v_wind_0c_isotherm": [
+                  "conus"
+                ],
+                "v_wind_10m": [
+                  "conus"
+                ],
+                "v_wind_500mb": [
+                  "conus"
+                ],
+                "v_wind_80m": [
+                  "conus"
+                ],
+                "vertical_velocity_500mb": [
+                  "conus"
+                ],
+                "vertical_velocity_700mb": [
+                  "conus"
+                ],
+                "visibility": [
+                  "conus"
+                ],
+                "wind_0c_isotherm": [
+                  "conus"
+                ],
+                "wind_10m": [
+                  "conus"
+                ],
+                "wind_500mb": [
+                  "conus"
+                ],
+                "wind_700mb": [
+                  "conus"
+                ],
+                "wind_850mb": [
+                  "conus"
+                ],
+                "wind_speed_80m": [
+                  "conus"
+                ]
+              }
+            },
+            "f012": {
+              "overlays": {
+                "cape": [
+                  "conus"
+                ],
+                "ceiling": [
+                  "conus"
+                ],
+                "cin_surface": [
+                  "conus"
+                ],
+                "cloud_cover_high": [
+                  "conus"
+                ],
+                "cloud_cover_low": [
+                  "conus"
+                ],
+                "cloud_cover_mid": [
+                  "conus"
+                ],
+                "cloud_cover_total": [
+                  "conus"
+                ],
+                "composite_reflectivity": [
+                  "conus"
+                ],
+                "dewpoint_2m": [
+                  "conus"
+                ],
+                "gust_surface": [
+                  "conus"
+                ],
+                "height_0c_isotherm": [
+                  "conus"
+                ],
+                "height_500mb": [
+                  "conus"
+                ],
+                "height_700mb": [
+                  "conus"
+                ],
+                "height_850mb": [
+                  "conus"
+                ],
+                "helicity_0_1km": [
+                  "conus"
+                ],
+                "helicity_0_3km": [
+                  "conus"
+                ],
+                "land_mask": [
+                  "conus"
+                ],
+                "mslp": [
+                  "conus"
+                ],
+                "pressure_surface": [
+                  "conus"
+                ],
+                "ptype": [
+                  "conus"
+                ],
+                "pwat": [
+                  "conus"
+                ],
+                "qpf": [
+                  "conus"
+                ],
+                "relative_vorticity_0_1km": [
+                  "conus"
+                ],
+                "relative_vorticity_0_2km": [
+                  "conus"
+                ],
+                "rh_0c_isotherm": [
+                  "conus"
+                ],
+                "rh_2m": [
+                  "conus"
+                ],
+                "shear_u_0_1km": [
+                  "conus"
+                ],
+                "shear_u_0_6km": [
+                  "conus"
+                ],
+                "shear_v_0_1km": [
+                  "conus"
+                ],
+                "shear_v_0_6km": [
+                  "conus"
+                ],
+                "specific_humidity_2m": [
+                  "conus"
+                ],
+                "specific_humidity_700mb": [
+                  "conus"
+                ],
+                "specific_humidity_850mb": [
+                  "conus"
+                ],
+                "storm_motion_u": [
+                  "conus"
+                ],
+                "storm_motion_v": [
+                  "conus"
+                ],
+                "surface_pressure": [
+                  "conus"
+                ],
+                "temperature_2m": [
+                  "conus"
+                ],
+                "temperature_700mb": [
+                  "conus"
+                ],
+                "temperature_850mb": [
+                  "conus"
+                ],
+                "temperature_925mb": [
+                  "conus"
+                ],
+                "temperature_potential_2m": [
+                  "conus"
+                ],
+                "u_wind_0c_isotherm": [
+                  "conus"
+                ],
+                "u_wind_10m": [
+                  "conus"
+                ],
+                "u_wind_500mb": [
+                  "conus"
+                ],
+                "u_wind_80m": [
+                  "conus"
+                ],
+                "v_wind_0c_isotherm": [
+                  "conus"
+                ],
+                "v_wind_10m": [
+                  "conus"
+                ],
+                "v_wind_500mb": [
+                  "conus"
+                ],
+                "v_wind_80m": [
+                  "conus"
+                ],
+                "vertical_velocity_500mb": [
+                  "conus"
+                ],
+                "vertical_velocity_700mb": [
+                  "conus"
+                ],
+                "visibility": [
+                  "conus"
+                ],
+                "wind_0c_isotherm": [
+                  "conus"
+                ],
+                "wind_10m": [
+                  "conus"
+                ],
+                "wind_500mb": [
+                  "conus"
+                ],
+                "wind_700mb": [
+                  "conus"
+                ],
+                "wind_850mb": [
+                  "conus"
+                ],
+                "wind_speed_80m": [
+                  "conus"
+                ]
+              }
+            },
+            "f013": {
+              "overlays": {
+                "cape": [
+                  "conus"
+                ],
+                "ceiling": [
+                  "conus"
+                ],
+                "cin_surface": [
+                  "conus"
+                ],
+                "cloud_cover_high": [
+                  "conus"
+                ],
+                "cloud_cover_low": [
+                  "conus"
+                ],
+                "cloud_cover_mid": [
+                  "conus"
+                ],
+                "cloud_cover_total": [
+                  "conus"
+                ],
+                "composite_reflectivity": [
+                  "conus"
+                ],
+                "dewpoint_2m": [
+                  "conus"
+                ],
+                "gust_surface": [
+                  "conus"
+                ],
+                "height_0c_isotherm": [
+                  "conus"
+                ],
+                "height_500mb": [
+                  "conus"
+                ],
+                "height_700mb": [
+                  "conus"
+                ],
+                "height_850mb": [
+                  "conus"
+                ],
+                "helicity_0_1km": [
+                  "conus"
+                ],
+                "helicity_0_3km": [
+                  "conus"
+                ],
+                "land_mask": [
+                  "conus"
+                ],
+                "mslp": [
+                  "conus"
+                ],
+                "pressure_surface": [
+                  "conus"
+                ],
+                "ptype": [
+                  "conus"
+                ],
+                "pwat": [
+                  "conus"
+                ],
+                "qpf": [
+                  "conus"
+                ],
+                "relative_vorticity_0_1km": [
+                  "conus"
+                ],
+                "relative_vorticity_0_2km": [
+                  "conus"
+                ],
+                "rh_0c_isotherm": [
+                  "conus"
+                ],
+                "rh_2m": [
+                  "conus"
+                ],
+                "shear_u_0_1km": [
+                  "conus"
+                ],
+                "shear_u_0_6km": [
+                  "conus"
+                ],
+                "shear_v_0_1km": [
+                  "conus"
+                ],
+                "shear_v_0_6km": [
+                  "conus"
+                ],
+                "specific_humidity_2m": [
+                  "conus"
+                ],
+                "specific_humidity_700mb": [
+                  "conus"
+                ],
+                "specific_humidity_850mb": [
+                  "conus"
+                ],
+                "storm_motion_u": [
+                  "conus"
+                ],
+                "storm_motion_v": [
+                  "conus"
+                ],
+                "surface_pressure": [
+                  "conus"
+                ],
+                "temperature_2m": [
+                  "conus"
+                ],
+                "temperature_700mb": [
+                  "conus"
+                ],
+                "temperature_850mb": [
+                  "conus"
+                ],
+                "temperature_925mb": [
+                  "conus"
+                ],
+                "temperature_potential_2m": [
+                  "conus"
+                ],
+                "u_wind_0c_isotherm": [
+                  "conus"
+                ],
+                "u_wind_10m": [
+                  "conus"
+                ],
+                "u_wind_500mb": [
+                  "conus"
+                ],
+                "u_wind_80m": [
+                  "conus"
+                ],
+                "v_wind_0c_isotherm": [
+                  "conus"
+                ],
+                "v_wind_10m": [
+                  "conus"
+                ],
+                "v_wind_500mb": [
+                  "conus"
+                ],
+                "v_wind_80m": [
+                  "conus"
+                ],
+                "vertical_velocity_500mb": [
+                  "conus"
+                ],
+                "vertical_velocity_700mb": [
+                  "conus"
+                ],
+                "visibility": [
+                  "conus"
+                ],
+                "wind_0c_isotherm": [
+                  "conus"
+                ],
+                "wind_10m": [
+                  "conus"
+                ],
+                "wind_500mb": [
+                  "conus"
+                ],
+                "wind_700mb": [
+                  "conus"
+                ],
+                "wind_850mb": [
+                  "conus"
+                ],
+                "wind_speed_80m": [
+                  "conus"
+                ]
+              }
+            },
+            "f014": {
+              "overlays": {
+                "cape": [
+                  "conus"
+                ],
+                "ceiling": [
+                  "conus"
+                ],
+                "cin_surface": [
+                  "conus"
+                ],
+                "cloud_cover_high": [
+                  "conus"
+                ],
+                "cloud_cover_low": [
+                  "conus"
+                ],
+                "cloud_cover_mid": [
+                  "conus"
+                ],
+                "cloud_cover_total": [
+                  "conus"
+                ],
+                "composite_reflectivity": [
+                  "conus"
+                ],
+                "dewpoint_2m": [
+                  "conus"
+                ],
+                "gust_surface": [
+                  "conus"
+                ],
+                "height_0c_isotherm": [
+                  "conus"
+                ],
+                "height_500mb": [
+                  "conus"
+                ],
+                "height_700mb": [
+                  "conus"
+                ],
+                "height_850mb": [
+                  "conus"
+                ],
+                "helicity_0_1km": [
+                  "conus"
+                ],
+                "helicity_0_3km": [
+                  "conus"
+                ],
+                "land_mask": [
+                  "conus"
+                ],
+                "mslp": [
+                  "conus"
+                ],
+                "pressure_surface": [
+                  "conus"
+                ],
+                "ptype": [
+                  "conus"
+                ],
+                "pwat": [
+                  "conus"
+                ],
+                "qpf": [
+                  "conus"
+                ],
+                "relative_vorticity_0_1km": [
+                  "conus"
+                ],
+                "relative_vorticity_0_2km": [
+                  "conus"
+                ],
+                "rh_0c_isotherm": [
+                  "conus"
+                ],
+                "rh_2m": [
+                  "conus"
+                ],
+                "shear_u_0_1km": [
+                  "conus"
+                ],
+                "shear_u_0_6km": [
+                  "conus"
+                ],
+                "shear_v_0_1km": [
+                  "conus"
+                ],
+                "shear_v_0_6km": [
+                  "conus"
+                ],
+                "specific_humidity_2m": [
+                  "conus"
+                ],
+                "specific_humidity_700mb": [
+                  "conus"
+                ],
+                "specific_humidity_850mb": [
+                  "conus"
+                ],
+                "storm_motion_u": [
+                  "conus"
+                ],
+                "storm_motion_v": [
+                  "conus"
+                ],
+                "surface_pressure": [
+                  "conus"
+                ],
+                "temperature_2m": [
+                  "conus"
+                ],
+                "temperature_700mb": [
+                  "conus"
+                ],
+                "temperature_850mb": [
+                  "conus"
+                ],
+                "temperature_925mb": [
+                  "conus"
+                ],
+                "temperature_potential_2m": [
+                  "conus"
+                ],
+                "u_wind_0c_isotherm": [
+                  "conus"
+                ],
+                "u_wind_10m": [
+                  "conus"
+                ],
+                "u_wind_500mb": [
+                  "conus"
+                ],
+                "u_wind_80m": [
+                  "conus"
+                ],
+                "v_wind_0c_isotherm": [
+                  "conus"
+                ],
+                "v_wind_10m": [
+                  "conus"
+                ],
+                "v_wind_500mb": [
+                  "conus"
+                ],
+                "v_wind_80m": [
+                  "conus"
+                ],
+                "vertical_velocity_500mb": [
+                  "conus"
+                ],
+                "vertical_velocity_700mb": [
+                  "conus"
+                ],
+                "visibility": [
+                  "conus"
+                ],
+                "wind_0c_isotherm": [
+                  "conus"
+                ],
+                "wind_10m": [
+                  "conus"
+                ],
+                "wind_500mb": [
+                  "conus"
+                ],
+                "wind_700mb": [
+                  "conus"
+                ],
+                "wind_850mb": [
+                  "conus"
+                ],
+                "wind_speed_80m": [
+                  "conus"
+                ]
+              }
+            },
+            "f015": {
+              "overlays": {
+                "cape": [
+                  "conus"
+                ],
+                "ceiling": [
+                  "conus"
+                ],
+                "cin_surface": [
+                  "conus"
+                ],
+                "cloud_cover_high": [
+                  "conus"
+                ],
+                "cloud_cover_low": [
+                  "conus"
+                ],
+                "cloud_cover_mid": [
+                  "conus"
+                ],
+                "cloud_cover_total": [
+                  "conus"
+                ],
+                "composite_reflectivity": [
+                  "conus"
+                ],
+                "dewpoint_2m": [
+                  "conus"
+                ],
+                "gust_surface": [
+                  "conus"
+                ],
+                "height_0c_isotherm": [
+                  "conus"
+                ],
+                "height_500mb": [
+                  "conus"
+                ],
+                "height_700mb": [
+                  "conus"
+                ],
+                "height_850mb": [
+                  "conus"
+                ],
+                "helicity_0_1km": [
+                  "conus"
+                ],
+                "helicity_0_3km": [
+                  "conus"
+                ],
+                "land_mask": [
+                  "conus"
+                ],
+                "mslp": [
+                  "conus"
+                ],
+                "pressure_surface": [
+                  "conus"
+                ],
+                "ptype": [
+                  "conus"
+                ],
+                "pwat": [
+                  "conus"
+                ],
+                "qpf": [
+                  "conus"
+                ],
+                "relative_vorticity_0_1km": [
+                  "conus"
+                ],
+                "relative_vorticity_0_2km": [
+                  "conus"
+                ],
+                "rh_0c_isotherm": [
+                  "conus"
+                ],
+                "rh_2m": [
+                  "conus"
+                ],
+                "shear_u_0_1km": [
+                  "conus"
+                ],
+                "shear_u_0_6km": [
+                  "conus"
+                ],
+                "shear_v_0_1km": [
+                  "conus"
+                ],
+                "shear_v_0_6km": [
+                  "conus"
+                ],
+                "specific_humidity_2m": [
+                  "conus"
+                ],
+                "specific_humidity_700mb": [
+                  "conus"
+                ],
+                "specific_humidity_850mb": [
+                  "conus"
+                ],
+                "storm_motion_u": [
+                  "conus"
+                ],
+                "storm_motion_v": [
+                  "conus"
+                ],
+                "surface_pressure": [
+                  "conus"
+                ],
+                "temperature_2m": [
+                  "conus"
+                ],
+                "temperature_700mb": [
+                  "conus"
+                ],
+                "temperature_850mb": [
+                  "conus"
+                ],
+                "temperature_925mb": [
+                  "conus"
+                ],
+                "temperature_potential_2m": [
+                  "conus"
+                ],
+                "u_wind_0c_isotherm": [
+                  "conus"
+                ],
+                "u_wind_10m": [
+                  "conus"
+                ],
+                "u_wind_500mb": [
+                  "conus"
+                ],
+                "u_wind_80m": [
+                  "conus"
+                ],
+                "v_wind_0c_isotherm": [
+                  "conus"
+                ],
+                "v_wind_10m": [
+                  "conus"
+                ],
+                "v_wind_500mb": [
+                  "conus"
+                ],
+                "v_wind_80m": [
+                  "conus"
+                ],
+                "vertical_velocity_500mb": [
+                  "conus"
+                ],
+                "vertical_velocity_700mb": [
+                  "conus"
+                ],
+                "visibility": [
+                  "conus"
+                ],
+                "wind_0c_isotherm": [
+                  "conus"
+                ],
+                "wind_10m": [
+                  "conus"
+                ],
+                "wind_500mb": [
+                  "conus"
+                ],
+                "wind_700mb": [
+                  "conus"
+                ],
+                "wind_850mb": [
+                  "conus"
+                ],
+                "wind_speed_80m": [
+                  "conus"
+                ]
+              }
+            },
+            "f016": {
+              "overlays": {
+                "cape": [
+                  "conus"
+                ],
+                "ceiling": [
+                  "conus"
+                ],
+                "cin_surface": [
+                  "conus"
+                ],
+                "cloud_cover_high": [
+                  "conus"
+                ],
+                "cloud_cover_low": [
+                  "conus"
+                ],
+                "cloud_cover_mid": [
+                  "conus"
+                ],
+                "cloud_cover_total": [
+                  "conus"
+                ],
+                "composite_reflectivity": [
+                  "conus"
+                ],
+                "dewpoint_2m": [
+                  "conus"
+                ],
+                "gust_surface": [
+                  "conus"
+                ],
+                "height_0c_isotherm": [
+                  "conus"
+                ],
+                "height_500mb": [
+                  "conus"
+                ],
+                "height_700mb": [
+                  "conus"
+                ],
+                "height_850mb": [
+                  "conus"
+                ],
+                "helicity_0_1km": [
+                  "conus"
+                ],
+                "helicity_0_3km": [
+                  "conus"
+                ],
+                "land_mask": [
+                  "conus"
+                ],
+                "mslp": [
+                  "conus"
+                ],
+                "pressure_surface": [
+                  "conus"
+                ],
+                "ptype": [
+                  "conus"
+                ],
+                "pwat": [
+                  "conus"
+                ],
+                "qpf": [
+                  "conus"
+                ],
+                "relative_vorticity_0_1km": [
+                  "conus"
+                ],
+                "relative_vorticity_0_2km": [
+                  "conus"
+                ],
+                "rh_0c_isotherm": [
+                  "conus"
+                ],
+                "rh_2m": [
+                  "conus"
+                ],
+                "shear_u_0_1km": [
+                  "conus"
+                ],
+                "shear_u_0_6km": [
+                  "conus"
+                ],
+                "shear_v_0_1km": [
+                  "conus"
+                ],
+                "shear_v_0_6km": [
+                  "conus"
+                ],
+                "specific_humidity_2m": [
+                  "conus"
+                ],
+                "specific_humidity_700mb": [
+                  "conus"
+                ],
+                "specific_humidity_850mb": [
+                  "conus"
+                ],
+                "storm_motion_u": [
+                  "conus"
+                ],
+                "storm_motion_v": [
+                  "conus"
+                ],
+                "surface_pressure": [
+                  "conus"
+                ],
+                "temperature_2m": [
+                  "conus"
+                ],
+                "temperature_700mb": [
+                  "conus"
+                ],
+                "temperature_850mb": [
+                  "conus"
+                ],
+                "temperature_925mb": [
+                  "conus"
+                ],
+                "temperature_potential_2m": [
+                  "conus"
+                ],
+                "u_wind_0c_isotherm": [
+                  "conus"
+                ],
+                "u_wind_10m": [
+                  "conus"
+                ],
+                "u_wind_500mb": [
+                  "conus"
+                ],
+                "u_wind_80m": [
+                  "conus"
+                ],
+                "v_wind_0c_isotherm": [
+                  "conus"
+                ],
+                "v_wind_10m": [
+                  "conus"
+                ],
+                "v_wind_500mb": [
+                  "conus"
+                ],
+                "v_wind_80m": [
+                  "conus"
+                ],
+                "vertical_velocity_500mb": [
+                  "conus"
+                ],
+                "vertical_velocity_700mb": [
+                  "conus"
+                ],
+                "visibility": [
+                  "conus"
+                ],
+                "wind_0c_isotherm": [
+                  "conus"
+                ],
+                "wind_10m": [
+                  "conus"
+                ],
+                "wind_500mb": [
+                  "conus"
+                ],
+                "wind_700mb": [
+                  "conus"
+                ],
+                "wind_850mb": [
+                  "conus"
+                ],
+                "wind_speed_80m": [
+                  "conus"
+                ]
+              }
+            },
+            "f017": {
+              "overlays": {
+                "cape": [
+                  "conus"
+                ],
+                "ceiling": [
+                  "conus"
+                ],
+                "cin_surface": [
+                  "conus"
+                ],
+                "cloud_cover_high": [
+                  "conus"
+                ],
+                "cloud_cover_low": [
+                  "conus"
+                ],
+                "cloud_cover_mid": [
+                  "conus"
+                ],
+                "cloud_cover_total": [
+                  "conus"
+                ],
+                "composite_reflectivity": [
+                  "conus"
+                ],
+                "dewpoint_2m": [
+                  "conus"
+                ],
+                "gust_surface": [
+                  "conus"
+                ],
+                "height_0c_isotherm": [
+                  "conus"
+                ],
+                "height_500mb": [
+                  "conus"
+                ],
+                "height_700mb": [
+                  "conus"
+                ],
+                "height_850mb": [
+                  "conus"
+                ],
+                "helicity_0_1km": [
+                  "conus"
+                ],
+                "helicity_0_3km": [
+                  "conus"
+                ],
+                "land_mask": [
+                  "conus"
+                ],
+                "mslp": [
+                  "conus"
+                ],
+                "pressure_surface": [
+                  "conus"
+                ],
+                "ptype": [
+                  "conus"
+                ],
+                "pwat": [
+                  "conus"
+                ],
+                "qpf": [
+                  "conus"
+                ],
+                "relative_vorticity_0_1km": [
+                  "conus"
+                ],
+                "relative_vorticity_0_2km": [
+                  "conus"
+                ],
+                "rh_0c_isotherm": [
+                  "conus"
+                ],
+                "rh_2m": [
+                  "conus"
+                ],
+                "shear_u_0_1km": [
+                  "conus"
+                ],
+                "shear_u_0_6km": [
+                  "conus"
+                ],
+                "shear_v_0_1km": [
+                  "conus"
+                ],
+                "shear_v_0_6km": [
+                  "conus"
+                ],
+                "specific_humidity_2m": [
+                  "conus"
+                ],
+                "specific_humidity_700mb": [
+                  "conus"
+                ],
+                "specific_humidity_850mb": [
+                  "conus"
+                ],
+                "storm_motion_u": [
+                  "conus"
+                ],
+                "storm_motion_v": [
+                  "conus"
+                ],
+                "surface_pressure": [
+                  "conus"
+                ],
+                "temperature_2m": [
+                  "conus"
+                ],
+                "temperature_700mb": [
+                  "conus"
+                ],
+                "temperature_850mb": [
+                  "conus"
+                ],
+                "temperature_925mb": [
+                  "conus"
+                ],
+                "temperature_potential_2m": [
+                  "conus"
+                ],
+                "u_wind_0c_isotherm": [
+                  "conus"
+                ],
+                "u_wind_10m": [
+                  "conus"
+                ],
+                "u_wind_500mb": [
+                  "conus"
+                ],
+                "u_wind_80m": [
+                  "conus"
+                ],
+                "v_wind_0c_isotherm": [
+                  "conus"
+                ],
+                "v_wind_10m": [
+                  "conus"
+                ],
+                "v_wind_500mb": [
+                  "conus"
+                ],
+                "v_wind_80m": [
+                  "conus"
+                ],
+                "vertical_velocity_500mb": [
+                  "conus"
+                ],
+                "vertical_velocity_700mb": [
+                  "conus"
+                ],
+                "visibility": [
+                  "conus"
+                ],
+                "wind_0c_isotherm": [
+                  "conus"
+                ],
+                "wind_10m": [
+                  "conus"
+                ],
+                "wind_500mb": [
+                  "conus"
+                ],
+                "wind_700mb": [
+                  "conus"
+                ],
+                "wind_850mb": [
+                  "conus"
+                ],
+                "wind_speed_80m": [
+                  "conus"
+                ]
+              }
+            },
+            "f018": {
+              "overlays": {
+                "cape": [
+                  "conus"
+                ],
+                "ceiling": [
+                  "conus"
+                ],
+                "cin_surface": [
+                  "conus"
+                ],
+                "cloud_cover_high": [
+                  "conus"
+                ],
+                "cloud_cover_low": [
+                  "conus"
+                ],
+                "cloud_cover_mid": [
+                  "conus"
+                ],
+                "cloud_cover_total": [
+                  "conus"
+                ],
+                "composite_reflectivity": [
+                  "conus"
+                ],
+                "dewpoint_2m": [
+                  "conus"
+                ],
+                "gust_surface": [
+                  "conus"
+                ],
+                "height_0c_isotherm": [
+                  "conus"
+                ],
+                "height_500mb": [
+                  "conus"
+                ],
+                "height_700mb": [
+                  "conus"
+                ],
+                "height_850mb": [
+                  "conus"
+                ],
+                "helicity_0_1km": [
+                  "conus"
+                ],
+                "helicity_0_3km": [
+                  "conus"
+                ],
+                "land_mask": [
+                  "conus"
+                ],
+                "mslp": [
+                  "conus"
+                ],
+                "pressure_surface": [
+                  "conus"
+                ],
+                "ptype": [
+                  "conus"
+                ],
+                "pwat": [
+                  "conus"
+                ],
+                "qpf": [
+                  "conus"
+                ],
+                "relative_vorticity_0_1km": [
+                  "conus"
+                ],
+                "relative_vorticity_0_2km": [
+                  "conus"
+                ],
+                "rh_0c_isotherm": [
+                  "conus"
+                ],
+                "rh_2m": [
+                  "conus"
+                ],
+                "shear_u_0_1km": [
+                  "conus"
+                ],
+                "shear_u_0_6km": [
+                  "conus"
+                ],
+                "shear_v_0_1km": [
+                  "conus"
+                ],
+                "shear_v_0_6km": [
+                  "conus"
+                ],
+                "specific_humidity_2m": [
+                  "conus"
+                ],
+                "specific_humidity_700mb": [
+                  "conus"
+                ],
+                "specific_humidity_850mb": [
+                  "conus"
+                ],
+                "storm_motion_u": [
+                  "conus"
+                ],
+                "storm_motion_v": [
+                  "conus"
+                ],
+                "surface_pressure": [
+                  "conus"
+                ],
+                "temperature_2m": [
+                  "conus"
+                ],
+                "temperature_700mb": [
+                  "conus"
+                ],
+                "temperature_850mb": [
+                  "conus"
+                ],
+                "temperature_925mb": [
+                  "conus"
+                ],
+                "temperature_potential_2m": [
+                  "conus"
+                ],
+                "u_wind_0c_isotherm": [
+                  "conus"
+                ],
+                "u_wind_10m": [
+                  "conus"
+                ],
+                "u_wind_500mb": [
+                  "conus"
+                ],
+                "u_wind_80m": [
+                  "conus"
+                ],
+                "v_wind_0c_isotherm": [
+                  "conus"
+                ],
+                "v_wind_10m": [
+                  "conus"
+                ],
+                "v_wind_500mb": [
+                  "conus"
+                ],
+                "v_wind_80m": [
+                  "conus"
+                ],
+                "vertical_velocity_500mb": [
+                  "conus"
+                ],
+                "vertical_velocity_700mb": [
+                  "conus"
+                ],
+                "visibility": [
+                  "conus"
+                ],
+                "wind_0c_isotherm": [
+                  "conus"
+                ],
+                "wind_10m": [
+                  "conus"
+                ],
+                "wind_500mb": [
+                  "conus"
+                ],
+                "wind_700mb": [
+                  "conus"
+                ],
+                "wind_850mb": [
+                  "conus"
+                ],
+                "wind_speed_80m": [
+                  "conus"
+                ]
+              }
+            }
+          }
         }
       }
     }

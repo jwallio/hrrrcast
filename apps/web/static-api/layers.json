@@ -5966,6 +5966,73 @@
       }
     },
     {
+      "family": "surface",
+      "group": "curated",
+      "id": "specific_humidity_2m",
+      "label": "2 m Specific Humidity",
+      "native": false,
+      "priority": "next",
+      "renderMode": "raster",
+      "style": {
+        "colors": [
+          "#1f2c5b",
+          "#4974b8",
+          "#74b98a",
+          "#d5dc73",
+          "#e1934e"
+        ],
+        "labels": [
+          "0",
+          "4",
+          "8",
+          "16",
+          "24"
+        ],
+        "palette": "moisture",
+        "range": [
+          0.0,
+          0.024
+        ],
+        "rawUnits": "kg/kg",
+        "transform": "kgkg_to_gkg",
+        "type": "continuous",
+        "units": "g/kg"
+      }
+    },
+    {
+      "family": "surface",
+      "group": "curated",
+      "id": "temperature_potential_2m",
+      "label": "2 m Potential Temperature",
+      "native": false,
+      "priority": "next",
+      "renderMode": "raster",
+      "style": {
+        "colors": [
+          "#213875",
+          "#4a90e2",
+          "#f6f6c6",
+          "#e67b3a",
+          "#93210b"
+        ],
+        "labels": [
+          "260",
+          "280",
+          "300",
+          "320",
+          "340"
+        ],
+        "palette": "temperature",
+        "range": [
+          260.0,
+          340.0
+        ],
+        "rawUnits": "K",
+        "type": "continuous",
+        "units": "K"
+      }
+    },
+    {
       "family": "winter",
       "group": "curated",
       "id": "ptype",
@@ -6021,6 +6088,74 @@
         "range": [
           98000.0,
           104000.0
+        ],
+        "rawUnits": "Pa",
+        "transform": "pa_to_hpa",
+        "type": "continuous",
+        "units": "hPa"
+      }
+    },
+    {
+      "family": "surface",
+      "group": "curated",
+      "id": "surface_pressure",
+      "label": "Surface Pressure",
+      "native": false,
+      "priority": "next",
+      "renderMode": "raster",
+      "style": {
+        "colors": [
+          "#203268",
+          "#7dacd6",
+          "#f5f5f5",
+          "#e29e54",
+          "#872620"
+        ],
+        "labels": [
+          "850",
+          "900",
+          "950",
+          "1000",
+          "1050"
+        ],
+        "palette": "pressure",
+        "range": [
+          85000.0,
+          105000.0
+        ],
+        "rawUnits": "Pa",
+        "transform": "pa_to_hpa",
+        "type": "continuous",
+        "units": "hPa"
+      }
+    },
+    {
+      "family": "surface",
+      "group": "curated",
+      "id": "pressure_surface",
+      "label": "Pressure at Surface",
+      "native": false,
+      "priority": "next",
+      "renderMode": "raster",
+      "style": {
+        "colors": [
+          "#203268",
+          "#7dacd6",
+          "#f5f5f5",
+          "#e29e54",
+          "#872620"
+        ],
+        "labels": [
+          "850",
+          "900",
+          "950",
+          "1000",
+          "1050"
+        ],
+        "palette": "pressure",
+        "range": [
+          85000.0,
+          105000.0
         ],
         "rawUnits": "Pa",
         "transform": "pa_to_hpa",
@@ -6145,10 +6280,247 @@
       }
     },
     {
+      "family": "severe",
+      "group": "curated",
+      "id": "cin_surface",
+      "label": "Surface CIN",
+      "native": false,
+      "priority": "next",
+      "renderMode": "raster",
+      "style": {
+        "colors": [
+          "#234c8c",
+          "#7aa6d8",
+          "#f2f2f2",
+          "#e8a16d",
+          "#8d2d2a"
+        ],
+        "labels": [
+          "-400",
+          "-200",
+          "-100",
+          "-25",
+          "0"
+        ],
+        "palette": "diverging",
+        "range": [
+          -400.0,
+          0.0
+        ],
+        "rawUnits": "J/kg",
+        "type": "continuous",
+        "units": "J/kg"
+      }
+    },
+    {
       "family": "surface",
       "group": "curated",
       "id": "wind_10m",
       "label": "10 m Wind Speed",
+      "native": false,
+      "priority": "next",
+      "renderMode": "raster",
+      "style": {
+        "colors": [
+          "#0b1840",
+          "#3c6db5",
+          "#70b796",
+          "#facc40",
+          "#db5231"
+        ],
+        "labels": [
+          "0",
+          "15",
+          "30",
+          "50",
+          "75"
+        ],
+        "palette": "wind",
+        "range": [
+          0.0,
+          40.0
+        ],
+        "rawUnits": "m/s",
+        "transform": "mps_to_mph",
+        "type": "continuous",
+        "units": "mph"
+      }
+    },
+    {
+      "family": "wind",
+      "group": "curated",
+      "id": "u_wind_10m",
+      "label": "10 m U Wind",
+      "native": false,
+      "priority": "next",
+      "renderMode": "raster",
+      "style": {
+        "colors": [
+          "#234c8c",
+          "#7aa6d8",
+          "#f2f2f2",
+          "#e8a16d",
+          "#8d2d2a"
+        ],
+        "labels": [
+          "-90",
+          "-45",
+          "0",
+          "45",
+          "90"
+        ],
+        "palette": "diverging",
+        "range": [
+          -40.0,
+          40.0
+        ],
+        "rawUnits": "m/s",
+        "transform": "mps_to_mph",
+        "type": "continuous",
+        "units": "mph"
+      }
+    },
+    {
+      "family": "wind",
+      "group": "curated",
+      "id": "v_wind_10m",
+      "label": "10 m V Wind",
+      "native": false,
+      "priority": "next",
+      "renderMode": "raster",
+      "style": {
+        "colors": [
+          "#234c8c",
+          "#7aa6d8",
+          "#f2f2f2",
+          "#e8a16d",
+          "#8d2d2a"
+        ],
+        "labels": [
+          "-90",
+          "-45",
+          "0",
+          "45",
+          "90"
+        ],
+        "palette": "diverging",
+        "range": [
+          -40.0,
+          40.0
+        ],
+        "rawUnits": "m/s",
+        "transform": "mps_to_mph",
+        "type": "continuous",
+        "units": "mph"
+      }
+    },
+    {
+      "family": "wind",
+      "group": "curated",
+      "id": "u_wind_80m",
+      "label": "80 m U Wind",
+      "native": false,
+      "priority": "next",
+      "renderMode": "raster",
+      "style": {
+        "colors": [
+          "#234c8c",
+          "#7aa6d8",
+          "#f2f2f2",
+          "#e8a16d",
+          "#8d2d2a"
+        ],
+        "labels": [
+          "-90",
+          "-45",
+          "0",
+          "45",
+          "90"
+        ],
+        "palette": "diverging",
+        "range": [
+          -40.0,
+          40.0
+        ],
+        "rawUnits": "m/s",
+        "transform": "mps_to_mph",
+        "type": "continuous",
+        "units": "mph"
+      }
+    },
+    {
+      "family": "wind",
+      "group": "curated",
+      "id": "v_wind_80m",
+      "label": "80 m V Wind",
+      "native": false,
+      "priority": "next",
+      "renderMode": "raster",
+      "style": {
+        "colors": [
+          "#234c8c",
+          "#7aa6d8",
+          "#f2f2f2",
+          "#e8a16d",
+          "#8d2d2a"
+        ],
+        "labels": [
+          "-90",
+          "-45",
+          "0",
+          "45",
+          "90"
+        ],
+        "palette": "diverging",
+        "range": [
+          -40.0,
+          40.0
+        ],
+        "rawUnits": "m/s",
+        "transform": "mps_to_mph",
+        "type": "continuous",
+        "units": "mph"
+      }
+    },
+    {
+      "family": "wind",
+      "group": "curated",
+      "id": "wind_speed_80m",
+      "label": "80 m Wind Speed",
+      "native": false,
+      "priority": "next",
+      "renderMode": "raster",
+      "style": {
+        "colors": [
+          "#0b1840",
+          "#3c6db5",
+          "#70b796",
+          "#facc40",
+          "#db5231"
+        ],
+        "labels": [
+          "0",
+          "15",
+          "30",
+          "50",
+          "75"
+        ],
+        "palette": "wind",
+        "range": [
+          0.0,
+          40.0
+        ],
+        "rawUnits": "m/s",
+        "transform": "mps_to_mph",
+        "type": "continuous",
+        "units": "mph"
+      }
+    },
+    {
+      "family": "surface",
+      "group": "curated",
+      "id": "gust_surface",
+      "label": "Surface Wind Gust",
       "native": false,
       "priority": "next",
       "renderMode": "raster",
@@ -6248,6 +6620,105 @@
     {
       "family": "clouds",
       "group": "curated",
+      "id": "cloud_cover_low",
+      "label": "Low Cloud Cover",
+      "native": false,
+      "priority": "next",
+      "renderMode": "raster",
+      "style": {
+        "colors": [
+          "#0f1720",
+          "#5f7893",
+          "#a7bccf",
+          "#dbe6f0",
+          "#f8fbff"
+        ],
+        "labels": [
+          "0",
+          "25",
+          "50",
+          "75",
+          "100"
+        ],
+        "palette": "clouds",
+        "range": [
+          0.0,
+          100.0
+        ],
+        "rawUnits": "%",
+        "type": "continuous",
+        "units": "%"
+      }
+    },
+    {
+      "family": "clouds",
+      "group": "curated",
+      "id": "cloud_cover_mid",
+      "label": "Mid Cloud Cover",
+      "native": false,
+      "priority": "next",
+      "renderMode": "raster",
+      "style": {
+        "colors": [
+          "#0f1720",
+          "#5f7893",
+          "#a7bccf",
+          "#dbe6f0",
+          "#f8fbff"
+        ],
+        "labels": [
+          "0",
+          "25",
+          "50",
+          "75",
+          "100"
+        ],
+        "palette": "clouds",
+        "range": [
+          0.0,
+          100.0
+        ],
+        "rawUnits": "%",
+        "type": "continuous",
+        "units": "%"
+      }
+    },
+    {
+      "family": "clouds",
+      "group": "curated",
+      "id": "cloud_cover_high",
+      "label": "High Cloud Cover",
+      "native": false,
+      "priority": "next",
+      "renderMode": "raster",
+      "style": {
+        "colors": [
+          "#0f1720",
+          "#5f7893",
+          "#a7bccf",
+          "#dbe6f0",
+          "#f8fbff"
+        ],
+        "labels": [
+          "0",
+          "25",
+          "50",
+          "75",
+          "100"
+        ],
+        "palette": "clouds",
+        "range": [
+          0.0,
+          100.0
+        ],
+        "rawUnits": "%",
+        "type": "continuous",
+        "units": "%"
+      }
+    },
+    {
+      "family": "clouds",
+      "group": "curated",
       "id": "ceiling",
       "label": "Cloud Ceiling Height",
       "native": false,
@@ -6270,10 +6741,250 @@
       }
     },
     {
+      "family": "surface",
+      "group": "curated",
+      "id": "land_mask",
+      "label": "Land Mask",
+      "native": false,
+      "priority": "next",
+      "renderMode": "raster",
+      "style": {
+        "colors": [
+          "#16381a",
+          "#4b7f31",
+          "#b7b76f",
+          "#b08b61",
+          "#ffffff"
+        ],
+        "labels": [
+          "0",
+          "0.25",
+          "0.5",
+          "0.75",
+          "1"
+        ],
+        "palette": "terrain",
+        "range": [
+          0.0,
+          1.0
+        ],
+        "rawUnits": "flag",
+        "type": "continuous",
+        "units": "flag"
+      }
+    },
+    {
+      "family": "upper_air",
+      "group": "curated",
+      "id": "height_0c_isotherm",
+      "label": "0 C Isotherm Height",
+      "native": false,
+      "priority": "next",
+      "renderMode": "raster",
+      "style": {
+        "colors": [
+          "#16381a",
+          "#4b7f31",
+          "#b7b76f",
+          "#b08b61",
+          "#ffffff"
+        ],
+        "labels": null,
+        "palette": "terrain",
+        "range": null,
+        "rawUnits": "m",
+        "type": "continuous",
+        "units": "m"
+      }
+    },
+    {
+      "family": "upper_air",
+      "group": "curated",
+      "id": "rh_0c_isotherm",
+      "label": "0 C Isotherm Relative Humidity",
+      "native": false,
+      "priority": "next",
+      "renderMode": "raster",
+      "style": {
+        "colors": [
+          "#1f2c5b",
+          "#4974b8",
+          "#74b98a",
+          "#d5dc73",
+          "#e1934e"
+        ],
+        "labels": [
+          "0",
+          "25",
+          "50",
+          "75",
+          "100"
+        ],
+        "palette": "moisture",
+        "range": [
+          0.0,
+          100.0
+        ],
+        "rawUnits": "%",
+        "type": "continuous",
+        "units": "%"
+      }
+    },
+    {
+      "family": "upper_air",
+      "group": "curated",
+      "id": "wind_0c_isotherm",
+      "label": "0 C Isotherm Wind Speed",
+      "native": false,
+      "priority": "next",
+      "renderMode": "raster",
+      "style": {
+        "colors": [
+          "#0b1840",
+          "#3c6db5",
+          "#70b796",
+          "#facc40",
+          "#db5231"
+        ],
+        "labels": [
+          "0",
+          "15",
+          "30",
+          "50",
+          "75"
+        ],
+        "palette": "wind",
+        "range": [
+          0.0,
+          40.0
+        ],
+        "rawUnits": "m/s",
+        "transform": "mps_to_mph",
+        "type": "continuous",
+        "units": "mph"
+      }
+    },
+    {
+      "family": "upper_air",
+      "group": "curated",
+      "id": "u_wind_0c_isotherm",
+      "label": "0 C Isotherm U Wind",
+      "native": false,
+      "priority": "next",
+      "renderMode": "raster",
+      "style": {
+        "colors": [
+          "#234c8c",
+          "#7aa6d8",
+          "#f2f2f2",
+          "#e8a16d",
+          "#8d2d2a"
+        ],
+        "labels": [
+          "-90",
+          "-45",
+          "0",
+          "45",
+          "90"
+        ],
+        "palette": "diverging",
+        "range": [
+          -40.0,
+          40.0
+        ],
+        "rawUnits": "m/s",
+        "transform": "mps_to_mph",
+        "type": "continuous",
+        "units": "mph"
+      }
+    },
+    {
+      "family": "upper_air",
+      "group": "curated",
+      "id": "v_wind_0c_isotherm",
+      "label": "0 C Isotherm V Wind",
+      "native": false,
+      "priority": "next",
+      "renderMode": "raster",
+      "style": {
+        "colors": [
+          "#234c8c",
+          "#7aa6d8",
+          "#f2f2f2",
+          "#e8a16d",
+          "#8d2d2a"
+        ],
+        "labels": [
+          "-90",
+          "-45",
+          "0",
+          "45",
+          "90"
+        ],
+        "palette": "diverging",
+        "range": [
+          -40.0,
+          40.0
+        ],
+        "rawUnits": "m/s",
+        "transform": "mps_to_mph",
+        "type": "continuous",
+        "units": "mph"
+      }
+    },
+    {
       "family": "upper_air",
       "group": "curated",
       "id": "height_500mb",
       "label": "500 mb Height",
+      "native": false,
+      "priority": "next",
+      "renderMode": "raster",
+      "style": {
+        "colors": [
+          "#16381a",
+          "#4b7f31",
+          "#b7b76f",
+          "#b08b61",
+          "#ffffff"
+        ],
+        "labels": null,
+        "palette": "terrain",
+        "range": null,
+        "rawUnits": "m",
+        "type": "continuous",
+        "units": "m"
+      }
+    },
+    {
+      "family": "upper_air",
+      "group": "curated",
+      "id": "height_700mb",
+      "label": "700 mb Height",
+      "native": false,
+      "priority": "next",
+      "renderMode": "raster",
+      "style": {
+        "colors": [
+          "#16381a",
+          "#4b7f31",
+          "#b7b76f",
+          "#b08b61",
+          "#ffffff"
+        ],
+        "labels": null,
+        "palette": "terrain",
+        "range": null,
+        "rawUnits": "m",
+        "type": "continuous",
+        "units": "m"
+      }
+    },
+    {
+      "family": "upper_air",
+      "group": "curated",
+      "id": "height_850mb",
+      "label": "850 mb Height",
       "native": false,
       "priority": "next",
       "renderMode": "raster",
@@ -6325,6 +7036,692 @@
         "transform": "kelvin_to_fahrenheit",
         "type": "continuous",
         "units": "F"
+      }
+    },
+    {
+      "family": "upper_air",
+      "group": "curated",
+      "id": "temperature_700mb",
+      "label": "700 mb Temperature",
+      "native": false,
+      "priority": "next",
+      "renderMode": "raster",
+      "style": {
+        "colors": [
+          "#213875",
+          "#4a90e2",
+          "#f6f6c6",
+          "#e67b3a",
+          "#93210b"
+        ],
+        "labels": [
+          "-10",
+          "10",
+          "32",
+          "60",
+          "90"
+        ],
+        "palette": "temperature",
+        "range": [
+          250.0,
+          315.0
+        ],
+        "rawUnits": "K",
+        "transform": "kelvin_to_fahrenheit",
+        "type": "continuous",
+        "units": "F"
+      }
+    },
+    {
+      "family": "upper_air",
+      "group": "curated",
+      "id": "temperature_925mb",
+      "label": "925 mb Temperature",
+      "native": false,
+      "priority": "next",
+      "renderMode": "raster",
+      "style": {
+        "colors": [
+          "#213875",
+          "#4a90e2",
+          "#f6f6c6",
+          "#e67b3a",
+          "#93210b"
+        ],
+        "labels": [
+          "-10",
+          "10",
+          "32",
+          "60",
+          "90"
+        ],
+        "palette": "temperature",
+        "range": [
+          250.0,
+          315.0
+        ],
+        "rawUnits": "K",
+        "transform": "kelvin_to_fahrenheit",
+        "type": "continuous",
+        "units": "F"
+      }
+    },
+    {
+      "family": "upper_air",
+      "group": "curated",
+      "id": "specific_humidity_700mb",
+      "label": "700 mb Specific Humidity",
+      "native": false,
+      "priority": "next",
+      "renderMode": "raster",
+      "style": {
+        "colors": [
+          "#1f2c5b",
+          "#4974b8",
+          "#74b98a",
+          "#d5dc73",
+          "#e1934e"
+        ],
+        "labels": [
+          "0",
+          "4",
+          "8",
+          "16",
+          "24"
+        ],
+        "palette": "moisture",
+        "range": [
+          0.0,
+          0.024
+        ],
+        "rawUnits": "kg/kg",
+        "transform": "kgkg_to_gkg",
+        "type": "continuous",
+        "units": "g/kg"
+      }
+    },
+    {
+      "family": "upper_air",
+      "group": "curated",
+      "id": "specific_humidity_850mb",
+      "label": "850 mb Specific Humidity",
+      "native": false,
+      "priority": "next",
+      "renderMode": "raster",
+      "style": {
+        "colors": [
+          "#1f2c5b",
+          "#4974b8",
+          "#74b98a",
+          "#d5dc73",
+          "#e1934e"
+        ],
+        "labels": [
+          "0",
+          "4",
+          "8",
+          "16",
+          "24"
+        ],
+        "palette": "moisture",
+        "range": [
+          0.0,
+          0.024
+        ],
+        "rawUnits": "kg/kg",
+        "transform": "kgkg_to_gkg",
+        "type": "continuous",
+        "units": "g/kg"
+      }
+    },
+    {
+      "family": "upper_air",
+      "group": "curated",
+      "id": "u_wind_500mb",
+      "label": "500 mb U Wind",
+      "native": false,
+      "priority": "next",
+      "renderMode": "raster",
+      "style": {
+        "colors": [
+          "#234c8c",
+          "#7aa6d8",
+          "#f2f2f2",
+          "#e8a16d",
+          "#8d2d2a"
+        ],
+        "labels": [
+          "-90",
+          "-45",
+          "0",
+          "45",
+          "90"
+        ],
+        "palette": "diverging",
+        "range": [
+          -40.0,
+          40.0
+        ],
+        "rawUnits": "m/s",
+        "transform": "mps_to_mph",
+        "type": "continuous",
+        "units": "mph"
+      }
+    },
+    {
+      "family": "upper_air",
+      "group": "curated",
+      "id": "v_wind_500mb",
+      "label": "500 mb V Wind",
+      "native": false,
+      "priority": "next",
+      "renderMode": "raster",
+      "style": {
+        "colors": [
+          "#234c8c",
+          "#7aa6d8",
+          "#f2f2f2",
+          "#e8a16d",
+          "#8d2d2a"
+        ],
+        "labels": [
+          "-90",
+          "-45",
+          "0",
+          "45",
+          "90"
+        ],
+        "palette": "diverging",
+        "range": [
+          -40.0,
+          40.0
+        ],
+        "rawUnits": "m/s",
+        "transform": "mps_to_mph",
+        "type": "continuous",
+        "units": "mph"
+      }
+    },
+    {
+      "family": "upper_air",
+      "group": "curated",
+      "id": "wind_500mb",
+      "label": "500 mb Wind Speed",
+      "native": false,
+      "priority": "next",
+      "renderMode": "raster",
+      "style": {
+        "colors": [
+          "#0b1840",
+          "#3c6db5",
+          "#70b796",
+          "#facc40",
+          "#db5231"
+        ],
+        "labels": [
+          "0",
+          "15",
+          "30",
+          "50",
+          "75"
+        ],
+        "palette": "wind",
+        "range": [
+          0.0,
+          40.0
+        ],
+        "rawUnits": "m/s",
+        "transform": "mps_to_mph",
+        "type": "continuous",
+        "units": "mph"
+      }
+    },
+    {
+      "family": "upper_air",
+      "group": "curated",
+      "id": "wind_700mb",
+      "label": "700 mb Wind Speed",
+      "native": false,
+      "priority": "next",
+      "renderMode": "raster",
+      "style": {
+        "colors": [
+          "#0b1840",
+          "#3c6db5",
+          "#70b796",
+          "#facc40",
+          "#db5231"
+        ],
+        "labels": [
+          "0",
+          "15",
+          "30",
+          "50",
+          "75"
+        ],
+        "palette": "wind",
+        "range": [
+          0.0,
+          40.0
+        ],
+        "rawUnits": "m/s",
+        "transform": "mps_to_mph",
+        "type": "continuous",
+        "units": "mph"
+      }
+    },
+    {
+      "family": "upper_air",
+      "group": "curated",
+      "id": "wind_850mb",
+      "label": "850 mb Wind Speed",
+      "native": false,
+      "priority": "next",
+      "renderMode": "raster",
+      "style": {
+        "colors": [
+          "#0b1840",
+          "#3c6db5",
+          "#70b796",
+          "#facc40",
+          "#db5231"
+        ],
+        "labels": [
+          "0",
+          "15",
+          "30",
+          "50",
+          "75"
+        ],
+        "palette": "wind",
+        "range": [
+          0.0,
+          40.0
+        ],
+        "rawUnits": "m/s",
+        "transform": "mps_to_mph",
+        "type": "continuous",
+        "units": "mph"
+      }
+    },
+    {
+      "family": "upper_air",
+      "group": "curated",
+      "id": "vertical_velocity_500mb",
+      "label": "500 mb Vertical Velocity",
+      "native": false,
+      "priority": "next",
+      "renderMode": "raster",
+      "style": {
+        "colors": [
+          "#234c8c",
+          "#7aa6d8",
+          "#f2f2f2",
+          "#e8a16d",
+          "#8d2d2a"
+        ],
+        "labels": [
+          "-2",
+          "-1",
+          "0",
+          "1",
+          "2"
+        ],
+        "palette": "diverging",
+        "range": [
+          -2.0,
+          2.0
+        ],
+        "rawUnits": "Pa/s",
+        "type": "continuous",
+        "units": "Pa/s"
+      }
+    },
+    {
+      "family": "upper_air",
+      "group": "curated",
+      "id": "vertical_velocity_700mb",
+      "label": "700 mb Vertical Velocity",
+      "native": false,
+      "priority": "next",
+      "renderMode": "raster",
+      "style": {
+        "colors": [
+          "#234c8c",
+          "#7aa6d8",
+          "#f2f2f2",
+          "#e8a16d",
+          "#8d2d2a"
+        ],
+        "labels": [
+          "-2",
+          "-1",
+          "0",
+          "1",
+          "2"
+        ],
+        "palette": "diverging",
+        "range": [
+          -2.0,
+          2.0
+        ],
+        "rawUnits": "Pa/s",
+        "type": "continuous",
+        "units": "Pa/s"
+      }
+    },
+    {
+      "family": "severe",
+      "group": "curated",
+      "id": "helicity_0_1km",
+      "label": "0 to 1 km Helicity",
+      "native": false,
+      "priority": "next",
+      "renderMode": "raster",
+      "style": {
+        "colors": [
+          "#141428",
+          "#3a66ac",
+          "#55be78",
+          "#f0d649",
+          "#d15329"
+        ],
+        "labels": [
+          "0",
+          "100",
+          "200",
+          "400",
+          "600"
+        ],
+        "palette": "severe",
+        "range": [
+          0.0,
+          600.0
+        ],
+        "rawUnits": "m2/s2",
+        "type": "continuous",
+        "units": "m2/s2"
+      }
+    },
+    {
+      "family": "severe",
+      "group": "curated",
+      "id": "helicity_0_3km",
+      "label": "0 to 3 km Helicity",
+      "native": false,
+      "priority": "next",
+      "renderMode": "raster",
+      "style": {
+        "colors": [
+          "#141428",
+          "#3a66ac",
+          "#55be78",
+          "#f0d649",
+          "#d15329"
+        ],
+        "labels": [
+          "0",
+          "100",
+          "200",
+          "400",
+          "600"
+        ],
+        "palette": "severe",
+        "range": [
+          0.0,
+          600.0
+        ],
+        "rawUnits": "m2/s2",
+        "type": "continuous",
+        "units": "m2/s2"
+      }
+    },
+    {
+      "family": "severe",
+      "group": "curated",
+      "id": "storm_motion_u",
+      "label": "Storm Motion U",
+      "native": false,
+      "priority": "next",
+      "renderMode": "raster",
+      "style": {
+        "colors": [
+          "#234c8c",
+          "#7aa6d8",
+          "#f2f2f2",
+          "#e8a16d",
+          "#8d2d2a"
+        ],
+        "labels": [
+          "-90",
+          "-45",
+          "0",
+          "45",
+          "90"
+        ],
+        "palette": "diverging",
+        "range": [
+          -40.0,
+          40.0
+        ],
+        "rawUnits": "m/s",
+        "transform": "mps_to_mph",
+        "type": "continuous",
+        "units": "mph"
+      }
+    },
+    {
+      "family": "severe",
+      "group": "curated",
+      "id": "storm_motion_v",
+      "label": "Storm Motion V",
+      "native": false,
+      "priority": "next",
+      "renderMode": "raster",
+      "style": {
+        "colors": [
+          "#234c8c",
+          "#7aa6d8",
+          "#f2f2f2",
+          "#e8a16d",
+          "#8d2d2a"
+        ],
+        "labels": [
+          "-90",
+          "-45",
+          "0",
+          "45",
+          "90"
+        ],
+        "palette": "diverging",
+        "range": [
+          -40.0,
+          40.0
+        ],
+        "rawUnits": "m/s",
+        "transform": "mps_to_mph",
+        "type": "continuous",
+        "units": "mph"
+      }
+    },
+    {
+      "family": "severe",
+      "group": "curated",
+      "id": "shear_u_0_1km",
+      "label": "0 to 1 km U Shear",
+      "native": false,
+      "priority": "next",
+      "renderMode": "raster",
+      "style": {
+        "colors": [
+          "#141428",
+          "#3a66ac",
+          "#55be78",
+          "#f0d649",
+          "#d15329"
+        ],
+        "labels": [
+          "0",
+          "10",
+          "20",
+          "30",
+          "40"
+        ],
+        "palette": "severe",
+        "range": [
+          0.0,
+          40.0
+        ],
+        "rawUnits": "m/s",
+        "type": "continuous",
+        "units": "m/s"
+      }
+    },
+    {
+      "family": "severe",
+      "group": "curated",
+      "id": "shear_v_0_1km",
+      "label": "0 to 1 km V Shear",
+      "native": false,
+      "priority": "next",
+      "renderMode": "raster",
+      "style": {
+        "colors": [
+          "#141428",
+          "#3a66ac",
+          "#55be78",
+          "#f0d649",
+          "#d15329"
+        ],
+        "labels": [
+          "0",
+          "10",
+          "20",
+          "30",
+          "40"
+        ],
+        "palette": "severe",
+        "range": [
+          0.0,
+          40.0
+        ],
+        "rawUnits": "m/s",
+        "type": "continuous",
+        "units": "m/s"
+      }
+    },
+    {
+      "family": "severe",
+      "group": "curated",
+      "id": "shear_u_0_6km",
+      "label": "0 to 6 km U Shear",
+      "native": false,
+      "priority": "next",
+      "renderMode": "raster",
+      "style": {
+        "colors": [
+          "#141428",
+          "#3a66ac",
+          "#55be78",
+          "#f0d649",
+          "#d15329"
+        ],
+        "labels": [
+          "0",
+          "10",
+          "20",
+          "30",
+          "40"
+        ],
+        "palette": "severe",
+        "range": [
+          0.0,
+          40.0
+        ],
+        "rawUnits": "m/s",
+        "type": "continuous",
+        "units": "m/s"
+      }
+    },
+    {
+      "family": "severe",
+      "group": "curated",
+      "id": "shear_v_0_6km",
+      "label": "0 to 6 km V Shear",
+      "native": false,
+      "priority": "next",
+      "renderMode": "raster",
+      "style": {
+        "colors": [
+          "#141428",
+          "#3a66ac",
+          "#55be78",
+          "#f0d649",
+          "#d15329"
+        ],
+        "labels": [
+          "0",
+          "10",
+          "20",
+          "30",
+          "40"
+        ],
+        "palette": "severe",
+        "range": [
+          0.0,
+          40.0
+        ],
+        "rawUnits": "m/s",
+        "type": "continuous",
+        "units": "m/s"
+      }
+    },
+    {
+      "family": "severe",
+      "group": "curated",
+      "id": "relative_vorticity_0_1km",
+      "label": "0 to 1 km Relative Vorticity",
+      "native": false,
+      "priority": "next",
+      "renderMode": "raster",
+      "style": {
+        "colors": [
+          "#234c8c",
+          "#7aa6d8",
+          "#f2f2f2",
+          "#e8a16d",
+          "#8d2d2a"
+        ],
+        "labels": null,
+        "palette": "diverging",
+        "range": null,
+        "rawUnits": "1/s",
+        "type": "continuous",
+        "units": "1/s"
+      }
+    },
+    {
+      "family": "severe",
+      "group": "curated",
+      "id": "relative_vorticity_0_2km",
+      "label": "0 to 2 km Relative Vorticity",
+      "native": false,
+      "priority": "next",
+      "renderMode": "raster",
+      "style": {
+        "colors": [
+          "#234c8c",
+          "#7aa6d8",
+          "#f2f2f2",
+          "#e8a16d",
+          "#8d2d2a"
+        ],
+        "labels": null,
+        "palette": "diverging",
+        "range": null,
+        "rawUnits": "1/s",
+        "type": "continuous",
+        "units": "1/s"
       }
     },
     {

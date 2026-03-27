@@ -14,7 +14,7 @@
   "netcdf_path": "data\\processed\\products\\2026032705\\ens\\composite_reflectivity_probability_gt_40dbz\\f002\\conus.nc",
   "notes": "Probability that composite reflectivity exceeds 40 dBZ.",
   "overlay_id": "composite_reflectivity_probability_gt_40dbz",
-  "preview_url": "./products/2026032705/ens/composite_reflectivity_probability_gt_40dbz/f002/conus.preview.png",
+  "preview_url": "./static-api/products/2026032705/ens/composite_reflectivity_probability_gt_40dbz/f002/conus.preview.png",
   "run_id": "2026032705",
   "shape": [
     1059,

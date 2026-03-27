@@ -1,0 +1,56 @@
+{
+  "bbox": [
+    -127.0,
+    23.0,
+    -66.0,
+    50.0
+  ],
+  "clipped_grib_path": "data\\processed\\products\\2026032705\\m00\\cloud_cover_low\\f000\\conus.grib2",
+  "display_path": "2026032705/m00/cloud_cover_low/f000/conus",
+  "domain_id": "conus",
+  "field_key": "LCDC:low cloud layer",
+  "forecast_hour": 0,
+  "long_name": "Low Cloud Cover",
+  "member": "m00",
+  "native": false,
+  "netcdf_path": "data\\processed\\products\\2026032705\\m00\\cloud_cover_low\\f000\\conus.nc",
+  "overlay_id": "cloud_cover_low",
+  "preview_url": "./static-api/products/2026032705/m00/cloud_cover_low/f000/conus.preview.png",
+  "run_id": "2026032705",
+  "shape": [
+    1,
+    1059,
+    1799
+  ],
+  "static_export": true,
+  "stats": {
+    "max": 100.0,
+    "min": 0.0
+  },
+  "style": {
+    "colors": [
+      "#0f1720",
+      "#5f7893",
+      "#a7bccf",
+      "#dbe6f0",
+      "#f8fbff"
+    ],
+    "labels": [
+      "0",
+      "25",
+      "50",
+      "75",
+      "100"
+    ],
+    "palette": "clouds",
+    "range": [
+      0.0,
+      100.0
+    ],
+    "rawUnits": "%",
+    "type": "continuous",
+    "units": "%"
+  },
+  "units": "percent",
+  "variable_name": "LCDC_lowcloudlayer"
+}

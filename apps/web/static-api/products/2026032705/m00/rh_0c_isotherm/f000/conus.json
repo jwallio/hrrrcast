@@ -1,0 +1,56 @@
+{
+  "bbox": [
+    -127.0,
+    23.0,
+    -66.0,
+    50.0
+  ],
+  "clipped_grib_path": "data\\processed\\products\\2026032705\\m00\\rh_0c_isotherm\\f000\\conus.grib2",
+  "display_path": "2026032705/m00/rh_0c_isotherm/f000/conus",
+  "domain_id": "conus",
+  "field_key": "RH:0C isotherm",
+  "forecast_hour": 0,
+  "long_name": "Relative Humidity",
+  "member": "m00",
+  "native": false,
+  "netcdf_path": "data\\processed\\products\\2026032705\\m00\\rh_0c_isotherm\\f000\\conus.nc",
+  "overlay_id": "rh_0c_isotherm",
+  "preview_url": "./static-api/products/2026032705/m00/rh_0c_isotherm/f000/conus.preview.png",
+  "run_id": "2026032705",
+  "shape": [
+    1,
+    1059,
+    1799
+  ],
+  "static_export": true,
+  "stats": {
+    "max": 100.0,
+    "min": 0.0
+  },
+  "style": {
+    "colors": [
+      "#1f2c5b",
+      "#4974b8",
+      "#74b98a",
+      "#d5dc73",
+      "#e1934e"
+    ],
+    "labels": [
+      "0",
+      "25",
+      "50",
+      "75",
+      "100"
+    ],
+    "palette": "moisture",
+    "range": [
+      0.0,
+      100.0
+    ],
+    "rawUnits": "%",
+    "type": "continuous",
+    "units": "%"
+  },
+  "units": "percent",
+  "variable_name": "RH_0Cisotherm"
+}

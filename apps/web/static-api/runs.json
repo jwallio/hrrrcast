@@ -4,7 +4,8 @@
       "max_forecast_hour": 18,
       "member_count": 9,
       "members": [
-        "ens"
+        "ens",
+        "m00"
       ],
       "run_id": "2026032705",
       "status": "ready",

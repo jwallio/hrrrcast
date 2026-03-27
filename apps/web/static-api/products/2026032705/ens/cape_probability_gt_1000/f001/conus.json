@@ -14,7 +14,7 @@
   "netcdf_path": "data\\processed\\products\\2026032705\\ens\\cape_probability_gt_1000\\f001\\conus.nc",
   "notes": "Probability that surface CAPE exceeds 1000 J/kg.",
   "overlay_id": "cape_probability_gt_1000",
-  "preview_url": "./products/2026032705/ens/cape_probability_gt_1000/f001/conus.preview.png",
+  "preview_url": "./static-api/products/2026032705/ens/cape_probability_gt_1000/f001/conus.preview.png",
   "run_id": "2026032705",
   "shape": [
     1059,

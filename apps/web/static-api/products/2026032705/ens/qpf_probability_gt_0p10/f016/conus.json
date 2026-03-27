@@ -14,7 +14,7 @@
   "netcdf_path": "data\\processed\\products\\2026032705\\ens\\qpf_probability_gt_0p10\\f016\\conus.nc",
   "notes": "Probability that accumulated precipitation exceeds 0.10 in.",
   "overlay_id": "qpf_probability_gt_0p10",
-  "preview_url": "./products/2026032705/ens/qpf_probability_gt_0p10/f016/conus.preview.png",
+  "preview_url": "./static-api/products/2026032705/ens/qpf_probability_gt_0p10/f016/conus.preview.png",
   "run_id": "2026032705",
   "shape": [
     1059,

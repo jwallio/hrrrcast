@@ -1,0 +1,57 @@
+{
+  "bbox": [
+    -127.0,
+    23.0,
+    -66.0,
+    50.0
+  ],
+  "clipped_grib_path": "data\\processed\\products\\2026032705\\m00\\visibility\\f014\\conus.grib2",
+  "display_path": "2026032705/m00/visibility/f014/conus",
+  "domain_id": "conus",
+  "field_key": "VIS:surface",
+  "forecast_hour": 14,
+  "long_name": "Visibility",
+  "member": "m00",
+  "native": false,
+  "netcdf_path": "data\\processed\\products\\2026032705\\m00\\visibility\\f014\\conus.nc",
+  "overlay_id": "visibility",
+  "preview_url": "./static-api/products/2026032705/m00/visibility/f014/conus.preview.png",
+  "run_id": "2026032705",
+  "shape": [
+    1,
+    1059,
+    1799
+  ],
+  "static_export": true,
+  "stats": {
+    "max": 89999.359375,
+    "min": 0.0
+  },
+  "style": {
+    "colors": [
+      "#0f1720",
+      "#5f7893",
+      "#a7bccf",
+      "#dbe6f0",
+      "#f8fbff"
+    ],
+    "labels": [
+      "0",
+      "1",
+      "3",
+      "6",
+      "10"
+    ],
+    "palette": "clouds",
+    "range": [
+      0.0,
+      16093.0
+    ],
+    "rawUnits": "m",
+    "transform": "m_to_miles",
+    "type": "continuous",
+    "units": "mi"
+  },
+  "units": "m",
+  "variable_name": "VIS_surface"
+}

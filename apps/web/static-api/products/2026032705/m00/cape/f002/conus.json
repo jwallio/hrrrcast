@@ -1,0 +1,56 @@
+{
+  "bbox": [
+    -127.0,
+    23.0,
+    -66.0,
+    50.0
+  ],
+  "clipped_grib_path": "data\\processed\\products\\2026032705\\m00\\cape\\f002\\conus.grib2",
+  "display_path": "2026032705/m00/cape/f002/conus",
+  "domain_id": "conus",
+  "field_key": "CAPE:surface",
+  "forecast_hour": 2,
+  "long_name": "Convective Available Potential Energy",
+  "member": "m00",
+  "native": false,
+  "netcdf_path": "data\\processed\\products\\2026032705\\m00\\cape\\f002\\conus.nc",
+  "overlay_id": "cape",
+  "preview_url": "./static-api/products/2026032705/m00/cape/f002/conus.preview.png",
+  "run_id": "2026032705",
+  "shape": [
+    1,
+    1059,
+    1799
+  ],
+  "static_export": true,
+  "stats": {
+    "max": 3086.47998046875,
+    "min": 0.0
+  },
+  "style": {
+    "colors": [
+      "#141428",
+      "#3a66ac",
+      "#55be78",
+      "#f0d649",
+      "#d15329"
+    ],
+    "labels": [
+      "0",
+      "500",
+      "1000",
+      "2500",
+      "4000"
+    ],
+    "palette": "severe",
+    "range": [
+      0.0,
+      4000.0
+    ],
+    "rawUnits": "J/kg",
+    "type": "continuous",
+    "units": "J/kg"
+  },
+  "units": "J/kg",
+  "variable_name": "CAPE_surface"
+}
