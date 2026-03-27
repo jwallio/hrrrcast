@@ -84,6 +84,7 @@ const OVERLAY_ALIASES = {
 
 const els = {
   controlPanel: document.querySelector(".control-panel"),
+  mapStage: document.querySelector(".map-stage"),
   runSelect: document.getElementById("run-select"),
   mobileRunSelect: document.getElementById("mobile-run-select"),
   viewModeSelect: document.getElementById("view-mode-select"),
@@ -125,9 +126,14 @@ const els = {
   archiveToggle: document.getElementById("archive-toggle"),
   animateToggle: document.getElementById("animate-toggle"),
   animationSpeedSelect: document.getElementById("animation-speed-select"),
+  timelineGroupPanel: document.getElementById("timeline-group-panel"),
   legendPanel: document.getElementById("legend-panel"),
   legendUnits: document.getElementById("legend-units"),
   mobilePanelToggle: document.getElementById("mobile-panel-toggle"),
+  mobileQuickPanel: document.getElementById("mobile-quick-panel"),
+  mobileAdvancedToggleRow: document.querySelector(".mobile-advanced-toggle-row"),
+  mobileTimelineHost: document.getElementById("mobile-timeline-host"),
+  mobileQuickHost: document.getElementById("mobile-quick-host"),
   summaryRun: document.getElementById("summary-run"),
   summaryMember: document.getElementById("summary-member"),
   summaryHour: document.getElementById("summary-hour"),
@@ -483,6 +489,7 @@ function bindControls() {
 }
 
 function bindResponsiveUi() {
+  relocateMobilePanels();
   els.mobilePanelToggle.addEventListener("click", () => {
     if (!isMobileViewport()) {
       return;
@@ -495,6 +502,7 @@ function bindResponsiveUi() {
     if (!isMobileViewport()) {
       appState.panelCollapsed = false;
     }
+    relocateMobilePanels();
     updatePanelUi();
     requestMapResize();
   });
@@ -512,6 +520,34 @@ function updatePanelUi() {
 
 function isMobileViewport() {
   return window.innerWidth <= MOBILE_PANEL_BREAKPOINT;
+}
+
+function relocateMobilePanels() {
+  if (!els.timelineGroupPanel || !els.mobileQuickPanel || !els.mobileAdvancedToggleRow) {
+    return;
+  }
+  if (isMobileViewport()) {
+    if (els.timelineGroupPanel.parentElement !== els.mobileTimelineHost) {
+      els.mobileTimelineHost.appendChild(els.timelineGroupPanel);
+    }
+    if (els.mobileQuickPanel.parentElement !== els.mobileQuickHost) {
+      els.mobileQuickHost.appendChild(els.mobileQuickPanel);
+    }
+    if (els.mobileAdvancedToggleRow.parentElement !== els.mobileQuickHost) {
+      els.mobileQuickHost.appendChild(els.mobileAdvancedToggleRow);
+    }
+    return;
+  }
+  if (els.timelineGroupPanel.parentElement !== els.controlPanel) {
+    els.controlPanel.appendChild(els.timelineGroupPanel);
+  }
+  const firstAdvancedPanel = els.controlPanel.querySelector(".advanced-panel");
+  if (els.mobileAdvancedToggleRow.parentElement !== els.controlPanel) {
+    els.controlPanel.insertBefore(els.mobileAdvancedToggleRow, firstAdvancedPanel);
+  }
+  if (els.mobileQuickPanel.parentElement !== els.controlPanel) {
+    els.controlPanel.insertBefore(els.mobileQuickPanel, els.mobileAdvancedToggleRow);
+  }
 }
 
 function getVisibleRuns() {

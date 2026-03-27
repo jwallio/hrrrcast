@@ -403,12 +403,17 @@ input[type="range"] {
   min-height: 100vh;
   background: #dde2e8;
   overflow: hidden;
-  contain: paint;
 }
 
 #map {
   position: absolute;
   inset: 0;
+  background: #dde2e8;
+}
+
+#map .maplibregl-canvas-container,
+#map .maplibregl-canvas {
+  background: #dde2e8 !important;
 }
 
 .map-overlay {
@@ -462,6 +467,10 @@ input[type="range"] {
 }
 
 .mobile-panel-toggle {
+  display: none;
+}
+
+.mobile-flow-host {
   display: none;
 }
 
@@ -555,6 +564,16 @@ input[type="range"] {
 }
 
 @media (max-width: 820px) {
+  .mobile-flow-host {
+    display: block;
+    padding: 0 12px 12px;
+    background: var(--panel);
+  }
+
+  .mobile-flow-host:empty {
+    display: none;
+  }
+
   .mobile-panel-toggle {
     display: inline-flex;
     align-items: center;
@@ -568,7 +587,7 @@ input[type="range"] {
 
   .mobile-quick-panel {
     display: block;
-    margin-top: 10px;
+    margin-top: 0;
   }
 
   .control-panel {
@@ -603,26 +622,21 @@ input[type="range"] {
     display: flex;
     flex-direction: column;
     min-height: auto;
-    overflow: visible;
-    background: transparent;
+    overflow: hidden;
+    background: var(--panel);
   }
 
   #map {
     position: relative;
     inset: auto;
-    flex: 0 0 58vh;
-    min-height: 52vh;
+    flex: 0 0 50vh;
+    min-height: 50vh;
     background: #dde2e8;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   }
 
   .map-overlay {
-    position: static;
-    inset: auto;
-    gap: 10px;
-    padding: 12px;
-    background: var(--panel);
-    box-shadow: var(--shadow);
+    display: none;
   }
 
   .map-topbar {
@@ -688,7 +702,7 @@ input[type="range"] {
   }
 
   #map {
-    flex-basis: 54vh;
+    flex-basis: 46vh;
     min-height: 46vh;
   }
 
