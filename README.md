@@ -241,7 +241,7 @@ https://jwallio.github.io/HRRRCast/?backend=https://your-backend-host.example.co
 - The web app now supports `member`, `ensemble`, and `compare` viewing modes, plus overlay-group filtering for curated, ensemble, and native layers.
 - Windows scheduler helper scripts are available under `scripts/run_refresh_latest_ready.ps1` and `scripts/register_refresh_task.ps1`.
 - GitHub Pages currently serves a static export of the latest-ready ensemble snapshot from `apps/web/static-api/`.
-- `.github/workflows/refresh-pages-snapshot.yml` now supports a no-hosting-cost path: GitHub Actions builds the `pages_snapshot` profile on `windows-latest` using the official NOAA CPC `wgrib2` Windows binaries, exports only `ens`, and commits `apps/web/static-api/` only when the published ready run changes.
+- `.github/workflows/refresh-pages-snapshot.yml` now supports a no-hosting-cost path: GitHub Actions builds the `pages_snapshot` profile on `windows-latest` using the official NOAA CPC `wgrib2` Windows binaries, exports only `ens`, commits `apps/web/static-api/` only when the published ready run changes, and deploys Pages directly from the same workflow.
 - GitHub cannot host the Python backend itself. The public Pages site can point at a single deployed backend URL through `?backend=...` or `apps/web/config.js`.
 - The deployable backend expects processed artifacts under `data/processed/`. A real public host still needs persistent storage or a startup sync strategy for those artifacts.
 - The one-command refresh workflow now discovers the newest run, updates `latest.json`, syncs the latest ready profile, and can optionally run health checks.

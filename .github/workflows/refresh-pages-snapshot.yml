@@ -7,6 +7,8 @@ on:
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
 
 concurrency:
   group: refresh-pages-snapshot
@@ -87,3 +89,17 @@ jobs:
             git commit -m "Refresh static Pages snapshot for ${{ steps.latest.outputs.run_id }}"
             git push origin HEAD:main
           }
+
+      - name: Configure Pages
+        if: ${{ steps.latest.outputs.run_id != steps.current.outputs.run_id }}
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        if: ${{ steps.latest.outputs.run_id != steps.current.outputs.run_id }}
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: apps/web
+
+      - name: Deploy Pages
+        if: ${{ steps.latest.outputs.run_id != steps.current.outputs.run_id }}
+        uses: actions/deploy-pages@v4
