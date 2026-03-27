@@ -427,10 +427,12 @@ function bindResponsiveUi() {
 
 function updatePanelUi() {
   const mobile = isMobileViewport();
-  els.controlPanel.classList.toggle("collapsed", mobile && appState.panelCollapsed);
   els.mobilePanelToggle.classList.toggle("hidden", !mobile);
   els.mobilePanelToggle.textContent = mobile && appState.panelCollapsed ? "More Controls" : "Hide Advanced";
   els.mobilePanelToggle.setAttribute("aria-expanded", String(!(mobile && appState.panelCollapsed)));
+  document.querySelectorAll(".advanced-panel").forEach((panel) => {
+    panel.classList.toggle("hidden", mobile && appState.panelCollapsed);
+  });
 }
 
 function isMobileViewport() {

@@ -28,7 +28,72 @@
           </p>
         </div>
 
-        <section class="panel-group">
+        <section id="mobile-quick-panel" class="mobile-quick-panel">
+          <div class="mobile-quick-grid">
+            <label class="field compact-field">
+              <span>Run</span>
+              <select id="mobile-run-select"></select>
+            </label>
+            <label class="field compact-field">
+              <span>Domain</span>
+              <select id="mobile-domain-select"></select>
+            </label>
+            <label class="field compact-field">
+              <span>View</span>
+              <select id="mobile-view-mode-select">
+                <option value="member">Member</option>
+                <option value="ensemble">Ensemble</option>
+                <option value="compare">Compare</option>
+              </select>
+            </label>
+            <label class="field compact-field">
+              <span>Member</span>
+              <select id="mobile-member-select"></select>
+            </label>
+            <div id="mobile-compare-controls" class="hidden">
+              <label class="field compact-field">
+                <span>Compare</span>
+                <select id="mobile-compare-member-select"></select>
+              </label>
+            </div>
+            <label class="field compact-field">
+              <span>Hour</span>
+              <select id="mobile-fhr-select"></select>
+            </label>
+            <label class="field compact-field">
+              <span>Overlay Group</span>
+              <select id="mobile-overlay-group-select">
+                <option value="featured">Featured</option>
+                <option value="all">All</option>
+                <option value="curated">Curated</option>
+                <option value="severe">Severe</option>
+                <option value="surface">Surface</option>
+                <option value="upper_air">Upper Air</option>
+                <option value="clouds">Clouds</option>
+                <option value="wind">Wind</option>
+                <option value="precipitation">Precipitation</option>
+                <option value="radar">Radar</option>
+                <option value="moisture">Moisture</option>
+                <option value="synoptic">Synoptic</option>
+                <option value="winter">Winter</option>
+                <option value="ensemble">Ensemble</option>
+                <option value="native">Native</option>
+              </select>
+            </label>
+            <label class="field compact-field mobile-quick-overlay">
+              <span>Overlay</span>
+              <select id="mobile-overlay-select"></select>
+            </label>
+          </div>
+        </section>
+
+        <div class="mobile-advanced-toggle-row">
+          <button id="mobile-panel-toggle" class="secondary-button mobile-panel-toggle" type="button">
+            More Controls
+          </button>
+        </div>
+
+        <section class="panel-group advanced-panel">
           <div class="panel-head">
             <h2>Run</h2>
             <span id="run-status-pill" class="status-pill">Loading</span>
@@ -80,7 +145,7 @@
           <p id="run-status-text" class="muted-note"></p>
         </section>
 
-        <section class="panel-group">
+        <section class="panel-group advanced-panel">
           <div class="panel-head">
             <h2>Domain</h2>
             <span id="domain-label" class="mini-meta"></span>
@@ -88,7 +153,7 @@
           <div id="domain-grid" class="chip-grid"></div>
         </section>
 
-        <section class="panel-group">
+        <section class="panel-group advanced-panel">
           <div class="panel-head">
             <h2>Overlay</h2>
             <span id="overlay-meta" class="mini-meta"></span>
@@ -120,7 +185,7 @@
           <div id="overlay-grid" class="chip-grid overlay-grid"></div>
         </section>
 
-        <section class="panel-group">
+        <section class="panel-group advanced-panel">
           <div class="panel-head">
             <h2>Map</h2>
             <span class="mini-meta">Background and linework</span>
@@ -165,7 +230,7 @@
           <input id="timeline-slider" type="range" min="0" max="0" step="1" value="0" />
         </section>
 
-        <section class="panel-group">
+        <section class="panel-group advanced-panel">
           <div class="panel-head">
             <h2>Legend</h2>
             <span id="legend-units" class="mini-meta"></span>
@@ -173,7 +238,7 @@
           <div id="legend-panel" class="legend-panel"></div>
         </section>
 
-        <section class="panel-group info-strip">
+        <section class="panel-group info-strip advanced-panel">
           <div>
             <p class="info-label">Built product</p>
             <p id="asset-path" class="info-value">Waiting for selection</p>
@@ -193,9 +258,6 @@
         <div class="map-overlay">
           <div class="map-top-stack">
             <div class="map-topbar">
-              <button id="mobile-panel-toggle" class="secondary-button mobile-panel-toggle" type="button">
-                Show Controls
-              </button>
               <div class="summary-strip">
                 <span id="summary-run" class="summary-pill">Run</span>
                 <span id="summary-member" class="summary-pill">Member</span>
@@ -203,64 +265,6 @@
                 <span id="summary-overlay" class="summary-pill summary-pill-wide">Overlay</span>
               </div>
             </div>
-            <section id="mobile-quick-panel" class="mobile-quick-panel">
-              <div class="mobile-quick-grid">
-                <label class="field compact-field">
-                  <span>Run</span>
-                  <select id="mobile-run-select"></select>
-                </label>
-                <label class="field compact-field">
-                  <span>Domain</span>
-                  <select id="mobile-domain-select"></select>
-                </label>
-                <label class="field compact-field">
-                  <span>View</span>
-                  <select id="mobile-view-mode-select">
-                    <option value="member">Member</option>
-                    <option value="ensemble">Ensemble</option>
-                    <option value="compare">Compare</option>
-                  </select>
-                </label>
-                <label class="field compact-field">
-                  <span>Member</span>
-                  <select id="mobile-member-select"></select>
-                </label>
-                <div id="mobile-compare-controls" class="hidden">
-                  <label class="field compact-field">
-                    <span>Compare</span>
-                    <select id="mobile-compare-member-select"></select>
-                  </label>
-                </div>
-                <label class="field compact-field">
-                  <span>Hour</span>
-                  <select id="mobile-fhr-select"></select>
-                </label>
-                <label class="field compact-field">
-                  <span>Overlay Group</span>
-                  <select id="mobile-overlay-group-select">
-                    <option value="featured">Featured</option>
-                    <option value="all">All</option>
-                    <option value="curated">Curated</option>
-                    <option value="severe">Severe</option>
-                    <option value="surface">Surface</option>
-                    <option value="upper_air">Upper Air</option>
-                    <option value="clouds">Clouds</option>
-                    <option value="wind">Wind</option>
-                    <option value="precipitation">Precipitation</option>
-                    <option value="radar">Radar</option>
-                    <option value="moisture">Moisture</option>
-                    <option value="synoptic">Synoptic</option>
-                    <option value="winter">Winter</option>
-                    <option value="ensemble">Ensemble</option>
-                    <option value="native">Native</option>
-                  </select>
-                </label>
-                <label class="field compact-field mobile-quick-overlay">
-                  <span>Overlay</span>
-                  <select id="mobile-overlay-select"></select>
-                </label>
-              </div>
-            </section>
             <div class="map-title-block">
               <p class="eyebrow">Viewer State</p>
               <h2 id="map-title">Loading</h2>
