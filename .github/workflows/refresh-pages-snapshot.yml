@@ -61,7 +61,7 @@ jobs:
 
       - name: Build latest-ready CONUS ensemble snapshot inputs
         run: |
-          python scripts/refresh_latest_ready_workflow.py --profile core_conus_fast --skip-health-check --recent-runs-to-scan 8
+          python scripts/refresh_latest_ready_workflow.py --profile pages_snapshot --skip-health-check --recent-runs-to-scan 8
 
       - name: Capture newly discovered latest-ready run
         id: latest

@@ -54,6 +54,23 @@
       "hourMode": "all_available"
     },
     {
+      "id": "pages_snapshot",
+      "label": "Pages Snapshot",
+      "description": "Minimal CONUS-only member inputs required to derive the public ensemble snapshot on GitHub Pages.",
+      "overlayIds": [
+        "composite_reflectivity",
+        "temperature_2m",
+        "qpf",
+        "cape",
+        "wind_10m"
+      ],
+      "includeEnsembleDerived": true,
+      "domains": [
+        "conus"
+      ],
+      "hourMode": "all_available"
+    },
+    {
       "id": "full_native_sample",
       "label": "Full Native Sample",
       "description": "All curated and native overlays for a single sample hour across all configured domains.",
