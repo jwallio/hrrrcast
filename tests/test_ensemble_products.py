@@ -6,6 +6,7 @@ import numpy as np
 import xarray as xr
 
 from pipelines.ingest.ensemble_products import ENSEMBLE_MEMBER_ID, build_ensemble_products
+from tests.fixture_data import sample_manifest, write_manifest
 
 
 class EnsembleProductTests(unittest.TestCase):
@@ -54,6 +55,11 @@ class EnsembleProductTests(unittest.TestCase):
                 lat,
                 lon,
             )
+            manifest_root = root / "data" / "processed"
+            write_manifest(
+                manifest_root,
+                sample_manifest(run_id="2026032300", members=["m00", "m01"], forecast_hours=[0]),
+            )
 
             catalog = build_ensemble_products(
                 run_id="2026032300",
@@ -61,6 +67,7 @@ class EnsembleProductTests(unittest.TestCase):
                 overlays=["temperature_2m_mean", "temperature_2m_spread", "qpf_probability_gt_0p10"],
                 domains=["conus"],
                 members=["m00", "m01"],
+                manifest_path=manifest_root / "manifests" / "2026032300.json",
                 product_dir=root,
             )
             self.assertEqual(3, len([artifact for artifact in catalog["artifacts"] if artifact["status"] == "built"]))
