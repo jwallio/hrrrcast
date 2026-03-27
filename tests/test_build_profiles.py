@@ -25,6 +25,15 @@ class BuildProfileTests(unittest.TestCase):
         self.assertEqual([0], plan["forecast_hours"])
         self.assertGreaterEqual(len(plan["overlays"]), 230)
 
+    def test_resolve_pages_member_snapshot_profile(self) -> None:
+        manifest = sample_manifest(run_id="2026032300", forecast_hours=list(range(19)))
+        plan = resolve_build_profile(manifest, "m00", "pages_member_snapshot", "config/build-profiles.json")
+        self.assertEqual(19, len(plan["forecast_hours"]))
+        self.assertEqual(58, len(plan["overlays"]))
+        self.assertEqual([], plan["ensemble_overlays"])
+        self.assertFalse(plan["build_ensemble_derived"])
+        self.assertEqual(["conus"], plan["domains"])
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -54,9 +54,52 @@ Curated member overlays:
 - `wind_10m`
 - `visibility`
 - `cloud_cover_total`
+- `cloud_cover_low`
+- `cloud_cover_mid`
+- `cloud_cover_high`
 - `ceiling`
+- `specific_humidity_2m`
+- `temperature_potential_2m`
+- `cin_surface`
+- `surface_pressure`
+- `pressure_surface`
+- `gust_surface`
+- `u_wind_10m`
+- `v_wind_10m`
+- `u_wind_80m`
+- `v_wind_80m`
+- `wind_speed_80m`
+- `land_mask`
+- `height_0c_isotherm`
+- `rh_0c_isotherm`
+- `wind_0c_isotherm`
+- `u_wind_0c_isotherm`
+- `v_wind_0c_isotherm`
 - `height_500mb`
+- `height_700mb`
+- `height_850mb`
 - `temperature_850mb`
+- `temperature_700mb`
+- `temperature_925mb`
+- `specific_humidity_700mb`
+- `specific_humidity_850mb`
+- `u_wind_500mb`
+- `v_wind_500mb`
+- `wind_500mb`
+- `wind_700mb`
+- `wind_850mb`
+- `vertical_velocity_500mb`
+- `vertical_velocity_700mb`
+- `helicity_0_1km`
+- `helicity_0_3km`
+- `storm_motion_u`
+- `storm_motion_v`
+- `shear_u_0_1km`
+- `shear_v_0_1km`
+- `shear_u_0_6km`
+- `shear_v_0_6km`
+- `relative_vorticity_0_1km`
+- `relative_vorticity_0_2km`
 
 Ensemble overlays:
 
@@ -149,6 +192,7 @@ Build a named profile:
 ```powershell
 python scripts/build_run_profile.py --run-id latest-ready --profile core_operational
 python scripts/build_run_profile.py --run-id latest-ready --profile pages_snapshot
+python scripts/build_run_profile.py --run-id latest-ready --member m00 --profile pages_member_snapshot
 python scripts/build_run_profile.py --run-id latest-ready --member m00 --profile full_native_sample
 ```
 
@@ -186,7 +230,8 @@ Refresh the no-cost GitHub Pages snapshot end to end:
 
 ```powershell
 python scripts/refresh_latest_ready_workflow.py --profile pages_snapshot --skip-health-check --recent-runs-to-scan 8
-python scripts/export_static_pages_data.py --clean --member ens
+python scripts/build_run_profile.py --run-id latest-ready --member m00 --profile pages_member_snapshot
+python scripts/export_static_pages_data.py --clean --member ens --member m00
 ```
 
 Smoke-check the local services:
@@ -240,8 +285,8 @@ https://jwallio.github.io/HRRRCast/?backend=https://your-backend-host.example.co
 - The operational sync and refresh workflows now default to the full discovered ensemble member set. Use `--member` only when you intentionally want a single-member build.
 - The web app now supports `member`, `ensemble`, and `compare` viewing modes, plus overlay-group filtering for curated, ensemble, and native layers.
 - Windows scheduler helper scripts are available under `scripts/run_refresh_latest_ready.ps1` and `scripts/register_refresh_task.ps1`.
-- GitHub Pages currently serves a static export of the latest-ready ensemble snapshot from `apps/web/static-api/`.
-- `.github/workflows/refresh-pages-snapshot.yml` now supports a no-hosting-cost path: GitHub Actions builds the `pages_snapshot` profile on `windows-latest` using the official NOAA CPC `wgrib2` Windows binaries, exports only `ens`, commits `apps/web/static-api/` only when the published ready run changes, and deploys Pages directly from the same workflow.
+- GitHub Pages currently serves a static export of the latest-ready snapshot from `apps/web/static-api/`, including `ens` plus curated CONUS member overlays for `m00`.
+- `.github/workflows/refresh-pages-snapshot.yml` now supports a no-hosting-cost path: GitHub Actions builds the `pages_snapshot` ensemble inputs plus the `pages_member_snapshot` `m00` overlays on `windows-latest` using the official NOAA CPC `wgrib2` Windows binaries, exports `ens` and `m00`, commits `apps/web/static-api/` only when the published ready run changes, and deploys Pages directly from the same workflow.
 - GitHub cannot host the Python backend itself. The public Pages site can point at a single deployed backend URL through `?backend=...` or `apps/web/config.js`.
 - The deployable backend expects processed artifacts under `data/processed/`. A real public host still needs persistent storage or a startup sync strategy for those artifacts.
 - The one-command refresh workflow now discovers the newest run, updates `latest.json`, syncs the latest ready profile, and can optionally run health checks.
