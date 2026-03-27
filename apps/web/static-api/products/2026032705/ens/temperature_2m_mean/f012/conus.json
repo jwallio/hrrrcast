@@ -1,0 +1,43 @@
+{
+  "bbox": [
+    -127.0,
+    23.0,
+    -66.0,
+    50.0
+  ],
+  "display_path": "2026032705/ens/temperature_2m_mean/f012/conus",
+  "domain_id": "conus",
+  "ensemble_mode": "mean",
+  "forecast_hour": 12,
+  "long_name": "Ensemble mean of 2 m temperature from all processed members.",
+  "member": "ens",
+  "netcdf_path": "data\\processed\\products\\2026032705\\ens\\temperature_2m_mean\\f012\\conus.nc",
+  "notes": "Ensemble mean of 2 m temperature from all processed members.",
+  "overlay_id": "temperature_2m_mean",
+  "preview_url": "./products/2026032705/ens/temperature_2m_mean/f012/conus.preview.png",
+  "run_id": "2026032705",
+  "shape": [
+    1059,
+    1799
+  ],
+  "source_members": [
+    "m00",
+    "m01",
+    "m02",
+    "m03",
+    "m04",
+    "m05",
+    "m06",
+    "m07",
+    "m08"
+  ],
+  "source_overlay_id": "temperature_2m",
+  "static_export": true,
+  "stats": {
+    "max": 307.9066467285156,
+    "min": 247.67556762695312
+  },
+  "status": "built",
+  "units": "K",
+  "variable_name": "TEMPERATURE_2M_MEAN"
+}
