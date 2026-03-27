@@ -52,17 +52,26 @@ const OVERLAY_ALIASES = {
 const els = {
   controlPanel: document.querySelector(".control-panel"),
   runSelect: document.getElementById("run-select"),
+  mobileRunSelect: document.getElementById("mobile-run-select"),
   viewModeSelect: document.getElementById("view-mode-select"),
+  mobileViewModeSelect: document.getElementById("mobile-view-mode-select"),
   memberSelect: document.getElementById("member-select"),
+  mobileMemberSelect: document.getElementById("mobile-member-select"),
   compareControls: document.getElementById("compare-controls"),
+  mobileCompareControls: document.getElementById("mobile-compare-controls"),
   compareMemberSelect: document.getElementById("compare-member-select"),
+  mobileCompareMemberSelect: document.getElementById("mobile-compare-member-select"),
   compareOpacityRow: document.getElementById("compare-opacity-row"),
   compareOpacitySlider: document.getElementById("compare-opacity-slider"),
   compareOpacityReadout: document.getElementById("compare-opacity-readout"),
   fhrSelect: document.getElementById("fhr-select"),
+  mobileFhrSelect: document.getElementById("mobile-fhr-select"),
   domainGrid: document.getElementById("domain-grid"),
+  mobileDomainSelect: document.getElementById("mobile-domain-select"),
   overlayGrid: document.getElementById("overlay-grid"),
   overlayGroupSelect: document.getElementById("overlay-group-select"),
+  mobileOverlayGroupSelect: document.getElementById("mobile-overlay-group-select"),
+  mobileOverlaySelect: document.getElementById("mobile-overlay-select"),
   backgroundGrid: document.getElementById("background-grid"),
   stateStyleSelect: document.getElementById("state-style-select"),
   countryStyleSelect: document.getElementById("country-style-select"),
@@ -179,7 +188,9 @@ async function init() {
   updateSummaryStrip();
   els.overlayFilterInput.value = appState.overlayFilter;
   els.overlayGroupSelect.value = appState.overlayGroup;
+  els.mobileOverlayGroupSelect.value = appState.overlayGroup;
   els.viewModeSelect.value = appState.viewMode;
+  els.mobileViewModeSelect.value = appState.viewMode;
   els.compareOpacitySlider.value = String(Math.round(appState.compareOpacity * 100));
   els.compareOpacityReadout.textContent = `${Math.round(appState.compareOpacity * 100)}%`;
   await syncSelectionState({ preserveUrl: false });
@@ -277,7 +288,15 @@ function bindControls() {
     appState.run = event.target.value;
     await syncSelectionState();
   });
+  els.mobileRunSelect.addEventListener("change", async (event) => {
+    appState.run = event.target.value;
+    await syncSelectionState();
+  });
   els.viewModeSelect.addEventListener("change", async (event) => {
+    appState.viewMode = event.target.value;
+    await syncSelectionState();
+  });
+  els.mobileViewModeSelect.addEventListener("change", async (event) => {
     appState.viewMode = event.target.value;
     await syncSelectionState();
   });
@@ -285,7 +304,16 @@ function bindControls() {
     appState.member = event.target.value;
     await syncSelectionState();
   });
+  els.mobileMemberSelect.addEventListener("change", async (event) => {
+    appState.member = event.target.value;
+    await syncSelectionState();
+  });
   els.compareMemberSelect.addEventListener("change", async (event) => {
+    appState.compareMember = event.target.value;
+    await refreshOverlay();
+    updateUrl();
+  });
+  els.mobileCompareMemberSelect.addEventListener("change", async (event) => {
     appState.compareMember = event.target.value;
     await refreshOverlay();
     updateUrl();
@@ -297,6 +325,10 @@ function bindControls() {
     updateUrl();
   });
   els.fhrSelect.addEventListener("change", async (event) => {
+    appState.fhr = normalizeFhrToken(event.target.value);
+    await syncSelectionState();
+  });
+  els.mobileFhrSelect.addEventListener("change", async (event) => {
     appState.fhr = normalizeFhrToken(event.target.value);
     await syncSelectionState();
   });
@@ -324,6 +356,24 @@ function bindControls() {
   els.overlayGroupSelect.addEventListener("change", () => {
     appState.overlayGroup = els.overlayGroupSelect.value;
     populateOverlayButtons(currentBuiltOverlayMap());
+    updateUrl();
+  });
+  els.mobileOverlayGroupSelect.addEventListener("change", () => {
+    appState.overlayGroup = els.mobileOverlayGroupSelect.value;
+    populateOverlayButtons(currentBuiltOverlayMap());
+    updateUrl();
+  });
+  els.mobileOverlaySelect.addEventListener("change", async (event) => {
+    appState.overlay = event.target.value;
+    populateOverlayButtons(currentBuiltOverlayMap());
+    await refreshOverlay();
+    updateUrl();
+  });
+  els.mobileDomainSelect.addEventListener("change", async (event) => {
+    appState.proj = event.target.value;
+    moveToDomain();
+    populateDomainButtons();
+    await refreshOverlay();
     updateUrl();
   });
   els.latestReadyButton.addEventListener("click", async () => {
@@ -379,7 +429,7 @@ function updatePanelUi() {
   const mobile = isMobileViewport();
   els.controlPanel.classList.toggle("collapsed", mobile && appState.panelCollapsed);
   els.mobilePanelToggle.classList.toggle("hidden", !mobile);
-  els.mobilePanelToggle.textContent = mobile && appState.panelCollapsed ? "Show Controls" : "Hide Controls";
+  els.mobilePanelToggle.textContent = mobile && appState.panelCollapsed ? "More Controls" : "Hide Advanced";
   els.mobilePanelToggle.setAttribute("aria-expanded", String(!(mobile && appState.panelCollapsed)));
 }
 
@@ -417,13 +467,16 @@ function selectDefaultRun() {
 
 function populateRunSelect() {
   const fragment = document.createDocumentFragment();
+  const mobileFragment = document.createDocumentFragment();
   for (const run of getVisibleRuns()) {
     const option = document.createElement("option");
     option.value = run.run_id;
     option.textContent = `${run.run_id} | ${run.status}`;
     fragment.appendChild(option);
+    mobileFragment.appendChild(option.cloneNode(true));
   }
   els.runSelect.replaceChildren(fragment);
+  els.mobileRunSelect.replaceChildren(mobileFragment);
   els.archiveToggle.checked = appState.archive;
   els.latestReadyButton.disabled = !appState.latestReadyRun;
 }
@@ -457,6 +510,12 @@ function populateDomainButtons() {
     );
   }
   els.domainGrid.replaceChildren(fragment);
+  populateSelect(
+    els.mobileDomainSelect,
+    appState.domainsConfig.domains.map((domain) => domain.id),
+    appState.proj,
+    (value) => getDomain(value)?.label || value
+  );
 }
 
 async function syncSelectionState({ preserveUrl = true } = {}) {
@@ -468,6 +527,7 @@ async function syncSelectionState({ preserveUrl = true } = {}) {
   appState.overlay = canonicalOverlayId(appState.overlay);
   appState.run = runRecord.run_id;
   els.runSelect.value = appState.run;
+  els.mobileRunSelect.value = appState.run;
   setRunStatus(runRecord);
 
   const builtMemberIndex = appState.productIndex[appState.run]?.members || {};
@@ -496,16 +556,21 @@ async function syncSelectionState({ preserveUrl = true } = {}) {
   if (appState.viewMode === "ensemble") {
     appState.member = "ens";
     populateSelect(els.memberSelect, ["ens"], "ens", () => "Ensemble");
+    populateSelect(els.mobileMemberSelect, ["ens"], "ens", () => "Ensemble");
     els.memberSelect.disabled = true;
+    els.mobileMemberSelect.disabled = true;
   } else {
     if (!effectiveMemberOptions.includes(appState.member)) {
       appState.member = effectiveMemberOptions[0] || runRecord.members?.[0] || "m00";
     }
     populateSelect(els.memberSelect, effectiveMemberOptions, appState.member);
+    populateSelect(els.mobileMemberSelect, effectiveMemberOptions, appState.member);
     els.memberSelect.disabled = false;
+    els.mobileMemberSelect.disabled = false;
   }
   syncCompareControls(effectiveMemberOptions);
   els.viewModeSelect.value = appState.viewMode;
+  els.mobileViewModeSelect.value = appState.viewMode;
 
   const activeMemberKey = currentPrimaryMember();
   const fhIndex = builtMemberIndex[activeMemberKey]?.forecast_hours || {};
@@ -522,6 +587,7 @@ async function syncSelectionState({ preserveUrl = true } = {}) {
     appState.fhr = effectiveFhrs[0];
   }
   populateSelect(els.fhrSelect, effectiveFhrs, appState.fhr, (value) => value.toUpperCase());
+  populateSelect(els.mobileFhrSelect, effectiveFhrs, appState.fhr, (value) => value.toUpperCase());
   els.timelineSlider.min = "0";
   els.timelineSlider.max = String(Math.max(0, effectiveFhrs.length - 1));
   els.timelineSlider.value = String(Math.max(0, effectiveFhrs.indexOf(appState.fhr)));
@@ -548,6 +614,7 @@ async function syncSelectionState({ preserveUrl = true } = {}) {
 function syncCompareControls(memberOptions) {
   const isCompareMode = appState.viewMode === "compare";
   els.compareControls.classList.toggle("hidden", !isCompareMode);
+  els.mobileCompareControls.classList.toggle("hidden", !isCompareMode);
   els.compareOpacityRow.classList.toggle("hidden", !isCompareMode);
   if (!isCompareMode) {
     return;
@@ -557,6 +624,7 @@ function syncCompareControls(memberOptions) {
     appState.compareMember = compareOptions[0] || appState.member;
   }
   populateSelect(els.compareMemberSelect, compareOptions, appState.compareMember);
+  populateSelect(els.mobileCompareMemberSelect, compareOptions, appState.compareMember);
   els.compareOpacitySlider.value = String(Math.round(appState.compareOpacity * 100));
   els.compareOpacityReadout.textContent = `${Math.round(appState.compareOpacity * 100)}%`;
 }
@@ -571,6 +639,11 @@ function populateOverlayButtons(builtOverlayMap) {
   const fragment = document.createDocumentFragment();
   const filteredConfigured = configured.filter((overlay) => matchesOverlayFilter(overlay, appState.overlayFilter));
   const visibleConfigured = sortVisibleOverlays(filteredConfigured.length > 0 ? filteredConfigured : configured, builtOverlays);
+  const visibleOverlayIds = visibleConfigured.map((overlay) => overlay.id);
+  if (!visibleOverlayIds.includes(appState.overlay)) {
+    const firstVisibleBuilt = visibleConfigured.find((overlay) => builtOverlays.includes(overlay.id));
+    appState.overlay = firstVisibleBuilt?.id || visibleConfigured[0]?.id || appState.overlay;
+  }
   for (const overlay of visibleConfigured) {
     const isBuilt = builtOverlays.includes(overlay.id);
     fragment.appendChild(
@@ -592,6 +665,24 @@ function populateOverlayButtons(builtOverlayMap) {
     );
   }
   els.overlayGrid.replaceChildren(fragment);
+  populateSelect(
+    els.mobileOverlaySelect,
+    visibleConfigured.map((overlay) => overlay.id),
+    appState.overlay,
+    (value) => {
+      const overlay = visibleConfigured.find((item) => item.id === value);
+      if (!overlay) {
+        return value;
+      }
+      const builtNote = builtOverlays.includes(value) ? "" : " | unavailable";
+      return `${overlay.label}${builtNote}`;
+    }
+  );
+  Array.from(els.mobileOverlaySelect.options).forEach((option) => {
+    option.disabled = !builtOverlays.includes(option.value);
+  });
+  els.overlayGroupSelect.value = appState.overlayGroup;
+  els.mobileOverlayGroupSelect.value = appState.overlayGroup;
   const domainCount = builtOverlayMap[appState.overlay]?.length || 0;
   const visibleNativeCount = visibleConfigured.filter((overlay) => overlay.native).length;
   const visibleEnsembleCount = visibleConfigured.filter((overlay) => overlay.group === "ensemble").length;
