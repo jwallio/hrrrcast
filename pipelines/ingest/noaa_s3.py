@@ -92,6 +92,15 @@ class NOAAHrrrCastClient:
             raise RuntimeError(f"No cycles found under HRRRCast/{latest_date}/")
         return f"{latest_date}{cycles[-1]}"
 
+    def recent_run_ids(self, limit: int = 8) -> list[str]:
+        run_ids: list[str] = []
+        for date in sorted(self.list_dates(), reverse=True):
+            for cycle in sorted(self.list_cycles(date), reverse=True):
+                run_ids.append(f"{date}{cycle}")
+                if len(run_ids) >= limit:
+                    return run_ids
+        return run_ids
+
     def _build_url(self, query: dict[str, str]) -> str:
         return f"{self.bucket_url}/?{urllib.parse.urlencode(query)}"
 

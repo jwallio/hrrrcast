@@ -34,6 +34,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--manifest-dir", default=DEFAULT_MANIFEST_DIR)
     parser.add_argument("--required-members", type=int, default=6)
     parser.add_argument("--required-min-fhr", type=int, default=18)
+    parser.add_argument("--recent-runs-to-scan", type=int, default=8)
     parser.add_argument("--keep-ready-runs", type=int, default=2)
     parser.add_argument("--keep-partial-runs", type=int, default=1)
     parser.add_argument("--warm-cache", action="store_true")
@@ -52,24 +53,43 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
 
     client = NOAAHrrrCastClient()
-    latest_run_id = client.latest_run_id()
+    candidate_run_ids = client.recent_run_ids(limit=args.recent_runs_to_scan)
+    if not candidate_run_ids:
+        raise RuntimeError("No recent HRRRCast runs were discovered in NOAA S3.")
+    latest_run_id = candidate_run_ids[0]
     thresholds = ManifestThresholds(
         required_member_count=args.required_members,
         required_min_forecast_hour=args.required_min_fhr,
     )
-    manifest = build_run_manifest(
-        run_id=latest_run_id,
-        client=client,
-        cache_dir=args.cache_dir,
-        thresholds=thresholds,
-    )
-    manifest_path = write_manifest(Path(args.manifest_dir) / f"{latest_run_id}.json", manifest)
-    latest_alias_path = write_latest_manifest_alias(manifest, args.manifest_dir)
+    manifests: list[dict[str, object]] = []
+    ready_manifest: dict[str, object] | None = None
+    latest_alias_path = None
+    latest_manifest_path = None
+    for index, run_id in enumerate(candidate_run_ids):
+        manifest = build_run_manifest(
+            run_id=run_id,
+            client=client,
+            cache_dir=args.cache_dir,
+            thresholds=thresholds,
+        )
+        manifest_path = write_manifest(Path(args.manifest_dir) / f"{run_id}.json", manifest)
+        manifests.append(manifest)
+        if index == 0:
+            latest_manifest_path = manifest_path
+            latest_alias_path = write_latest_manifest_alias(manifest, args.manifest_dir)
+        if ready_manifest is None and manifest["run"]["status"] == "ready":
+            ready_manifest = manifest
+            break
 
     print(f"latest_run_id: {latest_run_id}")
-    print(f"latest_status: {manifest['run']['status']}")
-    print(f"manifest_path: {manifest_path}")
+    print(f"latest_status: {manifests[0]['run']['status']}")
+    print(f"manifest_path: {latest_manifest_path}")
     print(f"latest_alias: {latest_alias_path}")
+    if ready_manifest is None:
+        raise RuntimeError(
+            f"No ready HRRRCast run was found in the {len(candidate_run_ids)} most recent cycles."
+        )
+    print(f"latest_ready_run_id: {ready_manifest['run']['run_id']}")
 
     sync_summary = sync_latest_ready_profile(
         profile=args.profile,

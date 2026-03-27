@@ -5,8 +5,10 @@ from __future__ import annotations
 from dataclasses import dataclass
 from datetime import UTC, datetime
 import json
+import os
 from pathlib import Path
 import re
+import shutil
 import subprocess
 import urllib.parse
 import urllib.request
@@ -655,7 +657,7 @@ def _load_or_build_manifest(run_id: str, manifest_path: str | Path | None) -> di
 
 
 def _run_wgrib2(arguments: list[str]) -> None:
-    command = [WGRIB2_EXE, *arguments]
+    command = [resolve_wgrib2_executable(), *arguments]
     result = subprocess.run(command, check=False, capture_output=True, text=True)
     if result.returncode != 0:
         raise RuntimeError(
@@ -664,3 +666,18 @@ def _run_wgrib2(arguments: list[str]) -> None:
             f"stdout={result.stdout}\n"
             f"stderr={result.stderr}"
         )
+
+
+def resolve_wgrib2_executable() -> str:
+    candidates = [
+        os.environ.get("WGRIB2_EXE"),
+        WGRIB2_EXE,
+        shutil.which("wgrib2"),
+        shutil.which("wgrib2.exe"),
+    ]
+    for candidate in candidates:
+        if candidate and Path(candidate).exists():
+            return str(candidate)
+    raise FileNotFoundError(
+        "wgrib2 executable not found. Set WGRIB2_EXE or install wgrib2 on PATH."
+    )
