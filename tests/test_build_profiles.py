@@ -14,7 +14,7 @@ class BuildProfileTests(unittest.TestCase):
         manifest = sample_manifest(run_id="2026032300", forecast_hours=list(range(49)))
         plan = resolve_build_profile(manifest, "m00", "core_operational", "config/build-profiles.json")
         self.assertEqual(49, len(plan["forecast_hours"]))
-        self.assertEqual(15, len(plan["overlays"]))
+        self.assertEqual(58, len(plan["overlays"]))
         self.assertEqual(6, len(plan["ensemble_overlays"]))
         self.assertTrue(plan["build_ensemble_derived"])
         self.assertEqual(7, len(plan["domains"]))
@@ -23,7 +23,7 @@ class BuildProfileTests(unittest.TestCase):
         manifest = sample_manifest(run_id="2026032300", forecast_hours=list(range(49)))
         plan = resolve_build_profile(manifest, "m00", "full_native_sample", "config/build-profiles.json")
         self.assertEqual([0], plan["forecast_hours"])
-        self.assertGreaterEqual(len(plan["overlays"]), 179)
+        self.assertGreaterEqual(len(plan["overlays"]), 230)
 
 
 if __name__ == "__main__":

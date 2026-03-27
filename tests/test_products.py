@@ -23,6 +23,10 @@ class ProductHelpersTests(unittest.TestCase):
         self.assertEqual("single_field", PRODUCT_SPECS["mslp"].mode)
         self.assertEqual("derived_ptype", PRODUCT_SPECS["ptype"].mode)
         self.assertEqual("derived_wind_speed", PRODUCT_SPECS["wind_10m"].mode)
+        self.assertEqual(
+            ("UGRD:80 m above ground", "VGRD:80 m above ground"),
+            PRODUCT_SPECS["wind_speed_80m"].component_field_keys,
+        )
         self.assertEqual("deferred", PRODUCT_SPECS["snowfall"].mode)
 
     def test_merge_artifacts_replaces_matching_overlay_domain(self) -> None:

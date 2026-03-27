@@ -78,6 +78,20 @@
       "priority": "next"
     },
     {
+      "id": "specific_humidity_2m",
+      "label": "2 m Specific Humidity",
+      "family": "surface",
+      "renderMode": "raster",
+      "priority": "next"
+    },
+    {
+      "id": "temperature_potential_2m",
+      "label": "2 m Potential Temperature",
+      "family": "surface",
+      "renderMode": "raster",
+      "priority": "next"
+    },
+    {
       "id": "ptype",
       "label": "Precip Type",
       "family": "winter",
@@ -90,6 +104,20 @@
       "family": "synoptic",
       "renderMode": "raster",
       "priority": "mvp"
+    },
+    {
+      "id": "surface_pressure",
+      "label": "Surface Pressure",
+      "family": "surface",
+      "renderMode": "raster",
+      "priority": "next"
+    },
+    {
+      "id": "pressure_surface",
+      "label": "Pressure at Surface",
+      "family": "surface",
+      "renderMode": "raster",
+      "priority": "next"
     },
     {
       "id": "qpf",
@@ -120,8 +148,57 @@
       "priority": "next"
     },
     {
+      "id": "cin_surface",
+      "label": "Surface CIN",
+      "family": "severe",
+      "renderMode": "raster",
+      "priority": "next"
+    },
+    {
       "id": "wind_10m",
       "label": "10 m Wind Speed",
+      "family": "surface",
+      "renderMode": "raster",
+      "priority": "next"
+    },
+    {
+      "id": "u_wind_10m",
+      "label": "10 m U Wind",
+      "family": "wind",
+      "renderMode": "raster",
+      "priority": "next"
+    },
+    {
+      "id": "v_wind_10m",
+      "label": "10 m V Wind",
+      "family": "wind",
+      "renderMode": "raster",
+      "priority": "next"
+    },
+    {
+      "id": "u_wind_80m",
+      "label": "80 m U Wind",
+      "family": "wind",
+      "renderMode": "raster",
+      "priority": "next"
+    },
+    {
+      "id": "v_wind_80m",
+      "label": "80 m V Wind",
+      "family": "wind",
+      "renderMode": "raster",
+      "priority": "next"
+    },
+    {
+      "id": "wind_speed_80m",
+      "label": "80 m Wind Speed",
+      "family": "wind",
+      "renderMode": "raster",
+      "priority": "next"
+    },
+    {
+      "id": "gust_surface",
+      "label": "Surface Wind Gust",
       "family": "surface",
       "renderMode": "raster",
       "priority": "next"
@@ -141,9 +218,72 @@
       "priority": "next"
     },
     {
+      "id": "cloud_cover_low",
+      "label": "Low Cloud Cover",
+      "family": "clouds",
+      "renderMode": "raster",
+      "priority": "next"
+    },
+    {
+      "id": "cloud_cover_mid",
+      "label": "Mid Cloud Cover",
+      "family": "clouds",
+      "renderMode": "raster",
+      "priority": "next"
+    },
+    {
+      "id": "cloud_cover_high",
+      "label": "High Cloud Cover",
+      "family": "clouds",
+      "renderMode": "raster",
+      "priority": "next"
+    },
+    {
       "id": "ceiling",
       "label": "Cloud Ceiling Height",
       "family": "clouds",
+      "renderMode": "raster",
+      "priority": "next"
+    },
+    {
+      "id": "land_mask",
+      "label": "Land Mask",
+      "family": "surface",
+      "renderMode": "raster",
+      "priority": "next"
+    },
+    {
+      "id": "height_0c_isotherm",
+      "label": "0 C Isotherm Height",
+      "family": "upper_air",
+      "renderMode": "raster",
+      "priority": "next"
+    },
+    {
+      "id": "rh_0c_isotherm",
+      "label": "0 C Isotherm Relative Humidity",
+      "family": "upper_air",
+      "renderMode": "raster",
+      "priority": "next"
+    },
+    {
+      "id": "wind_0c_isotherm",
+      "label": "0 C Isotherm Wind Speed",
+      "family": "upper_air",
+      "renderMode": "raster",
+      "priority": "next"
+    },
+    {
+      "id": "u_wind_0c_isotherm",
+      "label": "0 C Isotherm U Wind",
+      "family": "upper_air",
+      "renderMode": "raster",
+      "priority": "next"
+    },
+    {
+      "id": "v_wind_0c_isotherm",
+      "label": "0 C Isotherm V Wind",
+      "family": "upper_air",
       "renderMode": "raster",
       "priority": "next"
     },
@@ -155,9 +295,170 @@
       "priority": "next"
     },
     {
+      "id": "height_700mb",
+      "label": "700 mb Height",
+      "family": "upper_air",
+      "renderMode": "raster",
+      "priority": "next"
+    },
+    {
+      "id": "height_850mb",
+      "label": "850 mb Height",
+      "family": "upper_air",
+      "renderMode": "raster",
+      "priority": "next"
+    },
+    {
       "id": "temperature_850mb",
       "label": "850 mb Temperature",
       "family": "upper_air",
+      "renderMode": "raster",
+      "priority": "next"
+    },
+    {
+      "id": "temperature_700mb",
+      "label": "700 mb Temperature",
+      "family": "upper_air",
+      "renderMode": "raster",
+      "priority": "next"
+    },
+    {
+      "id": "temperature_925mb",
+      "label": "925 mb Temperature",
+      "family": "upper_air",
+      "renderMode": "raster",
+      "priority": "next"
+    },
+    {
+      "id": "specific_humidity_700mb",
+      "label": "700 mb Specific Humidity",
+      "family": "upper_air",
+      "renderMode": "raster",
+      "priority": "next"
+    },
+    {
+      "id": "specific_humidity_850mb",
+      "label": "850 mb Specific Humidity",
+      "family": "upper_air",
+      "renderMode": "raster",
+      "priority": "next"
+    },
+    {
+      "id": "u_wind_500mb",
+      "label": "500 mb U Wind",
+      "family": "upper_air",
+      "renderMode": "raster",
+      "priority": "next"
+    },
+    {
+      "id": "v_wind_500mb",
+      "label": "500 mb V Wind",
+      "family": "upper_air",
+      "renderMode": "raster",
+      "priority": "next"
+    },
+    {
+      "id": "wind_500mb",
+      "label": "500 mb Wind Speed",
+      "family": "upper_air",
+      "renderMode": "raster",
+      "priority": "next"
+    },
+    {
+      "id": "wind_700mb",
+      "label": "700 mb Wind Speed",
+      "family": "upper_air",
+      "renderMode": "raster",
+      "priority": "next"
+    },
+    {
+      "id": "wind_850mb",
+      "label": "850 mb Wind Speed",
+      "family": "upper_air",
+      "renderMode": "raster",
+      "priority": "next"
+    },
+    {
+      "id": "vertical_velocity_500mb",
+      "label": "500 mb Vertical Velocity",
+      "family": "upper_air",
+      "renderMode": "raster",
+      "priority": "next"
+    },
+    {
+      "id": "vertical_velocity_700mb",
+      "label": "700 mb Vertical Velocity",
+      "family": "upper_air",
+      "renderMode": "raster",
+      "priority": "next"
+    },
+    {
+      "id": "helicity_0_1km",
+      "label": "0 to 1 km Helicity",
+      "family": "severe",
+      "renderMode": "raster",
+      "priority": "next"
+    },
+    {
+      "id": "helicity_0_3km",
+      "label": "0 to 3 km Helicity",
+      "family": "severe",
+      "renderMode": "raster",
+      "priority": "next"
+    },
+    {
+      "id": "storm_motion_u",
+      "label": "Storm Motion U",
+      "family": "severe",
+      "renderMode": "raster",
+      "priority": "next"
+    },
+    {
+      "id": "storm_motion_v",
+      "label": "Storm Motion V",
+      "family": "severe",
+      "renderMode": "raster",
+      "priority": "next"
+    },
+    {
+      "id": "shear_u_0_1km",
+      "label": "0 to 1 km U Shear",
+      "family": "severe",
+      "renderMode": "raster",
+      "priority": "next"
+    },
+    {
+      "id": "shear_v_0_1km",
+      "label": "0 to 1 km V Shear",
+      "family": "severe",
+      "renderMode": "raster",
+      "priority": "next"
+    },
+    {
+      "id": "shear_u_0_6km",
+      "label": "0 to 6 km U Shear",
+      "family": "severe",
+      "renderMode": "raster",
+      "priority": "next"
+    },
+    {
+      "id": "shear_v_0_6km",
+      "label": "0 to 6 km V Shear",
+      "family": "severe",
+      "renderMode": "raster",
+      "priority": "next"
+    },
+    {
+      "id": "relative_vorticity_0_1km",
+      "label": "0 to 1 km Relative Vorticity",
+      "family": "severe",
+      "renderMode": "raster",
+      "priority": "next"
+    },
+    {
+      "id": "relative_vorticity_0_2km",
+      "label": "0 to 2 km Relative Vorticity",
+      "family": "severe",
       "renderMode": "raster",
       "priority": "next"
     },

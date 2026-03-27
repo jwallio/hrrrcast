@@ -34,22 +34,64 @@ class ProductSpec:
     field_key: str | None
     mode: str
     notes: str | None = None
+    component_field_keys: tuple[str, ...] = ()
+    variable_name: str | None = None
+    long_name: str | None = None
 
 
 PRODUCT_SPECS: dict[str, ProductSpec] = {
     "temperature_2m": ProductSpec("temperature_2m", "TMP:2 m above ground", "single_field"),
     "dewpoint_2m": ProductSpec("dewpoint_2m", "DPT:2 m above ground", "single_field"),
     "rh_2m": ProductSpec("rh_2m", "RH:2 m above ground", "single_field"),
+    "specific_humidity_2m": ProductSpec("specific_humidity_2m", "SPFH:2 m above ground", "single_field"),
+    "temperature_potential_2m": ProductSpec("temperature_potential_2m", "POT:2 m above ground", "single_field"),
     "qpf": ProductSpec("qpf", "APCP:surface", "single_field"),
     "pwat": ProductSpec("pwat", "PWAT:entire atmosphere", "single_field"),
     "composite_reflectivity": ProductSpec("composite_reflectivity", "REFC:entire atmosphere", "single_field"),
     "mslp": ProductSpec("mslp", "MSLMA:mean sea level", "single_field"),
     "cape": ProductSpec("cape", "CAPE:surface", "single_field"),
+    "cin_surface": ProductSpec("cin_surface", "CIN:surface", "single_field"),
     "visibility": ProductSpec("visibility", "VIS:surface", "single_field"),
     "cloud_cover_total": ProductSpec("cloud_cover_total", "TCDC:entire atmosphere", "single_field"),
+    "cloud_cover_low": ProductSpec("cloud_cover_low", "LCDC:low cloud layer", "single_field"),
+    "cloud_cover_mid": ProductSpec("cloud_cover_mid", "MCDC:middle cloud layer", "single_field"),
+    "cloud_cover_high": ProductSpec("cloud_cover_high", "HCDC:high cloud layer", "single_field"),
     "ceiling": ProductSpec("ceiling", "HGT:cloud ceiling", "single_field"),
+    "land_mask": ProductSpec("land_mask", "LAND:surface", "single_field"),
+    "gust_surface": ProductSpec("gust_surface", "GUST:surface", "single_field"),
+    "surface_pressure": ProductSpec("surface_pressure", "PRES:surface", "single_field"),
+    "pressure_surface": ProductSpec("pressure_surface", "PRES:surface", "single_field"),
+    "height_0c_isotherm": ProductSpec("height_0c_isotherm", "HGT:0C isotherm", "single_field"),
+    "rh_0c_isotherm": ProductSpec("rh_0c_isotherm", "RH:0C isotherm", "single_field"),
+    "wind_0c_isotherm": ProductSpec("wind_0c_isotherm", "WIND:0C isotherm", "single_field"),
+    "u_wind_0c_isotherm": ProductSpec("u_wind_0c_isotherm", "UGRD:0C isotherm", "single_field"),
+    "v_wind_0c_isotherm": ProductSpec("v_wind_0c_isotherm", "VGRD:0C isotherm", "single_field"),
+    "u_wind_10m": ProductSpec("u_wind_10m", "UGRD:10 m above ground", "single_field"),
+    "v_wind_10m": ProductSpec("v_wind_10m", "VGRD:10 m above ground", "single_field"),
+    "u_wind_80m": ProductSpec("u_wind_80m", "UGRD:80 m above ground", "single_field"),
+    "v_wind_80m": ProductSpec("v_wind_80m", "VGRD:80 m above ground", "single_field"),
     "height_500mb": ProductSpec("height_500mb", "HGT:500 mb", "single_field"),
+    "height_700mb": ProductSpec("height_700mb", "HGT:700 mb", "single_field"),
+    "height_850mb": ProductSpec("height_850mb", "HGT:850 mb", "single_field"),
     "temperature_850mb": ProductSpec("temperature_850mb", "TMP:850 mb", "single_field"),
+    "temperature_700mb": ProductSpec("temperature_700mb", "TMP:700 mb", "single_field"),
+    "temperature_925mb": ProductSpec("temperature_925mb", "TMP:925 mb", "single_field"),
+    "specific_humidity_700mb": ProductSpec("specific_humidity_700mb", "SPFH:700 mb", "single_field"),
+    "specific_humidity_850mb": ProductSpec("specific_humidity_850mb", "SPFH:850 mb", "single_field"),
+    "u_wind_500mb": ProductSpec("u_wind_500mb", "UGRD:500 mb", "single_field"),
+    "v_wind_500mb": ProductSpec("v_wind_500mb", "VGRD:500 mb", "single_field"),
+    "vertical_velocity_500mb": ProductSpec("vertical_velocity_500mb", "VVEL:500 mb", "single_field"),
+    "vertical_velocity_700mb": ProductSpec("vertical_velocity_700mb", "VVEL:700 mb", "single_field"),
+    "helicity_0_1km": ProductSpec("helicity_0_1km", "HLCY:1000-0 m above ground", "single_field"),
+    "helicity_0_3km": ProductSpec("helicity_0_3km", "HLCY:3000-0 m above ground", "single_field"),
+    "storm_motion_u": ProductSpec("storm_motion_u", "USTM:0-6000 m above ground", "single_field"),
+    "storm_motion_v": ProductSpec("storm_motion_v", "VSTM:0-6000 m above ground", "single_field"),
+    "shear_u_0_1km": ProductSpec("shear_u_0_1km", "VUCSH:1000-0 m above ground", "single_field"),
+    "shear_v_0_1km": ProductSpec("shear_v_0_1km", "VVCSH:1000-0 m above ground", "single_field"),
+    "shear_u_0_6km": ProductSpec("shear_u_0_6km", "VUCSH:6000-0 m above ground", "single_field"),
+    "shear_v_0_6km": ProductSpec("shear_v_0_6km", "VVCSH:6000-0 m above ground", "single_field"),
+    "relative_vorticity_0_1km": ProductSpec("relative_vorticity_0_1km", "RELV:1000-0 m above ground", "single_field"),
+    "relative_vorticity_0_2km": ProductSpec("relative_vorticity_0_2km", "RELV:2000-0 m above ground", "single_field"),
     "ptype": ProductSpec(
         "ptype",
         None,
@@ -67,6 +109,45 @@ PRODUCT_SPECS: dict[str, ProductSpec] = {
         None,
         "derived_wind_speed",
         notes="Derived raster wind speed from 10 m UGRD/VGRD components.",
+        component_field_keys=("UGRD:10 m above ground", "VGRD:10 m above ground"),
+        variable_name="WINDSPD_10maboveground",
+        long_name="10 m wind speed",
+    ),
+    "wind_speed_80m": ProductSpec(
+        "wind_speed_80m",
+        None,
+        "derived_wind_speed",
+        notes="Derived raster wind speed from 80 m UGRD/VGRD components.",
+        component_field_keys=("UGRD:80 m above ground", "VGRD:80 m above ground"),
+        variable_name="WINDSPD_80maboveground",
+        long_name="80 m wind speed",
+    ),
+    "wind_500mb": ProductSpec(
+        "wind_500mb",
+        None,
+        "derived_wind_speed",
+        notes="Derived raster wind speed from 500 mb UGRD/VGRD components.",
+        component_field_keys=("UGRD:500 mb", "VGRD:500 mb"),
+        variable_name="WINDSPD_500mb",
+        long_name="500 mb wind speed",
+    ),
+    "wind_700mb": ProductSpec(
+        "wind_700mb",
+        None,
+        "derived_wind_speed",
+        notes="Derived raster wind speed from 700 mb UGRD/VGRD components.",
+        component_field_keys=("UGRD:700 mb", "VGRD:700 mb"),
+        variable_name="WINDSPD_700mb",
+        long_name="700 mb wind speed",
+    ),
+    "wind_850mb": ProductSpec(
+        "wind_850mb",
+        None,
+        "derived_wind_speed",
+        notes="Derived raster wind speed from 850 mb UGRD/VGRD components.",
+        component_field_keys=("UGRD:850 mb", "VGRD:850 mb"),
+        variable_name="WINDSPD_850mb",
+        long_name="850 mb wind speed",
     ),
 }
 
@@ -98,13 +179,22 @@ def build_products(
     for overlay_id in overlays:
         spec = resolve_product_spec(overlay_id, available_field_keys)
         overlay_availability = hour_detail["overlays"].get(overlay_id)
-        if overlay_availability is None and spec.field_key:
-            overlay_availability = {
-                "available": spec.field_key in available_field_keys,
-                "missing_all_of": [] if spec.field_key in available_field_keys else [spec.field_key],
-                "missing_any_of": [],
-                "notes": spec.notes,
-            }
+        if overlay_availability is None:
+            if spec.field_key:
+                overlay_availability = {
+                    "available": spec.field_key in available_field_keys,
+                    "missing_all_of": [] if spec.field_key in available_field_keys else [spec.field_key],
+                    "missing_any_of": [],
+                    "notes": spec.notes,
+                }
+            elif spec.mode == "derived_wind_speed" and spec.component_field_keys:
+                missing = [field_key for field_key in spec.component_field_keys if field_key not in available_field_keys]
+                overlay_availability = {
+                    "available": not missing,
+                    "missing_all_of": missing,
+                    "missing_any_of": [],
+                    "notes": spec.notes,
+                }
         if overlay_availability is None:
             artifacts.append(
                 {
@@ -145,6 +235,7 @@ def build_products(
                 for domain in selected_domains:
                     artifacts.append(
                         build_wind_speed_product(
+                            spec=spec,
                             run_id=run_id,
                             member=member,
                             forecast_hour=forecast_hour,
@@ -438,6 +529,7 @@ def build_ptype_product(
 
 
 def build_wind_speed_product(
+    spec: ProductSpec,
     run_id: str,
     member: str,
     forecast_hour: int,
@@ -448,12 +540,15 @@ def build_wind_speed_product(
     field_cache_dir: str | Path,
     product_dir: str | Path,
 ) -> dict[str, object]:
+    if len(spec.component_field_keys) != 2:
+        raise ValueError(f"{spec.overlay_id} requires exactly two wind component field keys.")
+    u_field_key, v_field_key = spec.component_field_keys
     ugrd = _build_component_netcdf(
         run_id,
         member,
         forecast_hour,
-        "wind_10m",
-        "UGRD:10 m above ground",
+        spec.overlay_id,
+        u_field_key,
         grib_key,
         idx_records,
         grib_size_bytes,
@@ -466,8 +561,8 @@ def build_wind_speed_product(
         run_id,
         member,
         forecast_hour,
-        "wind_10m",
-        "VGRD:10 m above ground",
+        spec.overlay_id,
+        v_field_key,
         grib_key,
         idx_records,
         grib_size_bytes,
@@ -481,10 +576,10 @@ def build_wind_speed_product(
         ugrd_var = list(ugrd_ds.data_vars)[0]
         vgrd_var = list(vgrd_ds.data_vars)[0]
         wind_speed = np.sqrt((ugrd_ds[ugrd_var] ** 2) + (vgrd_ds[vgrd_var] ** 2)).astype(np.float32)
-        wind_speed.name = "WINDSPD_10maboveground"
+        wind_speed.name = spec.variable_name or sanitize_name(f"{spec.overlay_id}_wind_speed")
         wind_speed.attrs.update(
             {
-                "long_name": "10 m wind speed",
+                "long_name": spec.long_name or f"{spec.overlay_id} wind speed",
                 "units": "m s-1",
             }
         )
@@ -494,28 +589,29 @@ def build_wind_speed_product(
         if "longitude" in ugrd_ds.variables:
             dataset["longitude"] = ugrd_ds["longitude"]
 
-    output_dir = Path(product_dir) / run_id / member / "wind_10m" / f"f{forecast_hour:03d}"
+    output_dir = Path(product_dir) / run_id / member / spec.overlay_id / f"f{forecast_hour:03d}"
     output_dir.mkdir(parents=True, exist_ok=True)
     netcdf_path = output_dir / f"{domain['id']}.nc"
     dataset.to_netcdf(netcdf_path)
 
-    values = dataset["WINDSPD_10maboveground"].values
+    variable_name = list(dataset.data_vars)[0]
+    values = dataset[variable_name].values
     metadata = {
         "run_id": run_id,
         "member": member,
         "forecast_hour": forecast_hour,
-        "overlay_id": "wind_10m",
+        "overlay_id": spec.overlay_id,
         "domain_id": domain["id"],
         "bbox": domain["viewport"]["bbox"],
         "netcdf_path": str(netcdf_path),
-        "variable_name": "WINDSPD_10maboveground",
+        "variable_name": variable_name,
         "shape": [int(size) for size in values.shape],
         "stats": {
             "min": float(np.nanmin(values)),
             "max": float(np.nanmax(values)),
         },
         "units": "m s-1",
-        "style": style_for_overlay_id("wind_10m"),
+        "style": style_for_overlay_id(spec.overlay_id),
         "status": "built",
     }
     metadata_path = output_dir / f"{domain['id']}.json"
@@ -523,8 +619,8 @@ def build_wind_speed_product(
     metadata["metadata_path"] = str(metadata_path)
     metadata["component_paths"] = [ugrd["netcdf_path"], vgrd["netcdf_path"]]
     metadata["source_field_offsets"] = {
-        "UGRD:10 m above ground": ugrd["source_field_offset"],
-        "VGRD:10 m above ground": vgrd["source_field_offset"],
+        u_field_key: ugrd["source_field_offset"],
+        v_field_key: vgrd["source_field_offset"],
     }
     return metadata
 
