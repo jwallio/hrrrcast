@@ -12,6 +12,8 @@ Current capabilities:
 - shareable URL state for run, member, forecast hour, domain, baselayer, overlay, view mode, and archive mode
 - local cache warming and stack health checks
 - GitHub Pages static export for the latest-ready ensemble snapshot
+- unified backend entrypoint for container deployment
+- container image publishing workflow to GHCR
 
 ## Current Stack
 
@@ -21,6 +23,8 @@ Current capabilities:
   Standard-library Python JSON API for manifests, domains, and layers
 - `services/tile-api`
   Standard-library Python tile and product API over processed NetCDF assets
+- `services/backend`
+  Single-process deployable backend exposing both API surfaces on one port
 - `pipelines/ingest`
   Python ingest and product generation for NOAA HRRRCast GRIB2 data
 - `scripts`
@@ -108,6 +112,12 @@ Launch the existing local stack:
 
 ```powershell
 python scripts/run_local_stack.py
+```
+
+Run the unified backend locally:
+
+```powershell
+python services/backend/app.py --host 127.0.0.1 --port 8080
 ```
 
 Bootstrap sample products for the latest ready processed run, warm common tiles, and then launch:
@@ -206,6 +216,12 @@ Example:
 http://127.0.0.1:8080/?run=2026032617&member=m00&fhr=0&proj=conus&overlay=temperature_2m&mode=compare&compareMember=m01&compareOpacity=45&overlayGroup=curated&background=plain_ocean&state=states_brown&country=countries_brown&archive=false
 ```
 
+For a single public backend:
+
+```text
+https://jwallio.github.io/HRRRCast/?backend=https://your-backend-host.example.com
+```
+
 ## Notes
 
 - The tile path is intentionally lightweight and suited to local development, internal sharing, and early product iteration.
@@ -217,6 +233,8 @@ http://127.0.0.1:8080/?run=2026032617&member=m00&fhr=0&proj=conus&overlay=temper
 - The web app now supports `member`, `ensemble`, and `compare` viewing modes, plus overlay-group filtering for curated, ensemble, and native layers.
 - Windows scheduler helper scripts are available under `scripts/run_refresh_latest_ready.ps1` and `scripts/register_refresh_task.ps1`.
 - GitHub Pages currently serves a static export of the latest-ready ensemble snapshot from `apps/web/static-api/`.
+- GitHub cannot host the Python backend itself. The public Pages site can point at a single deployed backend URL through `?backend=...` or `apps/web/config.js`.
+- The deployable backend expects processed artifacts under `data/processed/`. A real public host still needs persistent storage or a startup sync strategy for those artifacts.
 - The one-command refresh workflow now discovers the newest run, updates `latest.json`, syncs the latest ready profile, and can optionally run health checks.
 
 ## References

@@ -1,10 +1,17 @@
 const query = new URLSearchParams(window.location.search);
 
+const runtimeConfig = window.HRRRCAST_CONFIG || {};
 const isLocalHost = ["127.0.0.1", "localhost"].includes(window.location.hostname);
 const forceStaticMode = query.get("static") === "true";
-const staticMode = forceStaticMode || (!isLocalHost && !query.get("catalogApi") && !query.get("tileApi"));
-const catalogBase = query.get("catalogApi") || (staticMode ? "./static-api" : "http://127.0.0.1:8000");
-const tileBase = query.get("tileApi") || (staticMode ? "./static-api" : "http://127.0.0.1:8001");
+const backendBase = query.get("backend") || runtimeConfig.backendBase || "";
+const explicitCatalogBase = query.get("catalogApi");
+const explicitTileBase = query.get("tileApi");
+const staticMode =
+  forceStaticMode || (!isLocalHost && !backendBase && !explicitCatalogBase && !explicitTileBase);
+const catalogBase =
+  explicitCatalogBase || (backendBase ? backendBase : staticMode ? "./static-api" : "http://127.0.0.1:8000");
+const tileBase =
+  explicitTileBase || (backendBase ? backendBase : staticMode ? "./static-api" : "http://127.0.0.1:8001");
 
 const backgroundSources = {
   plain_ocean: {
@@ -941,9 +948,17 @@ function updateUrl() {
     params.delete("overlayFilter");
   }
   if (!staticMode) {
-    params.set("catalogApi", catalogBase);
-    params.set("tileApi", tileBase);
+    if (backendBase) {
+      params.set("backend", backendBase);
+      params.delete("catalogApi");
+      params.delete("tileApi");
+    } else {
+      params.delete("backend");
+      params.set("catalogApi", catalogBase);
+      params.set("tileApi", tileBase);
+    }
   } else {
+    params.delete("backend");
     params.delete("catalogApi");
     params.delete("tileApi");
   }

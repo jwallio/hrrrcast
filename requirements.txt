@@ -1,0 +1,4 @@
+numpy
+Pillow
+xarray
+netCDF4

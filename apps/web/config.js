@@ -1,0 +1,1 @@
+window.HRRRCAST_CONFIG = window.HRRRCAST_CONFIG || {};
