@@ -134,7 +134,7 @@ def export_assets(
 
                     payload = dict(metadata)
                     payload["display_path"] = f"{run_id}/{member}/{overlay_id}/{fhr_token}/{domain_id}"
-                    payload["preview_url"] = relative_url(output_dir, preview_path)
+                    payload["preview_url"] = static_preview_url(output_dir, preview_path)
                     payload["static_export"] = True
                     payload_path = target_dir / f"{domain_id}.json"
                     payload_path.write_text(json.dumps(payload, indent=2, sort_keys=True), encoding="utf-8")
@@ -142,6 +142,11 @@ def export_assets(
 
 def relative_url(root: Path, path: Path) -> str:
     return "./" + path.relative_to(root).as_posix()
+
+
+def static_preview_url(output_dir: Path, path: Path) -> str:
+    static_root = output_dir.parent
+    return "./" + path.relative_to(static_root).as_posix()
 
 
 if __name__ == "__main__":

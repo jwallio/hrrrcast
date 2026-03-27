@@ -611,7 +611,7 @@ function addPrimaryOverlay(map, metadata, primaryMember, domainId) {
   if (staticMode) {
     map.addSource("overlay-primary", {
       type: "image",
-      url: metadata.preview_url || previewImageUrl(appState.run, primaryMember, appState.overlay, appState.fhr, domainId),
+      url: staticPreviewUrl(metadata, primaryMember, domainId),
       coordinates: imageCoordinatesForBbox(metadata.bbox),
     });
     map.addLayer({
@@ -646,7 +646,7 @@ function addCompareOverlay(map, metadata, domainId) {
   if (staticMode) {
     map.addSource("overlay-compare", {
       type: "image",
-      url: metadata.preview_url || previewImageUrl(appState.run, appState.compareMember, appState.overlay, appState.fhr, domainId),
+      url: staticPreviewUrl(metadata, appState.compareMember, domainId),
       coordinates: imageCoordinatesForBbox(metadata.bbox),
     });
   } else {
@@ -1053,6 +1053,32 @@ function previewImageUrl(runId, member, overlayId, fhrToken, domainId) {
   return staticMode
     ? `${tileBase}/products/${runId}/${member}/${overlayId}/${fhrToken}/${domainId}.preview.png`
     : `${tileBase}/api/products/${runId}/${member}/${overlayId}/${fhrToken}/${domainId}/preview.png`;
+}
+
+function staticPreviewUrl(metadata, member, domainId) {
+  if (!staticMode) {
+    return previewImageUrl(appState.run, member, appState.overlay, appState.fhr, domainId);
+  }
+  const previewUrl = metadata?.preview_url;
+  if (!previewUrl) {
+    return previewImageUrl(appState.run, member, appState.overlay, appState.fhr, domainId);
+  }
+  if (/^https?:\/\//i.test(previewUrl)) {
+    return previewUrl;
+  }
+  if (previewUrl.startsWith(`${tileBase}/`)) {
+    return previewUrl;
+  }
+  if (previewUrl.startsWith("./products/")) {
+    return `${tileBase}/${previewUrl.slice(2)}`;
+  }
+  if (previewUrl.startsWith("products/")) {
+    return `${tileBase}/${previewUrl}`;
+  }
+  if (previewUrl.startsWith("./")) {
+    return `${window.location.pathname.replace(/[^/]+$/, "")}${previewUrl.slice(2)}`;
+  }
+  return `${tileBase}/${previewUrl.replace(/^\//, "")}`;
 }
 
 function tileTemplateUrl(runId, member, overlayId, fhrToken, domainId) {
