@@ -402,11 +402,18 @@ input[type="range"] {
   position: relative;
   min-height: 100vh;
   background: #dde2e8;
+  isolation: isolate;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  contain: layout paint;
 }
 
 #map {
   position: absolute;
   inset: 0;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  will-change: transform;
 }
 
 .map-overlay {

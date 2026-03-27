@@ -890,12 +890,34 @@ function moveToDomain() {
   const domain = getDomain(appState.proj);
   els.domainLabel.textContent = domain.label;
   if (appState.map) {
+    const bbox = domain.viewport?.bbox;
+    if (Array.isArray(bbox) && bbox.length === 4) {
+      appState.map.fitBounds(
+        [
+          [bbox[0], bbox[1]],
+          [bbox[2], bbox[3]],
+        ],
+        {
+          padding: domainFitPadding(),
+          duration: 850,
+          essential: true,
+        }
+      );
+      return;
+    }
     appState.map.easeTo({
       center: domain.viewport.center,
       zoom: domain.viewport.zoom,
       duration: 850,
+      essential: true,
     });
   }
+}
+
+function domainFitPadding() {
+  return isMobileViewport()
+    ? { top: 18, right: 18, bottom: 18, left: 18 }
+    : { top: 28, right: 28, bottom: 28, left: 28 };
 }
 
 function renderLegend(metadata = null) {
