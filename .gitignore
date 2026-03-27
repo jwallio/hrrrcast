@@ -1,0 +1,14 @@
+.DS_Store
+.pytest_cache/
+.venv/
+__pycache__/
+*.pyc
+
+node_modules/
+dist/
+.vite/
+
+data/cache/
+data/raw/
+data/processed/
+tmp/

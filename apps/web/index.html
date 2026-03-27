@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>HRRRCast Visualizer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://unpkg.com/maplibre-gl@5.3.0/dist/maplibre-gl.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="control-panel">
+        <div class="brand-block">
+          <p class="eyebrow">Experimental Viewer</p>
+          <h1>HRRRCast</h1>
+          <p class="subhead">
+            Map-first visualizer for processed NOAA HRRRCast products with
+            domain presets, baselayer switching, and shareable URL state.
+          </p>
+        </div>
+
+        <section class="panel-group">
+          <div class="panel-head">
+            <h2>Run</h2>
+            <span id="run-status-pill" class="status-pill">Loading</span>
+          </div>
+          <label class="field">
+            <span>Run</span>
+            <select id="run-select"></select>
+          </label>
+          <div class="grid-two">
+            <label class="field">
+              <span>View</span>
+              <select id="view-mode-select">
+                <option value="member">Member</option>
+                <option value="ensemble">Ensemble</option>
+                <option value="compare">Compare</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>Member</span>
+              <select id="member-select"></select>
+            </label>
+          </div>
+          <div class="grid-two">
+            <label class="field">
+              <span>Hour</span>
+              <select id="fhr-select"></select>
+            </label>
+            <div id="compare-controls" class="compare-controls hidden">
+              <label class="field">
+                <span>Compare Member</span>
+                <select id="compare-member-select"></select>
+              </label>
+            </div>
+          </div>
+          <div id="compare-opacity-row" class="field hidden">
+            <span>Compare Opacity</span>
+            <div class="slider-row">
+              <input id="compare-opacity-slider" type="range" min="10" max="90" step="5" value="45" />
+              <strong id="compare-opacity-readout">45%</strong>
+            </div>
+          </div>
+          <div class="action-row">
+            <button id="latest-ready-button" class="secondary-button" type="button">Latest Ready</button>
+            <label class="toggle-row" for="archive-toggle">
+              <input id="archive-toggle" type="checkbox" />
+              <span>Show archive and partial runs</span>
+            </label>
+          </div>
+          <p id="run-status-text" class="muted-note"></p>
+        </section>
+
+        <section class="panel-group">
+          <div class="panel-head">
+            <h2>Domain</h2>
+            <span id="domain-label" class="mini-meta"></span>
+          </div>
+          <div id="domain-grid" class="chip-grid"></div>
+        </section>
+
+        <section class="panel-group">
+          <div class="panel-head">
+            <h2>Overlay</h2>
+            <span id="overlay-meta" class="mini-meta"></span>
+          </div>
+          <label class="field">
+            <span>Group</span>
+            <select id="overlay-group-select">
+              <option value="all">All</option>
+              <option value="curated">Curated</option>
+              <option value="ensemble">Ensemble</option>
+              <option value="native">Native</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>Filter</span>
+            <input id="overlay-filter-input" type="text" placeholder="Search native fields or overlays" />
+          </label>
+          <div id="overlay-grid" class="chip-grid overlay-grid"></div>
+        </section>
+
+        <section class="panel-group">
+          <div class="panel-head">
+            <h2>Map</h2>
+            <span class="mini-meta">Background and linework</span>
+          </div>
+          <div id="background-grid" class="chip-grid"></div>
+          <div class="grid-two layer-grid">
+            <label class="field">
+              <span>States</span>
+              <select id="state-style-select">
+                <option value="states_brown">States Brown</option>
+                <option value="states_white">States White</option>
+                <option value="none">Hidden</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>Countries</span>
+              <select id="country-style-select">
+                <option value="countries_brown">Countries Brown</option>
+                <option value="countries_white">Countries White</option>
+                <option value="none">Hidden</option>
+              </select>
+            </label>
+          </div>
+        </section>
+
+        <section class="panel-group timeline-group">
+          <div class="panel-head">
+            <h2>Forecast Hour</h2>
+            <span id="timeline-readout" class="mini-meta"></span>
+          </div>
+          <div class="timeline-actions">
+            <button id="animate-toggle" class="secondary-button" type="button">Play</button>
+            <label class="field compact-field">
+              <span>Speed</span>
+              <select id="animation-speed-select">
+                <option value="1400">Slow</option>
+                <option value="900" selected>Medium</option>
+                <option value="600">Fast</option>
+              </select>
+            </label>
+          </div>
+          <input id="timeline-slider" type="range" min="0" max="0" step="1" value="0" />
+        </section>
+
+        <section class="panel-group">
+          <div class="panel-head">
+            <h2>Legend</h2>
+            <span id="legend-units" class="mini-meta"></span>
+          </div>
+          <div id="legend-panel" class="legend-panel"></div>
+        </section>
+
+        <section class="panel-group info-strip">
+          <div>
+            <p class="info-label">Built product</p>
+            <p id="asset-path" class="info-value">Waiting for selection</p>
+          </div>
+          <div>
+            <p class="info-label">Data APIs</p>
+            <p class="info-value mono">
+              catalog: <span id="catalog-base-label">127.0.0.1:8000</span><br />
+              product: <span id="tile-base-label">127.0.0.1:8001</span>
+            </p>
+          </div>
+        </section>
+      </aside>
+
+      <main class="map-stage">
+        <div id="map"></div>
+        <div class="map-overlay">
+          <div class="map-title-block">
+            <p class="eyebrow">Viewer State</p>
+            <h2 id="map-title">Loading</h2>
+            <p id="map-subtitle" class="map-subtitle"></p>
+          </div>
+          <div id="asset-status" class="asset-status">Loading processed assets...</div>
+        </div>
+      </main>
+    </div>
+
+    <script src="https://unpkg.com/maplibre-gl@5.3.0/dist/maplibre-gl.js"></script>
+    <script src="./app.js" type="module"></script>
+  </body>
+</html>

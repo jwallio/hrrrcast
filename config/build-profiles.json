@@ -1,0 +1,67 @@
+{
+  "version": 1,
+  "defaultProfile": "core_operational",
+  "profiles": [
+    {
+      "id": "core_operational",
+      "label": "Core Operational",
+      "description": "Curated operational overlays for all available forecast hours across all configured domains.",
+      "overlayIds": [
+        "composite_reflectivity",
+        "temperature_2m",
+        "dewpoint_2m",
+        "rh_2m",
+        "ptype",
+        "mslp",
+        "qpf",
+        "pwat",
+        "cape",
+        "wind_10m",
+        "visibility",
+        "cloud_cover_total",
+        "ceiling",
+        "height_500mb",
+        "temperature_850mb"
+      ],
+      "includeEnsembleDerived": true,
+      "hourMode": "all_available"
+    },
+    {
+      "id": "core_conus_fast",
+      "label": "Core CONUS Fast",
+      "description": "Curated operational overlays for all available forecast hours on the CONUS domain only.",
+      "overlayIds": [
+        "composite_reflectivity",
+        "temperature_2m",
+        "dewpoint_2m",
+        "rh_2m",
+        "ptype",
+        "mslp",
+        "qpf",
+        "pwat",
+        "cape",
+        "wind_10m",
+        "visibility",
+        "cloud_cover_total",
+        "ceiling",
+        "height_500mb",
+        "temperature_850mb"
+      ],
+      "includeEnsembleDerived": true,
+      "domains": [
+        "conus"
+      ],
+      "hourMode": "all_available"
+    },
+    {
+      "id": "full_native_sample",
+      "label": "Full Native Sample",
+      "description": "All curated and native overlays for a single sample hour across all configured domains.",
+      "includeDerived": true,
+      "includeNative": true,
+      "hours": [
+        0
+      ]
+    }
+  ]
+}

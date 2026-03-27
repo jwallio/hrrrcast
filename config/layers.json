@@ -1,0 +1,213 @@
+{
+  "version": 1,
+  "defaults": {
+    "baselayer": "plain_ocean",
+    "stateLayer": "states_brown",
+    "countryLayer": "countries_brown",
+    "weatherOverlay": "temperature_2m_mean",
+    "member": "ens",
+    "viewMode": "ensemble",
+    "overlayGroup": "ensemble"
+  },
+  "baselayers": [
+    {
+      "id": "plain_ocean",
+      "label": "Plain Ocean",
+      "kind": "raster"
+    },
+    {
+      "id": "terrain_light",
+      "label": "Terrain Light",
+      "kind": "raster"
+    },
+    {
+      "id": "satellite",
+      "label": "Satellite",
+      "kind": "raster"
+    }
+  ],
+  "referenceLayers": [
+    {
+      "id": "states_brown",
+      "label": "States Brown",
+      "kind": "vector"
+    },
+    {
+      "id": "states_white",
+      "label": "States White",
+      "kind": "vector"
+    },
+    {
+      "id": "countries_brown",
+      "label": "Countries Brown",
+      "kind": "vector"
+    },
+    {
+      "id": "countries_white",
+      "label": "Countries White",
+      "kind": "vector"
+    }
+  ],
+  "weatherOverlays": [
+    {
+      "id": "composite_reflectivity",
+      "label": "Composite Reflectivity",
+      "family": "radar",
+      "renderMode": "raster",
+      "priority": "mvp"
+    },
+    {
+      "id": "temperature_2m",
+      "label": "2 m Temperature",
+      "family": "surface",
+      "renderMode": "raster",
+      "priority": "mvp"
+    },
+    {
+      "id": "dewpoint_2m",
+      "label": "2 m Dewpoint",
+      "family": "surface",
+      "renderMode": "raster",
+      "priority": "next"
+    },
+    {
+      "id": "rh_2m",
+      "label": "2 m Relative Humidity",
+      "family": "surface",
+      "renderMode": "raster",
+      "priority": "next"
+    },
+    {
+      "id": "ptype",
+      "label": "Precip Type",
+      "family": "winter",
+      "renderMode": "raster",
+      "priority": "mvp"
+    },
+    {
+      "id": "mslp",
+      "label": "Mean Sea Level Pressure",
+      "family": "synoptic",
+      "renderMode": "raster",
+      "priority": "mvp"
+    },
+    {
+      "id": "qpf",
+      "label": "Accumulated Precipitation",
+      "family": "precipitation",
+      "renderMode": "raster",
+      "priority": "mvp"
+    },
+    {
+      "id": "pwat",
+      "label": "Precipitable Water",
+      "family": "moisture",
+      "renderMode": "raster",
+      "priority": "next"
+    },
+    {
+      "id": "snowfall",
+      "label": "Snowfall",
+      "family": "winter",
+      "renderMode": "raster",
+      "priority": "mvp"
+    },
+    {
+      "id": "cape",
+      "label": "Surface CAPE",
+      "family": "severe",
+      "renderMode": "raster",
+      "priority": "next"
+    },
+    {
+      "id": "wind_10m",
+      "label": "10 m Wind Speed",
+      "family": "surface",
+      "renderMode": "raster",
+      "priority": "next"
+    },
+    {
+      "id": "visibility",
+      "label": "Visibility",
+      "family": "surface",
+      "renderMode": "raster",
+      "priority": "next"
+    },
+    {
+      "id": "cloud_cover_total",
+      "label": "Total Cloud Cover",
+      "family": "clouds",
+      "renderMode": "raster",
+      "priority": "next"
+    },
+    {
+      "id": "ceiling",
+      "label": "Cloud Ceiling Height",
+      "family": "clouds",
+      "renderMode": "raster",
+      "priority": "next"
+    },
+    {
+      "id": "height_500mb",
+      "label": "500 mb Height",
+      "family": "upper_air",
+      "renderMode": "raster",
+      "priority": "next"
+    },
+    {
+      "id": "temperature_850mb",
+      "label": "850 mb Temperature",
+      "family": "upper_air",
+      "renderMode": "raster",
+      "priority": "next"
+    },
+    {
+      "id": "temperature_2m_mean",
+      "label": "Ensemble Mean 2 m Temperature",
+      "family": "ensemble",
+      "renderMode": "raster",
+      "priority": "ensemble",
+      "group": "ensemble"
+    },
+    {
+      "id": "temperature_2m_spread",
+      "label": "Ensemble Spread 2 m Temperature",
+      "family": "ensemble",
+      "renderMode": "raster",
+      "priority": "ensemble",
+      "group": "ensemble"
+    },
+    {
+      "id": "qpf_probability_gt_0p10",
+      "label": "QPF Probability > 0.10 in",
+      "family": "ensemble",
+      "renderMode": "raster",
+      "priority": "ensemble",
+      "group": "ensemble"
+    },
+    {
+      "id": "wind_10m_probability_gt_25kt",
+      "label": "10 m Wind Probability > 25 kt",
+      "family": "ensemble",
+      "renderMode": "raster",
+      "priority": "ensemble",
+      "group": "ensemble"
+    },
+    {
+      "id": "composite_reflectivity_probability_gt_40dbz",
+      "label": "Reflectivity Probability > 40 dBZ",
+      "family": "ensemble",
+      "renderMode": "raster",
+      "priority": "ensemble",
+      "group": "ensemble"
+    },
+    {
+      "id": "cape_probability_gt_1000",
+      "label": "CAPE Probability > 1000 J/kg",
+      "family": "ensemble",
+      "renderMode": "raster",
+      "priority": "ensemble",
+      "group": "ensemble"
+    }
+  ]
+}
