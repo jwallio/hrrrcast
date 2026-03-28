@@ -1,0 +1,58 @@
+{
+  "asset_version": "2026032814",
+  "bbox": [
+    -127.0,
+    23.0,
+    -66.0,
+    50.0
+  ],
+  "clipped_grib_path": "data\\processed\\products\\2026032814\\m00\\composite_reflectivity\\f007\\conus.grib2",
+  "display_path": "2026032814/m00/composite_reflectivity/f007/conus",
+  "domain_id": "conus",
+  "field_key": "REFC:entire atmosphere",
+  "forecast_hour": 7,
+  "long_name": "Composite reflectivity",
+  "member": "m00",
+  "mobile_preview_url": "./static-api/products/2026032814/m00/composite_reflectivity/f007/conus.mobile.webp",
+  "native": false,
+  "netcdf_path": "data\\processed\\products\\2026032814\\m00\\composite_reflectivity\\f007\\conus.nc",
+  "overlay_id": "composite_reflectivity",
+  "preview_url": "./static-api/products/2026032814/m00/composite_reflectivity/f007/conus.preview.png",
+  "run_id": "2026032814",
+  "shape": [
+    1,
+    1059,
+    1799
+  ],
+  "static_export": true,
+  "stats": {
+    "max": 58.0099983215332,
+    "min": 0.0
+  },
+  "style": {
+    "colors": [
+      "#0a0a0a",
+      "#3c781e",
+      "#b4c828",
+      "#ffa000",
+      "#d22828"
+    ],
+    "labels": [
+      "0",
+      "20",
+      "35",
+      "50",
+      "70"
+    ],
+    "palette": "reflectivity",
+    "range": [
+      0.0,
+      70.0
+    ],
+    "rawUnits": "dBZ",
+    "type": "continuous",
+    "units": "dBZ"
+  },
+  "units": "dB",
+  "variable_name": "REFC_entireatmosphere"
+}

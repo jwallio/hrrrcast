@@ -1,0 +1,58 @@
+{
+  "asset_version": "2026032814",
+  "bbox": [
+    -127.0,
+    23.0,
+    -66.0,
+    50.0
+  ],
+  "clipped_grib_path": "data\\processed\\products\\2026032814\\m00\\helicity_0_3km\\f010\\conus.grib2",
+  "display_path": "2026032814/m00/helicity_0_3km/f010/conus",
+  "domain_id": "conus",
+  "field_key": "HLCY:3000-0 m above ground",
+  "forecast_hour": 10,
+  "long_name": "Storm Relative Helicity",
+  "member": "m00",
+  "mobile_preview_url": "./static-api/products/2026032814/m00/helicity_0_3km/f010/conus.mobile.webp",
+  "native": false,
+  "netcdf_path": "data\\processed\\products\\2026032814\\m00\\helicity_0_3km\\f010\\conus.nc",
+  "overlay_id": "helicity_0_3km",
+  "preview_url": "./static-api/products/2026032814/m00/helicity_0_3km/f010/conus.preview.png",
+  "run_id": "2026032814",
+  "shape": [
+    1,
+    1059,
+    1799
+  ],
+  "static_export": true,
+  "stats": {
+    "max": 709.1699829101562,
+    "min": -128.50999450683594
+  },
+  "style": {
+    "colors": [
+      "#141428",
+      "#3a66ac",
+      "#55be78",
+      "#f0d649",
+      "#d15329"
+    ],
+    "labels": [
+      "0",
+      "100",
+      "200",
+      "400",
+      "600"
+    ],
+    "palette": "severe",
+    "range": [
+      0.0,
+      600.0
+    ],
+    "rawUnits": "m2/s2",
+    "type": "continuous",
+    "units": "m2/s2"
+  },
+  "units": "m^2/s^2",
+  "variable_name": "HLCY_3000M0maboveground"
+}
