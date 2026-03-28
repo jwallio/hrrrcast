@@ -7,8 +7,8 @@
         "ens",
         "m00"
       ],
-      "run_id": "2026032810",
-      "static_asset_version": "2026032810",
+      "run_id": "2026032811",
+      "static_asset_version": "2026032811",
       "status": "ready",
       "status_reasons": [
         "All discovered members meet the configured Phase 1 completeness thresholds."
