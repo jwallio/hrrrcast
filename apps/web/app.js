@@ -31,7 +31,7 @@
     },
     {
       id: "upper_air",
-      label: "Upper Air",
+      label: "Upper",
       match: (overlay) => overlay.family === "upper_air",
     },
     {
@@ -46,7 +46,7 @@
     },
     {
       id: "ensemble",
-      label: "Ensemble",
+      label: "Ens",
       match: (overlay) => overlay.family === "ensemble",
     },
   ];

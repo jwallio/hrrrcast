@@ -141,12 +141,13 @@ button {
 
 .toolbar {
   display: grid;
-  grid-template-columns: 1.05fr 1fr 1fr 2.1fr;
-  gap: 8px;
-  padding: 8px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+  padding: 7px;
   border: 1px solid var(--panel-border);
   border-radius: 0 var(--radius-md) var(--radius-md) var(--radius-md);
   background: #ffffff;
+  align-items: end;
 }
 
 .field {
@@ -156,9 +157,9 @@ button {
 }
 
 .field span {
-  font-size: 0.64rem;
+  font-size: 0.6rem;
   font-weight: 700;
-  letter-spacing: 0.07em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--ink-soft);
 }
@@ -166,8 +167,8 @@ button {
 .field select,
 .speed-field select {
   width: 100%;
-  min-height: 36px;
-  padding: 7px 10px;
+  min-height: 34px;
+  padding: 6px 9px;
   border: 1px solid #c4cfdb;
   border-radius: var(--radius-sm);
   background: #ffffff;
@@ -175,7 +176,7 @@ button {
 }
 
 .field-product {
-  grid-column: span 1;
+  grid-column: 1 / -1;
 }
 
 .product-shell {
@@ -478,7 +479,7 @@ button {
   }
 
   .field-product {
-    grid-column: span 3;
+    grid-column: 1 / -1;
   }
 
   .product-head {
@@ -537,18 +538,18 @@ button {
 
   .toolbar {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 6px;
-    padding: 7px;
+    gap: 5px;
+    padding: 6px;
   }
 
   .field-product {
-    grid-column: span 2;
+    grid-column: 1 / -1;
   }
 
   .field select,
   .speed-field select {
-    min-height: 34px;
-    padding: 7px 8px;
+    min-height: 32px;
+    padding: 6px 8px;
   }
 
   .product-head {
