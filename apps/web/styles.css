@@ -242,6 +242,24 @@ input[type="range"] {
   justify-content: space-between;
 }
 
+.timeline-transport {
+  display: inline-grid;
+  grid-template-columns: 44px minmax(88px, 1fr) 44px;
+  gap: 8px;
+  align-items: center;
+  flex: 1 1 auto;
+}
+
+.transport-button {
+  min-height: 42px;
+  padding: 0 12px;
+}
+
+.play-button {
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
 .secondary-button {
   border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 12px;
@@ -1084,6 +1102,12 @@ input[type="range"] {
     align-items: stretch;
   }
 
+  .timeline-actions {
+    flex-direction: row;
+    align-items: end;
+    gap: 10px;
+  }
+
   .map-title-block h2 {
     font-size: 1rem;
   }
@@ -1097,8 +1121,8 @@ input[type="range"] {
   }
 
   #map {
-    height: 46vh;
-    min-height: 46vh;
+    height: 54vh;
+    min-height: 54vh;
   }
 
   .map-subtitle,
@@ -1141,6 +1165,80 @@ input[type="range"] {
     margin-top: 10px;
     padding: 12px;
     border-radius: 14px;
+  }
+
+  .mobile-quick-panel {
+    gap: 10px;
+    padding: 12px;
+    border-radius: 16px;
+  }
+
+  #mobile-timeline-host .timeline-group {
+    padding: 10px 12px;
+    border-radius: 16px;
+  }
+
+  #mobile-timeline-host .timeline-meta-row {
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+
+  #mobile-timeline-host .timeline-meta-pill {
+    padding: 5px 9px;
+    font-size: 0.66rem;
+  }
+
+  #mobile-timeline-host .timeline-actions {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 104px;
+    gap: 10px;
+    align-items: end;
+    margin-bottom: 8px;
+  }
+
+  #mobile-timeline-host .timeline-transport {
+    grid-template-columns: 46px minmax(0, 1fr) 46px;
+  }
+
+  #mobile-timeline-host .transport-button {
+    min-height: 40px;
+    border-radius: 10px;
+  }
+
+  #mobile-timeline-host .play-button {
+    font-size: 0.95rem;
+  }
+
+  #mobile-timeline-host .compact-field {
+    min-width: 0;
+  }
+
+  #mobile-timeline-host .slider-row {
+    gap: 8px;
+  }
+
+  #mobile-timeline-host .slider-row strong {
+    min-width: 3.2rem;
+    font-size: 0.88rem;
+  }
+
+  #mobile-timeline-host .timeline-ticks {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 6px;
+    margin-top: 8px;
+    padding-bottom: 2px;
+    scrollbar-width: none;
+  }
+
+  #mobile-timeline-host .timeline-ticks::-webkit-scrollbar {
+    display: none;
+  }
+
+  #mobile-timeline-host .timeline-tick {
+    padding: 5px 9px;
+    font-size: 0.78rem;
+    white-space: nowrap;
   }
 
   .chip {

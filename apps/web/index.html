@@ -222,7 +222,15 @@
             <span class="timeline-meta-pill">Step <strong id="timeline-step-label">--</strong></span>
           </div>
           <div class="timeline-actions">
-            <button id="animate-toggle" class="secondary-button" type="button">Play</button>
+            <div class="timeline-transport">
+              <button id="prev-hour-button" class="secondary-button transport-button" type="button" aria-label="Previous hour">
+                &larr;
+              </button>
+              <button id="animate-toggle" class="secondary-button transport-button play-button" type="button">Play</button>
+              <button id="next-hour-button" class="secondary-button transport-button" type="button" aria-label="Next hour">
+                &rarr;
+              </button>
+            </div>
             <label class="field compact-field">
               <span>Speed</span>
               <select id="animation-speed-select">

@@ -315,6 +315,8 @@ const els = {
   countryStyleSelect: document.getElementById("country-style-select"),
   timelineSlider: document.getElementById("timeline-slider"),
   timelineReadout: document.getElementById("timeline-readout"),
+  prevHourButton: document.getElementById("prev-hour-button"),
+  nextHourButton: document.getElementById("next-hour-button"),
   runStatusPill: document.getElementById("run-status-pill"),
   runStatusText: document.getElementById("run-status-text"),
   domainLabel: document.getElementById("domain-label"),
@@ -382,6 +384,10 @@ const appState = {
   modeNotice: "",
   panelCollapsed: false,
   mobileStaticViewport: null,
+  mobileStaticPayloadCache: new Map(),
+  mobileStaticImageCache: new Map(),
+  mobileStaticPrefetchTimeoutId: null,
+  mobileStaticRenderToken: 0,
 };
 
 init().catch((error) => {
@@ -758,7 +764,12 @@ function bindControls() {
   });
   els.timelineSlider.addEventListener("input", async (event) => {
     const index = Number(event.target.value);
-    appState.fhr = appState.availableFhrs[index] || appState.fhr;
+    const nextFhr = appState.availableFhrs[index] || appState.fhr;
+    if (mobileSafariStaticMode) {
+      await previewForecastHour(nextFhr);
+      return;
+    }
+    appState.fhr = nextFhr;
     els.timelineReadout.textContent = appState.fhr.toUpperCase();
     await syncSelectionState();
   });
@@ -813,6 +824,12 @@ function bindControls() {
       return;
     }
     startAnimation();
+  });
+  els.prevHourButton.addEventListener("click", async () => {
+    await stepForecastHour(-1);
+  });
+  els.nextHourButton.addEventListener("click", async () => {
+    await stepForecastHour(1);
   });
   els.animationSpeedSelect.addEventListener("change", () => {
     appState.animationDelay = Number(els.animationSpeedSelect.value);
@@ -1043,17 +1060,11 @@ async function syncSelectionState({ preserveUrl = true } = {}) {
   }
   populateSelect(els.fhrSelect, effectiveFhrs, appState.fhr, (value) => value.toUpperCase());
   populateSelect(els.mobileFhrSelect, effectiveFhrs, appState.fhr, (value) => value.toUpperCase());
-  els.timelineSlider.min = "0";
-  els.timelineSlider.max = String(Math.max(0, effectiveFhrs.length - 1));
-  els.timelineSlider.value = String(Math.max(0, effectiveFhrs.indexOf(appState.fhr)));
-  els.timelineReadout.textContent = appState.fhr.toUpperCase();
-  updateTimelineRail();
+  syncForecastHourControls();
 
   populateOverlayButtons(fhIndex[appState.fhr]?.overlays || {});
-  updateSummaryStrip();
   updateMapPresentation();
   moveToDomain();
-  updateAnimationUi();
   if (effectiveFhrs.length < 2) {
     stopAnimation();
   } else if (appState.isAnimating) {
@@ -1062,6 +1073,7 @@ async function syncSelectionState({ preserveUrl = true } = {}) {
   if (appState.loaded) {
     await refreshOverlay();
   }
+  scheduleMobileStaticPrefetch();
   if (preserveUrl) {
     updateUrl();
   }
@@ -1213,39 +1225,23 @@ async function refreshMobileStaticOverlay() {
     return;
   }
 
+  const renderToken = ++appState.mobileStaticRenderToken;
   const domainId = appState.proj;
-  const forecastHourNumber = parseInt(appState.fhr.slice(1), 10);
   const primaryMember = currentPrimaryMember();
 
   try {
-    const primaryPayload = await fetchPreferredMetadata(primaryMember, domainId);
-    let subtitleMode = primaryMember;
-    let compareNote = "";
-    let assetPathText = primaryPayload.metadata.display_path || primaryPayload.metadata.netcdf_path;
+    const primaryPayload = await fetchPreferredMetadata(primaryMember, domainId, appState.fhr);
     let comparePayload = null;
 
     if (appState.viewMode === "compare" && appState.compareMember) {
-      comparePayload = await fetchPreferredMetadata(appState.compareMember, domainId);
-      subtitleMode = `${appState.member} vs ${appState.compareMember}`;
-      compareNote = ` Compare layer opacity ${Math.round(appState.compareOpacity * 100)}%.`;
-      assetPathText = `${assetPathText} | compare ${
-        comparePayload.metadata.display_path || comparePayload.metadata.netcdf_path
-      }`;
-    } else if (appState.viewMode === "ensemble") {
-      subtitleMode = "ensemble";
-      compareNote = primaryPayload.metadata.notes ? ` ${primaryPayload.metadata.notes}` : "";
+      comparePayload = await fetchPreferredMetadata(appState.compareMember, domainId, appState.fhr);
     }
 
-    renderMobileStaticViewport(primaryPayload, comparePayload);
-    els.assetPath.textContent = assetPathText;
-    els.mapTitle.textContent = `${labelForOverlay(appState.overlay)} | ${appState.proj.toUpperCase()}`;
-    els.mapSubtitle.textContent = `${appState.run} | ${appState.member} | f${String(forecastHourNumber).padStart(
-      3,
-      "0"
-    )} | ${subtitleMode} | ${primaryPayload.metadata.long_name || primaryPayload.metadata.variable_name}`;
-    setAssetStatus(`${buildAssetSummary(primaryPayload.metadata, appState.overlay, domainId)}${compareNote}`, "ok");
-    updateSummaryStrip();
-    renderLegend(primaryPayload.metadata);
+    if (renderToken !== appState.mobileStaticRenderToken) {
+      return;
+    }
+    applyMobileStaticOverlay(primaryPayload, comparePayload);
+    scheduleMobileStaticPrefetch();
   } catch (error) {
     els.assetPath.textContent = "No processed asset found for this combination";
     els.mapTitle.textContent = `${labelForOverlay(appState.overlay)} | ${appState.proj.toUpperCase()}`;
@@ -1296,25 +1292,70 @@ function addPrimaryOverlay(map, metadata, primaryMember, domainId) {
   });
 }
 
-async function fetchPreferredMetadata(member, domainId) {
+function applyMobileStaticOverlay(primaryPayload, comparePayload = null) {
+  const domainId = appState.proj;
+  const forecastHourNumber = parseInt(appState.fhr.slice(1), 10);
+  let subtitleMode = currentPrimaryMember();
+  let compareNote = "";
+  let assetPathText = primaryPayload.metadata.display_path || primaryPayload.metadata.netcdf_path;
+  if (appState.viewMode === "compare" && comparePayload) {
+    subtitleMode = `${appState.member} vs ${appState.compareMember}`;
+    compareNote = ` Compare layer opacity ${Math.round(appState.compareOpacity * 100)}%.`;
+    assetPathText = `${assetPathText} | compare ${
+      comparePayload.metadata.display_path || comparePayload.metadata.netcdf_path
+    }`;
+  } else if (appState.viewMode === "ensemble") {
+    subtitleMode = "ensemble";
+    compareNote = primaryPayload.metadata.notes ? ` ${primaryPayload.metadata.notes}` : "";
+  }
+  renderMobileStaticViewport(primaryPayload, comparePayload);
+  els.assetPath.textContent = assetPathText;
+  els.mapTitle.textContent = `${labelForOverlay(appState.overlay)} | ${appState.proj.toUpperCase()}`;
+  els.mapSubtitle.textContent = `${appState.run} | ${appState.member} | f${String(forecastHourNumber).padStart(
+    3,
+    "0"
+  )} | ${subtitleMode} | ${primaryPayload.metadata.long_name || primaryPayload.metadata.variable_name}`;
+  setAssetStatus(`${buildAssetSummary(primaryPayload.metadata, appState.overlay, domainId)}${compareNote}`, "ok");
+  updateSummaryStrip();
+  renderLegend(primaryPayload.metadata);
+}
+
+async function fetchPreferredMetadata(member, domainId, fhrToken = appState.fhr) {
+  const cacheKey = mobileStaticCacheKey(member, domainId, fhrToken);
+  const cached = appState.mobileStaticPayloadCache.get(cacheKey);
+  if (cached) {
+    return cached;
+  }
   const preferredDomains =
     mobileSafariStaticMode && domainId !== "conus" ? ["conus", domainId] : [domainId];
-  let lastError = null;
-  for (const candidateDomain of preferredDomains) {
-    try {
-      const metadata = await fetchJson(
-        productMetadataUrl(appState.run, member, appState.overlay, appState.fhr, candidateDomain)
-      );
-      return {
-        metadata,
-        domainId: candidateDomain,
-        previewUrl: staticPreviewUrl(metadata, member, candidateDomain),
-      };
-    } catch (error) {
-      lastError = error;
+  const pending = (async () => {
+    let lastError = null;
+    for (const candidateDomain of preferredDomains) {
+      try {
+        const metadata = await fetchJson(
+          productMetadataUrl(appState.run, member, appState.overlay, fhrToken, candidateDomain)
+        );
+        const previewUrl = staticPreviewUrl(metadata, member, candidateDomain);
+        await preloadStaticFrame(previewUrl);
+        return {
+          metadata,
+          domainId: candidateDomain,
+          requestedDomainId: domainId,
+          previewUrl,
+          fhrToken,
+        };
+      } catch (error) {
+        lastError = error;
+      }
     }
-  }
-  throw lastError || new Error(`No preview metadata found for ${member} / ${domainId}`);
+    throw lastError || new Error(`No preview metadata found for ${member} / ${domainId}`);
+  })().catch((error) => {
+    appState.mobileStaticPayloadCache.delete(cacheKey);
+    throw error;
+  });
+  appState.mobileStaticPayloadCache.set(cacheKey, pending);
+  trimMobileStaticCache(appState.mobileStaticPayloadCache, 72);
+  return pending;
 }
 
 function renderMobileStaticViewport(primaryPayload, comparePayload = null) {
@@ -1865,6 +1906,101 @@ function currentBuiltOverlayMap() {
   return appState.productIndex[appState.run]?.members?.[currentPrimaryMember()]?.forecast_hours?.[appState.fhr]?.overlays || {};
 }
 
+function mobileStaticCacheKey(member, domainId, fhrToken = appState.fhr) {
+  return [appState.run, canonicalOverlayId(appState.overlay), member, normalizeFhrToken(fhrToken), domainId].join("|");
+}
+
+function trimMobileStaticCache(cache, maxEntries) {
+  while (cache.size > maxEntries) {
+    const oldestKey = cache.keys().next().value;
+    cache.delete(oldestKey);
+  }
+}
+
+function preloadStaticFrame(url) {
+  const cached = appState.mobileStaticImageCache.get(url);
+  if (cached) {
+    return cached;
+  }
+  const pending = new Promise((resolve, reject) => {
+    const image = new Image();
+    image.decoding = "async";
+    image.onload = () => resolve(image);
+    image.onerror = () => reject(new Error(`Failed to preload ${url}`));
+    image.src = url;
+  }).catch((error) => {
+    appState.mobileStaticImageCache.delete(url);
+    throw error;
+  });
+  appState.mobileStaticImageCache.set(url, pending);
+  trimMobileStaticCache(appState.mobileStaticImageCache, 96);
+  return pending;
+}
+
+async function previewForecastHour(token) {
+  const nextFhr = normalizeFhrToken(token);
+  if (!nextFhr || nextFhr === appState.fhr) {
+    return;
+  }
+  appState.fhr = nextFhr;
+  const renderToken = ++appState.mobileStaticRenderToken;
+  syncForecastHourControls();
+  try {
+    const primaryPayload = await fetchPreferredMetadata(currentPrimaryMember(), appState.proj, appState.fhr);
+    const comparePayload =
+      appState.viewMode === "compare" && appState.compareMember
+        ? await fetchPreferredMetadata(appState.compareMember, appState.proj, appState.fhr)
+        : null;
+    if (renderToken !== appState.mobileStaticRenderToken) {
+      return;
+    }
+    applyMobileStaticOverlay(primaryPayload, comparePayload);
+    scheduleMobileStaticPrefetch();
+  } catch (error) {
+    console.error(error);
+  }
+  updateUrl();
+}
+
+function scheduleMobileStaticPrefetch() {
+  if (!mobileSafariStaticMode) {
+    return;
+  }
+  if (appState.mobileStaticPrefetchTimeoutId != null) {
+    window.clearTimeout(appState.mobileStaticPrefetchTimeoutId);
+  }
+  appState.mobileStaticPrefetchTimeoutId = window.setTimeout(() => {
+    appState.mobileStaticPrefetchTimeoutId = null;
+    void primeMobileStaticFrames();
+  }, 90);
+}
+
+async function primeMobileStaticFrames() {
+  if (!mobileSafariStaticMode || appState.availableFhrs.length < 2) {
+    return;
+  }
+  const centerIndex = appState.availableFhrs.indexOf(appState.fhr);
+  if (centerIndex < 0) {
+    return;
+  }
+  const members = [currentPrimaryMember()];
+  if (appState.viewMode === "compare" && appState.compareMember) {
+    members.push(appState.compareMember);
+  }
+  const requests = [];
+  for (let offset = -6; offset <= 6; offset += 1) {
+    const index = centerIndex + offset;
+    if (index < 0 || index >= appState.availableFhrs.length) {
+      continue;
+    }
+    const token = appState.availableFhrs[index];
+    for (const member of members) {
+      requests.push(fetchPreferredMetadata(member, appState.proj, token));
+    }
+  }
+  await Promise.allSettled(requests);
+}
+
 function currentPrimaryMember() {
   return appState.viewMode === "ensemble" ? "ens" : appState.member;
 }
@@ -1962,19 +2098,45 @@ function refreshAnimationLoop() {
 }
 
 async function advanceForecastHour() {
+  await stepForecastHour(1);
+}
+
+async function stepForecastHour(direction) {
   if (appState.availableFhrs.length < 2) {
     return;
   }
   const currentIndex = appState.availableFhrs.indexOf(appState.fhr);
-  const nextIndex = currentIndex >= 0 ? (currentIndex + 1) % appState.availableFhrs.length : 0;
-  appState.fhr = appState.availableFhrs[nextIndex];
+  const nextIndex =
+    currentIndex >= 0
+      ? (currentIndex + direction + appState.availableFhrs.length) % appState.availableFhrs.length
+      : 0;
+  const nextFhr = appState.availableFhrs[nextIndex];
+  if (mobileSafariStaticMode) {
+    await previewForecastHour(nextFhr);
+    return;
+  }
+  appState.fhr = nextFhr;
   await syncSelectionState();
 }
 
 function updateAnimationUi() {
   els.animateToggle.textContent = appState.isAnimating ? "Pause" : "Play";
   els.animateToggle.disabled = appState.availableFhrs.length < 2;
+  els.prevHourButton.disabled = appState.availableFhrs.length < 2;
+  els.nextHourButton.disabled = appState.availableFhrs.length < 2;
   els.animationSpeedSelect.value = String(appState.animationDelay);
+}
+
+function syncForecastHourControls() {
+  els.timelineSlider.min = "0";
+  els.timelineSlider.max = String(Math.max(0, appState.availableFhrs.length - 1));
+  els.fhrSelect.value = appState.fhr;
+  els.mobileFhrSelect.value = appState.fhr;
+  els.timelineSlider.value = String(Math.max(0, appState.availableFhrs.indexOf(appState.fhr)));
+  els.timelineReadout.textContent = appState.fhr.toUpperCase();
+  updateTimelineRail();
+  updateSummaryStrip();
+  updateAnimationUi();
 }
 
 function updateTimelineRail() {
