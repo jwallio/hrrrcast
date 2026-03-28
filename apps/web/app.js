@@ -2497,16 +2497,16 @@ function canonicalOverlayId(overlayId) {
 
 function updateSummaryStrip() {
   const overlayEntry = currentOverlayEntry();
-  els.summaryRun.textContent = `Run ${formatRunLabel(appState.run)}`;
+  els.summaryRun.textContent = formatRunLabel(appState.run);
   const memberLabel =
     appState.viewMode === "ensemble"
-      ? "Ensemble"
+      ? "ENS"
       : appState.viewMode === "compare"
-      ? `${appState.member || "--"} vs ${appState.compareMember || "--"}`
+      ? `${appState.member || "--"} / ${appState.compareMember || "--"}`
       : currentPrimaryMember() || "--";
   els.summaryMember.textContent = memberLabel;
-  els.summaryHour.textContent = appState.fhr ? appState.fhr.toUpperCase().replace("F", "Hour +") : "Hour";
-  els.summaryValid.textContent = `Valid ${formatValidTimeLabel(appState.run, appState.fhr)}`;
+  els.summaryHour.textContent = appState.fhr ? appState.fhr.toUpperCase().replace("F", "+") : "+000";
+  els.summaryValid.textContent = formatValidTimeLabel(appState.run, appState.fhr);
   els.summaryRegion.textContent = labelForDomain(appState.proj || "conus");
   els.mapFamilyTag.textContent = overlayEntry?.family ? overlayEntry.family.replace("_", " ") : "curated";
   els.mapInitTag.textContent = formatRunLabel(appState.run);
