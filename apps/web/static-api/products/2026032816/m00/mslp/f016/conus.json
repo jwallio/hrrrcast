@@ -1,0 +1,59 @@
+{
+  "asset_version": "2026032816",
+  "bbox": [
+    -127.0,
+    23.0,
+    -66.0,
+    50.0
+  ],
+  "clipped_grib_path": "data\\processed\\products\\2026032816\\m00\\mslp\\f016\\conus.grib2",
+  "display_path": "2026032816/m00/mslp/f016/conus",
+  "domain_id": "conus",
+  "field_key": "MSLMA:mean sea level",
+  "forecast_hour": 16,
+  "long_name": "MSLP (MAPS System Reduction)",
+  "member": "m00",
+  "mobile_preview_url": "./static-api/products/2026032816/m00/mslp/f016/conus.mobile.webp",
+  "native": false,
+  "netcdf_path": "data\\processed\\products\\2026032816\\m00\\mslp\\f016\\conus.nc",
+  "overlay_id": "mslp",
+  "preview_url": "./static-api/products/2026032816/m00/mslp/f016/conus.preview.png",
+  "run_id": "2026032816",
+  "shape": [
+    1,
+    1059,
+    1799
+  ],
+  "static_export": true,
+  "stats": {
+    "max": 103790.4921875,
+    "min": 100317.046875
+  },
+  "style": {
+    "colors": [
+      "#203268",
+      "#7dacd6",
+      "#f5f5f5",
+      "#e29e54",
+      "#872620"
+    ],
+    "labels": [
+      "980",
+      "995",
+      "1010",
+      "1025",
+      "1040"
+    ],
+    "palette": "pressure",
+    "range": [
+      98000.0,
+      104000.0
+    ],
+    "rawUnits": "Pa",
+    "transform": "pa_to_hpa",
+    "type": "continuous",
+    "units": "hPa"
+  },
+  "units": "Pa",
+  "variable_name": "MSLMA_meansealevel"
+}

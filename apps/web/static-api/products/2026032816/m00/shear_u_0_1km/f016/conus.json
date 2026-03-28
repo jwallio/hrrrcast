@@ -1,0 +1,58 @@
+{
+  "asset_version": "2026032816",
+  "bbox": [
+    -127.0,
+    23.0,
+    -66.0,
+    50.0
+  ],
+  "clipped_grib_path": "data\\processed\\products\\2026032816\\m00\\shear_u_0_1km\\f016\\conus.grib2",
+  "display_path": "2026032816/m00/shear_u_0_1km/f016/conus",
+  "domain_id": "conus",
+  "field_key": "VUCSH:1000-0 m above ground",
+  "forecast_hour": 16,
+  "long_name": "Vertical U-Component Shear",
+  "member": "m00",
+  "mobile_preview_url": "./static-api/products/2026032816/m00/shear_u_0_1km/f016/conus.mobile.webp",
+  "native": false,
+  "netcdf_path": "data\\processed\\products\\2026032816\\m00\\shear_u_0_1km\\f016\\conus.nc",
+  "overlay_id": "shear_u_0_1km",
+  "preview_url": "./static-api/products/2026032816/m00/shear_u_0_1km/f016/conus.preview.png",
+  "run_id": "2026032816",
+  "shape": [
+    1,
+    1059,
+    1799
+  ],
+  "static_export": true,
+  "stats": {
+    "max": 0.024399999529123306,
+    "min": -0.01310999970883131
+  },
+  "style": {
+    "colors": [
+      "#141428",
+      "#3a66ac",
+      "#55be78",
+      "#f0d649",
+      "#d15329"
+    ],
+    "labels": [
+      "0",
+      "10",
+      "20",
+      "30",
+      "40"
+    ],
+    "palette": "severe",
+    "range": [
+      0.0,
+      40.0
+    ],
+    "rawUnits": "m/s",
+    "type": "continuous",
+    "units": "m/s"
+  },
+  "units": "1/s",
+  "variable_name": "VUCSH_1000M0maboveground"
+}

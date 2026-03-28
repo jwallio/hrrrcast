@@ -1,0 +1,59 @@
+{
+  "asset_version": "2026032816",
+  "bbox": [
+    -127.0,
+    23.0,
+    -66.0,
+    50.0
+  ],
+  "clipped_grib_path": "data\\processed\\products\\2026032816\\m00\\temperature_850mb\\f008\\conus.grib2",
+  "display_path": "2026032816/m00/temperature_850mb/f008/conus",
+  "domain_id": "conus",
+  "field_key": "TMP:850 mb",
+  "forecast_hour": 8,
+  "long_name": "Temperature",
+  "member": "m00",
+  "mobile_preview_url": "./static-api/products/2026032816/m00/temperature_850mb/f008/conus.mobile.webp",
+  "native": false,
+  "netcdf_path": "data\\processed\\products\\2026032816\\m00\\temperature_850mb\\f008\\conus.nc",
+  "overlay_id": "temperature_850mb",
+  "preview_url": "./static-api/products/2026032816/m00/temperature_850mb/f008/conus.preview.png",
+  "run_id": "2026032816",
+  "shape": [
+    1,
+    1059,
+    1799
+  ],
+  "static_export": true,
+  "stats": {
+    "max": 301.70001220703125,
+    "min": 247.97000122070312
+  },
+  "style": {
+    "colors": [
+      "#213875",
+      "#4a90e2",
+      "#f6f6c6",
+      "#e67b3a",
+      "#93210b"
+    ],
+    "labels": [
+      "-10",
+      "10",
+      "32",
+      "60",
+      "90"
+    ],
+    "palette": "temperature",
+    "range": [
+      250.0,
+      315.0
+    ],
+    "rawUnits": "K",
+    "transform": "kelvin_to_fahrenheit",
+    "type": "continuous",
+    "units": "F"
+  },
+  "units": "K",
+  "variable_name": "TMP_850mb"
+}
