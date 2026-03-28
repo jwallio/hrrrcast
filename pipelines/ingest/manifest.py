@@ -52,10 +52,12 @@ def build_run_manifest(
     discovered_member_hours: dict[str, list[int]] = {}
     discovered_overlay_ready = 0
     for member, hour_map in sorted(grouped.items()):
-        discovered_member_hours[member] = sorted(hour_map)
+        available_hours: list[int] = []
         hour_payload: dict[str, object] = {}
         for forecast_hour, object_pair in sorted(hour_map.items()):
-            idx_object = object_pair["idx"]
+            idx_object = object_pair.get("idx")
+            if idx_object is None:
+                continue
             grib_object = object_pair.get("grib")
             idx_text = client.fetch_text(idx_object.key)
             cached_idx_path = cache_root / Path(idx_object.key).name
@@ -81,9 +83,11 @@ def build_run_manifest(
                 overlays=overlay_map,
             )
             hour_payload[f"{forecast_hour:03d}"] = inventory.to_dict()
+            available_hours.append(forecast_hour)
+        discovered_member_hours[member] = available_hours
         members_payload[member] = {
-            "forecast_hours": discovered_member_hours[member],
-            "forecast_hour_count": len(discovered_member_hours[member]),
+            "forecast_hours": available_hours,
+            "forecast_hour_count": len(available_hours),
             "forecast_hour_details": hour_payload,
         }
 
