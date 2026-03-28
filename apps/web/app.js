@@ -8,47 +8,14 @@
   const SOURCE_BBOX = [-127.0, 23.0, -66.0, 50.0];
 
   const FAMILY_CONFIG = [
-    {
-      id: "featured",
-      label: "Featured",
-      match: (overlay) => overlay.featured && overlay.group !== "native",
-    },
-    {
-      id: "precip",
-      label: "Precip",
-      match: (overlay) =>
-        ["precipitation", "radar", "winter", "moisture"].includes(overlay.family),
-    },
-    {
-      id: "severe",
-      label: "Severe",
-      match: (overlay) => overlay.family === "severe",
-    },
-    {
-      id: "surface",
-      label: "Surface",
-      match: (overlay) => ["surface", "synoptic", "temperature"].includes(overlay.family),
-    },
-    {
-      id: "upper_air",
-      label: "Upper",
-      match: (overlay) => overlay.family === "upper_air",
-    },
-    {
-      id: "wind",
-      label: "Wind",
-      match: (overlay) => ["wind", "dynamics"].includes(overlay.family),
-    },
-    {
-      id: "clouds",
-      label: "Clouds",
-      match: (overlay) => overlay.family === "clouds",
-    },
-    {
-      id: "ensemble",
-      label: "Ens",
-      match: (overlay) => overlay.family === "ensemble",
-    },
+    { id: "featured", label: "Featured", match: (overlay) => overlay.featured && overlay.group !== "native" },
+    { id: "precip", label: "Precip", match: (overlay) => ["precipitation", "radar", "winter", "moisture"].includes(overlay.family) },
+    { id: "severe", label: "Severe", match: (overlay) => overlay.family === "severe" },
+    { id: "surface", label: "Surface", match: (overlay) => ["surface", "synoptic", "temperature"].includes(overlay.family) },
+    { id: "upper_air", label: "Upper", match: (overlay) => overlay.family === "upper_air" },
+    { id: "wind", label: "Wind", match: (overlay) => ["wind", "dynamics"].includes(overlay.family) },
+    { id: "clouds", label: "Clouds", match: (overlay) => overlay.family === "clouds" },
+    { id: "ensemble", label: "Ens", match: (overlay) => overlay.family === "ensemble" },
   ];
 
   const DOMAIN_PADDING = {
@@ -61,6 +28,15 @@
     carolinas: { x: 0.2, y: 0.2 },
   };
 
+  const REGION_STATE_NAMES = {
+    southeast: ["Alabama", "Florida", "Georgia", "Mississippi", "North Carolina", "South Carolina", "Tennessee"],
+    northeast: ["Connecticut", "Delaware", "Maine", "Maryland", "Massachusetts", "New Hampshire", "New Jersey", "New York", "Pennsylvania", "Rhode Island", "Vermont", "Virginia", "West Virginia"],
+    south_central: ["Arkansas", "Kansas", "Louisiana", "Missouri", "New Mexico", "Oklahoma", "Texas"],
+    northwest: ["Idaho", "Montana", "Oregon", "Washington", "Wyoming"],
+    southwest: ["Arizona", "California", "Colorado", "Nevada", "New Mexico", "Utah"],
+    carolinas: ["North Carolina", "South Carolina"],
+  };
+
   const MEMBER_LABELS = {
     ens: "Ensemble",
     m00: "Member 00",
@@ -69,9 +45,8 @@
   const dom = {
     runBadge: document.getElementById("runBadge"),
     familyStrip: document.getElementById("familyStrip"),
-    runSelect: document.getElementById("runSelect"),
-    domainSelect: document.getElementById("domainSelect"),
-    memberSelect: document.getElementById("memberSelect"),
+    modeStrip: document.getElementById("modeStrip"),
+    regionStrip: document.getElementById("regionStrip"),
     overlaySelect: document.getElementById("overlaySelect"),
     overlayFamilyLabel: document.getElementById("overlayFamilyLabel"),
     productTitle: document.getElementById("productTitle"),
@@ -114,6 +89,7 @@
     layerMap: new Map(),
     domainMap: new Map(),
     index: null,
+    statesGeo: [],
   };
 
   const imageCache = new Map();
@@ -129,22 +105,23 @@
   });
 
   async function init() {
-    const [runsPayload, layersPayload, domainsPayload, indexPayload] = await Promise.all([
+    const [runsPayload, layersPayload, domainsPayload, indexPayload, statesPayload] = await Promise.all([
       loadJson(`${STATIC_ROOT}/runs.json`),
       loadJson(`${STATIC_ROOT}/layers.json`),
       loadJson(`${STATIC_ROOT}/domains.json`),
       loadJson(`${STATIC_ROOT}/products-index.json`),
+      loadJson("./us-states.geojson"),
     ]);
 
     refs.runs = Array.isArray(runsPayload.runs) ? runsPayload.runs.slice() : [];
     refs.runMap = new Map(refs.runs.map((run) => [run.run_id, run]));
-    refs.layerMap = new Map(
-      (layersPayload.weatherOverlays || []).map((overlay) => [overlay.id, overlay])
-    );
-    refs.domainMap = new Map(
-      (domainsPayload.domains || []).map((domain) => [domain.id, domain])
-    );
+    refs.layerMap = new Map((layersPayload.weatherOverlays || []).map((overlay) => [overlay.id, overlay]));
+    refs.domainMap = new Map((domainsPayload.domains || []).map((domain) => [domain.id, domain]));
     refs.index = indexPayload.runs || {};
+    refs.statesGeo = (statesPayload.features || []).filter((feature) => {
+      const name = feature && feature.properties ? feature.properties.name : "";
+      return !["Alaska", "Hawaii", "Puerto Rico"].includes(name);
+    });
 
     hydrateStateFromUrl();
     seedDefaults(layersPayload.defaults || {});
@@ -154,32 +131,9 @@
   }
 
   function bindEvents() {
-    dom.runSelect.addEventListener("change", () => {
-      state.runId = dom.runSelect.value;
-      state.member = null;
-      state.overlayId = null;
-      ensureConsistentState();
-      renderAll();
-    });
-
-    dom.domainSelect.addEventListener("change", () => {
-      state.domainId = dom.domainSelect.value;
-      renderHeader();
-      updateUrl();
-      renderFrame();
-    });
-
-    dom.memberSelect.addEventListener("change", () => {
-      state.member = dom.memberSelect.value;
-      ensureConsistentState();
-      renderAll();
-    });
-
     dom.overlaySelect.addEventListener("change", () => {
       state.overlayId = dom.overlaySelect.value;
-      const family = FAMILY_CONFIG.find((item) =>
-        item.match(refs.layerMap.get(state.overlayId) || {})
-      );
+      const family = FAMILY_CONFIG.find((item) => item.match(refs.layerMap.get(state.overlayId) || {}));
       if (family) {
         state.familyId = family.id;
       }
@@ -274,11 +228,7 @@
     }
 
     const availableHours = getOverlayHours(state.runId, state.member, state.overlayId);
-    if (availableHours.length) {
-      state.hour = nearestHour(availableHours, state.hour);
-    } else {
-      state.hour = 0;
-    }
+    state.hour = availableHours.length ? nearestHour(availableHours, state.hour) : 0;
 
     if (!refs.domainMap.has(state.domainId)) {
       state.domainId = SOURCE_DOMAIN_ID;
@@ -286,47 +236,15 @@
   }
 
   function renderAll() {
-    renderRunOptions();
-    renderMemberOptions();
     renderFamilyStrip();
+    renderModeStrip();
+    renderRegionStrip();
     renderOverlayOptions();
     renderHeader();
     renderLegend();
     renderTimeline();
     renderFrame();
     updateUrl();
-  }
-
-  function renderRunOptions() {
-    dom.runSelect.innerHTML = "";
-    for (const run of refs.runs) {
-      const option = document.createElement("option");
-      option.value = run.run_id;
-      option.textContent = `${formatRunStamp(run.run_id)}${run.status === "ready" ? "" : " partial"}`;
-      option.selected = run.run_id === state.runId;
-      dom.runSelect.appendChild(option);
-    }
-
-    dom.domainSelect.innerHTML = "";
-    for (const domain of refs.domainMap.values()) {
-      const option = document.createElement("option");
-      option.value = domain.id;
-      option.textContent = domain.label;
-      option.selected = domain.id === state.domainId;
-      dom.domainSelect.appendChild(option);
-    }
-  }
-
-  function renderMemberOptions() {
-    const members = getAvailableMembers(state.runId);
-    dom.memberSelect.innerHTML = "";
-    for (const member of members) {
-      const option = document.createElement("option");
-      option.value = member;
-      option.textContent = MEMBER_LABELS[member] || member.toUpperCase();
-      option.selected = member === state.member;
-      dom.memberSelect.appendChild(option);
-    }
   }
 
   function renderFamilyStrip() {
@@ -348,10 +266,44 @@
     }
   }
 
+  function renderModeStrip() {
+    dom.modeStrip.innerHTML = "";
+    for (const member of getAvailableMembers(state.runId)) {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "chip-button";
+      button.textContent = MEMBER_LABELS[member] || member.toUpperCase();
+      button.setAttribute("aria-pressed", String(member === state.member));
+      button.addEventListener("click", () => {
+        state.member = member;
+        ensureConsistentState();
+        renderAll();
+      });
+      dom.modeStrip.appendChild(button);
+    }
+  }
+
+  function renderRegionStrip() {
+    dom.regionStrip.innerHTML = "";
+    for (const domain of refs.domainMap.values()) {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "chip-button";
+      button.textContent = domain.label;
+      button.setAttribute("aria-pressed", String(domain.id === state.domainId));
+      button.addEventListener("click", () => {
+        state.domainId = domain.id;
+        renderHeader();
+        renderFrame();
+        updateUrl();
+      });
+      dom.regionStrip.appendChild(button);
+    }
+  }
+
   function renderOverlayOptions() {
     const overlays = getOverlaysForFamily(state.runId, state.member, state.familyId);
     dom.overlaySelect.innerHTML = "";
-
     for (const overlay of overlays) {
       const option = document.createElement("option");
       option.value = overlay.id;
@@ -368,9 +320,7 @@
 
     dom.runBadge.textContent = `Run ${formatRunStamp(state.runId)}${run && run.status !== "ready" ? " partial" : ""}`;
     dom.overlayFamilyLabel.textContent = familyLabel(state.familyId);
-    dom.productTitle.textContent = overlay
-      ? `${overlay.label} | ${domain ? domain.label : "CONUS"}`
-      : "Forecast product";
+    dom.productTitle.textContent = overlay ? `${overlay.label} | ${domain ? domain.label : "CONUS"}` : "Forecast product";
     dom.metaInit.textContent = `${formatRunStamp(state.runId)} init`;
     dom.metaValid.textContent = `${formatValidStamp(state.runId, state.hour)} valid`;
     dom.metaMember.textContent = MEMBER_LABELS[state.member] || state.member.toUpperCase();
@@ -383,13 +333,12 @@
     dom.legendUnits.textContent = style.units || "";
     dom.legendScale.innerHTML = "";
 
-    if (!overlay || !style) {
+    if (!overlay) {
       return;
     }
 
     const colors = Array.isArray(style.colors) ? style.colors : [];
     const labels = Array.isArray(style.labels) ? style.labels : [];
-
     if (!colors.length) {
       return;
     }
@@ -397,7 +346,7 @@
     const isCategorical =
       style.type === "categorical" ||
       overlay.id === "ptype" ||
-      colors.length <= 5 && labels.length === colors.length && !style.range;
+      (colors.length <= 5 && labels.length === colors.length && !style.range);
 
     if (isCategorical) {
       colors.forEach((color, index) => {
@@ -457,16 +406,16 @@
       if (hour === state.hour) {
         chip.classList.add("is-active");
       }
-        chip.addEventListener("click", () => {
-          state.hour = hour;
-          stopPlayback();
-          renderHeader();
-          renderTimeline();
-          renderFrame();
-          updateUrl();
-        });
-        dom.hourChips.appendChild(chip);
-      }
+      chip.addEventListener("click", () => {
+        state.hour = hour;
+        stopPlayback();
+        renderHeader();
+        renderTimeline();
+        renderFrame();
+        updateUrl();
+      });
+      dom.hourChips.appendChild(chip);
+    }
   }
 
   function renderFrame() {
@@ -510,25 +459,19 @@
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.clearRect(0, 0, width, height);
 
-    const crop = computeCropRect(width, height, state.domainId, image.naturalWidth, image.naturalHeight);
-    ctx.drawImage(
-      image,
-      crop.sx,
-      crop.sy,
-      crop.sw,
-      crop.sh,
-      0,
-      0,
-      width,
-      height
-    );
+    const viewBBox = getViewBBox(width, height, state.domainId);
+    const crop = computeCropRect(viewBBox, image.naturalWidth, image.naturalHeight);
+
+    ctx.drawImage(image, crop.sx, crop.sy, crop.sw, crop.sh, 0, 0, width, height);
 
     const vignette = ctx.createLinearGradient(0, 0, 0, height);
-    vignette.addColorStop(0, "rgba(7, 16, 28, 0.08)");
+    vignette.addColorStop(0, "rgba(7, 16, 28, 0.06)");
     vignette.addColorStop(0.8, "rgba(7, 16, 28, 0)");
     vignette.addColorStop(1, "rgba(7, 16, 28, 0.12)");
     ctx.fillStyle = vignette;
     ctx.fillRect(0, 0, width, height);
+
+    drawStateOverlay(viewBBox, width, height);
   }
 
   function clearCanvas() {
@@ -544,18 +487,19 @@
     ctx.fillRect(0, 0, width, height);
   }
 
-  function computeCropRect(viewWidth, viewHeight, domainId, imageWidth, imageHeight) {
-    const source = SOURCE_BBOX;
+  function getViewBBox(viewWidth, viewHeight, domainId) {
     const domain = refs.domainMap.get(domainId) || refs.domainMap.get(SOURCE_DOMAIN_ID);
-    const targetBBox = domain && domain.viewport ? domain.viewport.bbox : source;
-    const paddedBBox = fitBBoxToAspect(targetBBox, viewWidth / viewHeight, domainId, source);
+    const targetBBox = domain && domain.viewport ? domain.viewport.bbox : SOURCE_BBOX;
+    return fitBBoxToAspect(targetBBox, viewWidth / viewHeight, domainId, SOURCE_BBOX);
+  }
 
-    const sourceWidth = source[2] - source[0];
-    const sourceHeight = source[3] - source[1];
-    const left = (paddedBBox[0] - source[0]) / sourceWidth;
-    const right = (paddedBBox[2] - source[0]) / sourceWidth;
-    const top = (source[3] - paddedBBox[3]) / sourceHeight;
-    const bottom = (source[3] - paddedBBox[1]) / sourceHeight;
+  function computeCropRect(viewBBox, imageWidth, imageHeight) {
+    const sourceWidth = SOURCE_BBOX[2] - SOURCE_BBOX[0];
+    const sourceHeight = SOURCE_BBOX[3] - SOURCE_BBOX[1];
+    const left = (viewBBox[0] - SOURCE_BBOX[0]) / sourceWidth;
+    const right = (viewBBox[2] - SOURCE_BBOX[0]) / sourceWidth;
+    const top = (SOURCE_BBOX[3] - viewBBox[3]) / sourceHeight;
+    const bottom = (SOURCE_BBOX[3] - viewBBox[1]) / sourceHeight;
 
     return {
       sx: clamp(left, 0, 1) * imageWidth,
@@ -565,19 +509,89 @@
     };
   }
 
+  function drawStateOverlay(viewBBox, width, height) {
+    if (!refs.statesGeo.length) {
+      return;
+    }
+
+    const highlightedStates = new Set(REGION_STATE_NAMES[state.domainId] || []);
+    const scaleX = width / (viewBBox[2] - viewBBox[0]);
+    const scaleY = height / (viewBBox[3] - viewBBox[1]);
+
+    ctx.save();
+    ctx.lineJoin = "round";
+    ctx.lineCap = "round";
+
+    for (const feature of refs.statesGeo) {
+      if (!featureIntersectsBBox(feature, viewBBox)) {
+        continue;
+      }
+
+      const name = feature.properties ? feature.properties.name : "";
+      const isHighlighted = highlightedStates.has(name);
+      const polygons =
+        feature.geometry && feature.geometry.type === "Polygon"
+          ? [feature.geometry.coordinates]
+          : (feature.geometry && feature.geometry.coordinates) || [];
+
+      ctx.beginPath();
+      for (const polygon of polygons) {
+        for (const ring of polygon) {
+          ring.forEach((point, index) => {
+            const x = (point[0] - viewBBox[0]) * scaleX;
+            const y = (viewBBox[3] - point[1]) * scaleY;
+            if (index === 0) {
+              ctx.moveTo(x, y);
+            } else {
+              ctx.lineTo(x, y);
+            }
+          });
+          ctx.closePath();
+        }
+      }
+
+      if (isHighlighted) {
+        ctx.fillStyle = "rgba(231, 154, 55, 0.08)";
+        ctx.fill();
+      }
+
+      ctx.strokeStyle = isHighlighted ? "rgba(255, 248, 232, 0.95)" : "rgba(244, 248, 253, 0.55)";
+      ctx.lineWidth = isHighlighted ? 1.35 : 0.7;
+      ctx.stroke();
+    }
+
+    ctx.restore();
+  }
+
+  function featureIntersectsBBox(feature, bbox) {
+    const polygons =
+      feature.geometry && feature.geometry.type === "Polygon"
+        ? [feature.geometry.coordinates]
+        : (feature.geometry && feature.geometry.coordinates) || [];
+
+    for (const polygon of polygons) {
+      for (const ring of polygon) {
+        for (const point of ring) {
+          if (
+            point[0] >= bbox[0] &&
+            point[0] <= bbox[2] &&
+            point[1] >= bbox[1] &&
+            point[1] <= bbox[3]
+          ) {
+            return true;
+          }
+        }
+      }
+    }
+    return false;
+  }
+
   function fitBBoxToAspect(targetBBox, aspect, domainId, bounds) {
     const pad = DOMAIN_PADDING[domainId] || DOMAIN_PADDING[SOURCE_DOMAIN_ID];
-    let minLon = targetBBox[0];
-    let minLat = targetBBox[1];
-    let maxLon = targetBBox[2];
-    let maxLat = targetBBox[3];
-
-    const expandLon = (maxLon - minLon) * pad.x;
-    const expandLat = (maxLat - minLat) * pad.y;
-    minLon -= expandLon;
-    maxLon += expandLon;
-    minLat -= expandLat;
-    maxLat += expandLat;
+    let minLon = targetBBox[0] - (targetBBox[2] - targetBBox[0]) * pad.x;
+    let maxLon = targetBBox[2] + (targetBBox[2] - targetBBox[0]) * pad.x;
+    let minLat = targetBBox[1] - (targetBBox[3] - targetBBox[1]) * pad.y;
+    let maxLat = targetBBox[3] + (targetBBox[3] - targetBBox[1]) * pad.y;
 
     let width = maxLon - minLon;
     let height = maxLat - minLat;
@@ -661,15 +675,13 @@
       if (target === state.hour) {
         continue;
       }
-      const key = getFrameKey(state.runId, state.member, state.overlayId, target);
-      getImageForFrame(key).catch(() => {});
+      getImageForFrame(getFrameKey(state.runId, state.member, state.overlayId, target)).catch(() => {});
     }
   }
 
   function trimImageCache() {
     while (imageCache.size > CACHE_LIMIT) {
-      const oldestKey = imageCache.keys().next().value;
-      imageCache.delete(oldestKey);
+      imageCache.delete(imageCache.keys().next().value);
     }
   }
 
@@ -680,8 +692,7 @@
     }
 
     const currentIndex = hours.indexOf(state.hour);
-    const nextIndex = (currentIndex + direction + hours.length) % hours.length;
-    state.hour = hours[nextIndex];
+    state.hour = hours[(currentIndex + direction + hours.length) % hours.length];
     stopPlayback();
     renderHeader();
     renderTimeline();
@@ -709,8 +720,7 @@
         return;
       }
       const currentIndex = hours.indexOf(state.hour);
-      const nextIndex = (currentIndex + 1) % hours.length;
-      state.hour = hours[nextIndex];
+      state.hour = hours[(currentIndex + 1) % hours.length];
       renderHeader();
       renderTimeline();
       renderFrame();
@@ -741,13 +751,11 @@
     params.set("proj", state.domainId);
     params.set("fhr", String(state.hour));
     params.set("family", state.familyId);
-    const nextUrl = `${window.location.pathname}?${params.toString()}`;
-    window.history.replaceState({}, "", nextUrl);
+    window.history.replaceState({}, "", `${window.location.pathname}?${params.toString()}`);
   }
 
   function getFrameKey(runId, member, overlayId, hour) {
-    const variant = prefersMobilePreview() ? "mobile" : "desktop";
-    return [runId, member, overlayId, padHour(hour), variant].join("|");
+    return [runId, member, overlayId, padHour(hour), prefersMobilePreview() ? "mobile" : "desktop"].join("|");
   }
 
   function getFrameUrlFromKey(key) {
@@ -762,10 +770,7 @@
 
   function getAvailableMembers(runId) {
     const run = refs.index[runId];
-    if (!run || !run.members) {
-      return [];
-    }
-    return Object.keys(run.members);
+    return run && run.members ? Object.keys(run.members) : [];
   }
 
   function getOverlayHours(runId, member, overlayId) {
@@ -777,9 +782,8 @@
     const hours = [];
     const forecastHours = run.members[member].forecast_hours || {};
     for (const [hourKey, hourData] of Object.entries(forecastHours)) {
-      const numericHour = Number(hourKey.slice(1));
       if (hourData.overlays && overlayId in hourData.overlays) {
-        hours.push(numericHour);
+        hours.push(Number(hourKey.slice(1)));
       }
     }
     return hours.sort((left, right) => left - right);
@@ -792,25 +796,18 @@
     }
 
     const overlayIds = new Set();
-    const forecastHours = run.members[member].forecast_hours || {};
-    for (const hourData of Object.values(forecastHours)) {
+    for (const hourData of Object.values(run.members[member].forecast_hours || {})) {
       for (const overlayId of Object.keys(hourData.overlays || {})) {
         overlayIds.add(overlayId);
       }
     }
 
-    return [...overlayIds]
-      .map((id) => refs.layerMap.get(id))
-      .filter(Boolean)
-      .sort(sortOverlayList);
+    return [...overlayIds].map((id) => refs.layerMap.get(id)).filter(Boolean).sort(sortOverlayList);
   }
 
   function getOverlaysForFamily(runId, member, familyId) {
     const family = FAMILY_CONFIG.find((item) => item.id === familyId);
-    if (!family) {
-      return [];
-    }
-    return getAvailableOverlays(runId, member).filter((overlay) => family.match(overlay));
+    return family ? getAvailableOverlays(runId, member).filter((overlay) => family.match(overlay)) : [];
   }
 
   function findFirstAvailableFamily(runId, member) {
@@ -837,7 +834,7 @@
     }
 
     let best = hours[0];
-    let bestDistance = Math.abs(hours[0] - target);
+    let bestDistance = Math.abs(best - target);
     for (const hour of hours) {
       const distance = Math.abs(hour - target);
       if (distance < bestDistance) {
@@ -849,8 +846,7 @@
   }
 
   function formatRunStamp(runId) {
-    const date = parseRunDate(runId);
-    return formatStamp(date);
+    return formatStamp(parseRunDate(runId));
   }
 
   function formatValidStamp(runId, forecastHour) {
@@ -869,9 +865,7 @@
 
   function formatStamp(date) {
     const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    return `${String(date.getUTCHours()).padStart(2, "0")}Z ${months[date.getUTCMonth()]} ${String(
-      date.getUTCDate()
-    ).padStart(2, "0")}`;
+    return `${String(date.getUTCHours()).padStart(2, "0")}Z ${months[date.getUTCMonth()]} ${String(date.getUTCDate()).padStart(2, "0")}`;
   }
 
   function padHour(value) {
@@ -882,10 +876,7 @@
     if (typeof value !== "number" || Number.isNaN(value)) {
       return "";
     }
-    if (Math.abs(value) >= 100 || Number.isInteger(value)) {
-      return String(Math.round(value));
-    }
-    return value.toFixed(1);
+    return Math.abs(value) >= 100 || Number.isInteger(value) ? String(Math.round(value)) : value.toFixed(1);
   }
 
   function clamp(value, min, max) {

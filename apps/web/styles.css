@@ -3,7 +3,6 @@
   --page-bg: #edf2f7;
   --panel-bg: #ffffff;
   --panel-border: #c4cfda;
-  --panel-shadow: 0 6px 16px rgba(17, 33, 51, 0.06);
   --ink: #142433;
   --ink-soft: #617283;
   --navy: #24384d;
@@ -57,7 +56,6 @@ button {
   border: 1px solid #30465d;
   border-radius: var(--radius-md);
   background: linear-gradient(180deg, #2b4159 0%, #1b2d41 100%);
-  box-shadow: var(--panel-shadow);
   color: #f5f8fc;
 }
 
@@ -101,30 +99,42 @@ button {
   background: #f6f9fc;
 }
 
-.family-strip {
+.family-strip,
+.chip-strip,
+.hour-chips {
   display: flex;
   gap: 4px;
   overflow-x: auto;
-  padding-bottom: 4px;
   scrollbar-width: none;
 }
 
-.family-strip::-webkit-scrollbar {
+.family-strip::-webkit-scrollbar,
+.chip-strip::-webkit-scrollbar,
+.hour-chips::-webkit-scrollbar {
   display: none;
 }
 
-.family-button {
+.family-strip {
+  padding-bottom: 4px;
+}
+
+.family-button,
+.chip-button {
   flex: 0 0 auto;
-  min-width: 88px;
-  padding: 8px 10px;
+  border-radius: 8px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.family-button {
+  min-width: 82px;
+  padding: 7px 9px;
   border: 1px solid #31465d;
   border-radius: 8px 8px 0 0;
   background: linear-gradient(180deg, #31475f 0%, #24384d 100%);
   color: #ebf2f9;
-  font-size: 0.71rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
 }
 
 .family-button[aria-pressed="true"] {
@@ -134,20 +144,56 @@ button {
   box-shadow: inset 0 -2px 0 var(--blue);
 }
 
-.family-button:disabled {
+.family-button:disabled,
+.chip-button:disabled {
   opacity: 0.45;
   cursor: default;
 }
 
-.toolbar {
+.selection-rails {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 6px;
   padding: 7px;
   border: 1px solid var(--panel-border);
   border-radius: 0 var(--radius-md) var(--radius-md) var(--radius-md);
   background: #ffffff;
-  align-items: end;
+}
+
+.selection-row {
+  display: grid;
+  grid-template-columns: 54px minmax(0, 1fr);
+  gap: 8px;
+  align-items: center;
+}
+
+.selection-label {
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.chip-button {
+  min-width: 64px;
+  padding: 6px 9px;
+  border: 1px solid #cad3dd;
+  background: #f7fafc;
+  color: var(--ink-soft);
+}
+
+.chip-button[aria-pressed="true"] {
+  border-color: #31465d;
+  background: linear-gradient(180deg, #31475f 0%, #24384d 100%);
+  color: #f5f8fc;
+}
+
+.toolbar {
+  margin-top: 6px;
+  padding: 7px;
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius-md);
+  background: #ffffff;
 }
 
 .field {
@@ -173,10 +219,6 @@ button {
   border-radius: var(--radius-sm);
   background: #ffffff;
   color: var(--ink);
-}
-
-.field-product {
-  grid-column: 1 / -1;
 }
 
 .product-shell {
@@ -241,7 +283,7 @@ button {
   width: 100%;
   aspect-ratio: var(--frame-aspect);
   background:
-    radial-gradient(circle at top left, rgba(255, 255, 255, 0.22), transparent 34%),
+    radial-gradient(circle at top left, rgba(255, 255, 255, 0.18), transparent 34%),
     linear-gradient(180deg, #0d1825 0%, #1a2939 100%);
 }
 
@@ -439,18 +481,6 @@ button {
   accent-color: var(--accent);
 }
 
-.hour-chips {
-  display: flex;
-  gap: 6px;
-  overflow-x: auto;
-  padding-bottom: 2px;
-  scrollbar-width: none;
-}
-
-.hour-chips::-webkit-scrollbar {
-  display: none;
-}
-
 .hour-chip {
   flex: 0 0 auto;
   min-width: 54px;
@@ -469,19 +499,7 @@ button {
   color: #fff5e9;
 }
 
-.hour-chip.is-disabled {
-  opacity: 0.42;
-}
-
 @media (max-width: 900px) {
-  .toolbar {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  .field-product {
-    grid-column: 1 / -1;
-  }
-
   .product-head {
     flex-direction: column;
   }
@@ -531,19 +549,25 @@ button {
   }
 
   .family-button {
-    min-width: 78px;
+    min-width: 76px;
     padding: 7px 8px;
-    font-size: 0.64rem;
+    font-size: 0.62rem;
   }
 
+  .selection-rails,
   .toolbar {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 5px;
     padding: 6px;
   }
 
-  .field-product {
-    grid-column: 1 / -1;
+  .selection-row {
+    grid-template-columns: 42px minmax(0, 1fr);
+    gap: 6px;
+  }
+
+  .chip-button {
+    min-width: 58px;
+    padding: 6px 8px;
+    font-size: 0.62rem;
   }
 
   .field select,

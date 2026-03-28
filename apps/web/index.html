@@ -23,22 +23,19 @@
       <main class="viewer-shell">
         <nav class="family-strip" id="familyStrip" aria-label="Product families"></nav>
 
+        <section class="selection-rails" aria-label="Quick selection">
+          <div class="selection-row">
+            <span class="selection-label">Mode</span>
+            <nav class="chip-strip" id="modeStrip" aria-label="Forecast mode"></nav>
+          </div>
+
+          <div class="selection-row">
+            <span class="selection-label">Region</span>
+            <nav class="chip-strip" id="regionStrip" aria-label="Forecast region"></nav>
+          </div>
+        </section>
+
         <section class="toolbar" aria-label="Primary controls">
-          <label class="field field-run">
-            <span>Run</span>
-            <select id="runSelect"></select>
-          </label>
-
-          <label class="field field-region">
-            <span>Region</span>
-            <select id="domainSelect"></select>
-          </label>
-
-          <label class="field field-view">
-            <span>Mode</span>
-            <select id="memberSelect"></select>
-          </label>
-
           <label class="field field-product">
             <span>Field</span>
             <select id="overlaySelect"></select>
