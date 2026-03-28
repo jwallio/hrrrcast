@@ -216,6 +216,11 @@
             <h2>Forecast Hour</h2>
             <span id="timeline-readout" class="mini-meta"></span>
           </div>
+          <div class="timeline-meta-row">
+            <span class="timeline-meta-pill">Init <strong id="timeline-init-label">--</strong></span>
+            <span class="timeline-meta-pill">Valid <strong id="timeline-valid-label">--</strong></span>
+            <span class="timeline-meta-pill">Step <strong id="timeline-step-label">--</strong></span>
+          </div>
           <div class="timeline-actions">
             <button id="animate-toggle" class="secondary-button" type="button">Play</button>
             <label class="field compact-field">
@@ -228,6 +233,7 @@
             </label>
           </div>
           <input id="timeline-slider" type="range" min="0" max="0" step="1" value="0" />
+          <div id="timeline-ticks" class="timeline-ticks"></div>
         </section>
 
         <section class="panel-group advanced-panel">
@@ -254,27 +260,48 @@
       </aside>
 
       <main class="map-stage">
-        <div id="map"></div>
-        <div id="mobile-timeline-host" class="mobile-flow-host"></div>
-        <div id="mobile-quick-host" class="mobile-flow-host"></div>
-        <div class="map-overlay">
-          <div class="map-top-stack">
-            <div class="map-topbar">
-              <div class="summary-strip">
-                <span id="summary-run" class="summary-pill">Run</span>
-                <span id="summary-member" class="summary-pill">Member</span>
-                <span id="summary-hour" class="summary-pill">Hour</span>
-                <span id="summary-overlay" class="summary-pill summary-pill-wide">Overlay</span>
+        <div class="map-frame-shell">
+          <div class="map-frame">
+            <div id="map"></div>
+            <div class="map-overlay">
+              <div class="map-top-stack">
+                <div class="map-topbar">
+                  <div class="summary-strip">
+                    <span id="summary-run" class="summary-pill">Run</span>
+                    <span id="summary-member" class="summary-pill">Member</span>
+                    <span id="summary-hour" class="summary-pill">Hour</span>
+                    <span id="summary-valid" class="summary-pill">Valid</span>
+                    <span id="summary-region" class="summary-pill">Region</span>
+                  </div>
+                </div>
+                <div class="map-title-block">
+                  <p class="eyebrow">Forecast Product</p>
+                  <h2 id="map-title">Loading</h2>
+                  <p id="map-subtitle" class="map-subtitle"></p>
+                  <div class="map-meta-strip">
+                    <span class="map-meta-pill">Family <strong id="map-family-tag">--</strong></span>
+                    <span class="map-meta-pill">Init <strong id="map-init-tag">--</strong></span>
+                    <span class="map-meta-pill">Valid <strong id="map-valid-tag">--</strong></span>
+                  </div>
+                </div>
               </div>
-            </div>
-            <div class="map-title-block">
-              <p class="eyebrow">Viewer State</p>
-              <h2 id="map-title">Loading</h2>
-              <p id="map-subtitle" class="map-subtitle"></p>
+              <div id="asset-status" class="asset-status">Loading processed assets...</div>
             </div>
           </div>
-          <div id="asset-status" class="asset-status">Loading processed assets...</div>
+          <div class="map-lower-rail">
+            <div id="map-legend-rail" class="map-legend-rail">
+              <div class="map-legend-head">
+                <p class="eyebrow">Legend</p>
+                <span id="map-legend-units" class="mini-meta"></span>
+              </div>
+              <div id="map-legend-panel" class="legend-panel map-legend-panel"></div>
+            </div>
+            <div id="desktop-timeline-host" class="desktop-timeline-host"></div>
+          </div>
         </div>
+        <div id="mobile-timeline-host" class="mobile-flow-host"></div>
+        <div id="mobile-legend-host" class="mobile-flow-host mobile-legend-host"></div>
+        <div id="mobile-quick-host" class="mobile-flow-host"></div>
       </main>
     </div>
 

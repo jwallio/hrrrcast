@@ -78,6 +78,204 @@ const REGION_STATES = {
   carolinas: ["North Carolina", "South Carolina"],
 };
 
+const FAMILY_THEMES = {
+  default: {
+    accent: "#f28c45",
+    background: "plain_ocean",
+    stateColor: "#8e6344",
+    countryColor: "#7f5d47",
+    stateOpacity: 0.52,
+    countryOpacity: 0.62,
+    basemapOpacity: 0.78,
+    basemapSaturation: -0.45,
+    basemapBrightnessMin: 0.95,
+    basemapBrightnessMax: 1.05,
+    maskOpacity: 0.12,
+    graticuleOpacity: 0.14,
+    overlayOpacity: 0.9,
+  },
+  severe: {
+    accent: "#ef7b39",
+    background: "terrain_light",
+    stateColor: "#6e5b4f",
+    countryColor: "#5c4d43",
+    stateOpacity: 0.38,
+    countryOpacity: 0.5,
+    basemapOpacity: 0.52,
+    basemapSaturation: -0.65,
+    basemapBrightnessMin: 0.78,
+    basemapBrightnessMax: 0.92,
+    maskOpacity: 0.2,
+    graticuleOpacity: 0.1,
+    overlayOpacity: 0.96,
+  },
+  upper_air: {
+    accent: "#d8733a",
+    background: "plain_ocean",
+    stateColor: "#927566",
+    countryColor: "#81695c",
+    stateOpacity: 0.34,
+    countryOpacity: 0.46,
+    basemapOpacity: 0.58,
+    basemapSaturation: -0.72,
+    basemapBrightnessMin: 0.9,
+    basemapBrightnessMax: 1.02,
+    maskOpacity: 0.14,
+    graticuleOpacity: 0.18,
+    overlayOpacity: 0.94,
+  },
+  synoptic: {
+    accent: "#d8894e",
+    background: "plain_ocean",
+    stateColor: "#8d7364",
+    countryColor: "#7a6558",
+    stateOpacity: 0.36,
+    countryOpacity: 0.5,
+    basemapOpacity: 0.63,
+    basemapSaturation: -0.58,
+    basemapBrightnessMin: 0.92,
+    basemapBrightnessMax: 1.03,
+    maskOpacity: 0.16,
+    graticuleOpacity: 0.16,
+    overlayOpacity: 0.93,
+  },
+  surface: {
+    accent: "#f28c45",
+    background: "plain_ocean",
+    stateColor: "#8e6344",
+    countryColor: "#7f5d47",
+    stateOpacity: 0.46,
+    countryOpacity: 0.58,
+    basemapOpacity: 0.72,
+    basemapSaturation: -0.5,
+    basemapBrightnessMin: 0.95,
+    basemapBrightnessMax: 1.05,
+    maskOpacity: 0.12,
+    graticuleOpacity: 0.14,
+    overlayOpacity: 0.9,
+  },
+  wind: {
+    accent: "#e0894c",
+    background: "plain_ocean",
+    stateColor: "#877062",
+    countryColor: "#77655b",
+    stateOpacity: 0.32,
+    countryOpacity: 0.44,
+    basemapOpacity: 0.58,
+    basemapSaturation: -0.68,
+    basemapBrightnessMin: 0.91,
+    basemapBrightnessMax: 1.02,
+    maskOpacity: 0.15,
+    graticuleOpacity: 0.18,
+    overlayOpacity: 0.94,
+  },
+  moisture: {
+    accent: "#e38b4f",
+    background: "plain_ocean",
+    stateColor: "#8d7162",
+    countryColor: "#7a6459",
+    stateOpacity: 0.38,
+    countryOpacity: 0.5,
+    basemapOpacity: 0.64,
+    basemapSaturation: -0.54,
+    basemapBrightnessMin: 0.94,
+    basemapBrightnessMax: 1.04,
+    maskOpacity: 0.12,
+    graticuleOpacity: 0.15,
+    overlayOpacity: 0.92,
+  },
+  precipitation: {
+    accent: "#f28c45",
+    background: "plain_ocean",
+    stateColor: "#8a6f61",
+    countryColor: "#756256",
+    stateOpacity: 0.3,
+    countryOpacity: 0.42,
+    basemapOpacity: 0.54,
+    basemapSaturation: -0.72,
+    basemapBrightnessMin: 0.9,
+    basemapBrightnessMax: 1,
+    maskOpacity: 0.16,
+    graticuleOpacity: 0.1,
+    overlayOpacity: 0.96,
+  },
+  clouds: {
+    accent: "#db8750",
+    background: "plain_ocean",
+    stateColor: "#907467",
+    countryColor: "#7d685d",
+    stateOpacity: 0.26,
+    countryOpacity: 0.4,
+    basemapOpacity: 0.5,
+    basemapSaturation: -0.8,
+    basemapBrightnessMin: 0.94,
+    basemapBrightnessMax: 1.05,
+    maskOpacity: 0.14,
+    graticuleOpacity: 0.12,
+    overlayOpacity: 0.94,
+  },
+  winter: {
+    accent: "#d88248",
+    background: "plain_ocean",
+    stateColor: "#8d7667",
+    countryColor: "#79675c",
+    stateOpacity: 0.34,
+    countryOpacity: 0.46,
+    basemapOpacity: 0.56,
+    basemapSaturation: -0.74,
+    basemapBrightnessMin: 0.96,
+    basemapBrightnessMax: 1.08,
+    maskOpacity: 0.14,
+    graticuleOpacity: 0.16,
+    overlayOpacity: 0.95,
+  },
+  native: {
+    accent: "#d3854b",
+    background: "plain_ocean",
+    stateColor: "#8d7466",
+    countryColor: "#7b685d",
+    stateOpacity: 0.3,
+    countryOpacity: 0.42,
+    basemapOpacity: 0.58,
+    basemapSaturation: -0.72,
+    basemapBrightnessMin: 0.92,
+    basemapBrightnessMax: 1.02,
+    maskOpacity: 0.14,
+    graticuleOpacity: 0.18,
+    overlayOpacity: 0.94,
+  },
+  radar: {
+    accent: "#ff8c3a",
+    background: "plain_ocean",
+    stateColor: "#8a6c59",
+    countryColor: "#756153",
+    stateOpacity: 0.28,
+    countryOpacity: 0.38,
+    basemapOpacity: 0.48,
+    basemapSaturation: -0.76,
+    basemapBrightnessMin: 0.86,
+    basemapBrightnessMax: 0.98,
+    maskOpacity: 0.18,
+    graticuleOpacity: 0.1,
+    overlayOpacity: 0.97,
+  },
+  ensemble: {
+    accent: "#d97a44",
+    background: "plain_ocean",
+    stateColor: "#8d7162",
+    countryColor: "#78665b",
+    stateOpacity: 0.36,
+    countryOpacity: 0.48,
+    basemapOpacity: 0.6,
+    basemapSaturation: -0.66,
+    basemapBrightnessMin: 0.9,
+    basemapBrightnessMax: 1.01,
+    maskOpacity: 0.16,
+    graticuleOpacity: 0.16,
+    overlayOpacity: 0.93,
+  },
+};
+
 const MOBILE_PANEL_BREAKPOINT = 820;
 const OVERLAY_ALIASES = {
   pressure_surface: "surface_pressure",
@@ -102,6 +300,10 @@ const els = {
   compareOpacityReadout: document.getElementById("compare-opacity-readout"),
   fhrSelect: document.getElementById("fhr-select"),
   mobileFhrSelect: document.getElementById("mobile-fhr-select"),
+  timelineInitLabel: document.getElementById("timeline-init-label"),
+  timelineValidLabel: document.getElementById("timeline-valid-label"),
+  timelineStepLabel: document.getElementById("timeline-step-label"),
+  timelineTicks: document.getElementById("timeline-ticks"),
   domainGrid: document.getElementById("domain-grid"),
   mobileDomainSelect: document.getElementById("mobile-domain-select"),
   overlayGrid: document.getElementById("overlay-grid"),
@@ -129,17 +331,26 @@ const els = {
   animateToggle: document.getElementById("animate-toggle"),
   animationSpeedSelect: document.getElementById("animation-speed-select"),
   timelineGroupPanel: document.getElementById("timeline-group-panel"),
+  desktopTimelineHost: document.getElementById("desktop-timeline-host"),
+  mapLegendRail: document.getElementById("map-legend-rail"),
   legendPanel: document.getElementById("legend-panel"),
   legendUnits: document.getElementById("legend-units"),
+  mapLegendPanel: document.getElementById("map-legend-panel"),
+  mapLegendUnits: document.getElementById("map-legend-units"),
   mobilePanelToggle: document.getElementById("mobile-panel-toggle"),
   mobileQuickPanel: document.getElementById("mobile-quick-panel"),
   mobileAdvancedToggleRow: document.querySelector(".mobile-advanced-toggle-row"),
   mobileTimelineHost: document.getElementById("mobile-timeline-host"),
+  mobileLegendHost: document.getElementById("mobile-legend-host"),
   mobileQuickHost: document.getElementById("mobile-quick-host"),
   summaryRun: document.getElementById("summary-run"),
   summaryMember: document.getElementById("summary-member"),
   summaryHour: document.getElementById("summary-hour"),
-  summaryOverlay: document.getElementById("summary-overlay"),
+  summaryValid: document.getElementById("summary-valid"),
+  summaryRegion: document.getElementById("summary-region"),
+  mapFamilyTag: document.getElementById("map-family-tag"),
+  mapInitTag: document.getElementById("map-init-tag"),
+  mapValidTag: document.getElementById("map-valid-tag"),
 };
 
 const appState = {
@@ -263,8 +474,7 @@ function buildMap() {
   map.on("load", () => {
     appState.loaded = true;
     addReferenceSources(map);
-    updateBoundaryStyles();
-    updateDomainHighlight();
+    updateMapPresentation();
     refreshOverlay().catch((error) => {
       console.error(error);
       setAssetStatus(`Overlay refresh failed: ${error.message}`, "error");
@@ -324,6 +534,10 @@ function buildBasemapLayers() {
 }
 
 function addReferenceSources(map) {
+  map.addSource("graticule-source", {
+    type: "geojson",
+    data: buildGraticuleGeoJson(),
+  });
   map.addSource("states-source", {
     type: "geojson",
     data: remoteGeoJson.states,
@@ -331,6 +545,33 @@ function addReferenceSources(map) {
   map.addSource("countries-source", {
     type: "geojson",
     data: remoteGeoJson.countries,
+  });
+  map.addSource("domain-focus-source", {
+    type: "geojson",
+    data: emptyFeatureCollection(),
+  });
+  map.addLayer({
+    id: "graticule-layer",
+    type: "line",
+    source: "graticule-source",
+    paint: {
+      "line-color": "#8e7b70",
+      "line-width": 1,
+      "line-opacity": 0.14,
+      "line-dasharray": [2, 4],
+    },
+  });
+  map.addLayer({
+    id: "domain-mask-layer",
+    type: "fill",
+    source: "domain-focus-source",
+    layout: {
+      visibility: "none",
+    },
+    paint: {
+      "fill-color": "#081019",
+      "fill-opacity": 0.12,
+    },
   });
   map.addLayer({
     id: "domain-fill-layer",
@@ -389,6 +630,47 @@ function addReferenceSources(map) {
       "line-opacity": 0.9,
     },
   });
+}
+
+function buildGraticuleGeoJson() {
+  const features = [];
+  for (let lon = -140; lon <= -60; lon += 10) {
+    features.push({
+      type: "Feature",
+      geometry: {
+        type: "LineString",
+        coordinates: [
+          [lon, 15],
+          [lon, 60],
+        ],
+      },
+      properties: { kind: "meridian", value: lon },
+    });
+  }
+  for (let lat = 20; lat <= 55; lat += 5) {
+    features.push({
+      type: "Feature",
+      geometry: {
+        type: "LineString",
+        coordinates: [
+          [-140, lat],
+          [-60, lat],
+        ],
+      },
+      properties: { kind: "parallel", value: lat },
+    });
+  }
+  return {
+    type: "FeatureCollection",
+    features,
+  };
+}
+
+function emptyFeatureCollection() {
+  return {
+    type: "FeatureCollection",
+    features: [],
+  };
 }
 
 function bindControls() {
@@ -552,12 +834,15 @@ function isMobileViewport() {
 }
 
 function relocateMobilePanels() {
-  if (!els.timelineGroupPanel || !els.mobileQuickPanel || !els.mobileAdvancedToggleRow) {
+  if (!els.timelineGroupPanel || !els.mobileQuickPanel || !els.mobileAdvancedToggleRow || !els.mapLegendRail) {
     return;
   }
   if (isMobileViewport()) {
     if (els.timelineGroupPanel.parentElement !== els.mobileTimelineHost) {
       els.mobileTimelineHost.appendChild(els.timelineGroupPanel);
+    }
+    if (els.mapLegendRail.parentElement !== els.mobileLegendHost) {
+      els.mobileLegendHost.appendChild(els.mapLegendRail);
     }
     if (els.mobileQuickPanel.parentElement !== els.mobileQuickHost) {
       els.mobileQuickHost.appendChild(els.mobileQuickPanel);
@@ -567,8 +852,12 @@ function relocateMobilePanels() {
     }
     return;
   }
-  if (els.timelineGroupPanel.parentElement !== els.controlPanel) {
-    els.controlPanel.appendChild(els.timelineGroupPanel);
+  if (els.timelineGroupPanel.parentElement !== els.desktopTimelineHost) {
+    els.desktopTimelineHost.appendChild(els.timelineGroupPanel);
+  }
+  const mapLowerRail = els.desktopTimelineHost.parentElement;
+  if (els.mapLegendRail.parentElement !== mapLowerRail) {
+    mapLowerRail.insertBefore(els.mapLegendRail, els.desktopTimelineHost);
   }
   const firstAdvancedPanel = els.controlPanel.querySelector(".advanced-panel");
   if (els.mobileAdvancedToggleRow.parentElement !== els.controlPanel) {
@@ -734,9 +1023,11 @@ async function syncSelectionState({ preserveUrl = true } = {}) {
   els.timelineSlider.max = String(Math.max(0, effectiveFhrs.length - 1));
   els.timelineSlider.value = String(Math.max(0, effectiveFhrs.indexOf(appState.fhr)));
   els.timelineReadout.textContent = appState.fhr.toUpperCase();
+  updateTimelineRail();
 
   populateOverlayButtons(fhIndex[appState.fhr]?.overlays || {});
   updateSummaryStrip();
+  updateMapPresentation();
   moveToDomain();
   updateAnimationUi();
   if (effectiveFhrs.length < 2) {
@@ -745,7 +1036,6 @@ async function syncSelectionState({ preserveUrl = true } = {}) {
     refreshAnimationLoop();
   }
   if (appState.loaded) {
-    updateBoundaryStyles();
     await refreshOverlay();
   }
   if (preserveUrl) {
@@ -947,6 +1237,7 @@ async function refreshMobileStaticOverlay() {
 }
 
 function addPrimaryOverlay(map, metadata, primaryMember, domainId) {
+  const theme = currentFamilyTheme();
   if (staticMode) {
     map.addSource("overlay-primary", {
       type: "image",
@@ -958,7 +1249,7 @@ function addPrimaryOverlay(map, metadata, primaryMember, domainId) {
       type: "raster",
       source: "overlay-primary",
       paint: {
-        "raster-opacity": appState.viewMode === "compare" ? 0.78 : 0.82,
+        "raster-opacity": appState.viewMode === "compare" ? Math.max(0.7, theme.overlayOpacity - 0.16) : theme.overlayOpacity,
         "raster-fade-duration": 0,
       },
     });
@@ -975,7 +1266,7 @@ function addPrimaryOverlay(map, metadata, primaryMember, domainId) {
     type: "raster",
     source: "overlay-primary",
     paint: {
-      "raster-opacity": appState.viewMode === "compare" ? 0.78 : 0.82,
+      "raster-opacity": appState.viewMode === "compare" ? Math.max(0.7, theme.overlayOpacity - 0.16) : theme.overlayOpacity,
       "raster-fade-duration": 0,
     },
   });
@@ -1150,15 +1441,39 @@ function buildAssetSummary(metadata, overlayId, domainId) {
 }
 
 function updateBasemapVisibility() {
-  if (!appState.map) {
+  const theme = currentFamilyTheme();
+  appState.mapStage.dataset.family = currentOverlayEntry()?.family || currentOverlayEntry()?.group || "default";
+  appState.mapStage.style.setProperty("--map-accent", theme.accent);
+  if (!appState.map || !appState.loaded) {
     return;
   }
+  const activeBackground = appState.background || theme.background;
   for (const id of Object.keys(backgroundSources)) {
+    const isActive = id === activeBackground;
     appState.map.setLayoutProperty(
       `basemap-${id}`,
       "visibility",
-      id === appState.background ? "visible" : "none"
+      isActive ? "visible" : "none"
     );
+    appState.map.setPaintProperty(`basemap-${id}`, "raster-opacity", isActive ? theme.basemapOpacity : 0);
+    appState.map.setPaintProperty(`basemap-${id}`, "raster-saturation", theme.basemapSaturation);
+    appState.map.setPaintProperty(`basemap-${id}`, "raster-brightness-min", theme.basemapBrightnessMin);
+    appState.map.setPaintProperty(`basemap-${id}`, "raster-brightness-max", theme.basemapBrightnessMax);
+  }
+  appState.map.setPaintProperty("graticule-layer", "line-opacity", theme.graticuleOpacity);
+}
+
+function updateMapPresentation() {
+  updateBasemapVisibility();
+  if (!appState.loaded) {
+    return;
+  }
+  if (!mobileSafariStaticMode) {
+    updateBoundaryStyles();
+    updateDomainHighlight();
+  } else {
+    appState.mapStage.dataset.family = currentOverlayEntry()?.family || currentOverlayEntry()?.group || "default";
+    appState.mapStage.style.setProperty("--map-accent", currentFamilyTheme().accent);
   }
 }
 
@@ -1166,14 +1481,21 @@ function updateBoundaryStyles() {
   if (!appState.map || !appState.loaded) {
     return;
   }
+  const theme = currentFamilyTheme();
   setLineStyle("states-layer", appState.stateLayer, {
-    brown: "#8e6344",
+    brown: theme.stateColor,
     white: "rgba(255,255,255,0.92)",
   });
   setLineStyle("countries-layer", appState.countryLayer, {
-    brown: "#8e6344",
+    brown: theme.countryColor,
     white: "rgba(255,255,255,0.92)",
   });
+  appState.map.setPaintProperty("states-layer", "line-opacity", appState.stateLayer.endsWith("white") ? 0.72 : theme.stateOpacity);
+  appState.map.setPaintProperty(
+    "countries-layer",
+    "line-opacity",
+    appState.countryLayer.endsWith("white") ? 0.82 : theme.countryOpacity
+  );
   els.stateStyleSelect.value = appState.stateLayer;
   els.countryStyleSelect.value = appState.countryLayer;
 }
@@ -1182,6 +1504,7 @@ function updateDomainHighlight() {
   if (!appState.map || !appState.loaded) {
     return;
   }
+  const theme = currentFamilyTheme();
   const stateNames = REGION_STATES[appState.proj] || [];
   const visible = stateNames.length > 0;
   const filter = visible
@@ -1192,6 +1515,71 @@ function updateDomainHighlight() {
   appState.map.setFilter("domain-outline-layer", filter);
   appState.map.setLayoutProperty("domain-fill-layer", "visibility", visible ? "visible" : "none");
   appState.map.setLayoutProperty("domain-outline-layer", "visibility", visible ? "visible" : "none");
+  appState.map.setPaintProperty("domain-fill-layer", "fill-color", theme.accent);
+  appState.map.setPaintProperty("domain-outline-layer", "line-color", theme.accent);
+  appState.map.setPaintProperty("domain-fill-layer", "fill-opacity", visible ? 0.08 : 0);
+  updateDomainMask();
+}
+
+function updateDomainMask() {
+  if (!appState.map || !appState.loaded) {
+    return;
+  }
+  const source = appState.map.getSource("domain-focus-source");
+  if (!source) {
+    return;
+  }
+  const bbox = getDomain(appState.proj)?.viewport?.bbox;
+  const theme = currentFamilyTheme();
+  if (!Array.isArray(bbox) || bbox.length !== 4 || appState.proj === "conus") {
+    source.setData(emptyFeatureCollection());
+    appState.map.setLayoutProperty("domain-mask-layer", "visibility", "none");
+    return;
+  }
+  source.setData(domainMaskGeoJson(bbox));
+  appState.map.setLayoutProperty("domain-mask-layer", "visibility", "visible");
+  appState.map.setPaintProperty("domain-mask-layer", "fill-opacity", theme.maskOpacity);
+}
+
+function domainMaskGeoJson(bbox) {
+  const [west, south, east, north] = bbox;
+  return {
+    type: "FeatureCollection",
+    features: [
+      {
+        type: "Feature",
+        properties: {},
+        geometry: {
+          type: "Polygon",
+          coordinates: [
+            [
+              [-180, -90],
+              [180, -90],
+              [180, 90],
+              [-180, 90],
+              [-180, -90],
+            ],
+            [
+              [west, south],
+              [west, north],
+              [east, north],
+              [east, south],
+              [west, south],
+            ],
+          ],
+        },
+      },
+    ],
+  };
+}
+
+function currentOverlayEntry() {
+  return lookupOverlayEntry(appState.overlay);
+}
+
+function currentFamilyTheme() {
+  const family = currentOverlayEntry()?.family || currentOverlayEntry()?.group || "default";
+  return FAMILY_THEMES[family] || FAMILY_THEMES.default;
 }
 
 function setLineStyle(layerId, layerSetting, palette) {
@@ -1273,6 +1661,7 @@ function renderLegend(metadata = null) {
     note: "Legend is not configured for this overlay yet.",
   };
   els.legendUnits.textContent = config.units || "";
+  els.mapLegendUnits.textContent = config.units || "";
 
   if (config.type === "continuous") {
     const gradient = document.createElement("div");
@@ -1287,7 +1676,7 @@ function renderLegend(metadata = null) {
       span.textContent = label;
       labels.appendChild(span);
     });
-    els.legendPanel.replaceChildren(gradient, labels);
+    replaceLegendPanels([gradient, labels]);
     return;
   }
 
@@ -1307,11 +1696,16 @@ function renderLegend(metadata = null) {
     if (config.note) {
       fragment.appendChild(makeLegendNote(config.note));
     }
-    els.legendPanel.replaceChildren(fragment);
+    replaceLegendPanels([fragment]);
     return;
   }
 
-  els.legendPanel.replaceChildren(makeLegendNote(config.note));
+  replaceLegendPanels([makeLegendNote(config.note)]);
+}
+
+function replaceLegendPanels(nodes) {
+  els.legendPanel.replaceChildren(...nodes.map((node) => node.cloneNode(true)));
+  els.mapLegendPanel.replaceChildren(...nodes.map((node) => node.cloneNode(true)));
 }
 
 function makeLegendNote(text) {
@@ -1463,6 +1857,29 @@ function updateAnimationUi() {
   els.animationSpeedSelect.value = String(appState.animationDelay);
 }
 
+function updateTimelineRail() {
+  els.timelineInitLabel.textContent = formatRunLabel(appState.run);
+  els.timelineValidLabel.textContent = formatValidTimeLabel(appState.run, appState.fhr);
+  els.timelineStepLabel.textContent = appState.fhr ? appState.fhr.toUpperCase() : "--";
+  const fragment = document.createDocumentFragment();
+  const currentIndex = appState.availableFhrs.indexOf(appState.fhr);
+  const start = Math.max(0, currentIndex - 3);
+  const end = Math.min(appState.availableFhrs.length, currentIndex + 4);
+  for (let index = start; index < end; index += 1) {
+    const token = appState.availableFhrs[index];
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = `timeline-tick${token === appState.fhr ? " active" : ""}`;
+    button.textContent = token.toUpperCase().replace("F", "+");
+    button.addEventListener("click", async () => {
+      appState.fhr = token;
+      await syncSelectionState();
+    });
+    fragment.appendChild(button);
+  }
+  els.timelineTicks.replaceChildren(fragment);
+}
+
 function updateUrl() {
   const params = new URLSearchParams(window.location.search);
   params.set("run", appState.run);
@@ -1533,6 +1950,43 @@ function labelForDomain(domainId) {
 function setAssetStatus(message, tone) {
   els.assetStatus.textContent = message;
   els.assetStatus.className = `asset-status${tone && tone !== "ok" ? ` ${tone}` : ""}`;
+}
+
+function formatRunLabel(runId) {
+  const parsed = parseRunDate(runId);
+  if (!parsed) {
+    return runId || "--";
+  }
+  return `${String(parsed.getUTCHours()).padStart(2, "0")}Z ${parsed.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    timeZone: "UTC",
+  })}`;
+}
+
+function formatValidTimeLabel(runId, fhrToken) {
+  const parsed = parseRunDate(runId);
+  const offsetHours = Number.parseInt((fhrToken || "f000").slice(1), 10);
+  if (!parsed || !Number.isFinite(offsetHours)) {
+    return "--";
+  }
+  const valid = new Date(parsed.getTime() + offsetHours * 60 * 60 * 1000);
+  return `${String(valid.getUTCHours()).padStart(2, "0")}Z ${valid.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    timeZone: "UTC",
+  })}`;
+}
+
+function parseRunDate(runId) {
+  if (!/^\d{10}$/.test(runId || "")) {
+    return null;
+  }
+  const year = Number.parseInt(runId.slice(0, 4), 10);
+  const month = Number.parseInt(runId.slice(4, 6), 10) - 1;
+  const day = Number.parseInt(runId.slice(6, 8), 10);
+  const hour = Number.parseInt(runId.slice(8, 10), 10);
+  return new Date(Date.UTC(year, month, day, hour));
 }
 
 function formatRangeForOverlay(overlayId, minValue, maxValue, style = null) {
@@ -1711,8 +2165,19 @@ function canonicalOverlayId(overlayId) {
 }
 
 function updateSummaryStrip() {
-  els.summaryRun.textContent = appState.run || "Run";
-  els.summaryMember.textContent = `Member ${currentPrimaryMember() || "--"}`;
-  els.summaryHour.textContent = appState.fhr ? appState.fhr.toUpperCase() : "Hour";
-  els.summaryOverlay.textContent = labelForOverlay(appState.overlay || "overlay");
+  const overlayEntry = currentOverlayEntry();
+  els.summaryRun.textContent = `Run ${formatRunLabel(appState.run)}`;
+  const memberLabel =
+    appState.viewMode === "ensemble"
+      ? "Ensemble"
+      : appState.viewMode === "compare"
+      ? `${appState.member || "--"} vs ${appState.compareMember || "--"}`
+      : currentPrimaryMember() || "--";
+  els.summaryMember.textContent = memberLabel;
+  els.summaryHour.textContent = appState.fhr ? appState.fhr.toUpperCase().replace("F", "Hour +") : "Hour";
+  els.summaryValid.textContent = `Valid ${formatValidTimeLabel(appState.run, appState.fhr)}`;
+  els.summaryRegion.textContent = labelForDomain(appState.proj || "conus");
+  els.mapFamilyTag.textContent = overlayEntry?.family ? overlayEntry.family.replace("_", " ") : "curated";
+  els.mapInitTag.textContent = formatRunLabel(appState.run);
+  els.mapValidTag.textContent = formatValidTimeLabel(appState.run, appState.fhr);
 }
