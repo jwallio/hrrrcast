@@ -12,6 +12,7 @@ const catalogBase =
   explicitCatalogBase || (backendBase ? backendBase : staticMode ? "./static-api" : "http://127.0.0.1:8000");
 const tileBase =
   explicitTileBase || (backendBase ? backendBase : staticMode ? "./static-api" : "http://127.0.0.1:8001");
+const mobileSafariStaticMode = staticMode && detectMobileSafari();
 
 const backgroundSources = {
   plain_ocean: {
@@ -85,6 +86,7 @@ const OVERLAY_ALIASES = {
 const els = {
   controlPanel: document.querySelector(".control-panel"),
   mapStage: document.querySelector(".map-stage"),
+  mapContainer: document.getElementById("map"),
   runSelect: document.getElementById("run-select"),
   mobileRunSelect: document.getElementById("mobile-run-select"),
   viewModeSelect: document.getElementById("view-mode-select"),
@@ -168,6 +170,7 @@ const appState = {
   compareOpacity: 0.45,
   modeNotice: "",
   panelCollapsed: false,
+  mobileStaticViewport: null,
 };
 
 init().catch((error) => {
@@ -236,6 +239,11 @@ async function init() {
 }
 
 function buildMap() {
+  if (mobileSafariStaticMode) {
+    buildMobileStaticViewport();
+    appState.loaded = true;
+    return;
+  }
   const domain = getDomain(appState.proj);
   const style = {
     version: 8,
@@ -264,6 +272,27 @@ function buildMap() {
     window.requestAnimationFrame(() => map.resize());
   });
   appState.map = map;
+}
+
+function buildMobileStaticViewport() {
+  const surface = document.createElement("div");
+  surface.className = "ios-static-map";
+  surface.innerHTML = `
+    <div class="ios-static-backdrop"></div>
+    <div class="ios-static-track">
+      <img class="ios-static-image ios-static-image-primary" alt="" />
+      <img class="ios-static-image ios-static-image-compare hidden" alt="" />
+    </div>
+    <div class="ios-static-badge">Safari static mode</div>
+  `;
+  els.mapContainer.replaceChildren(surface);
+  appState.mobileStaticViewport = {
+    surface,
+    track: surface.querySelector(".ios-static-track"),
+    primaryImage: surface.querySelector(".ios-static-image-primary"),
+    compareImage: surface.querySelector(".ios-static-image-compare"),
+    badge: surface.querySelector(".ios-static-badge"),
+  };
 }
 
 function buildBasemapSources() {
@@ -807,6 +836,10 @@ function populateOverlayButtons(builtOverlayMap) {
 }
 
 async function refreshOverlay() {
+  if (mobileSafariStaticMode) {
+    await refreshMobileStaticOverlay();
+    return;
+  }
   const map = appState.map;
   if (!map || !appState.loaded) {
     return;
@@ -861,6 +894,58 @@ async function refreshOverlay() {
   }
 }
 
+async function refreshMobileStaticOverlay() {
+  if (!appState.loaded || !appState.mobileStaticViewport) {
+    return;
+  }
+
+  const domainId = appState.proj;
+  const forecastHourNumber = parseInt(appState.fhr.slice(1), 10);
+  const primaryMember = currentPrimaryMember();
+
+  try {
+    const primaryPayload = await fetchPreferredMetadata(primaryMember, domainId);
+    let subtitleMode = primaryMember;
+    let compareNote = "";
+    let assetPathText = primaryPayload.metadata.display_path || primaryPayload.metadata.netcdf_path;
+    let comparePayload = null;
+
+    if (appState.viewMode === "compare" && appState.compareMember) {
+      comparePayload = await fetchPreferredMetadata(appState.compareMember, domainId);
+      subtitleMode = `${appState.member} vs ${appState.compareMember}`;
+      compareNote = ` Compare layer opacity ${Math.round(appState.compareOpacity * 100)}%.`;
+      assetPathText = `${assetPathText} | compare ${
+        comparePayload.metadata.display_path || comparePayload.metadata.netcdf_path
+      }`;
+    } else if (appState.viewMode === "ensemble") {
+      subtitleMode = "ensemble";
+      compareNote = primaryPayload.metadata.notes ? ` ${primaryPayload.metadata.notes}` : "";
+    }
+
+    renderMobileStaticViewport(primaryPayload, comparePayload);
+    els.assetPath.textContent = assetPathText;
+    els.mapTitle.textContent = `${labelForOverlay(appState.overlay)} | ${appState.proj.toUpperCase()}`;
+    els.mapSubtitle.textContent = `${appState.run} | ${appState.member} | f${String(forecastHourNumber).padStart(
+      3,
+      "0"
+    )} | ${subtitleMode} | ${primaryPayload.metadata.long_name || primaryPayload.metadata.variable_name}`;
+    setAssetStatus(`${buildAssetSummary(primaryPayload.metadata, appState.overlay, domainId)}${compareNote}`, "ok");
+    updateSummaryStrip();
+    renderLegend(primaryPayload.metadata);
+  } catch (error) {
+    els.assetPath.textContent = "No processed asset found for this combination";
+    els.mapTitle.textContent = `${labelForOverlay(appState.overlay)} | ${appState.proj.toUpperCase()}`;
+    els.mapSubtitle.textContent = `${appState.run} | ${currentPrimaryMember()} | ${appState.fhr.toUpperCase()}`;
+    setAssetStatus(
+      `No processed preview exists for ${appState.overlay} / ${domainId} / ${currentPrimaryMember()} / ${appState.fhr.toUpperCase()}.`,
+      "warning"
+    );
+    clearMobileStaticViewport();
+    updateSummaryStrip();
+    renderLegend();
+  }
+}
+
 function addPrimaryOverlay(map, metadata, primaryMember, domainId) {
   if (staticMode) {
     map.addSource("overlay-primary", {
@@ -894,6 +979,109 @@ function addPrimaryOverlay(map, metadata, primaryMember, domainId) {
       "raster-fade-duration": 0,
     },
   });
+}
+
+async function fetchPreferredMetadata(member, domainId) {
+  const preferredDomains =
+    mobileSafariStaticMode && domainId !== "conus" ? ["conus", domainId] : [domainId];
+  let lastError = null;
+  for (const candidateDomain of preferredDomains) {
+    try {
+      const metadata = await fetchJson(
+        productMetadataUrl(appState.run, member, appState.overlay, appState.fhr, candidateDomain)
+      );
+      return {
+        metadata,
+        domainId: candidateDomain,
+        previewUrl: staticPreviewUrl(metadata, member, candidateDomain),
+      };
+    } catch (error) {
+      lastError = error;
+    }
+  }
+  throw lastError || new Error(`No preview metadata found for ${member} / ${domainId}`);
+}
+
+function renderMobileStaticViewport(primaryPayload, comparePayload = null) {
+  const viewport = appState.mobileStaticViewport;
+  if (!viewport) {
+    return;
+  }
+
+  const width = viewport.surface.clientWidth;
+  const height = viewport.surface.clientHeight;
+  if (!width || !height) {
+    window.requestAnimationFrame(() => renderMobileStaticViewport(primaryPayload, comparePayload));
+    return;
+  }
+
+  const sourceBbox = primaryPayload.metadata?.bbox || getDomain("conus")?.viewport?.bbox;
+  const focusBbox = getDomain(appState.proj)?.viewport?.bbox || sourceBbox;
+  if (!sourceBbox || !focusBbox) {
+    return;
+  }
+
+  const transform = computeStaticViewportTransform(sourceBbox, focusBbox, width, height);
+  applyStaticViewportImage(
+    viewport.primaryImage,
+    primaryPayload.previewUrl,
+    transform,
+    appState.viewMode === "compare" ? 0.92 : 1
+  );
+
+  if (comparePayload) {
+    viewport.compareImage.classList.remove("hidden");
+    applyStaticViewportImage(viewport.compareImage, comparePayload.previewUrl, transform, appState.compareOpacity);
+  } else {
+    viewport.compareImage.classList.add("hidden");
+    viewport.compareImage.removeAttribute("src");
+  }
+
+  viewport.badge.textContent = `${labelForDomain(appState.proj)} | Safari static view`;
+}
+
+function applyStaticViewportImage(imageEl, url, transform, opacity) {
+  imageEl.src = url;
+  imageEl.style.width = `${transform.width}px`;
+  imageEl.style.height = `${transform.height}px`;
+  imageEl.style.transform = `translate(${transform.translateX}px, ${transform.translateY}px)`;
+  imageEl.style.opacity = String(opacity);
+}
+
+function clearMobileStaticViewport() {
+  const viewport = appState.mobileStaticViewport;
+  if (!viewport) {
+    return;
+  }
+  viewport.primaryImage.removeAttribute("src");
+  viewport.compareImage.removeAttribute("src");
+  viewport.compareImage.classList.add("hidden");
+}
+
+function computeStaticViewportTransform(sourceBbox, focusBbox, containerWidth, containerHeight) {
+  const sourceWidth = sourceBbox[2] - sourceBbox[0];
+  const sourceHeight = sourceBbox[3] - sourceBbox[1];
+  const focusWidth = Math.max(0.5, focusBbox[2] - focusBbox[0]);
+  const focusHeight = Math.max(0.5, focusBbox[3] - focusBbox[1]);
+  const sourceScale = Math.max(containerWidth / sourceWidth, containerHeight / sourceHeight);
+  const focusScale = Math.min(
+    containerWidth / (sourceScale * focusWidth),
+    containerHeight / (sourceScale * focusHeight)
+  );
+  const paddedScale = focusScale * 0.9;
+  const renderedWidth = sourceWidth * sourceScale * paddedScale;
+  const renderedHeight = sourceHeight * sourceScale * paddedScale;
+  const focusCenterX = (focusBbox[0] + focusBbox[2]) / 2;
+  const focusCenterY = (focusBbox[1] + focusBbox[3]) / 2;
+  const centerXPx = ((focusCenterX - sourceBbox[0]) / sourceWidth) * renderedWidth;
+  const centerYPx = ((sourceBbox[3] - focusCenterY) / sourceHeight) * renderedHeight;
+
+  return {
+    width: renderedWidth,
+    height: renderedHeight,
+    translateX: containerWidth / 2 - centerXPx,
+    translateY: containerHeight / 2 - centerYPx,
+  };
 }
 
 function addCompareOverlay(map, metadata, domainId) {
@@ -938,6 +1126,10 @@ function removeOverlayLayers(map) {
 }
 
 function updateCompareLayerOpacity() {
+  if (mobileSafariStaticMode && appState.mobileStaticViewport?.compareImage) {
+    appState.mobileStaticViewport.compareImage.style.opacity = String(appState.compareOpacity);
+    return;
+  }
   if (!appState.map || !appState.loaded || !appState.map.getLayer("overlay-compare-layer")) {
     return;
   }
@@ -1016,6 +1208,14 @@ function setLineStyle(layerId, layerSetting, palette) {
 function moveToDomain() {
   const domain = getDomain(appState.proj);
   els.domainLabel.textContent = domain.label;
+  if (mobileSafariStaticMode) {
+    if (appState.loaded) {
+      refreshOverlay().catch((error) => {
+        console.error(error);
+      });
+    }
+    return;
+  }
   if (appState.map) {
     updateDomainHighlight();
     const bbox = domain.viewport?.bbox;
@@ -1050,6 +1250,14 @@ function domainFitPadding() {
 }
 
 function requestMapResize() {
+  if (mobileSafariStaticMode) {
+    if (appState.loaded) {
+      refreshOverlay().catch((error) => {
+        console.error(error);
+      });
+    }
+    return;
+  }
   if (!appState.map) {
     return;
   }
@@ -1347,6 +1555,14 @@ function parseBoolean(value, defaultValue) {
     return defaultValue;
   }
   return value === "true";
+}
+
+function detectMobileSafari() {
+  const ua = navigator.userAgent || "";
+  const mobileApple = /iPhone|iPod|iPad/i.test(ua);
+  const webKit = /WebKit/i.test(ua);
+  const excluded = /CriOS|FxiOS|EdgiOS|OPiOS/i.test(ua);
+  return mobileApple && webKit && !excluded;
 }
 
 async function fetchJson(url) {
