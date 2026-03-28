@@ -1,0 +1,57 @@
+{
+  "bbox": [
+    -127.0,
+    23.0,
+    -66.0,
+    50.0
+  ],
+  "clipped_grib_path": "data\\processed\\products\\2026032802\\m00\\v_wind_500mb\\f013\\conus.grib2",
+  "display_path": "2026032802/m00/v_wind_500mb/f013/conus",
+  "domain_id": "conus",
+  "field_key": "VGRD:500 mb",
+  "forecast_hour": 13,
+  "long_name": "V-Component of Wind",
+  "member": "m00",
+  "native": false,
+  "netcdf_path": "data\\processed\\products\\2026032802\\m00\\v_wind_500mb\\f013\\conus.nc",
+  "overlay_id": "v_wind_500mb",
+  "preview_url": "./static-api/products/2026032802/m00/v_wind_500mb/f013/conus.preview.png",
+  "run_id": "2026032802",
+  "shape": [
+    1,
+    1059,
+    1799
+  ],
+  "static_export": true,
+  "stats": {
+    "max": 49.400001525878906,
+    "min": -40.189998626708984
+  },
+  "style": {
+    "colors": [
+      "#234c8c",
+      "#7aa6d8",
+      "#f2f2f2",
+      "#e8a16d",
+      "#8d2d2a"
+    ],
+    "labels": [
+      "-90",
+      "-45",
+      "0",
+      "45",
+      "90"
+    ],
+    "palette": "diverging",
+    "range": [
+      -40.0,
+      40.0
+    ],
+    "rawUnits": "m/s",
+    "transform": "mps_to_mph",
+    "type": "continuous",
+    "units": "mph"
+  },
+  "units": "m/s",
+  "variable_name": "VGRD_500mb"
+}

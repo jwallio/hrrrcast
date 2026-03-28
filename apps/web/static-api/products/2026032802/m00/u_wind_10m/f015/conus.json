@@ -1,0 +1,57 @@
+{
+  "bbox": [
+    -127.0,
+    23.0,
+    -66.0,
+    50.0
+  ],
+  "clipped_grib_path": "data\\processed\\products\\2026032802\\m00\\u_wind_10m\\f015\\conus.grib2",
+  "display_path": "2026032802/m00/u_wind_10m/f015/conus",
+  "domain_id": "conus",
+  "field_key": "UGRD:10 m above ground",
+  "forecast_hour": 15,
+  "long_name": "U-Component of Wind",
+  "member": "m00",
+  "native": false,
+  "netcdf_path": "data\\processed\\products\\2026032802\\m00\\u_wind_10m\\f015\\conus.nc",
+  "overlay_id": "u_wind_10m",
+  "preview_url": "./static-api/products/2026032802/m00/u_wind_10m/f015/conus.preview.png",
+  "run_id": "2026032802",
+  "shape": [
+    1,
+    1059,
+    1799
+  ],
+  "static_export": true,
+  "stats": {
+    "max": 19.159997940063477,
+    "min": -17.290000915527344
+  },
+  "style": {
+    "colors": [
+      "#234c8c",
+      "#7aa6d8",
+      "#f2f2f2",
+      "#e8a16d",
+      "#8d2d2a"
+    ],
+    "labels": [
+      "-90",
+      "-45",
+      "0",
+      "45",
+      "90"
+    ],
+    "palette": "diverging",
+    "range": [
+      -40.0,
+      40.0
+    ],
+    "rawUnits": "m/s",
+    "transform": "mps_to_mph",
+    "type": "continuous",
+    "units": "mph"
+  },
+  "units": "m/s",
+  "variable_name": "UGRD_10maboveground"
+}

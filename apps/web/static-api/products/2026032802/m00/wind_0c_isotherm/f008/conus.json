@@ -1,0 +1,57 @@
+{
+  "bbox": [
+    -127.0,
+    23.0,
+    -66.0,
+    50.0
+  ],
+  "clipped_grib_path": "data\\processed\\products\\2026032802\\m00\\wind_0c_isotherm\\f008\\conus.grib2",
+  "display_path": "2026032802/m00/wind_0c_isotherm/f008/conus",
+  "domain_id": "conus",
+  "field_key": "WIND:0C isotherm",
+  "forecast_hour": 8,
+  "long_name": "Wind Speed",
+  "member": "m00",
+  "native": false,
+  "netcdf_path": "data\\processed\\products\\2026032802\\m00\\wind_0c_isotherm\\f008\\conus.nc",
+  "overlay_id": "wind_0c_isotherm",
+  "preview_url": "./static-api/products/2026032802/m00/wind_0c_isotherm/f008/conus.preview.png",
+  "run_id": "2026032802",
+  "shape": [
+    1,
+    1059,
+    1799
+  ],
+  "static_export": true,
+  "stats": {
+    "max": 29.940000534057617,
+    "min": 0.0
+  },
+  "style": {
+    "colors": [
+      "#0b1840",
+      "#3c6db5",
+      "#70b796",
+      "#facc40",
+      "#db5231"
+    ],
+    "labels": [
+      "0",
+      "15",
+      "30",
+      "50",
+      "75"
+    ],
+    "palette": "wind",
+    "range": [
+      0.0,
+      40.0
+    ],
+    "rawUnits": "m/s",
+    "transform": "mps_to_mph",
+    "type": "continuous",
+    "units": "mph"
+  },
+  "units": "m/s",
+  "variable_name": "WIND_0Cisotherm"
+}

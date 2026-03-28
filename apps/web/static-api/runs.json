@@ -2,12 +2,12 @@
   "runs": [
     {
       "max_forecast_hour": 18,
-      "member_count": 6,
+      "member_count": 9,
       "members": [
         "ens",
         "m00"
       ],
-      "run_id": "2026032719",
+      "run_id": "2026032802",
       "status": "ready",
       "status_reasons": [
         "All discovered members meet the configured Phase 1 completeness thresholds."

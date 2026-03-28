@@ -1,0 +1,57 @@
+{
+  "bbox": [
+    -127.0,
+    23.0,
+    -66.0,
+    50.0
+  ],
+  "clipped_grib_path": "data\\processed\\products\\2026032802\\m00\\storm_motion_v\\f006\\conus.grib2",
+  "display_path": "2026032802/m00/storm_motion_v/f006/conus",
+  "domain_id": "conus",
+  "field_key": "VSTM:0-6000 m above ground",
+  "forecast_hour": 6,
+  "long_name": "V-Component Storm Motion",
+  "member": "m00",
+  "native": false,
+  "netcdf_path": "data\\processed\\products\\2026032802\\m00\\storm_motion_v\\f006\\conus.nc",
+  "overlay_id": "storm_motion_v",
+  "preview_url": "./static-api/products/2026032802/m00/storm_motion_v/f006/conus.preview.png",
+  "run_id": "2026032802",
+  "shape": [
+    1,
+    1059,
+    1799
+  ],
+  "static_export": true,
+  "stats": {
+    "max": 10.470000267028809,
+    "min": -22.149999618530273
+  },
+  "style": {
+    "colors": [
+      "#234c8c",
+      "#7aa6d8",
+      "#f2f2f2",
+      "#e8a16d",
+      "#8d2d2a"
+    ],
+    "labels": [
+      "-90",
+      "-45",
+      "0",
+      "45",
+      "90"
+    ],
+    "palette": "diverging",
+    "range": [
+      -40.0,
+      40.0
+    ],
+    "rawUnits": "m/s",
+    "transform": "mps_to_mph",
+    "type": "continuous",
+    "units": "mph"
+  },
+  "units": "m/s",
+  "variable_name": "VSTM_0M6000maboveground"
+}
