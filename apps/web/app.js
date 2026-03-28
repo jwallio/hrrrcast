@@ -341,6 +341,7 @@ const els = {
   mapLegendUnits: document.getElementById("map-legend-units"),
   mobilePanelToggle: document.getElementById("mobile-panel-toggle"),
   mobileQuickPanel: document.getElementById("mobile-quick-panel"),
+  quickFamilyStrip: document.getElementById("quick-family-strip"),
   mobileAdvancedToggleRow: document.querySelector(".mobile-advanced-toggle-row"),
   mobileTimelineHost: document.getElementById("mobile-timeline-host"),
   mobileLegendHost: document.getElementById("mobile-legend-host"),
@@ -444,6 +445,7 @@ async function init() {
   populateBackgroundButtons();
   populateDomainButtons();
   populateRunSelect();
+  populateQuickFamilyStrip();
   renderLegend();
   updateAnimationUi();
   updatePanelUi();
@@ -784,11 +786,13 @@ function bindControls() {
   els.overlayGroupSelect.addEventListener("change", () => {
     appState.overlayGroup = els.overlayGroupSelect.value;
     populateOverlayButtons(currentBuiltOverlayMap());
+    populateQuickFamilyStrip();
     updateUrl();
   });
   els.mobileOverlayGroupSelect.addEventListener("change", () => {
     appState.overlayGroup = els.mobileOverlayGroupSelect.value;
     populateOverlayButtons(currentBuiltOverlayMap());
+    populateQuickFamilyStrip();
     updateUrl();
   });
   els.mobileOverlaySelect.addEventListener("change", async (event) => {
@@ -981,6 +985,36 @@ function populateDomainButtons() {
     appState.proj,
     (value) => getDomain(value)?.label || value
   );
+}
+
+function populateQuickFamilyStrip() {
+  if (!els.quickFamilyStrip) {
+    return;
+  }
+  const families = [
+    ["featured", "Featured"],
+    ["precipitation", "Precip"],
+    ["severe", "Severe"],
+    ["surface", "Surface"],
+    ["upper_air", "Upper Air"],
+    ["wind", "Wind"],
+    ["clouds", "Clouds"],
+    ["ensemble", "Ensemble"],
+  ];
+  const fragment = document.createDocumentFragment();
+  for (const [value, label] of families) {
+    fragment.appendChild(
+      makeChip(label, appState.overlayGroup === value, () => {
+        appState.overlayGroup = value;
+        els.overlayGroupSelect.value = value;
+        els.mobileOverlayGroupSelect.value = value;
+        populateQuickFamilyStrip();
+        populateOverlayButtons(currentBuiltOverlayMap());
+        updateUrl();
+      })
+    );
+  }
+  els.quickFamilyStrip.replaceChildren(fragment);
 }
 
 async function syncSelectionState({ preserveUrl = true } = {}) {
