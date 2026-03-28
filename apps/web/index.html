@@ -18,8 +18,8 @@
   </head>
   <body>
     <div class="app-shell">
-      <aside class="control-panel">
-        <div class="brand-block">
+      <header class="viewer-header">
+        <div class="brand-block viewer-brand">
           <p class="eyebrow">Experimental Viewer</p>
           <h1>HRRRCast</h1>
           <p class="subhead">
@@ -27,15 +27,21 @@
             controls, regional presets, and shareable product state.
           </p>
         </div>
+        <div class="viewer-status">
+          <span id="run-status-pill" class="status-pill">Loading</span>
+          <p id="run-status-text" class="muted-note viewer-status-text"></p>
+        </div>
+      </header>
 
+      <section class="viewer-toolbar">
         <section id="mobile-quick-panel" class="mobile-quick-panel">
           <div class="mobile-quick-head">
             <div>
-              <p class="eyebrow">Quick Controls</p>
-              <h2>Forecast Viewer</h2>
+              <p class="eyebrow">Forecast Product</p>
+              <h2>Quick Controls</h2>
             </div>
             <button id="mobile-panel-toggle" class="secondary-button mobile-panel-toggle" type="button">
-              More
+              Advanced
             </button>
           </div>
           <div class="mobile-quick-grid">
@@ -44,33 +50,11 @@
               <select id="mobile-run-select"></select>
             </label>
             <label class="field compact-field">
-              <span>Domain</span>
+              <span>Region</span>
               <select id="mobile-domain-select"></select>
             </label>
             <label class="field compact-field">
-              <span>View</span>
-              <select id="mobile-view-mode-select">
-                <option value="member">Member</option>
-                <option value="ensemble">Ensemble</option>
-                <option value="compare">Compare</option>
-              </select>
-            </label>
-            <label class="field compact-field">
-              <span>Member</span>
-              <select id="mobile-member-select"></select>
-            </label>
-            <div id="mobile-compare-controls" class="hidden">
-              <label class="field compact-field">
-                <span>Compare</span>
-                <select id="mobile-compare-member-select"></select>
-              </label>
-            </div>
-            <label class="field compact-field">
-              <span>Hour</span>
-              <select id="mobile-fhr-select"></select>
-            </label>
-            <label class="field compact-field">
-              <span>Overlay Group</span>
+              <span>Overlay Family</span>
               <select id="mobile-overlay-group-select">
                 <option value="featured">Featured</option>
                 <option value="all">All</option>
@@ -93,17 +77,91 @@
               <span>Overlay</span>
               <select id="mobile-overlay-select"></select>
             </label>
+            <label class="field compact-field">
+              <span>Mode</span>
+              <select id="mobile-view-mode-select">
+                <option value="member">Member</option>
+                <option value="ensemble">Ensemble</option>
+                <option value="compare">Compare</option>
+              </select>
+            </label>
+            <label class="field compact-field">
+              <span>Member</span>
+              <select id="mobile-member-select"></select>
+            </label>
+            <div id="mobile-compare-controls" class="hidden">
+              <label class="field compact-field">
+                <span>Compare</span>
+                <select id="mobile-compare-member-select"></select>
+              </label>
+            </div>
+            <label class="field compact-field">
+              <span>Hour</span>
+              <select id="mobile-fhr-select"></select>
+            </label>
+          </div>
+          <div class="toolbar-actions">
+            <button id="latest-ready-button" class="secondary-button" type="button">Latest Ready</button>
+            <label class="toggle-row" for="archive-toggle">
+              <input id="archive-toggle" type="checkbox" />
+              <span>Archive</span>
+            </label>
           </div>
         </section>
-
         <div class="mobile-advanced-toggle-row">
-          <span class="mini-meta">Advanced controls are below</span>
+          <span class="mini-meta">Use Advanced for filters, map styling, and full overlay lists.</span>
         </div>
+      </section>
 
+      <main class="map-stage">
+        <div class="map-frame-shell">
+          <div class="map-frame">
+            <div id="map"></div>
+            <div class="map-overlay">
+              <div class="map-top-stack">
+                <div class="map-topbar">
+                  <div class="summary-strip">
+                    <span id="summary-run" class="summary-pill">Run</span>
+                    <span id="summary-member" class="summary-pill">Member</span>
+                    <span id="summary-hour" class="summary-pill">Hour</span>
+                    <span id="summary-valid" class="summary-pill">Valid</span>
+                    <span id="summary-region" class="summary-pill">Region</span>
+                  </div>
+                </div>
+                <div class="map-title-block">
+                  <p class="eyebrow">Forecast Product</p>
+                  <h2 id="map-title">Loading</h2>
+                  <p id="map-subtitle" class="map-subtitle"></p>
+                  <div class="map-meta-strip">
+                    <span class="map-meta-pill">Family <strong id="map-family-tag">--</strong></span>
+                    <span class="map-meta-pill">Init <strong id="map-init-tag">--</strong></span>
+                    <span class="map-meta-pill">Valid <strong id="map-valid-tag">--</strong></span>
+                  </div>
+                </div>
+              </div>
+              <div id="asset-status" class="asset-status">Loading processed assets...</div>
+            </div>
+          </div>
+          <div class="map-lower-rail">
+            <div id="map-legend-rail" class="map-legend-rail">
+              <div class="map-legend-head">
+                <p class="eyebrow">Legend</p>
+                <span id="map-legend-units" class="mini-meta"></span>
+              </div>
+              <div id="map-legend-panel" class="legend-panel map-legend-panel"></div>
+            </div>
+            <div id="desktop-timeline-host" class="desktop-timeline-host"></div>
+          </div>
+        </div>
+        <div id="mobile-timeline-host" class="mobile-flow-host"></div>
+        <div id="mobile-legend-host" class="mobile-flow-host mobile-legend-host"></div>
+      </main>
+
+      <aside class="control-panel">
         <section class="panel-group advanced-panel">
           <div class="panel-head">
             <h2>Run</h2>
-            <span id="run-status-pill" class="status-pill">Loading</span>
+            <span class="mini-meta">Detailed selection</span>
           </div>
           <label class="field">
             <span>Run</span>
@@ -142,14 +200,6 @@
               <strong id="compare-opacity-readout">45%</strong>
             </div>
           </div>
-          <div class="action-row">
-            <button id="latest-ready-button" class="secondary-button" type="button">Latest Ready</button>
-            <label class="toggle-row" for="archive-toggle">
-              <input id="archive-toggle" type="checkbox" />
-              <span>Show archive and partial runs</span>
-            </label>
-          </div>
-          <p id="run-status-text" class="muted-note"></p>
         </section>
 
         <section class="panel-group advanced-panel">
@@ -273,51 +323,6 @@
           </div>
         </section>
       </aside>
-
-      <main class="map-stage">
-        <div class="map-frame-shell">
-          <div class="map-frame">
-            <div id="map"></div>
-            <div class="map-overlay">
-              <div class="map-top-stack">
-                <div class="map-topbar">
-                  <div class="summary-strip">
-                    <span id="summary-run" class="summary-pill">Run</span>
-                    <span id="summary-member" class="summary-pill">Member</span>
-                    <span id="summary-hour" class="summary-pill">Hour</span>
-                    <span id="summary-valid" class="summary-pill">Valid</span>
-                    <span id="summary-region" class="summary-pill">Region</span>
-                  </div>
-                </div>
-                <div class="map-title-block">
-                  <p class="eyebrow">Forecast Product</p>
-                  <h2 id="map-title">Loading</h2>
-                  <p id="map-subtitle" class="map-subtitle"></p>
-                  <div class="map-meta-strip">
-                    <span class="map-meta-pill">Family <strong id="map-family-tag">--</strong></span>
-                    <span class="map-meta-pill">Init <strong id="map-init-tag">--</strong></span>
-                    <span class="map-meta-pill">Valid <strong id="map-valid-tag">--</strong></span>
-                  </div>
-                </div>
-              </div>
-              <div id="asset-status" class="asset-status">Loading processed assets...</div>
-            </div>
-          </div>
-          <div class="map-lower-rail">
-            <div id="map-legend-rail" class="map-legend-rail">
-              <div class="map-legend-head">
-                <p class="eyebrow">Legend</p>
-                <span id="map-legend-units" class="mini-meta"></span>
-              </div>
-              <div id="map-legend-panel" class="legend-panel map-legend-panel"></div>
-            </div>
-            <div id="desktop-timeline-host" class="desktop-timeline-host"></div>
-          </div>
-        </div>
-        <div id="mobile-timeline-host" class="mobile-flow-host"></div>
-        <div id="mobile-legend-host" class="mobile-flow-host mobile-legend-host"></div>
-        <div id="mobile-quick-host" class="mobile-flow-host"></div>
-      </main>
     </div>
 
     <script src="https://unpkg.com/maplibre-gl@5.3.0/dist/maplibre-gl.js"></script>

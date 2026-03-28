@@ -344,7 +344,6 @@ const els = {
   mobileAdvancedToggleRow: document.querySelector(".mobile-advanced-toggle-row"),
   mobileTimelineHost: document.getElementById("mobile-timeline-host"),
   mobileLegendHost: document.getElementById("mobile-legend-host"),
-  mobileQuickHost: document.getElementById("mobile-quick-host"),
   summaryRun: document.getElementById("summary-run"),
   summaryMember: document.getElementById("summary-member"),
   summaryHour: document.getElementById("summary-hour"),
@@ -434,7 +433,7 @@ async function init() {
     : 0.45;
   appState.overlayFilter = query.get("overlayFilter") || "";
   appState.overlayGroup = query.get("overlayGroup") || layersConfig.defaults.overlayGroup || "all";
-  appState.panelCollapsed = isMobileViewport();
+  appState.panelCollapsed = true;
 
   const defaultRun = selectDefaultRun();
   appState.run = query.get("run") || defaultRun;
@@ -847,17 +846,11 @@ function bindControls() {
 function bindResponsiveUi() {
   relocateMobilePanels();
   els.mobilePanelToggle.addEventListener("click", () => {
-    if (!isMobileViewport()) {
-      return;
-    }
     appState.panelCollapsed = !appState.panelCollapsed;
     updatePanelUi();
     requestMapResize();
   });
   window.addEventListener("resize", () => {
-    if (!isMobileViewport()) {
-      appState.panelCollapsed = false;
-    }
     relocateMobilePanels();
     updatePanelUi();
     requestMapResize();
@@ -865,14 +858,13 @@ function bindResponsiveUi() {
 }
 
 function updatePanelUi() {
-  const mobile = isMobileViewport();
-  els.mobilePanelToggle.classList.toggle("hidden", !mobile);
-  els.mobilePanelToggle.textContent = mobile && appState.panelCollapsed ? "More Controls" : "Hide Advanced";
-  els.mobilePanelToggle.setAttribute("aria-expanded", String(!(mobile && appState.panelCollapsed)));
+  els.mobilePanelToggle.textContent = appState.panelCollapsed ? "Advanced" : "Hide";
+  els.mobilePanelToggle.setAttribute("aria-expanded", String(!appState.panelCollapsed));
+  els.controlPanel.classList.toggle("collapsed", appState.panelCollapsed);
   document.querySelectorAll(".advanced-panel").forEach((panel) => {
-    panel.classList.toggle("hidden", mobile && appState.panelCollapsed);
+    panel.classList.toggle("hidden", appState.panelCollapsed);
   });
-  if (!(mobile && appState.panelCollapsed)) {
+  if (!appState.panelCollapsed) {
     populateOverlayButtons(currentBuiltOverlayMap());
   }
 }
@@ -882,7 +874,7 @@ function isMobileViewport() {
 }
 
 function relocateMobilePanels() {
-  if (!els.timelineGroupPanel || !els.mobileQuickPanel || !els.mobileAdvancedToggleRow || !els.mapLegendRail) {
+  if (!els.timelineGroupPanel || !els.mapLegendRail) {
     return;
   }
   if (isMobileViewport()) {
@@ -891,12 +883,6 @@ function relocateMobilePanels() {
     }
     if (els.mapLegendRail.parentElement !== els.mobileLegendHost) {
       els.mobileLegendHost.appendChild(els.mapLegendRail);
-    }
-    if (els.mobileQuickPanel.parentElement !== els.mobileQuickHost) {
-      els.mobileQuickHost.appendChild(els.mobileQuickPanel);
-    }
-    if (els.mobileAdvancedToggleRow.parentElement !== els.mobileQuickHost) {
-      els.mobileQuickHost.appendChild(els.mobileAdvancedToggleRow);
     }
     return;
   }
@@ -1139,7 +1125,7 @@ function populateOverlayButtons(builtOverlayMap) {
       )
     );
   }
-  if (!isMobileViewport() || !appState.panelCollapsed) {
+  if (!appState.panelCollapsed) {
     els.overlayGrid.replaceChildren(fragment);
   } else if (els.overlayGrid.childElementCount > 0) {
     els.overlayGrid.replaceChildren();
