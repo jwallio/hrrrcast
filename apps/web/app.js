@@ -489,11 +489,28 @@ function buildMobileStaticViewport() {
   surface.className = "ios-static-map";
   surface.innerHTML = `
     <div class="ios-static-backdrop"></div>
+    <div class="ios-static-vignette"></div>
     <div class="ios-static-track">
       <img class="ios-static-image ios-static-image-primary" alt="" />
       <img class="ios-static-image ios-static-image-compare hidden" alt="" />
+      <div class="ios-static-focus-ring"></div>
     </div>
-    <div class="ios-static-badge">Safari static mode</div>
+    <div class="ios-static-topbar">
+      <div class="ios-static-kicker">HRRRCast Mobile</div>
+      <div class="ios-static-title"></div>
+      <div class="ios-static-subtitle"></div>
+    </div>
+    <div class="ios-static-bottom">
+      <div class="ios-static-legend">
+        <div class="ios-static-legend-head">
+          <span class="ios-static-legend-name">Legend</span>
+          <span class="ios-static-legend-units"></span>
+        </div>
+        <div class="ios-static-legend-scale"></div>
+        <div class="ios-static-legend-labels"></div>
+      </div>
+      <div class="ios-static-badge">Safari static mode</div>
+    </div>
   `;
   els.mapContainer.replaceChildren(surface);
   appState.mobileStaticViewport = {
@@ -501,6 +518,13 @@ function buildMobileStaticViewport() {
     track: surface.querySelector(".ios-static-track"),
     primaryImage: surface.querySelector(".ios-static-image-primary"),
     compareImage: surface.querySelector(".ios-static-image-compare"),
+    focusRing: surface.querySelector(".ios-static-focus-ring"),
+    title: surface.querySelector(".ios-static-title"),
+    subtitle: surface.querySelector(".ios-static-subtitle"),
+    legendScale: surface.querySelector(".ios-static-legend-scale"),
+    legendLabels: surface.querySelector(".ios-static-legend-labels"),
+    legendUnits: surface.querySelector(".ios-static-legend-units"),
+    legendName: surface.querySelector(".ios-static-legend-name"),
     badge: surface.querySelector(".ios-static-badge"),
   };
 }
@@ -1312,7 +1336,7 @@ function renderMobileStaticViewport(primaryPayload, comparePayload = null) {
     return;
   }
 
-  const transform = computeStaticViewportTransform(sourceBbox, focusBbox, width, height);
+  const transform = computeStaticViewportTransform(sourceBbox, focusBbox, width, height, appState.proj);
   applyStaticViewportImage(
     viewport.primaryImage,
     primaryPayload.previewUrl,
@@ -1328,7 +1352,23 @@ function renderMobileStaticViewport(primaryPayload, comparePayload = null) {
     viewport.compareImage.removeAttribute("src");
   }
 
-  viewport.badge.textContent = `${labelForDomain(appState.proj)} | Safari static view`;
+  renderMobileStaticFocus(viewport, sourceBbox, focusBbox, transform);
+  renderMobileStaticLegend(primaryPayload.metadata);
+  const memberLabel =
+    appState.viewMode === "ensemble"
+      ? "Ensemble"
+      : appState.viewMode === "compare"
+      ? `${appState.member} vs ${appState.compareMember}`
+      : appState.member;
+  viewport.title.textContent = `${labelForOverlay(appState.overlay)} | ${labelForDomain(appState.proj)}`;
+  viewport.subtitle.textContent = `${formatRunLabel(appState.run)} init | ${formatValidTimeLabel(
+    appState.run,
+    appState.fhr
+  )} valid | ${memberLabel}`;
+  viewport.badge.textContent =
+    appState.viewMode === "compare"
+      ? `Compare ${Math.round(appState.compareOpacity * 100)}%`
+      : `${labelForDomain(appState.proj)} view`;
 }
 
 function applyStaticViewportImage(imageEl, url, transform, opacity) {
@@ -1347,23 +1387,32 @@ function clearMobileStaticViewport() {
   viewport.primaryImage.removeAttribute("src");
   viewport.compareImage.removeAttribute("src");
   viewport.compareImage.classList.add("hidden");
+  viewport.focusRing.style.cssText = "";
+  viewport.title.textContent = "";
+  viewport.subtitle.textContent = "";
+  viewport.legendScale.replaceChildren();
+  viewport.legendLabels.replaceChildren();
+  viewport.legendUnits.textContent = "";
 }
 
-function computeStaticViewportTransform(sourceBbox, focusBbox, containerWidth, containerHeight) {
+function computeStaticViewportTransform(sourceBbox, focusBbox, containerWidth, containerHeight, domainId) {
   const sourceWidth = sourceBbox[2] - sourceBbox[0];
   const sourceHeight = sourceBbox[3] - sourceBbox[1];
   const focusWidth = Math.max(0.5, focusBbox[2] - focusBbox[0]);
   const focusHeight = Math.max(0.5, focusBbox[3] - focusBbox[1]);
+  const padding = staticViewportPadding(domainId);
+  const paddedFocusWidth = focusWidth * padding.x;
+  const paddedFocusHeight = focusHeight * padding.y;
   const sourceScale = Math.max(containerWidth / sourceWidth, containerHeight / sourceHeight);
   const focusScale = Math.min(
-    containerWidth / (sourceScale * focusWidth),
-    containerHeight / (sourceScale * focusHeight)
+    containerWidth / (sourceScale * paddedFocusWidth),
+    containerHeight / (sourceScale * paddedFocusHeight)
   );
-  const paddedScale = focusScale * 0.9;
+  const paddedScale = focusScale * padding.zoom;
   const renderedWidth = sourceWidth * sourceScale * paddedScale;
   const renderedHeight = sourceHeight * sourceScale * paddedScale;
-  const focusCenterX = (focusBbox[0] + focusBbox[2]) / 2;
-  const focusCenterY = (focusBbox[1] + focusBbox[3]) / 2;
+  const focusCenterX = (focusBbox[0] + focusBbox[2]) / 2 + padding.offsetX * focusWidth;
+  const focusCenterY = (focusBbox[1] + focusBbox[3]) / 2 + padding.offsetY * focusHeight;
   const centerXPx = ((focusCenterX - sourceBbox[0]) / sourceWidth) * renderedWidth;
   const centerYPx = ((sourceBbox[3] - focusCenterY) / sourceHeight) * renderedHeight;
 
@@ -1373,6 +1422,77 @@ function computeStaticViewportTransform(sourceBbox, focusBbox, containerWidth, c
     translateX: containerWidth / 2 - centerXPx,
     translateY: containerHeight / 2 - centerYPx,
   };
+}
+
+function staticViewportPadding(domainId) {
+  const presets = {
+    conus: { x: 1.02, y: 1.06, zoom: 0.98, offsetX: 0, offsetY: 0.01 },
+    southeast: { x: 1.12, y: 1.16, zoom: 0.98, offsetX: -0.02, offsetY: 0.02 },
+    northeast: { x: 1.14, y: 1.18, zoom: 0.97, offsetX: -0.01, offsetY: 0.01 },
+    south_central: { x: 1.12, y: 1.14, zoom: 0.98, offsetX: 0, offsetY: 0.01 },
+    northwest: { x: 1.14, y: 1.14, zoom: 0.98, offsetX: -0.01, offsetY: 0 },
+    southwest: { x: 1.14, y: 1.16, zoom: 0.98, offsetX: 0.01, offsetY: 0.01 },
+    carolinas: { x: 1.24, y: 1.3, zoom: 0.96, offsetX: -0.02, offsetY: 0.01 },
+  };
+  return presets[domainId] || { x: 1.12, y: 1.14, zoom: 0.98, offsetX: 0, offsetY: 0 };
+}
+
+function renderMobileStaticFocus(viewport, sourceBbox, focusBbox, transform) {
+  const left = ((focusBbox[0] - sourceBbox[0]) / (sourceBbox[2] - sourceBbox[0])) * transform.width + transform.translateX;
+  const right = ((focusBbox[2] - sourceBbox[0]) / (sourceBbox[2] - sourceBbox[0])) * transform.width + transform.translateX;
+  const top = ((sourceBbox[3] - focusBbox[3]) / (sourceBbox[3] - sourceBbox[1])) * transform.height + transform.translateY;
+  const bottom = ((sourceBbox[3] - focusBbox[1]) / (sourceBbox[3] - sourceBbox[1])) * transform.height + transform.translateY;
+  const width = Math.max(32, right - left);
+  const height = Math.max(28, bottom - top);
+
+  viewport.focusRing.style.left = `${Math.max(8, left)}px`;
+  viewport.focusRing.style.top = `${Math.max(8, top)}px`;
+  viewport.focusRing.style.width = `${Math.max(24, Math.min(viewport.surface.clientWidth - 16, width))}px`;
+  viewport.focusRing.style.height = `${Math.max(24, Math.min(viewport.surface.clientHeight - 16, height))}px`;
+}
+
+function renderMobileStaticLegend(metadata) {
+  const viewport = appState.mobileStaticViewport;
+  if (!viewport) {
+    return;
+  }
+  const config = resolveOverlayStyle(appState.overlay, metadata) || { units: "", type: "message", note: "" };
+  viewport.legendUnits.textContent = config.units || "";
+  viewport.legendName.textContent = labelForOverlay(appState.overlay);
+  viewport.legendScale.replaceChildren();
+  viewport.legendLabels.replaceChildren();
+  viewport.legendScale.style.background = "";
+
+  if (config.type === "continuous") {
+    viewport.legendScale.className = "ios-static-legend-scale ios-static-legend-scale-gradient";
+    viewport.legendScale.style.background = `linear-gradient(90deg, ${config.colors.join(", ")})`;
+    const labels = config.labels || inferLegendLabels(config, metadata);
+    labels.forEach((label) => {
+      const span = document.createElement("span");
+      span.textContent = label;
+      viewport.legendLabels.appendChild(span);
+    });
+    return;
+  }
+
+  if (config.type === "categorical") {
+    viewport.legendScale.className = "ios-static-legend-scale ios-static-legend-scale-categorical";
+    const items = (config.items || []).slice(0, 4);
+    items.forEach((item) => {
+      const swatch = document.createElement("span");
+      swatch.className = "ios-static-legend-chip";
+      swatch.style.background = item.color;
+      swatch.textContent = item.label;
+      viewport.legendScale.appendChild(swatch);
+    });
+    return;
+  }
+
+  viewport.legendScale.className = "ios-static-legend-scale ios-static-legend-scale-message";
+  const note = document.createElement("span");
+  note.className = "ios-static-legend-message";
+  note.textContent = config.note || "Legend pending";
+  viewport.legendScale.appendChild(note);
 }
 
 function addCompareOverlay(map, metadata, domainId) {

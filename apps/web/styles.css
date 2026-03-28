@@ -502,6 +502,16 @@ input[type="range"] {
     linear-gradient(180deg, #f0ecdf 0%, #d8dfeb 100%);
 }
 
+.ios-static-vignette {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at center, transparent 38%, rgba(8, 13, 19, 0.08) 88%),
+    linear-gradient(180deg, rgba(8, 13, 19, 0.16) 0%, transparent 22%, transparent 76%, rgba(8, 13, 19, 0.18) 100%);
+  z-index: 1;
+  pointer-events: none;
+}
+
 .ios-static-backdrop {
   position: absolute;
   inset: 0;
@@ -516,6 +526,7 @@ input[type="range"] {
   position: absolute;
   inset: 0;
   overflow: hidden;
+  z-index: 0;
 }
 
 .ios-static-image {
@@ -527,11 +538,46 @@ input[type="range"] {
   user-select: none;
 }
 
-.ios-static-badge {
+.ios-static-focus-ring {
+  position: absolute;
+  border: 1.5px solid color-mix(in srgb, var(--map-accent) 82%, white 18%);
+  border-radius: 20px;
+  box-shadow:
+    0 0 0 999px rgba(8, 13, 19, 0.16),
+    0 0 0 5px rgba(248, 245, 239, 0.16),
+    0 20px 40px rgba(8, 13, 19, 0.14);
+  background: rgba(248, 245, 239, 0.03);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.ios-static-topbar,
+.ios-static-bottom {
   position: absolute;
   left: 12px;
-  bottom: 12px;
+  right: 12px;
   z-index: 2;
+  display: flex;
+  gap: 10px;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.ios-static-topbar {
+  top: 12px;
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+.ios-static-bottom {
+  bottom: 12px;
+  align-items: flex-end;
+}
+
+.ios-static-kicker,
+.ios-static-title,
+.ios-static-subtitle,
+.ios-static-badge {
   border-radius: 999px;
   background: color-mix(in srgb, var(--map-accent) 28%, rgba(11, 18, 27, 0.82));
   color: var(--text);
@@ -539,6 +585,103 @@ input[type="range"] {
   font-size: 0.7rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+}
+
+.ios-static-title,
+.ios-static-subtitle {
+  border-radius: 14px;
+  max-width: min(94%, 30rem);
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+.ios-static-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  padding: 10px 12px;
+}
+
+.ios-static-subtitle {
+  font-size: 0.72rem;
+  color: rgba(244, 239, 231, 0.92);
+  padding: 8px 11px;
+}
+
+.ios-static-legend {
+  min-width: 0;
+  flex: 1 1 auto;
+  max-width: 72%;
+  border-radius: 16px;
+  background: rgba(248, 245, 239, 0.9);
+  color: #15222f;
+  padding: 10px 12px;
+  box-shadow: 0 14px 28px rgba(8, 13, 19, 0.12);
+}
+
+.ios-static-legend-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.ios-static-legend-name,
+.ios-static-legend-units {
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(21, 34, 47, 0.72);
+}
+
+.ios-static-legend-scale {
+  min-height: 14px;
+}
+
+.ios-static-legend-scale-gradient {
+  border-radius: 999px;
+  border: 1px solid rgba(21, 34, 47, 0.08);
+}
+
+.ios-static-legend-scale-categorical {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.ios-static-legend-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 24px;
+  border-radius: 999px;
+  padding: 4px 8px;
+  color: #15222f;
+  font-size: 0.68rem;
+  border: 1px solid rgba(21, 34, 47, 0.08);
+}
+
+.ios-static-legend-scale-message {
+  display: flex;
+  align-items: center;
+}
+
+.ios-static-legend-message {
+  font-size: 0.72rem;
+  color: rgba(21, 34, 47, 0.74);
+}
+
+.ios-static-legend-labels {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 6px;
+  margin-top: 7px;
+  font-size: 0.64rem;
+  color: rgba(21, 34, 47, 0.72);
+}
+
+.ios-static-legend-labels span:last-child {
+  text-align: right;
 }
 
 .map-overlay {
@@ -969,6 +1112,29 @@ input[type="range"] {
 
   .mobile-quick-grid {
     grid-template-columns: 1fr;
+  }
+
+  .ios-static-topbar,
+  .ios-static-bottom {
+    left: 10px;
+    right: 10px;
+  }
+
+  .ios-static-legend {
+    max-width: 78%;
+    padding: 9px 10px;
+  }
+
+  .ios-static-title {
+    font-size: 0.88rem;
+  }
+
+  .ios-static-subtitle {
+    font-size: 0.68rem;
+  }
+
+  .ios-static-legend-labels {
+    font-size: 0.6rem;
   }
 
   .panel-group {
