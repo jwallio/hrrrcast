@@ -1,0 +1,44 @@
+{
+  "bbox": [
+    -127.0,
+    23.0,
+    -66.0,
+    50.0
+  ],
+  "display_path": "2026032804/ens/temperature_2m_spread/f009/conus",
+  "domain_id": "conus",
+  "ensemble_mode": "spread",
+  "forecast_hour": 9,
+  "long_name": "Ensemble standard deviation of 2 m temperature from all processed members.",
+  "member": "ens",
+  "netcdf_path": "data\\processed\\products\\2026032804\\ens\\temperature_2m_spread\\f009\\conus.nc",
+  "notes": "Ensemble standard deviation of 2 m temperature from all processed members.",
+  "overlay_id": "temperature_2m_spread",
+  "preview_url": "./static-api/products/2026032804/ens/temperature_2m_spread/f009/conus.preview.png",
+  "run_id": "2026032804",
+  "shape": [
+    1059,
+    1799
+  ],
+  "source_members": [
+    "m00",
+    "m01",
+    "m02",
+    "m03",
+    "m04",
+    "m05",
+    "m06",
+    "m07",
+    "m08"
+  ],
+  "source_overlay_id": "temperature_2m",
+  "source_overlay_ids": [],
+  "static_export": true,
+  "stats": {
+    "max": 4.101012229919434,
+    "min": 0.06762033700942993
+  },
+  "status": "built",
+  "units": "K",
+  "variable_name": "TEMPERATURE_2M_SPREAD"
+}

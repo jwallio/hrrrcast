@@ -1,0 +1,50 @@
+{
+  "bbox": [
+    -127.0,
+    23.0,
+    -66.0,
+    50.0
+  ],
+  "display_path": "2026032804/ens/shear_0_6km_probability_gt_40kt/f017/conus",
+  "domain_id": "conus",
+  "ensemble_mode": "vector_probability",
+  "forecast_hour": 17,
+  "long_name": "Probability that 0 to 6 km bulk shear magnitude exceeds 40 kt.",
+  "member": "ens",
+  "netcdf_path": "data\\processed\\products\\2026032804\\ens\\shear_0_6km_probability_gt_40kt\\f017\\conus.nc",
+  "notes": "Probability that 0 to 6 km bulk shear magnitude exceeds 40 kt.",
+  "overlay_id": "shear_0_6km_probability_gt_40kt",
+  "preview_url": "./static-api/products/2026032804/ens/shear_0_6km_probability_gt_40kt/f017/conus.preview.png",
+  "run_id": "2026032804",
+  "shape": [
+    1059,
+    1799
+  ],
+  "source_members": [
+    "m00",
+    "m01",
+    "m02",
+    "m03",
+    "m04",
+    "m05",
+    "m06",
+    "m07",
+    "m08"
+  ],
+  "source_overlay_id": null,
+  "source_overlay_ids": [
+    "shear_u_0_6km",
+    "shear_v_0_6km"
+  ],
+  "static_export": true,
+  "stats": {
+    "max": 0.0,
+    "min": 0.0
+  },
+  "status": "built",
+  "threshold": 40.0,
+  "threshold_raw": 20.5778,
+  "threshold_units": "kt",
+  "units": "%",
+  "variable_name": "SHEAR_0_6KM_PROBABILITY_GT_40KT"
+}
