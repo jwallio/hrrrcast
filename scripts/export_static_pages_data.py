@@ -3,10 +3,13 @@
 from __future__ import annotations
 
 import argparse
+import io
 import json
 from pathlib import Path
 import shutil
 import sys
+
+from PIL import Image
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -34,10 +37,11 @@ def build_parser() -> argparse.ArgumentParser:
         "--member",
         action="append",
         dest="members",
-        help="Member ids to export. Repeat to include multiple members. Defaults to ens, m00, and m01 when available.",
+        help="Member ids to export. Repeat to include multiple members. Defaults to ens and m00 when available.",
     )
     parser.add_argument("--output-dir", default=str(DEFAULT_OUTPUT_DIR))
     parser.add_argument("--max-preview-dimension", type=int, default=512)
+    parser.add_argument("--mobile-preview-dimension", type=int, default=320)
     parser.add_argument("--clean", action="store_true", help="Delete the output directory before export.")
     return parser
 
@@ -69,6 +73,7 @@ def main(argv: list[str] | None = None) -> int:
         members=members,
         run_payload=run_payload,
         max_preview_dimension=args.max_preview_dimension,
+        mobile_preview_dimension=args.mobile_preview_dimension,
     )
     print(f"Exported static Pages data for run {run_id} and members {', '.join(members)} to {output_dir}")
     return 0
@@ -85,6 +90,7 @@ def export_root_payloads(
     run_summary = next(run for run in run_summaries if str(run["run_id"]) == run_id)
     run_summary = dict(run_summary)
     run_summary["members"] = members
+    run_summary["static_asset_version"] = run_id
 
     runs_payload = {"runs": [run_summary]}
     (output_dir / "runs.json").write_text(json.dumps(runs_payload, indent=2, sort_keys=True), encoding="utf-8")
@@ -104,6 +110,8 @@ def export_root_payloads(
         json.dumps(static_index, indent=2, sort_keys=True),
         encoding="utf-8",
     )
+    snapshot_payload = {"run_id": run_id, "asset_version": run_id, "members": members}
+    (output_dir / "snapshot.json").write_text(json.dumps(snapshot_payload, indent=2, sort_keys=True), encoding="utf-8")
 
 
 def export_assets(
@@ -112,6 +120,7 @@ def export_assets(
     members: list[str],
     run_payload: dict[str, object],
     max_preview_dimension: int,
+    mobile_preview_dimension: int,
 ) -> None:
     for member in members:
         forecast_hours = run_payload["members"][member]["forecast_hours"]
@@ -131,10 +140,16 @@ def export_assets(
                         metadata=metadata,
                     )
                     preview_path.write_bytes(preview_bytes)
+                    mobile_preview_path = target_dir / f"{domain_id}.mobile.webp"
+                    mobile_preview_path.write_bytes(
+                        render_mobile_preview(preview_bytes, mobile_preview_dimension)
+                    )
 
                     payload = dict(metadata)
                     payload["display_path"] = f"{run_id}/{member}/{overlay_id}/{fhr_token}/{domain_id}"
                     payload["preview_url"] = static_preview_url(output_dir, preview_path)
+                    payload["mobile_preview_url"] = static_preview_url(output_dir, mobile_preview_path)
+                    payload["asset_version"] = run_id
                     payload["static_export"] = True
                     payload_path = target_dir / f"{domain_id}.json"
                     payload_path.write_text(json.dumps(payload, indent=2, sort_keys=True), encoding="utf-8")
@@ -147,6 +162,15 @@ def relative_url(root: Path, path: Path) -> str:
 def static_preview_url(output_dir: Path, path: Path) -> str:
     static_root = output_dir.parent
     return "./" + path.relative_to(static_root).as_posix()
+
+
+def render_mobile_preview(preview_bytes: bytes, max_dimension: int) -> bytes:
+    image = Image.open(io.BytesIO(preview_bytes))
+    image.load()
+    image.thumbnail((max_dimension, max_dimension), Image.Resampling.LANCZOS)
+    output = io.BytesIO()
+    image.save(output, format="WEBP", quality=78, method=6)
+    return output.getvalue()
 
 
 if __name__ == "__main__":

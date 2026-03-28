@@ -472,6 +472,8 @@ input[type="range"] {
     radial-gradient(circle at top left, rgba(242, 140, 69, 0.16), transparent 22%),
     linear-gradient(180deg, #d9dddf 0%, #eef0ee 100%);
   padding: 22px;
+  content-visibility: auto;
+  contain-intrinsic-size: 1200px;
 }
 
 .map-frame-shell {
@@ -554,6 +556,9 @@ input[type="range"] {
   max-width: none;
   pointer-events: none;
   user-select: none;
+  image-rendering: auto;
+  backface-visibility: hidden;
+  transform-origin: top left;
 }
 
 .ios-static-focus-ring {
@@ -772,6 +777,8 @@ input[type="range"] {
   padding: 12px;
   box-shadow: 0 16px 40px rgba(4, 9, 15, 0.18);
   backdrop-filter: blur(10px);
+  content-visibility: auto;
+  contain-intrinsic-size: 420px;
 }
 
 .mobile-quick-grid {
@@ -854,6 +861,8 @@ input[type="range"] {
   border: 1px solid rgba(23, 31, 38, 0.08);
   background: rgba(247, 244, 238, 0.9);
   box-shadow: 0 16px 38px rgba(8, 13, 19, 0.1);
+  content-visibility: auto;
+  contain-intrinsic-size: 240px;
 }
 
 .map-legend-rail {

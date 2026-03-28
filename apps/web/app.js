@@ -388,6 +388,8 @@ const appState = {
   mobileStaticImageCache: new Map(),
   mobileStaticPrefetchTimeoutId: null,
   mobileStaticRenderToken: 0,
+  mobileStaticPrefetchDirection: 1,
+  staticAssetVersion: null,
 };
 
 init().catch((error) => {
@@ -412,6 +414,8 @@ async function init() {
   appState.runs = runsPayload.runs || [];
   appState.productIndex = productIndex.runs || {};
   appState.latestReadyRun = latestReadyPayload?.run?.run_id || null;
+  appState.staticAssetVersion =
+    latestReadyPayload?.run?.run_id || runsPayload.runs?.[0]?.static_asset_version || null;
 
   appState.archive = parseBoolean(query.get("archive"), false);
   appState.proj = query.get("proj") || domainsConfig.defaultDomain;
@@ -868,6 +872,9 @@ function updatePanelUi() {
   document.querySelectorAll(".advanced-panel").forEach((panel) => {
     panel.classList.toggle("hidden", mobile && appState.panelCollapsed);
   });
+  if (!(mobile && appState.panelCollapsed)) {
+    populateOverlayButtons(currentBuiltOverlayMap());
+  }
 }
 
 function isMobileViewport() {
@@ -1132,7 +1139,11 @@ function populateOverlayButtons(builtOverlayMap) {
       )
     );
   }
-  els.overlayGrid.replaceChildren(fragment);
+  if (!isMobileViewport() || !appState.panelCollapsed) {
+    els.overlayGrid.replaceChildren(fragment);
+  } else if (els.overlayGrid.childElementCount > 0) {
+    els.overlayGrid.replaceChildren();
+  }
   populateSelect(
     els.mobileOverlaySelect,
     visibleConfigured.map((overlay) => overlay.id),
@@ -1942,6 +1953,11 @@ async function previewForecastHour(token) {
   if (!nextFhr || nextFhr === appState.fhr) {
     return;
   }
+  const previousIndex = appState.availableFhrs.indexOf(appState.fhr);
+  const nextIndex = appState.availableFhrs.indexOf(nextFhr);
+  if (previousIndex >= 0 && nextIndex >= 0 && previousIndex !== nextIndex) {
+    appState.mobileStaticPrefetchDirection = nextIndex > previousIndex ? 1 : -1;
+  }
   appState.fhr = nextFhr;
   const renderToken = ++appState.mobileStaticRenderToken;
   syncForecastHourControls();
@@ -1988,7 +2004,11 @@ async function primeMobileStaticFrames() {
     members.push(appState.compareMember);
   }
   const requests = [];
-  for (let offset = -6; offset <= 6; offset += 1) {
+  const directionalOffsets =
+    appState.mobileStaticPrefetchDirection >= 0
+      ? [0, 1, 2, 3, 4, 5, 6, 7, -1, -2, -3, -4]
+      : [0, -1, -2, -3, -4, -5, -6, -7, 1, 2, 3, 4];
+  for (const offset of directionalOffsets) {
     const index = centerIndex + offset;
     if (index < 0 || index >= appState.availableFhrs.length) {
       continue;
@@ -2302,42 +2322,53 @@ function detectMobileSafari() {
 }
 
 async function fetchJson(url) {
-  const response = await fetch(url);
+  const response = await fetch(url, { cache: cacheModeForUrl(url) });
   if (!response.ok) {
     throw new Error(`${response.status} ${response.statusText} for ${url}`);
   }
   return response.json();
 }
 
+function cacheModeForUrl(url) {
+  if (!staticMode) {
+    return "no-store";
+  }
+  return isStaticRootPayload(url) ? "no-store" : "force-cache";
+}
+
+function isStaticRootPayload(url) {
+  return /\/(domains|layers|runs|latest-ready|latest|products-index|snapshot)\.json(?:\?|$)/i.test(url);
+}
+
 function domainsUrl() {
-  return staticMode ? `${catalogBase}/domains.json` : `${catalogBase}/api/domains`;
+  return staticMode ? withStaticVersion(`${catalogBase}/domains.json`, false) : `${catalogBase}/api/domains`;
 }
 
 function layersUrl() {
-  return staticMode ? `${catalogBase}/layers.json` : `${catalogBase}/api/layers`;
+  return staticMode ? withStaticVersion(`${catalogBase}/layers.json`, false) : `${catalogBase}/api/layers`;
 }
 
 function runsUrl() {
-  return staticMode ? `${catalogBase}/runs.json` : `${catalogBase}/api/runs`;
+  return staticMode ? withStaticVersion(`${catalogBase}/runs.json`, false) : `${catalogBase}/api/runs`;
 }
 
 function latestReadyUrl() {
-  return staticMode ? `${catalogBase}/latest-ready.json` : `${catalogBase}/api/runs/latest-ready`;
+  return staticMode ? withStaticVersion(`${catalogBase}/latest-ready.json`, false) : `${catalogBase}/api/runs/latest-ready`;
 }
 
 function productsIndexUrl() {
-  return staticMode ? `${tileBase}/products-index.json` : `${tileBase}/api/products-index`;
+  return staticMode ? withStaticVersion(`${tileBase}/products-index.json`, false) : `${tileBase}/api/products-index`;
 }
 
 function productMetadataUrl(runId, member, overlayId, fhrToken, domainId) {
   return staticMode
-    ? `${tileBase}/products/${runId}/${member}/${overlayId}/${fhrToken}/${domainId}.json`
+    ? withStaticVersion(`${tileBase}/products/${runId}/${member}/${overlayId}/${fhrToken}/${domainId}.json`)
     : `${tileBase}/api/products/${runId}/${member}/${overlayId}/${fhrToken}/${domainId}`;
 }
 
 function previewImageUrl(runId, member, overlayId, fhrToken, domainId) {
   return staticMode
-    ? `${tileBase}/products/${runId}/${member}/${overlayId}/${fhrToken}/${domainId}.preview.png`
+    ? withStaticVersion(`${tileBase}/products/${runId}/${member}/${overlayId}/${fhrToken}/${domainId}.preview.png`)
     : `${tileBase}/api/products/${runId}/${member}/${overlayId}/${fhrToken}/${domainId}/preview.png`;
 }
 
@@ -2345,30 +2376,48 @@ function staticPreviewUrl(metadata, member, domainId) {
   if (!staticMode) {
     return previewImageUrl(appState.run, member, appState.overlay, appState.fhr, domainId);
   }
-  const previewUrl = metadata?.preview_url;
+  const previewUrl = preferMobileStaticPreview()
+    ? metadata?.mobile_preview_url || metadata?.preview_url
+    : metadata?.preview_url;
   if (!previewUrl) {
     return previewImageUrl(appState.run, member, appState.overlay, appState.fhr, domainId);
   }
   if (/^https?:\/\//i.test(previewUrl)) {
-    return previewUrl;
+    return withStaticVersion(previewUrl);
   }
   if (previewUrl.startsWith(`${tileBase}/`)) {
-    return previewUrl;
+    return withStaticVersion(previewUrl);
   }
   if (previewUrl.startsWith("./products/")) {
-    return `${tileBase}/${previewUrl.slice(2)}`;
+    return withStaticVersion(`${tileBase}/${previewUrl.slice(2)}`);
   }
   if (previewUrl.startsWith("products/")) {
-    return `${tileBase}/${previewUrl}`;
+    return withStaticVersion(`${tileBase}/${previewUrl}`);
   }
   if (previewUrl.startsWith("./")) {
-    return `${window.location.pathname.replace(/[^/]+$/, "")}${previewUrl.slice(2)}`;
+    return withStaticVersion(`${window.location.pathname.replace(/[^/]+$/, "")}${previewUrl.slice(2)}`);
   }
-  return `${tileBase}/${previewUrl.replace(/^\//, "")}`;
+  return withStaticVersion(`${tileBase}/${previewUrl.replace(/^\//, "")}`);
 }
 
 function tileTemplateUrl(runId, member, overlayId, fhrToken, domainId) {
   return `${tileBase}/tiles/${runId}/${member}/${overlayId}/${fhrToken}/${domainId}/{z}/{x}/{y}.png`;
+}
+
+function withStaticVersion(url, includeVersion = true) {
+  if (!staticMode || !includeVersion) {
+    return url;
+  }
+  const version = appState.staticAssetVersion;
+  if (!version) {
+    return url;
+  }
+  const separator = url.includes("?") ? "&" : "?";
+  return `${url}${separator}v=${encodeURIComponent(version)}`;
+}
+
+function preferMobileStaticPreview() {
+  return mobileSafariStaticMode || (staticMode && isMobileViewport());
 }
 
 function imageCoordinatesForBbox(bbox) {
