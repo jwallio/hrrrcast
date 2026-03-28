@@ -1,0 +1,56 @@
+{
+  "bbox": [
+    -127.0,
+    23.0,
+    -66.0,
+    50.0
+  ],
+  "clipped_grib_path": "data\\processed\\products\\2026032719\\m00\\temperature_potential_2m\\f004\\conus.grib2",
+  "display_path": "2026032719/m00/temperature_potential_2m/f004/conus",
+  "domain_id": "conus",
+  "field_key": "POT:2 m above ground",
+  "forecast_hour": 4,
+  "long_name": "Potential Temperature",
+  "member": "m00",
+  "native": false,
+  "netcdf_path": "data\\processed\\products\\2026032719\\m00\\temperature_potential_2m\\f004\\conus.nc",
+  "overlay_id": "temperature_potential_2m",
+  "preview_url": "./static-api/products/2026032719/m00/temperature_potential_2m/f004/conus.preview.png",
+  "run_id": "2026032719",
+  "shape": [
+    1,
+    1059,
+    1799
+  ],
+  "static_export": true,
+  "stats": {
+    "max": 323.8699951171875,
+    "min": 253.25999450683594
+  },
+  "style": {
+    "colors": [
+      "#213875",
+      "#4a90e2",
+      "#f6f6c6",
+      "#e67b3a",
+      "#93210b"
+    ],
+    "labels": [
+      "260",
+      "280",
+      "300",
+      "320",
+      "340"
+    ],
+    "palette": "temperature",
+    "range": [
+      260.0,
+      340.0
+    ],
+    "rawUnits": "K",
+    "type": "continuous",
+    "units": "K"
+  },
+  "units": "K",
+  "variable_name": "POT_2maboveground"
+}

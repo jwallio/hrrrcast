@@ -1,0 +1,57 @@
+{
+  "bbox": [
+    -127.0,
+    23.0,
+    -66.0,
+    50.0
+  ],
+  "clipped_grib_path": "data\\processed\\products\\2026032719\\m00\\specific_humidity_2m\\f003\\conus.grib2",
+  "display_path": "2026032719/m00/specific_humidity_2m/f003/conus",
+  "domain_id": "conus",
+  "field_key": "SPFH:2 m above ground",
+  "forecast_hour": 3,
+  "long_name": "Specific Humidity",
+  "member": "m00",
+  "native": false,
+  "netcdf_path": "data\\processed\\products\\2026032719\\m00\\specific_humidity_2m\\f003\\conus.nc",
+  "overlay_id": "specific_humidity_2m",
+  "preview_url": "./static-api/products/2026032719/m00/specific_humidity_2m/f003/conus.preview.png",
+  "run_id": "2026032719",
+  "shape": [
+    1,
+    1059,
+    1799
+  ],
+  "static_export": true,
+  "stats": {
+    "max": 0.01769018918275833,
+    "min": 0.00010427000233903527
+  },
+  "style": {
+    "colors": [
+      "#1f2c5b",
+      "#4974b8",
+      "#74b98a",
+      "#d5dc73",
+      "#e1934e"
+    ],
+    "labels": [
+      "0",
+      "4",
+      "8",
+      "16",
+      "24"
+    ],
+    "palette": "moisture",
+    "range": [
+      0.0,
+      0.024
+    ],
+    "rawUnits": "kg/kg",
+    "transform": "kgkg_to_gkg",
+    "type": "continuous",
+    "units": "g/kg"
+  },
+  "units": "kg/kg",
+  "variable_name": "SPFH_2maboveground"
+}
