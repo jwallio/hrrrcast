@@ -12,50 +12,42 @@
       id: "featured",
       label: "Featured",
       match: (overlay) => overlay.featured && overlay.group !== "native",
-      preferredMember: null,
     },
     {
       id: "precip",
       label: "Precip",
       match: (overlay) =>
         ["precipitation", "radar", "winter", "moisture"].includes(overlay.family),
-      preferredMember: "m00",
     },
     {
       id: "severe",
       label: "Severe",
       match: (overlay) => overlay.family === "severe",
-      preferredMember: "m00",
     },
     {
       id: "surface",
       label: "Surface",
       match: (overlay) => ["surface", "synoptic", "temperature"].includes(overlay.family),
-      preferredMember: "m00",
     },
     {
       id: "upper_air",
       label: "Upper Air",
       match: (overlay) => overlay.family === "upper_air",
-      preferredMember: "m00",
     },
     {
       id: "wind",
       label: "Wind",
       match: (overlay) => ["wind", "dynamics"].includes(overlay.family),
-      preferredMember: "m00",
     },
     {
       id: "clouds",
       label: "Clouds",
       match: (overlay) => overlay.family === "clouds",
-      preferredMember: "m00",
     },
     {
       id: "ensemble",
       label: "Ensemble",
       match: (overlay) => overlay.family === "ensemble",
-      preferredMember: "ens",
     },
   ];
 
@@ -72,12 +64,6 @@
   const MEMBER_LABELS = {
     ens: "Ensemble",
     m00: "Member 00",
-  };
-
-  const SPEED_LABELS = {
-    1200: "Slow",
-    700: "Medium",
-    350: "Fast",
   };
 
   const dom = {
@@ -106,7 +92,6 @@
     validLabel: document.getElementById("validLabel"),
     hourRange: document.getElementById("hourRange"),
     hourChips: document.getElementById("hourChips"),
-    statusLine: document.getElementById("statusLine"),
   };
 
   const ctx = dom.canvas.getContext("2d");
@@ -138,7 +123,7 @@
 
   init().catch((error) => {
     console.error(error);
-    dom.statusLine.textContent = "Unable to load the public HRRRCast snapshot.";
+    dom.runBadge.textContent = "Snapshot load failed";
     dom.loading.hidden = false;
     dom.loading.textContent = "Snapshot load failed";
   });
@@ -179,9 +164,9 @@
 
     dom.domainSelect.addEventListener("change", () => {
       state.domainId = dom.domainSelect.value;
+      renderHeader();
       updateUrl();
       renderFrame();
-      updateStatusLine();
     });
 
     dom.memberSelect.addEventListener("change", () => {
@@ -217,8 +202,10 @@
     dom.hourRange.addEventListener("input", () => {
       state.hour = Number(dom.hourRange.value);
       ensureConsistentState();
+      renderHeader();
       renderTimeline();
       renderFrame();
+      updateUrl();
     });
   }
 
@@ -272,17 +259,6 @@
 
     let familyOverlays = getOverlaysForFamily(state.runId, state.member, state.familyId);
     if (!familyOverlays.length) {
-      const preferredFamily = FAMILY_CONFIG.find((item) => item.id === state.familyId);
-      const preferredMember = preferredFamily && preferredFamily.preferredMember;
-      if (preferredMember && members.includes(preferredMember)) {
-        state.member = preferredMember;
-      } else {
-        state.member = findMemberForFamily(state.runId, state.familyId) || members[0];
-      }
-      familyOverlays = getOverlaysForFamily(state.runId, state.member, state.familyId);
-    }
-
-    if (!familyOverlays.length) {
       const fallback = findFirstAvailableFamily(state.runId, state.member);
       state.familyId = fallback ? fallback.id : "featured";
       familyOverlays = getOverlaysForFamily(state.runId, state.member, state.familyId);
@@ -318,7 +294,6 @@
     renderLegend();
     renderTimeline();
     renderFrame();
-    updateStatusLine();
     updateUrl();
   }
 
@@ -357,7 +332,7 @@
   function renderFamilyStrip() {
     dom.familyStrip.innerHTML = "";
     for (const family of FAMILY_CONFIG) {
-      const enabled = hasFamilyAnywhere(state.runId, family.id);
+      const enabled = getOverlaysForFamily(state.runId, state.member, family.id).length > 0;
       const button = document.createElement("button");
       button.type = "button";
       button.className = "family-button";
@@ -482,14 +457,16 @@
       if (hour === state.hour) {
         chip.classList.add("is-active");
       }
-      chip.addEventListener("click", () => {
-        state.hour = hour;
-        stopPlayback();
-        renderTimeline();
-        renderFrame();
-      });
-      dom.hourChips.appendChild(chip);
-    }
+        chip.addEventListener("click", () => {
+          state.hour = hour;
+          stopPlayback();
+          renderHeader();
+          renderTimeline();
+          renderFrame();
+          updateUrl();
+        });
+        dom.hourChips.appendChild(chip);
+      }
   }
 
   function renderFrame() {
@@ -706,9 +683,9 @@
     const nextIndex = (currentIndex + direction + hours.length) % hours.length;
     state.hour = hours[nextIndex];
     stopPlayback();
+    renderHeader();
     renderTimeline();
     renderFrame();
-    updateStatusLine();
     updateUrl();
   }
 
@@ -734,9 +711,9 @@
       const currentIndex = hours.indexOf(state.hour);
       const nextIndex = (currentIndex + 1) % hours.length;
       state.hour = hours[nextIndex];
+      renderHeader();
       renderTimeline();
       renderFrame();
-      updateStatusLine();
       updateUrl();
     }, state.playDelay);
   }
@@ -754,15 +731,6 @@
     resizeFrame = window.requestAnimationFrame(() => {
       renderFrame();
     });
-  }
-
-  function updateStatusLine() {
-    const hours = getOverlayHours(state.runId, state.member, state.overlayId);
-    const domain = refs.domainMap.get(state.domainId);
-    const memberLabel = MEMBER_LABELS[state.member] || state.member.toUpperCase();
-    const speedLabel = SPEED_LABELS[String(state.playDelay)] || "Medium";
-    dom.statusLine.textContent =
-      `Static public snapshot | ${memberLabel} | ${domain ? domain.label : "CONUS"} crop | ${hours.length} forecast hours | ${speedLabel} playback`;
   }
 
   function updateUrl() {
@@ -845,16 +813,6 @@
     return getAvailableOverlays(runId, member).filter((overlay) => family.match(overlay));
   }
 
-  function hasFamilyAnywhere(runId, familyId) {
-    const members = getAvailableMembers(runId);
-    return members.some((member) => getOverlaysForFamily(runId, member, familyId).length);
-  }
-
-  function findMemberForFamily(runId, familyId) {
-    const members = getAvailableMembers(runId);
-    return members.find((member) => getOverlaysForFamily(runId, member, familyId).length) || null;
-  }
-
   function findFirstAvailableFamily(runId, member) {
     return FAMILY_CONFIG.find((family) => getOverlaysForFamily(runId, member, family.id).length) || null;
   }
@@ -935,7 +893,7 @@
   }
 
   async function loadJson(path) {
-    const response = await fetch(path, { cache: "no-store" });
+    const response = await fetch(path, { cache: "default" });
     if (!response.ok) {
       throw new Error(`Failed to load ${path}`);
     }

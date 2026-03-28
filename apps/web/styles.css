@@ -3,7 +3,7 @@
   --page-bg: #eef2f6;
   --panel-bg: #ffffff;
   --panel-border: #c7d2de;
-  --panel-shadow: 0 10px 28px rgba(17, 33, 51, 0.1);
+  --panel-shadow: 0 8px 20px rgba(17, 33, 51, 0.08);
   --ink: #17283a;
   --ink-soft: #5d7085;
   --navy: #21354c;
@@ -103,9 +103,8 @@ button {
   padding: 12px;
   border: 1px solid var(--panel-border);
   border-radius: var(--radius-lg);
-  background: rgba(255, 255, 255, 0.74);
+  background: #f8fbfd;
   box-shadow: var(--panel-shadow);
-  backdrop-filter: blur(12px);
 }
 
 .family-strip {
@@ -478,13 +477,6 @@ button {
   opacity: 0.42;
 }
 
-.status-line {
-  margin: 10px 2px 0;
-  color: var(--ink-soft);
-  font-size: 0.82rem;
-  font-weight: 700;
-}
-
 @media (max-width: 900px) {
   .toolbar {
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -615,7 +607,4 @@ button {
     font-size: 0.78rem;
   }
 
-  .status-line {
-    font-size: 0.76rem;
-  }
 }
