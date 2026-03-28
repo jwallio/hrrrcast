@@ -3,331 +3,117 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>HRRRCast Visualizer</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://unpkg.com/maplibre-gl@5.3.0/dist/maplibre-gl.css"
-      rel="stylesheet"
+    <title>HRRRCast</title>
+    <meta
+      name="description"
+      content="Static NOAA HRRRCast forecast viewer with compact controls and fast frame stepping."
     />
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
     <div class="app-shell">
-      <header class="viewer-header">
-        <div class="brand-block viewer-brand">
-          <p class="eyebrow">Experimental Viewer</p>
-          <h1>HRRRCast</h1>
-          <p class="subhead">
-            Forecast viewer for processed NOAA HRRRCast guidance with compact
-            controls, regional presets, and shareable product state.
-          </p>
+      <header class="site-bar">
+        <div class="brand-block">
+          <span class="brand-mark">HRRRCast</span>
+          <span class="brand-note">Static forecast viewer</span>
         </div>
-        <div class="viewer-status">
-          <span id="run-status-pill" class="status-pill">Loading</span>
-          <p id="run-status-text" class="muted-note viewer-status-text"></p>
-        </div>
+        <div class="run-badge" id="runBadge">Loading latest run</div>
       </header>
 
-      <section class="viewer-toolbar">
-        <section id="mobile-quick-panel" class="mobile-quick-panel">
-          <div class="mobile-quick-head">
-            <div>
-              <p class="eyebrow">Forecast Product</p>
-              <h2>Quick Controls</h2>
-            </div>
-            <button id="mobile-panel-toggle" class="secondary-button mobile-panel-toggle" type="button">
-              Advanced
-            </button>
-          </div>
-          <div id="quick-family-strip" class="quick-family-strip"></div>
-          <div class="mobile-quick-grid">
-            <label class="field compact-field">
-              <span>Run</span>
-              <select id="mobile-run-select"></select>
-            </label>
-            <label class="field compact-field">
-              <span>Region</span>
-              <select id="mobile-domain-select"></select>
-            </label>
-            <label class="field compact-field">
-              <span>Overlay Family</span>
-              <select id="mobile-overlay-group-select">
-                <option value="featured">Featured</option>
-                <option value="all">All</option>
-                <option value="curated">Curated</option>
-                <option value="severe">Severe</option>
-                <option value="surface">Surface</option>
-                <option value="upper_air">Upper Air</option>
-                <option value="clouds">Clouds</option>
-                <option value="wind">Wind</option>
-                <option value="precipitation">Precipitation</option>
-                <option value="radar">Radar</option>
-                <option value="moisture">Moisture</option>
-                <option value="synoptic">Synoptic</option>
-                <option value="winter">Winter</option>
-                <option value="ensemble">Ensemble</option>
-                <option value="native">Native</option>
-              </select>
-            </label>
-            <label class="field compact-field mobile-quick-overlay">
-              <span>Overlay</span>
-              <select id="mobile-overlay-select"></select>
-            </label>
-            <label class="field compact-field">
-              <span>Mode</span>
-              <select id="mobile-view-mode-select">
-                <option value="member">Member</option>
-                <option value="ensemble">Ensemble</option>
-                <option value="compare">Compare</option>
-              </select>
-            </label>
-            <label class="field compact-field">
-              <span>Member</span>
-              <select id="mobile-member-select"></select>
-            </label>
-            <div id="mobile-compare-controls" class="hidden">
-              <label class="field compact-field">
-                <span>Compare</span>
-                <select id="mobile-compare-member-select"></select>
-              </label>
-            </div>
-            <label class="field compact-field">
-              <span>Hour</span>
-              <select id="mobile-fhr-select"></select>
-            </label>
-          </div>
-          <div class="toolbar-actions">
-            <button id="latest-ready-button" class="secondary-button" type="button">Latest Ready</button>
-            <label class="toggle-row" for="archive-toggle">
-              <input id="archive-toggle" type="checkbox" />
-              <span>Archive</span>
-            </label>
-          </div>
-        </section>
-        <div class="mobile-advanced-toggle-row">
-          <span class="mini-meta">Use Advanced for filters, map styling, and full overlay lists.</span>
-        </div>
-      </section>
+      <main class="viewer-shell">
+        <nav class="family-strip" id="familyStrip" aria-label="Product families"></nav>
 
-      <main class="map-stage">
-        <div class="map-frame-shell">
-          <div class="map-frame">
-            <div id="map"></div>
-            <div class="map-overlay">
-              <div class="map-top-stack">
-                <div class="map-topbar">
-                  <div class="summary-strip">
-                    <span id="summary-run" class="summary-pill">Run</span>
-                    <span id="summary-member" class="summary-pill">Member</span>
-                    <span id="summary-hour" class="summary-pill">Hour</span>
-                    <span id="summary-valid" class="summary-pill">Valid</span>
-                    <span id="summary-region" class="summary-pill">Region</span>
-                  </div>
-                </div>
-                <div class="map-title-block">
-                  <p class="eyebrow">Forecast Product</p>
-                  <h2 id="map-title">Loading</h2>
-                  <p id="map-subtitle" class="map-subtitle"></p>
-                  <div class="map-meta-strip">
-                    <span class="map-meta-pill">Family <strong id="map-family-tag">--</strong></span>
-                    <span class="map-meta-pill">Init <strong id="map-init-tag">--</strong></span>
-                    <span class="map-meta-pill">Valid <strong id="map-valid-tag">--</strong></span>
-                  </div>
-                </div>
-              </div>
-              <div id="asset-status" class="asset-status">Loading processed assets...</div>
-            </div>
-          </div>
-          <div class="map-lower-rail">
-            <div id="map-legend-rail" class="map-legend-rail">
-              <div class="map-legend-head">
-                <p class="eyebrow">Legend</p>
-                <span id="map-legend-units" class="mini-meta"></span>
-              </div>
-              <div id="map-legend-panel" class="legend-panel map-legend-panel"></div>
-            </div>
-            <div id="desktop-timeline-host" class="desktop-timeline-host"></div>
-          </div>
-        </div>
-        <div id="mobile-timeline-host" class="mobile-flow-host"></div>
-        <div id="mobile-legend-host" class="mobile-flow-host mobile-legend-host"></div>
-      </main>
-
-      <aside class="control-panel">
-        <section class="panel-group advanced-panel">
-          <div class="panel-head">
-            <h2>Run</h2>
-            <span class="mini-meta">Detailed selection</span>
-          </div>
+        <section class="toolbar" aria-label="Primary controls">
           <label class="field">
             <span>Run</span>
-            <select id="run-select"></select>
+            <select id="runSelect"></select>
           </label>
-          <div class="grid-two">
-            <label class="field">
-              <span>View</span>
-              <select id="view-mode-select">
-                <option value="member">Member</option>
-                <option value="ensemble">Ensemble</option>
-                <option value="compare">Compare</option>
-              </select>
-            </label>
-            <label class="field">
-              <span>Member</span>
-              <select id="member-select"></select>
-            </label>
-          </div>
-          <div class="grid-two">
-            <label class="field">
-              <span>Hour</span>
-              <select id="fhr-select"></select>
-            </label>
-            <div id="compare-controls" class="compare-controls hidden">
-              <label class="field">
-                <span>Compare Member</span>
-                <select id="compare-member-select"></select>
-              </label>
-            </div>
-          </div>
-          <div id="compare-opacity-row" class="field hidden">
-            <span>Compare Opacity</span>
-            <div class="slider-row">
-              <input id="compare-opacity-slider" type="range" min="10" max="90" step="5" value="45" />
-              <strong id="compare-opacity-readout">45%</strong>
-            </div>
-          </div>
-        </section>
 
-        <section class="panel-group advanced-panel">
-          <div class="panel-head">
-            <h2>Domain</h2>
-            <span id="domain-label" class="mini-meta"></span>
-          </div>
-          <div id="domain-grid" class="chip-grid"></div>
-        </section>
-
-        <section class="panel-group advanced-panel">
-          <div class="panel-head">
-            <h2>Overlay</h2>
-            <span id="overlay-meta" class="mini-meta"></span>
-          </div>
           <label class="field">
-            <span>Group</span>
-            <select id="overlay-group-select">
-              <option value="featured">Featured</option>
-              <option value="all">All</option>
-              <option value="curated">Curated</option>
-              <option value="severe">Severe</option>
-              <option value="surface">Surface</option>
-              <option value="upper_air">Upper Air</option>
-              <option value="clouds">Clouds</option>
-              <option value="wind">Wind</option>
-              <option value="precipitation">Precipitation</option>
-              <option value="radar">Radar</option>
-              <option value="moisture">Moisture</option>
-              <option value="synoptic">Synoptic</option>
-              <option value="winter">Winter</option>
-              <option value="ensemble">Ensemble</option>
-              <option value="native">Native</option>
-            </select>
+            <span>Region</span>
+            <select id="domainSelect"></select>
           </label>
+
           <label class="field">
-            <span>Filter</span>
-            <input id="overlay-filter-input" type="text" placeholder="Search native fields or overlays" />
+            <span>View</span>
+            <select id="memberSelect"></select>
           </label>
-          <div id="overlay-grid" class="chip-grid overlay-grid"></div>
+
+          <label class="field field-product">
+            <span>Product</span>
+            <select id="overlaySelect"></select>
+          </label>
         </section>
 
-        <section class="panel-group advanced-panel">
-          <div class="panel-head">
-            <h2>Map</h2>
-            <span class="mini-meta">Background and linework</span>
-          </div>
-          <div id="background-grid" class="chip-grid"></div>
-          <div class="grid-two layer-grid">
-            <label class="field">
-              <span>States</span>
-              <select id="state-style-select">
-                <option value="states_brown">States Brown</option>
-                <option value="states_white">States White</option>
-                <option value="none">Hidden</option>
-              </select>
-            </label>
-            <label class="field">
-              <span>Countries</span>
-              <select id="country-style-select">
-                <option value="countries_brown">Countries Brown</option>
-                <option value="countries_white">Countries White</option>
-                <option value="none">Hidden</option>
-              </select>
-            </label>
-          </div>
-        </section>
-
-        <section id="timeline-group-panel" class="panel-group timeline-group">
-          <div class="panel-head">
-            <h2>Forecast Hour</h2>
-            <span id="timeline-readout" class="mini-meta"></span>
-          </div>
-          <div class="timeline-meta-row">
-            <span class="timeline-meta-pill">Init <strong id="timeline-init-label">--</strong></span>
-            <span class="timeline-meta-pill">Valid <strong id="timeline-valid-label">--</strong></span>
-            <span class="timeline-meta-pill">Step <strong id="timeline-step-label">--</strong></span>
-          </div>
-          <div class="timeline-actions">
-            <div class="timeline-transport">
-              <button id="prev-hour-button" class="secondary-button transport-button" type="button" aria-label="Previous hour">
-                &larr;
-              </button>
-              <button id="animate-toggle" class="secondary-button transport-button play-button" type="button">Play</button>
-              <button id="next-hour-button" class="secondary-button transport-button" type="button" aria-label="Next hour">
-                &rarr;
-              </button>
+        <section class="product-shell" aria-label="Forecast product">
+          <div class="product-head">
+            <div class="title-block">
+              <p class="product-kicker" id="overlayFamilyLabel">Featured</p>
+              <h1 class="product-title" id="productTitle">Loading forecast</h1>
             </div>
-            <label class="field compact-field">
+
+            <div class="product-stamp">
+              <span id="metaInit">Init</span>
+              <span id="metaValid">Valid</span>
+              <span id="metaMember">Ensemble</span>
+            </div>
+          </div>
+
+          <div class="image-shell" id="imageShell">
+            <canvas id="forecastCanvas" aria-label="Forecast image"></canvas>
+            <div class="image-loading" id="imageLoading" hidden>Loading frame</div>
+          </div>
+
+          <div class="legend-rail">
+            <div class="legend-topline">
+              <span id="legendLabel">Legend</span>
+              <span id="legendUnits"></span>
+            </div>
+            <div class="legend-scale" id="legendScale"></div>
+          </div>
+        </section>
+
+        <section class="timeline-shell" aria-label="Forecast timeline">
+          <div class="timeline-topline">
+            <div class="transport">
+              <button type="button" id="prevHourButton">Prev</button>
+              <button type="button" id="playButton">Play</button>
+              <button type="button" id="nextHourButton">Next</button>
+            </div>
+
+            <label class="speed-field">
               <span>Speed</span>
-              <select id="animation-speed-select">
-                <option value="1400">Slow</option>
-                <option value="900" selected>Medium</option>
-                <option value="600">Fast</option>
+              <select id="speedSelect">
+                <option value="1200">Slow</option>
+                <option value="700" selected>Medium</option>
+                <option value="350">Fast</option>
               </select>
             </label>
+
+            <div class="timeline-summary">
+              <span id="hourLabel">F000</span>
+              <span id="validLabel">Valid</span>
+            </div>
           </div>
-          <input id="timeline-slider" type="range" min="0" max="0" step="1" value="0" />
-          <div id="timeline-ticks" class="timeline-ticks"></div>
+
+          <input
+            id="hourRange"
+            class="hour-range"
+            type="range"
+            min="0"
+            max="0"
+            step="1"
+            value="0"
+          />
+
+          <div class="hour-chips" id="hourChips" aria-label="Forecast hour quick picks"></div>
         </section>
 
-        <section class="panel-group advanced-panel">
-          <div class="panel-head">
-            <h2>Legend</h2>
-            <span id="legend-units" class="mini-meta"></span>
-          </div>
-          <div id="legend-panel" class="legend-panel"></div>
-        </section>
-
-        <section class="panel-group info-strip advanced-panel">
-          <div>
-            <p class="info-label">Built product</p>
-            <p id="asset-path" class="info-value">Waiting for selection</p>
-          </div>
-          <div>
-            <p class="info-label">Data APIs</p>
-            <p class="info-value mono">
-              catalog: <span id="catalog-base-label">127.0.0.1:8000</span><br />
-              product: <span id="tile-base-label">127.0.0.1:8001</span>
-            </p>
-          </div>
-        </section>
-      </aside>
+        <p class="status-line" id="statusLine">Preparing static viewer.</p>
+      </main>
     </div>
 
-    <script src="https://unpkg.com/maplibre-gl@5.3.0/dist/maplibre-gl.js"></script>
     <script src="./config.js"></script>
-    <script src="./app.js" type="module"></script>
+    <script src="./app.js"></script>
   </body>
 </html>
