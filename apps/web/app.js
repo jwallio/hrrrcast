@@ -574,12 +574,16 @@
       }
 
       if (isHighlighted) {
-        ctx.fillStyle = "rgba(231, 154, 55, 0.08)";
+        ctx.fillStyle = "rgba(231, 154, 55, 0.06)";
         ctx.fill();
       }
 
-      ctx.strokeStyle = isHighlighted ? "rgba(255, 248, 232, 0.95)" : "rgba(244, 248, 253, 0.55)";
-      ctx.lineWidth = isHighlighted ? 1.35 : 0.7;
+      ctx.strokeStyle = isHighlighted ? "rgba(33, 49, 68, 0.82)" : "rgba(24, 38, 56, 0.68)";
+      ctx.lineWidth = isHighlighted ? 2.2 : 1.4;
+      ctx.stroke();
+
+      ctx.strokeStyle = isHighlighted ? "rgba(255, 250, 240, 0.98)" : "rgba(236, 242, 249, 0.8)";
+      ctx.lineWidth = isHighlighted ? 1.0 : 0.55;
       ctx.stroke();
     }
 
