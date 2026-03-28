@@ -1,0 +1,59 @@
+{
+  "asset_version": "2026032810",
+  "bbox": [
+    -127.0,
+    23.0,
+    -66.0,
+    50.0
+  ],
+  "clipped_grib_path": "data\\processed\\products\\2026032810\\m00\\pwat\\f002\\conus.grib2",
+  "display_path": "2026032810/m00/pwat/f002/conus",
+  "domain_id": "conus",
+  "field_key": "PWAT:entire atmosphere",
+  "forecast_hour": 2,
+  "long_name": "Precipitable Water",
+  "member": "m00",
+  "mobile_preview_url": "./static-api/products/2026032810/m00/pwat/f002/conus.mobile.webp",
+  "native": false,
+  "netcdf_path": "data\\processed\\products\\2026032810\\m00\\pwat\\f002\\conus.nc",
+  "overlay_id": "pwat",
+  "preview_url": "./static-api/products/2026032810/m00/pwat/f002/conus.preview.png",
+  "run_id": "2026032810",
+  "shape": [
+    1,
+    1059,
+    1799
+  ],
+  "static_export": true,
+  "stats": {
+    "max": 42.44200134277344,
+    "min": 0.3199999928474426
+  },
+  "style": {
+    "colors": [
+      "#1f2c5b",
+      "#4974b8",
+      "#74b98a",
+      "#d5dc73",
+      "#e1934e"
+    ],
+    "labels": [
+      "0",
+      "0.5",
+      "1.0",
+      "1.5",
+      "2.5"
+    ],
+    "palette": "moisture",
+    "range": [
+      0.0,
+      63.5
+    ],
+    "rawUnits": "kg/m2",
+    "transform": "mm_to_inches",
+    "type": "continuous",
+    "units": "in"
+  },
+  "units": "kg/m^2",
+  "variable_name": "PWAT_entireatmosphere"
+}

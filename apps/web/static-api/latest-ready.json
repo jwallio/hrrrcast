@@ -1,12 +1,12 @@
 {
-  "generated_at_utc": "2026-03-28T14:10:09.616942+00:00",
+  "generated_at_utc": "2026-03-28T15:57:41.476719+00:00",
   "members": {
     "m00": {
       "forecast_hour_count": 19,
       "forecast_hour_details": {
         "000": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m00.t08z.pgrb2.f00.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m00.t10z.pgrb2.f00.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -175,9 +175,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 0,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m00.t08z.pgrb2.f00",
-          "grib_size_bytes": 266511193,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m00.t08z.pgrb2.f00.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m00.t10z.pgrb2.f00",
+          "grib_size_bytes": 266148395,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m00.t10z.pgrb2.f00.idx",
           "idx_size_bytes": 7367,
           "member": "m00",
           "overlays": {
@@ -271,8 +271,8 @@
           ]
         },
         "001": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m00.t08z.pgrb2.f01.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m00.t10z.pgrb2.f01.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -441,9 +441,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 1,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m00.t08z.pgrb2.f01",
-          "grib_size_bytes": 407402575,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m00.t08z.pgrb2.f01.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m00.t10z.pgrb2.f01",
+          "grib_size_bytes": 407160052,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m00.t10z.pgrb2.f01.idx",
           "idx_size_bytes": 8703,
           "member": "m00",
           "overlays": {
@@ -537,8 +537,8 @@
           ]
         },
         "002": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m00.t08z.pgrb2.f02.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m00.t10z.pgrb2.f02.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -707,9 +707,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 2,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m00.t08z.pgrb2.f02",
-          "grib_size_bytes": 407596024,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m00.t08z.pgrb2.f02.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m00.t10z.pgrb2.f02",
+          "grib_size_bytes": 407288815,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m00.t10z.pgrb2.f02.idx",
           "idx_size_bytes": 8703,
           "member": "m00",
           "overlays": {
@@ -803,8 +803,8 @@
           ]
         },
         "003": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m00.t08z.pgrb2.f03.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m00.t10z.pgrb2.f03.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -973,9 +973,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 3,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m00.t08z.pgrb2.f03",
-          "grib_size_bytes": 407717505,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m00.t08z.pgrb2.f03.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m00.t10z.pgrb2.f03",
+          "grib_size_bytes": 407446239,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m00.t10z.pgrb2.f03.idx",
           "idx_size_bytes": 8703,
           "member": "m00",
           "overlays": {
@@ -1069,8 +1069,8 @@
           ]
         },
         "004": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m00.t08z.pgrb2.f04.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m00.t10z.pgrb2.f04.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -1239,9 +1239,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 4,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m00.t08z.pgrb2.f04",
-          "grib_size_bytes": 407862192,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m00.t08z.pgrb2.f04.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m00.t10z.pgrb2.f04",
+          "grib_size_bytes": 407615885,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m00.t10z.pgrb2.f04.idx",
           "idx_size_bytes": 8703,
           "member": "m00",
           "overlays": {
@@ -1335,8 +1335,8 @@
           ]
         },
         "005": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m00.t08z.pgrb2.f05.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m00.t10z.pgrb2.f05.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -1505,9 +1505,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 5,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m00.t08z.pgrb2.f05",
-          "grib_size_bytes": 407917840,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m00.t08z.pgrb2.f05.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m00.t10z.pgrb2.f05",
+          "grib_size_bytes": 407447653,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m00.t10z.pgrb2.f05.idx",
           "idx_size_bytes": 8703,
           "member": "m00",
           "overlays": {
@@ -1601,8 +1601,8 @@
           ]
         },
         "006": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m00.t08z.pgrb2.f06.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m00.t10z.pgrb2.f06.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -1771,9 +1771,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 6,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m00.t08z.pgrb2.f06",
-          "grib_size_bytes": 407789503,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m00.t08z.pgrb2.f06.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m00.t10z.pgrb2.f06",
+          "grib_size_bytes": 407339302,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m00.t10z.pgrb2.f06.idx",
           "idx_size_bytes": 8703,
           "member": "m00",
           "overlays": {
@@ -1867,8 +1867,8 @@
           ]
         },
         "007": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m00.t08z.pgrb2.f07.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m00.t10z.pgrb2.f07.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -2037,9 +2037,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 7,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m00.t08z.pgrb2.f07",
-          "grib_size_bytes": 441097492,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m00.t08z.pgrb2.f07.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m00.t10z.pgrb2.f07",
+          "grib_size_bytes": 440676858,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m00.t10z.pgrb2.f07.idx",
           "idx_size_bytes": 8705,
           "member": "m00",
           "overlays": {
@@ -2133,8 +2133,8 @@
           ]
         },
         "008": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m00.t08z.pgrb2.f08.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m00.t10z.pgrb2.f08.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -2303,9 +2303,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 8,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m00.t08z.pgrb2.f08",
-          "grib_size_bytes": 440850287,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m00.t08z.pgrb2.f08.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m00.t10z.pgrb2.f08",
+          "grib_size_bytes": 440576426,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m00.t10z.pgrb2.f08.idx",
           "idx_size_bytes": 8705,
           "member": "m00",
           "overlays": {
@@ -2399,8 +2399,8 @@
           ]
         },
         "009": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m00.t08z.pgrb2.f09.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m00.t10z.pgrb2.f09.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -2569,9 +2569,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 9,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m00.t08z.pgrb2.f09",
-          "grib_size_bytes": 440630831,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m00.t08z.pgrb2.f09.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m00.t10z.pgrb2.f09",
+          "grib_size_bytes": 440309011,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m00.t10z.pgrb2.f09.idx",
           "idx_size_bytes": 8705,
           "member": "m00",
           "overlays": {
@@ -2665,8 +2665,8 @@
           ]
         },
         "010": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m00.t08z.pgrb2.f10.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m00.t10z.pgrb2.f10.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -2835,9 +2835,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 10,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m00.t08z.pgrb2.f10",
-          "grib_size_bytes": 440489996,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m00.t08z.pgrb2.f10.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m00.t10z.pgrb2.f10",
+          "grib_size_bytes": 440162911,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m00.t10z.pgrb2.f10.idx",
           "idx_size_bytes": 8869,
           "member": "m00",
           "overlays": {
@@ -2931,8 +2931,8 @@
           ]
         },
         "011": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m00.t08z.pgrb2.f11.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m00.t10z.pgrb2.f11.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -3101,9 +3101,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 11,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m00.t08z.pgrb2.f11",
-          "grib_size_bytes": 440292690,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m00.t08z.pgrb2.f11.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m00.t10z.pgrb2.f11",
+          "grib_size_bytes": 440081854,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m00.t10z.pgrb2.f11.idx",
           "idx_size_bytes": 8869,
           "member": "m00",
           "overlays": {
@@ -3197,8 +3197,8 @@
           ]
         },
         "012": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m00.t08z.pgrb2.f12.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m00.t10z.pgrb2.f12.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -3367,9 +3367,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 12,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m00.t08z.pgrb2.f12",
-          "grib_size_bytes": 440180079,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m00.t08z.pgrb2.f12.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m00.t10z.pgrb2.f12",
+          "grib_size_bytes": 439957178,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m00.t10z.pgrb2.f12.idx",
           "idx_size_bytes": 8869,
           "member": "m00",
           "overlays": {
@@ -3463,8 +3463,8 @@
           ]
         },
         "013": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m00.t08z.pgrb2.f13.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m00.t10z.pgrb2.f13.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -3633,9 +3633,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 13,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m00.t08z.pgrb2.f13",
-          "grib_size_bytes": 461017790,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m00.t08z.pgrb2.f13.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m00.t10z.pgrb2.f13",
+          "grib_size_bytes": 461038547,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m00.t10z.pgrb2.f13.idx",
           "idx_size_bytes": 8870,
           "member": "m00",
           "overlays": {
@@ -3729,8 +3729,8 @@
           ]
         },
         "014": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m00.t08z.pgrb2.f14.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m00.t10z.pgrb2.f14.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -3899,9 +3899,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 14,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m00.t08z.pgrb2.f14",
-          "grib_size_bytes": 460985867,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m00.t08z.pgrb2.f14.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m00.t10z.pgrb2.f14",
+          "grib_size_bytes": 460973483,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m00.t10z.pgrb2.f14.idx",
           "idx_size_bytes": 8870,
           "member": "m00",
           "overlays": {
@@ -3995,8 +3995,8 @@
           ]
         },
         "015": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m00.t08z.pgrb2.f15.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m00.t10z.pgrb2.f15.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -4165,9 +4165,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 15,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m00.t08z.pgrb2.f15",
-          "grib_size_bytes": 460857742,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m00.t08z.pgrb2.f15.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m00.t10z.pgrb2.f15",
+          "grib_size_bytes": 460797920,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m00.t10z.pgrb2.f15.idx",
           "idx_size_bytes": 8870,
           "member": "m00",
           "overlays": {
@@ -4261,8 +4261,8 @@
           ]
         },
         "016": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m00.t08z.pgrb2.f16.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m00.t10z.pgrb2.f16.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -4431,9 +4431,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 16,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m00.t08z.pgrb2.f16",
-          "grib_size_bytes": 460734327,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m00.t08z.pgrb2.f16.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m00.t10z.pgrb2.f16",
+          "grib_size_bytes": 460783295,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m00.t10z.pgrb2.f16.idx",
           "idx_size_bytes": 8870,
           "member": "m00",
           "overlays": {
@@ -4527,8 +4527,8 @@
           ]
         },
         "017": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m00.t08z.pgrb2.f17.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m00.t10z.pgrb2.f17.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -4697,9 +4697,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 17,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m00.t08z.pgrb2.f17",
-          "grib_size_bytes": 460648574,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m00.t08z.pgrb2.f17.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m00.t10z.pgrb2.f17",
+          "grib_size_bytes": 460795869,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m00.t10z.pgrb2.f17.idx",
           "idx_size_bytes": 8870,
           "member": "m00",
           "overlays": {
@@ -4793,8 +4793,8 @@
           ]
         },
         "018": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m00.t08z.pgrb2.f18.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m00.t10z.pgrb2.f18.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -4963,9 +4963,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 18,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m00.t08z.pgrb2.f18",
-          "grib_size_bytes": 460667139,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m00.t08z.pgrb2.f18.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m00.t10z.pgrb2.f18",
+          "grib_size_bytes": 460787190,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m00.t10z.pgrb2.f18.idx",
           "idx_size_bytes": 8870,
           "member": "m00",
           "overlays": {
@@ -5085,8 +5085,8 @@
       "forecast_hour_count": 19,
       "forecast_hour_details": {
         "000": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m01.t08z.pgrb2.f00.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m01.t10z.pgrb2.f00.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -5255,9 +5255,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 0,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m01.t08z.pgrb2.f00",
-          "grib_size_bytes": 266511193,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m01.t08z.pgrb2.f00.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m01.t10z.pgrb2.f00",
+          "grib_size_bytes": 266148395,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m01.t10z.pgrb2.f00.idx",
           "idx_size_bytes": 7367,
           "member": "m01",
           "overlays": {
@@ -5351,8 +5351,8 @@
           ]
         },
         "001": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m01.t08z.pgrb2.f01.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m01.t10z.pgrb2.f01.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -5521,9 +5521,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 1,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m01.t08z.pgrb2.f01",
-          "grib_size_bytes": 407298490,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m01.t08z.pgrb2.f01.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m01.t10z.pgrb2.f01",
+          "grib_size_bytes": 407295221,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m01.t10z.pgrb2.f01.idx",
           "idx_size_bytes": 8703,
           "member": "m01",
           "overlays": {
@@ -5617,8 +5617,8 @@
           ]
         },
         "002": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m01.t08z.pgrb2.f02.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m01.t10z.pgrb2.f02.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -5787,9 +5787,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 2,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m01.t08z.pgrb2.f02",
-          "grib_size_bytes": 407572843,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m01.t08z.pgrb2.f02.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m01.t10z.pgrb2.f02",
+          "grib_size_bytes": 407456998,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m01.t10z.pgrb2.f02.idx",
           "idx_size_bytes": 8703,
           "member": "m01",
           "overlays": {
@@ -5883,8 +5883,8 @@
           ]
         },
         "003": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m01.t08z.pgrb2.f03.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m01.t10z.pgrb2.f03.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -6053,9 +6053,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 3,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m01.t08z.pgrb2.f03",
-          "grib_size_bytes": 407802528,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m01.t08z.pgrb2.f03.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m01.t10z.pgrb2.f03",
+          "grib_size_bytes": 407546065,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m01.t10z.pgrb2.f03.idx",
           "idx_size_bytes": 8703,
           "member": "m01",
           "overlays": {
@@ -6149,8 +6149,8 @@
           ]
         },
         "004": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m01.t08z.pgrb2.f04.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m01.t10z.pgrb2.f04.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -6319,9 +6319,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 4,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m01.t08z.pgrb2.f04",
-          "grib_size_bytes": 407963697,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m01.t08z.pgrb2.f04.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m01.t10z.pgrb2.f04",
+          "grib_size_bytes": 407589707,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m01.t10z.pgrb2.f04.idx",
           "idx_size_bytes": 8703,
           "member": "m01",
           "overlays": {
@@ -6415,8 +6415,8 @@
           ]
         },
         "005": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m01.t08z.pgrb2.f05.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m01.t10z.pgrb2.f05.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -6585,9 +6585,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 5,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m01.t08z.pgrb2.f05",
-          "grib_size_bytes": 407944342,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m01.t08z.pgrb2.f05.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m01.t10z.pgrb2.f05",
+          "grib_size_bytes": 407500710,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m01.t10z.pgrb2.f05.idx",
           "idx_size_bytes": 8703,
           "member": "m01",
           "overlays": {
@@ -6681,8 +6681,8 @@
           ]
         },
         "006": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m01.t08z.pgrb2.f06.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m01.t10z.pgrb2.f06.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -6851,9 +6851,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 6,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m01.t08z.pgrb2.f06",
-          "grib_size_bytes": 407891757,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m01.t08z.pgrb2.f06.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m01.t10z.pgrb2.f06",
+          "grib_size_bytes": 407345063,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m01.t10z.pgrb2.f06.idx",
           "idx_size_bytes": 8703,
           "member": "m01",
           "overlays": {
@@ -6947,8 +6947,8 @@
           ]
         },
         "007": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m01.t08z.pgrb2.f07.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m01.t10z.pgrb2.f07.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -7117,9 +7117,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 7,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m01.t08z.pgrb2.f07",
-          "grib_size_bytes": 441207174,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m01.t08z.pgrb2.f07.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m01.t10z.pgrb2.f07",
+          "grib_size_bytes": 440732571,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m01.t10z.pgrb2.f07.idx",
           "idx_size_bytes": 8705,
           "member": "m01",
           "overlays": {
@@ -7213,8 +7213,8 @@
           ]
         },
         "008": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m01.t08z.pgrb2.f08.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m01.t10z.pgrb2.f08.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -7383,9 +7383,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 8,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m01.t08z.pgrb2.f08",
-          "grib_size_bytes": 440927578,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m01.t08z.pgrb2.f08.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m01.t10z.pgrb2.f08",
+          "grib_size_bytes": 440520720,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m01.t10z.pgrb2.f08.idx",
           "idx_size_bytes": 8705,
           "member": "m01",
           "overlays": {
@@ -7479,8 +7479,8 @@
           ]
         },
         "009": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m01.t08z.pgrb2.f09.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m01.t10z.pgrb2.f09.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -7649,9 +7649,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 9,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m01.t08z.pgrb2.f09",
-          "grib_size_bytes": 440668348,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m01.t08z.pgrb2.f09.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m01.t10z.pgrb2.f09",
+          "grib_size_bytes": 440360392,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m01.t10z.pgrb2.f09.idx",
           "idx_size_bytes": 8705,
           "member": "m01",
           "overlays": {
@@ -7745,8 +7745,8 @@
           ]
         },
         "010": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m01.t08z.pgrb2.f10.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m01.t10z.pgrb2.f10.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -7915,9 +7915,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 10,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m01.t08z.pgrb2.f10",
-          "grib_size_bytes": 440416682,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m01.t08z.pgrb2.f10.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m01.t10z.pgrb2.f10",
+          "grib_size_bytes": 440216864,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m01.t10z.pgrb2.f10.idx",
           "idx_size_bytes": 8869,
           "member": "m01",
           "overlays": {
@@ -8011,8 +8011,8 @@
           ]
         },
         "011": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m01.t08z.pgrb2.f11.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m01.t10z.pgrb2.f11.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -8181,9 +8181,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 11,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m01.t08z.pgrb2.f11",
-          "grib_size_bytes": 440318082,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m01.t08z.pgrb2.f11.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m01.t10z.pgrb2.f11",
+          "grib_size_bytes": 440057061,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m01.t10z.pgrb2.f11.idx",
           "idx_size_bytes": 8869,
           "member": "m01",
           "overlays": {
@@ -8277,8 +8277,8 @@
           ]
         },
         "012": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m01.t08z.pgrb2.f12.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m01.t10z.pgrb2.f12.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -8447,9 +8447,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 12,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m01.t08z.pgrb2.f12",
-          "grib_size_bytes": 440199298,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m01.t08z.pgrb2.f12.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m01.t10z.pgrb2.f12",
+          "grib_size_bytes": 439977208,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m01.t10z.pgrb2.f12.idx",
           "idx_size_bytes": 8869,
           "member": "m01",
           "overlays": {
@@ -8543,8 +8543,8 @@
           ]
         },
         "013": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m01.t08z.pgrb2.f13.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m01.t10z.pgrb2.f13.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -8713,9 +8713,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 13,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m01.t08z.pgrb2.f13",
-          "grib_size_bytes": 461190845,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m01.t08z.pgrb2.f13.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m01.t10z.pgrb2.f13",
+          "grib_size_bytes": 461117788,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m01.t10z.pgrb2.f13.idx",
           "idx_size_bytes": 8870,
           "member": "m01",
           "overlays": {
@@ -8809,8 +8809,8 @@
           ]
         },
         "014": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m01.t08z.pgrb2.f14.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m01.t10z.pgrb2.f14.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -8979,9 +8979,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 14,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m01.t08z.pgrb2.f14",
-          "grib_size_bytes": 461010204,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m01.t08z.pgrb2.f14.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m01.t10z.pgrb2.f14",
+          "grib_size_bytes": 461014077,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m01.t10z.pgrb2.f14.idx",
           "idx_size_bytes": 8870,
           "member": "m01",
           "overlays": {
@@ -9075,8 +9075,8 @@
           ]
         },
         "015": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m01.t08z.pgrb2.f15.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m01.t10z.pgrb2.f15.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -9245,9 +9245,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 15,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m01.t08z.pgrb2.f15",
-          "grib_size_bytes": 460932654,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m01.t08z.pgrb2.f15.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m01.t10z.pgrb2.f15",
+          "grib_size_bytes": 460852416,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m01.t10z.pgrb2.f15.idx",
           "idx_size_bytes": 8870,
           "member": "m01",
           "overlays": {
@@ -9341,8 +9341,8 @@
           ]
         },
         "016": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m01.t08z.pgrb2.f16.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m01.t10z.pgrb2.f16.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -9511,9 +9511,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 16,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m01.t08z.pgrb2.f16",
-          "grib_size_bytes": 460794108,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m01.t08z.pgrb2.f16.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m01.t10z.pgrb2.f16",
+          "grib_size_bytes": 460898477,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m01.t10z.pgrb2.f16.idx",
           "idx_size_bytes": 8870,
           "member": "m01",
           "overlays": {
@@ -9607,8 +9607,8 @@
           ]
         },
         "017": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m01.t08z.pgrb2.f17.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m01.t10z.pgrb2.f17.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -9777,9 +9777,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 17,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m01.t08z.pgrb2.f17",
-          "grib_size_bytes": 460737302,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m01.t08z.pgrb2.f17.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m01.t10z.pgrb2.f17",
+          "grib_size_bytes": 460855345,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m01.t10z.pgrb2.f17.idx",
           "idx_size_bytes": 8870,
           "member": "m01",
           "overlays": {
@@ -9873,8 +9873,8 @@
           ]
         },
         "018": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m01.t08z.pgrb2.f18.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m01.t10z.pgrb2.f18.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -10043,9 +10043,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 18,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m01.t08z.pgrb2.f18",
-          "grib_size_bytes": 460763012,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m01.t08z.pgrb2.f18.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m01.t10z.pgrb2.f18",
+          "grib_size_bytes": 460873173,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m01.t10z.pgrb2.f18.idx",
           "idx_size_bytes": 8870,
           "member": "m01",
           "overlays": {
@@ -10165,8 +10165,8 @@
       "forecast_hour_count": 19,
       "forecast_hour_details": {
         "000": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m02.t08z.pgrb2.f00.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m02.t10z.pgrb2.f00.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -10335,9 +10335,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 0,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m02.t08z.pgrb2.f00",
-          "grib_size_bytes": 266511193,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m02.t08z.pgrb2.f00.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m02.t10z.pgrb2.f00",
+          "grib_size_bytes": 266148395,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m02.t10z.pgrb2.f00.idx",
           "idx_size_bytes": 7367,
           "member": "m02",
           "overlays": {
@@ -10431,8 +10431,8 @@
           ]
         },
         "001": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m02.t08z.pgrb2.f01.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m02.t10z.pgrb2.f01.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -10601,9 +10601,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 1,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m02.t08z.pgrb2.f01",
-          "grib_size_bytes": 407355604,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m02.t08z.pgrb2.f01.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m02.t10z.pgrb2.f01",
+          "grib_size_bytes": 407072971,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m02.t10z.pgrb2.f01.idx",
           "idx_size_bytes": 8703,
           "member": "m02",
           "overlays": {
@@ -10697,8 +10697,8 @@
           ]
         },
         "002": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m02.t08z.pgrb2.f02.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m02.t10z.pgrb2.f02.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -10867,9 +10867,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 2,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m02.t08z.pgrb2.f02",
-          "grib_size_bytes": 407588698,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m02.t08z.pgrb2.f02.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m02.t10z.pgrb2.f02",
+          "grib_size_bytes": 407260708,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m02.t10z.pgrb2.f02.idx",
           "idx_size_bytes": 8703,
           "member": "m02",
           "overlays": {
@@ -10963,8 +10963,8 @@
           ]
         },
         "003": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m02.t08z.pgrb2.f03.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m02.t10z.pgrb2.f03.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -11133,9 +11133,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 3,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m02.t08z.pgrb2.f03",
-          "grib_size_bytes": 407768481,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m02.t08z.pgrb2.f03.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m02.t10z.pgrb2.f03",
+          "grib_size_bytes": 407435975,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m02.t10z.pgrb2.f03.idx",
           "idx_size_bytes": 8703,
           "member": "m02",
           "overlays": {
@@ -11229,8 +11229,8 @@
           ]
         },
         "004": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m02.t08z.pgrb2.f04.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m02.t10z.pgrb2.f04.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -11399,9 +11399,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 4,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m02.t08z.pgrb2.f04",
-          "grib_size_bytes": 407879665,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m02.t08z.pgrb2.f04.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m02.t10z.pgrb2.f04",
+          "grib_size_bytes": 407602302,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m02.t10z.pgrb2.f04.idx",
           "idx_size_bytes": 8703,
           "member": "m02",
           "overlays": {
@@ -11495,8 +11495,8 @@
           ]
         },
         "005": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m02.t08z.pgrb2.f05.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m02.t10z.pgrb2.f05.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -11665,9 +11665,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 5,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m02.t08z.pgrb2.f05",
-          "grib_size_bytes": 407972867,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m02.t08z.pgrb2.f05.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m02.t10z.pgrb2.f05",
+          "grib_size_bytes": 407578183,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m02.t10z.pgrb2.f05.idx",
           "idx_size_bytes": 8703,
           "member": "m02",
           "overlays": {
@@ -11761,8 +11761,8 @@
           ]
         },
         "006": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m02.t08z.pgrb2.f06.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m02.t10z.pgrb2.f06.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -11931,9 +11931,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 6,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m02.t08z.pgrb2.f06",
-          "grib_size_bytes": 407880920,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m02.t08z.pgrb2.f06.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m02.t10z.pgrb2.f06",
+          "grib_size_bytes": 407634740,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m02.t10z.pgrb2.f06.idx",
           "idx_size_bytes": 8703,
           "member": "m02",
           "overlays": {
@@ -12027,8 +12027,8 @@
           ]
         },
         "007": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m02.t08z.pgrb2.f07.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m02.t10z.pgrb2.f07.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -12197,9 +12197,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 7,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m02.t08z.pgrb2.f07",
-          "grib_size_bytes": 441190681,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m02.t08z.pgrb2.f07.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m02.t10z.pgrb2.f07",
+          "grib_size_bytes": 441490978,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m02.t10z.pgrb2.f07.idx",
           "idx_size_bytes": 8705,
           "member": "m02",
           "overlays": {
@@ -12293,8 +12293,8 @@
           ]
         },
         "008": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m02.t08z.pgrb2.f08.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m02.t10z.pgrb2.f08.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -12463,9 +12463,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 8,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m02.t08z.pgrb2.f08",
-          "grib_size_bytes": 441030319,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m02.t08z.pgrb2.f08.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m02.t10z.pgrb2.f08",
+          "grib_size_bytes": 441284593,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m02.t10z.pgrb2.f08.idx",
           "idx_size_bytes": 8705,
           "member": "m02",
           "overlays": {
@@ -12559,8 +12559,8 @@
           ]
         },
         "009": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m02.t08z.pgrb2.f09.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m02.t10z.pgrb2.f09.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -12729,9 +12729,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 9,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m02.t08z.pgrb2.f09",
-          "grib_size_bytes": 440781338,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m02.t08z.pgrb2.f09.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m02.t10z.pgrb2.f09",
+          "grib_size_bytes": 441051595,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m02.t10z.pgrb2.f09.idx",
           "idx_size_bytes": 8705,
           "member": "m02",
           "overlays": {
@@ -12825,8 +12825,8 @@
           ]
         },
         "010": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m02.t08z.pgrb2.f10.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m02.t10z.pgrb2.f10.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -12995,9 +12995,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 10,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m02.t08z.pgrb2.f10",
-          "grib_size_bytes": 440674937,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m02.t08z.pgrb2.f10.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m02.t10z.pgrb2.f10",
+          "grib_size_bytes": 440915252,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m02.t10z.pgrb2.f10.idx",
           "idx_size_bytes": 8869,
           "member": "m02",
           "overlays": {
@@ -13091,8 +13091,8 @@
           ]
         },
         "011": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m02.t08z.pgrb2.f11.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m02.t10z.pgrb2.f11.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -13261,9 +13261,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 11,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m02.t08z.pgrb2.f11",
-          "grib_size_bytes": 440434289,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m02.t08z.pgrb2.f11.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m02.t10z.pgrb2.f11",
+          "grib_size_bytes": 440894359,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m02.t10z.pgrb2.f11.idx",
           "idx_size_bytes": 8869,
           "member": "m02",
           "overlays": {
@@ -13357,8 +13357,8 @@
           ]
         },
         "012": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m02.t08z.pgrb2.f12.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m02.t10z.pgrb2.f12.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -13527,9 +13527,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 12,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m02.t08z.pgrb2.f12",
-          "grib_size_bytes": 440266050,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m02.t08z.pgrb2.f12.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m02.t10z.pgrb2.f12",
+          "grib_size_bytes": 440731150,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m02.t10z.pgrb2.f12.idx",
           "idx_size_bytes": 8869,
           "member": "m02",
           "overlays": {
@@ -13623,8 +13623,8 @@
           ]
         },
         "013": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m02.t08z.pgrb2.f13.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m02.t10z.pgrb2.f13.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -13793,10 +13793,10 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 13,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m02.t08z.pgrb2.f13",
-          "grib_size_bytes": 461284180,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m02.t08z.pgrb2.f13.idx",
-          "idx_size_bytes": 8870,
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m02.t10z.pgrb2.f13",
+          "grib_size_bytes": 462049621,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m02.t10z.pgrb2.f13.idx",
+          "idx_size_bytes": 8871,
           "member": "m02",
           "overlays": {
             "cape": {
@@ -13889,8 +13889,8 @@
           ]
         },
         "014": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m02.t08z.pgrb2.f14.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m02.t10z.pgrb2.f14.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -14059,10 +14059,10 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 14,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m02.t08z.pgrb2.f14",
-          "grib_size_bytes": 461124714,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m02.t08z.pgrb2.f14.idx",
-          "idx_size_bytes": 8870,
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m02.t10z.pgrb2.f14",
+          "grib_size_bytes": 461844487,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m02.t10z.pgrb2.f14.idx",
+          "idx_size_bytes": 8871,
           "member": "m02",
           "overlays": {
             "cape": {
@@ -14155,8 +14155,8 @@
           ]
         },
         "015": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m02.t08z.pgrb2.f15.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m02.t10z.pgrb2.f15.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -14325,9 +14325,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 15,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m02.t08z.pgrb2.f15",
-          "grib_size_bytes": 460959603,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m02.t08z.pgrb2.f15.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m02.t10z.pgrb2.f15",
+          "grib_size_bytes": 461702955,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m02.t10z.pgrb2.f15.idx",
           "idx_size_bytes": 8870,
           "member": "m02",
           "overlays": {
@@ -14421,8 +14421,8 @@
           ]
         },
         "016": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m02.t08z.pgrb2.f16.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m02.t10z.pgrb2.f16.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -14591,9 +14591,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 16,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m02.t08z.pgrb2.f16",
-          "grib_size_bytes": 460838309,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m02.t08z.pgrb2.f16.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m02.t10z.pgrb2.f16",
+          "grib_size_bytes": 461655370,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m02.t10z.pgrb2.f16.idx",
           "idx_size_bytes": 8870,
           "member": "m02",
           "overlays": {
@@ -14687,8 +14687,8 @@
           ]
         },
         "017": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m02.t08z.pgrb2.f17.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m02.t10z.pgrb2.f17.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -14857,9 +14857,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 17,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m02.t08z.pgrb2.f17",
-          "grib_size_bytes": 460837373,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m02.t08z.pgrb2.f17.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m02.t10z.pgrb2.f17",
+          "grib_size_bytes": 461617513,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m02.t10z.pgrb2.f17.idx",
           "idx_size_bytes": 8870,
           "member": "m02",
           "overlays": {
@@ -14953,8 +14953,8 @@
           ]
         },
         "018": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m02.t08z.pgrb2.f18.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m02.t10z.pgrb2.f18.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -15123,9 +15123,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 18,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m02.t08z.pgrb2.f18",
-          "grib_size_bytes": 460818127,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m02.t08z.pgrb2.f18.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m02.t10z.pgrb2.f18",
+          "grib_size_bytes": 461627461,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m02.t10z.pgrb2.f18.idx",
           "idx_size_bytes": 8870,
           "member": "m02",
           "overlays": {
@@ -15245,8 +15245,8 @@
       "forecast_hour_count": 19,
       "forecast_hour_details": {
         "000": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m03.t08z.pgrb2.f00.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m03.t10z.pgrb2.f00.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -15415,9 +15415,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 0,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m03.t08z.pgrb2.f00",
-          "grib_size_bytes": 266511193,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m03.t08z.pgrb2.f00.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m03.t10z.pgrb2.f00",
+          "grib_size_bytes": 266148395,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m03.t10z.pgrb2.f00.idx",
           "idx_size_bytes": 7367,
           "member": "m03",
           "overlays": {
@@ -15511,8 +15511,8 @@
           ]
         },
         "001": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m03.t08z.pgrb2.f01.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m03.t10z.pgrb2.f01.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -15681,9 +15681,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 1,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m03.t08z.pgrb2.f01",
-          "grib_size_bytes": 407444172,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m03.t08z.pgrb2.f01.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m03.t10z.pgrb2.f01",
+          "grib_size_bytes": 407229019,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m03.t10z.pgrb2.f01.idx",
           "idx_size_bytes": 8703,
           "member": "m03",
           "overlays": {
@@ -15777,8 +15777,8 @@
           ]
         },
         "002": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m03.t08z.pgrb2.f02.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m03.t10z.pgrb2.f02.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -15947,9 +15947,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 2,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m03.t08z.pgrb2.f02",
-          "grib_size_bytes": 407585814,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m03.t08z.pgrb2.f02.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m03.t10z.pgrb2.f02",
+          "grib_size_bytes": 407471648,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m03.t10z.pgrb2.f02.idx",
           "idx_size_bytes": 8703,
           "member": "m03",
           "overlays": {
@@ -16043,8 +16043,8 @@
           ]
         },
         "003": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m03.t08z.pgrb2.f03.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m03.t10z.pgrb2.f03.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -16213,9 +16213,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 3,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m03.t08z.pgrb2.f03",
-          "grib_size_bytes": 407723077,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m03.t08z.pgrb2.f03.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m03.t10z.pgrb2.f03",
+          "grib_size_bytes": 407548954,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m03.t10z.pgrb2.f03.idx",
           "idx_size_bytes": 8703,
           "member": "m03",
           "overlays": {
@@ -16309,8 +16309,8 @@
           ]
         },
         "004": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m03.t08z.pgrb2.f04.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m03.t10z.pgrb2.f04.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -16479,9 +16479,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 4,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m03.t08z.pgrb2.f04",
-          "grib_size_bytes": 407838099,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m03.t08z.pgrb2.f04.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m03.t10z.pgrb2.f04",
+          "grib_size_bytes": 407614975,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m03.t10z.pgrb2.f04.idx",
           "idx_size_bytes": 8703,
           "member": "m03",
           "overlays": {
@@ -16575,8 +16575,8 @@
           ]
         },
         "005": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m03.t08z.pgrb2.f05.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m03.t10z.pgrb2.f05.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -16745,9 +16745,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 5,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m03.t08z.pgrb2.f05",
-          "grib_size_bytes": 407938106,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m03.t08z.pgrb2.f05.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m03.t10z.pgrb2.f05",
+          "grib_size_bytes": 407518896,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m03.t10z.pgrb2.f05.idx",
           "idx_size_bytes": 8703,
           "member": "m03",
           "overlays": {
@@ -16841,8 +16841,8 @@
           ]
         },
         "006": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m03.t08z.pgrb2.f06.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m03.t10z.pgrb2.f06.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -17011,9 +17011,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 6,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m03.t08z.pgrb2.f06",
-          "grib_size_bytes": 407775228,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m03.t08z.pgrb2.f06.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m03.t10z.pgrb2.f06",
+          "grib_size_bytes": 407369383,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m03.t10z.pgrb2.f06.idx",
           "idx_size_bytes": 8703,
           "member": "m03",
           "overlays": {
@@ -17107,8 +17107,8 @@
           ]
         },
         "007": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m03.t08z.pgrb2.f07.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m03.t10z.pgrb2.f07.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -17277,9 +17277,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 7,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m03.t08z.pgrb2.f07",
-          "grib_size_bytes": 441122731,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m03.t08z.pgrb2.f07.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m03.t10z.pgrb2.f07",
+          "grib_size_bytes": 440664134,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m03.t10z.pgrb2.f07.idx",
           "idx_size_bytes": 8705,
           "member": "m03",
           "overlays": {
@@ -17373,8 +17373,8 @@
           ]
         },
         "008": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m03.t08z.pgrb2.f08.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m03.t10z.pgrb2.f08.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -17543,9 +17543,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 8,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m03.t08z.pgrb2.f08",
-          "grib_size_bytes": 440870405,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m03.t08z.pgrb2.f08.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m03.t10z.pgrb2.f08",
+          "grib_size_bytes": 440518884,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m03.t10z.pgrb2.f08.idx",
           "idx_size_bytes": 8705,
           "member": "m03",
           "overlays": {
@@ -17639,8 +17639,8 @@
           ]
         },
         "009": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m03.t08z.pgrb2.f09.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m03.t10z.pgrb2.f09.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -17809,9 +17809,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 9,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m03.t08z.pgrb2.f09",
-          "grib_size_bytes": 440670742,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m03.t08z.pgrb2.f09.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m03.t10z.pgrb2.f09",
+          "grib_size_bytes": 440375720,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m03.t10z.pgrb2.f09.idx",
           "idx_size_bytes": 8705,
           "member": "m03",
           "overlays": {
@@ -17905,8 +17905,8 @@
           ]
         },
         "010": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m03.t08z.pgrb2.f10.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m03.t10z.pgrb2.f10.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -18075,9 +18075,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 10,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m03.t08z.pgrb2.f10",
-          "grib_size_bytes": 440494842,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m03.t08z.pgrb2.f10.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m03.t10z.pgrb2.f10",
+          "grib_size_bytes": 440197661,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m03.t10z.pgrb2.f10.idx",
           "idx_size_bytes": 8869,
           "member": "m03",
           "overlays": {
@@ -18171,8 +18171,8 @@
           ]
         },
         "011": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m03.t08z.pgrb2.f11.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m03.t10z.pgrb2.f11.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -18341,9 +18341,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 11,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m03.t08z.pgrb2.f11",
-          "grib_size_bytes": 440285494,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m03.t08z.pgrb2.f11.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m03.t10z.pgrb2.f11",
+          "grib_size_bytes": 440069924,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m03.t10z.pgrb2.f11.idx",
           "idx_size_bytes": 8869,
           "member": "m03",
           "overlays": {
@@ -18437,8 +18437,8 @@
           ]
         },
         "012": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m03.t08z.pgrb2.f12.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m03.t10z.pgrb2.f12.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -18607,9 +18607,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 12,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m03.t08z.pgrb2.f12",
-          "grib_size_bytes": 440231648,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m03.t08z.pgrb2.f12.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m03.t10z.pgrb2.f12",
+          "grib_size_bytes": 439966406,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m03.t10z.pgrb2.f12.idx",
           "idx_size_bytes": 8869,
           "member": "m03",
           "overlays": {
@@ -18703,8 +18703,8 @@
           ]
         },
         "013": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m03.t08z.pgrb2.f13.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m03.t10z.pgrb2.f13.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -18873,9 +18873,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 13,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m03.t08z.pgrb2.f13",
-          "grib_size_bytes": 461150185,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m03.t08z.pgrb2.f13.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m03.t10z.pgrb2.f13",
+          "grib_size_bytes": 460976216,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m03.t10z.pgrb2.f13.idx",
           "idx_size_bytes": 8870,
           "member": "m03",
           "overlays": {
@@ -18969,8 +18969,8 @@
           ]
         },
         "014": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m03.t08z.pgrb2.f14.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m03.t10z.pgrb2.f14.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -19139,9 +19139,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 14,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m03.t08z.pgrb2.f14",
-          "grib_size_bytes": 461048047,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m03.t08z.pgrb2.f14.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m03.t10z.pgrb2.f14",
+          "grib_size_bytes": 460986783,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m03.t10z.pgrb2.f14.idx",
           "idx_size_bytes": 8870,
           "member": "m03",
           "overlays": {
@@ -19235,8 +19235,8 @@
           ]
         },
         "015": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m03.t08z.pgrb2.f15.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m03.t10z.pgrb2.f15.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -19405,9 +19405,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 15,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m03.t08z.pgrb2.f15",
-          "grib_size_bytes": 460949127,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m03.t08z.pgrb2.f15.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m03.t10z.pgrb2.f15",
+          "grib_size_bytes": 460975043,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m03.t10z.pgrb2.f15.idx",
           "idx_size_bytes": 8870,
           "member": "m03",
           "overlays": {
@@ -19501,8 +19501,8 @@
           ]
         },
         "016": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m03.t08z.pgrb2.f16.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m03.t10z.pgrb2.f16.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -19671,9 +19671,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 16,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m03.t08z.pgrb2.f16",
-          "grib_size_bytes": 460816624,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m03.t08z.pgrb2.f16.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m03.t10z.pgrb2.f16",
+          "grib_size_bytes": 460971045,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m03.t10z.pgrb2.f16.idx",
           "idx_size_bytes": 8870,
           "member": "m03",
           "overlays": {
@@ -19767,8 +19767,8 @@
           ]
         },
         "017": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m03.t08z.pgrb2.f17.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m03.t10z.pgrb2.f17.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -19937,9 +19937,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 17,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m03.t08z.pgrb2.f17",
-          "grib_size_bytes": 460767932,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m03.t08z.pgrb2.f17.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m03.t10z.pgrb2.f17",
+          "grib_size_bytes": 460954626,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m03.t10z.pgrb2.f17.idx",
           "idx_size_bytes": 8870,
           "member": "m03",
           "overlays": {
@@ -20033,8 +20033,8 @@
           ]
         },
         "018": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m03.t08z.pgrb2.f18.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m03.t10z.pgrb2.f18.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -20203,9 +20203,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 18,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m03.t08z.pgrb2.f18",
-          "grib_size_bytes": 460773345,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m03.t08z.pgrb2.f18.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m03.t10z.pgrb2.f18",
+          "grib_size_bytes": 460853436,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m03.t10z.pgrb2.f18.idx",
           "idx_size_bytes": 8870,
           "member": "m03",
           "overlays": {
@@ -20325,8 +20325,8 @@
       "forecast_hour_count": 19,
       "forecast_hour_details": {
         "000": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m04.t08z.pgrb2.f00.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m04.t10z.pgrb2.f00.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -20495,9 +20495,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 0,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m04.t08z.pgrb2.f00",
-          "grib_size_bytes": 266511193,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m04.t08z.pgrb2.f00.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m04.t10z.pgrb2.f00",
+          "grib_size_bytes": 266148395,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m04.t10z.pgrb2.f00.idx",
           "idx_size_bytes": 7367,
           "member": "m04",
           "overlays": {
@@ -20591,8 +20591,8 @@
           ]
         },
         "001": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m04.t08z.pgrb2.f01.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m04.t10z.pgrb2.f01.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -20761,9 +20761,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 1,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m04.t08z.pgrb2.f01",
-          "grib_size_bytes": 407286393,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m04.t08z.pgrb2.f01.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m04.t10z.pgrb2.f01",
+          "grib_size_bytes": 407122776,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m04.t10z.pgrb2.f01.idx",
           "idx_size_bytes": 8703,
           "member": "m04",
           "overlays": {
@@ -20857,8 +20857,8 @@
           ]
         },
         "002": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m04.t08z.pgrb2.f02.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m04.t10z.pgrb2.f02.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -21027,9 +21027,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 2,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m04.t08z.pgrb2.f02",
-          "grib_size_bytes": 407530295,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m04.t08z.pgrb2.f02.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m04.t10z.pgrb2.f02",
+          "grib_size_bytes": 407274807,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m04.t10z.pgrb2.f02.idx",
           "idx_size_bytes": 8703,
           "member": "m04",
           "overlays": {
@@ -21123,8 +21123,8 @@
           ]
         },
         "003": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m04.t08z.pgrb2.f03.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m04.t10z.pgrb2.f03.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -21293,9 +21293,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 3,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m04.t08z.pgrb2.f03",
-          "grib_size_bytes": 407710696,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m04.t08z.pgrb2.f03.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m04.t10z.pgrb2.f03",
+          "grib_size_bytes": 407483542,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m04.t10z.pgrb2.f03.idx",
           "idx_size_bytes": 8703,
           "member": "m04",
           "overlays": {
@@ -21389,8 +21389,8 @@
           ]
         },
         "004": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m04.t08z.pgrb2.f04.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m04.t10z.pgrb2.f04.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -21559,9 +21559,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 4,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m04.t08z.pgrb2.f04",
-          "grib_size_bytes": 407758806,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m04.t08z.pgrb2.f04.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m04.t10z.pgrb2.f04",
+          "grib_size_bytes": 407626050,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m04.t10z.pgrb2.f04.idx",
           "idx_size_bytes": 8703,
           "member": "m04",
           "overlays": {
@@ -21655,8 +21655,8 @@
           ]
         },
         "005": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m04.t08z.pgrb2.f05.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m04.t10z.pgrb2.f05.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -21825,9 +21825,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 5,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m04.t08z.pgrb2.f05",
-          "grib_size_bytes": 407878745,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m04.t08z.pgrb2.f05.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m04.t10z.pgrb2.f05",
+          "grib_size_bytes": 407562223,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m04.t10z.pgrb2.f05.idx",
           "idx_size_bytes": 8703,
           "member": "m04",
           "overlays": {
@@ -21921,8 +21921,8 @@
           ]
         },
         "006": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m04.t08z.pgrb2.f06.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m04.t10z.pgrb2.f06.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -22091,9 +22091,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 6,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m04.t08z.pgrb2.f06",
-          "grib_size_bytes": 407892452,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m04.t08z.pgrb2.f06.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m04.t10z.pgrb2.f06",
+          "grib_size_bytes": 407431160,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m04.t10z.pgrb2.f06.idx",
           "idx_size_bytes": 8703,
           "member": "m04",
           "overlays": {
@@ -22187,8 +22187,8 @@
           ]
         },
         "007": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m04.t08z.pgrb2.f07.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m04.t10z.pgrb2.f07.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -22357,9 +22357,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 7,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m04.t08z.pgrb2.f07",
-          "grib_size_bytes": 441145688,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m04.t08z.pgrb2.f07.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m04.t10z.pgrb2.f07",
+          "grib_size_bytes": 440755799,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m04.t10z.pgrb2.f07.idx",
           "idx_size_bytes": 8705,
           "member": "m04",
           "overlays": {
@@ -22453,8 +22453,8 @@
           ]
         },
         "008": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m04.t08z.pgrb2.f08.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m04.t10z.pgrb2.f08.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -22623,9 +22623,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 8,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m04.t08z.pgrb2.f08",
-          "grib_size_bytes": 440880407,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m04.t08z.pgrb2.f08.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m04.t10z.pgrb2.f08",
+          "grib_size_bytes": 440519492,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m04.t10z.pgrb2.f08.idx",
           "idx_size_bytes": 8705,
           "member": "m04",
           "overlays": {
@@ -22719,8 +22719,8 @@
           ]
         },
         "009": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m04.t08z.pgrb2.f09.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m04.t10z.pgrb2.f09.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -22889,9 +22889,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 9,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m04.t08z.pgrb2.f09",
-          "grib_size_bytes": 440618732,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m04.t08z.pgrb2.f09.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m04.t10z.pgrb2.f09",
+          "grib_size_bytes": 440327478,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m04.t10z.pgrb2.f09.idx",
           "idx_size_bytes": 8705,
           "member": "m04",
           "overlays": {
@@ -22985,8 +22985,8 @@
           ]
         },
         "010": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m04.t08z.pgrb2.f10.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m04.t10z.pgrb2.f10.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -23155,9 +23155,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 10,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m04.t08z.pgrb2.f10",
-          "grib_size_bytes": 440474266,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m04.t08z.pgrb2.f10.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m04.t10z.pgrb2.f10",
+          "grib_size_bytes": 440133939,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m04.t10z.pgrb2.f10.idx",
           "idx_size_bytes": 8869,
           "member": "m04",
           "overlays": {
@@ -23251,8 +23251,8 @@
           ]
         },
         "011": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m04.t08z.pgrb2.f11.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m04.t10z.pgrb2.f11.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -23421,9 +23421,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 11,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m04.t08z.pgrb2.f11",
-          "grib_size_bytes": 440286081,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m04.t08z.pgrb2.f11.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m04.t10z.pgrb2.f11",
+          "grib_size_bytes": 439974504,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m04.t10z.pgrb2.f11.idx",
           "idx_size_bytes": 8869,
           "member": "m04",
           "overlays": {
@@ -23517,8 +23517,8 @@
           ]
         },
         "012": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m04.t08z.pgrb2.f12.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m04.t10z.pgrb2.f12.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -23687,9 +23687,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 12,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m04.t08z.pgrb2.f12",
-          "grib_size_bytes": 440249113,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m04.t08z.pgrb2.f12.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m04.t10z.pgrb2.f12",
+          "grib_size_bytes": 439979861,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m04.t10z.pgrb2.f12.idx",
           "idx_size_bytes": 8869,
           "member": "m04",
           "overlays": {
@@ -23783,8 +23783,8 @@
           ]
         },
         "013": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m04.t08z.pgrb2.f13.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m04.t10z.pgrb2.f13.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -23953,9 +23953,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 13,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m04.t08z.pgrb2.f13",
-          "grib_size_bytes": 461049758,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m04.t08z.pgrb2.f13.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m04.t10z.pgrb2.f13",
+          "grib_size_bytes": 460953986,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m04.t10z.pgrb2.f13.idx",
           "idx_size_bytes": 8870,
           "member": "m04",
           "overlays": {
@@ -24049,8 +24049,8 @@
           ]
         },
         "014": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m04.t08z.pgrb2.f14.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m04.t10z.pgrb2.f14.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -24219,9 +24219,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 14,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m04.t08z.pgrb2.f14",
-          "grib_size_bytes": 460955564,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m04.t08z.pgrb2.f14.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m04.t10z.pgrb2.f14",
+          "grib_size_bytes": 461032893,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m04.t10z.pgrb2.f14.idx",
           "idx_size_bytes": 8870,
           "member": "m04",
           "overlays": {
@@ -24315,8 +24315,8 @@
           ]
         },
         "015": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m04.t08z.pgrb2.f15.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m04.t10z.pgrb2.f15.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -24485,9 +24485,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 15,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m04.t08z.pgrb2.f15",
-          "grib_size_bytes": 460887766,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m04.t08z.pgrb2.f15.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m04.t10z.pgrb2.f15",
+          "grib_size_bytes": 460912757,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m04.t10z.pgrb2.f15.idx",
           "idx_size_bytes": 8870,
           "member": "m04",
           "overlays": {
@@ -24581,8 +24581,8 @@
           ]
         },
         "016": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m04.t08z.pgrb2.f16.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m04.t10z.pgrb2.f16.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -24751,9 +24751,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 16,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m04.t08z.pgrb2.f16",
-          "grib_size_bytes": 460842365,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m04.t08z.pgrb2.f16.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m04.t10z.pgrb2.f16",
+          "grib_size_bytes": 460868129,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m04.t10z.pgrb2.f16.idx",
           "idx_size_bytes": 8870,
           "member": "m04",
           "overlays": {
@@ -24847,8 +24847,8 @@
           ]
         },
         "017": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m04.t08z.pgrb2.f17.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m04.t10z.pgrb2.f17.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -25017,9 +25017,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 17,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m04.t08z.pgrb2.f17",
-          "grib_size_bytes": 460834628,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m04.t08z.pgrb2.f17.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m04.t10z.pgrb2.f17",
+          "grib_size_bytes": 460849592,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m04.t10z.pgrb2.f17.idx",
           "idx_size_bytes": 8870,
           "member": "m04",
           "overlays": {
@@ -25113,8 +25113,8 @@
           ]
         },
         "018": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m04.t08z.pgrb2.f18.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m04.t10z.pgrb2.f18.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -25283,9 +25283,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 18,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m04.t08z.pgrb2.f18",
-          "grib_size_bytes": 460816221,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m04.t08z.pgrb2.f18.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m04.t10z.pgrb2.f18",
+          "grib_size_bytes": 460821735,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m04.t10z.pgrb2.f18.idx",
           "idx_size_bytes": 8870,
           "member": "m04",
           "overlays": {
@@ -25405,8 +25405,8 @@
       "forecast_hour_count": 19,
       "forecast_hour_details": {
         "000": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m05.t08z.pgrb2.f00.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m05.t10z.pgrb2.f00.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -25575,9 +25575,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 0,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m05.t08z.pgrb2.f00",
-          "grib_size_bytes": 266511193,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m05.t08z.pgrb2.f00.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m05.t10z.pgrb2.f00",
+          "grib_size_bytes": 266148395,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m05.t10z.pgrb2.f00.idx",
           "idx_size_bytes": 7367,
           "member": "m05",
           "overlays": {
@@ -25671,8 +25671,8 @@
           ]
         },
         "001": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m05.t08z.pgrb2.f01.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m05.t10z.pgrb2.f01.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -25841,9 +25841,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 1,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m05.t08z.pgrb2.f01",
-          "grib_size_bytes": 407357580,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m05.t08z.pgrb2.f01.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m05.t10z.pgrb2.f01",
+          "grib_size_bytes": 407200671,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m05.t10z.pgrb2.f01.idx",
           "idx_size_bytes": 8703,
           "member": "m05",
           "overlays": {
@@ -25937,8 +25937,8 @@
           ]
         },
         "002": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m05.t08z.pgrb2.f02.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m05.t10z.pgrb2.f02.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -26107,9 +26107,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 2,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m05.t08z.pgrb2.f02",
-          "grib_size_bytes": 407592717,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m05.t08z.pgrb2.f02.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m05.t10z.pgrb2.f02",
+          "grib_size_bytes": 407453703,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m05.t10z.pgrb2.f02.idx",
           "idx_size_bytes": 8703,
           "member": "m05",
           "overlays": {
@@ -26203,8 +26203,8 @@
           ]
         },
         "003": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m05.t08z.pgrb2.f03.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m05.t10z.pgrb2.f03.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -26373,9 +26373,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 3,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m05.t08z.pgrb2.f03",
-          "grib_size_bytes": 407790367,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m05.t08z.pgrb2.f03.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m05.t10z.pgrb2.f03",
+          "grib_size_bytes": 407499933,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m05.t10z.pgrb2.f03.idx",
           "idx_size_bytes": 8703,
           "member": "m05",
           "overlays": {
@@ -26469,8 +26469,8 @@
           ]
         },
         "004": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m05.t08z.pgrb2.f04.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m05.t10z.pgrb2.f04.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -26639,9 +26639,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 4,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m05.t08z.pgrb2.f04",
-          "grib_size_bytes": 407937202,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m05.t08z.pgrb2.f04.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m05.t10z.pgrb2.f04",
+          "grib_size_bytes": 407499490,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m05.t10z.pgrb2.f04.idx",
           "idx_size_bytes": 8703,
           "member": "m05",
           "overlays": {
@@ -26735,8 +26735,8 @@
           ]
         },
         "005": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m05.t08z.pgrb2.f05.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m05.t10z.pgrb2.f05.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -26905,9 +26905,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 5,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m05.t08z.pgrb2.f05",
-          "grib_size_bytes": 407934904,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m05.t08z.pgrb2.f05.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m05.t10z.pgrb2.f05",
+          "grib_size_bytes": 407400054,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m05.t10z.pgrb2.f05.idx",
           "idx_size_bytes": 8703,
           "member": "m05",
           "overlays": {
@@ -27001,8 +27001,8 @@
           ]
         },
         "006": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m05.t08z.pgrb2.f06.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m05.t10z.pgrb2.f06.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -27171,9 +27171,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 6,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m05.t08z.pgrb2.f06",
-          "grib_size_bytes": 407811425,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m05.t08z.pgrb2.f06.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m05.t10z.pgrb2.f06",
+          "grib_size_bytes": 407361018,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m05.t10z.pgrb2.f06.idx",
           "idx_size_bytes": 8703,
           "member": "m05",
           "overlays": {
@@ -27267,8 +27267,8 @@
           ]
         },
         "007": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m05.t08z.pgrb2.f07.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m05.t10z.pgrb2.f07.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -27437,9 +27437,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 7,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m05.t08z.pgrb2.f07",
-          "grib_size_bytes": 441106146,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m05.t08z.pgrb2.f07.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m05.t10z.pgrb2.f07",
+          "grib_size_bytes": 440581382,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m05.t10z.pgrb2.f07.idx",
           "idx_size_bytes": 8705,
           "member": "m05",
           "overlays": {
@@ -27533,8 +27533,8 @@
           ]
         },
         "008": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m05.t08z.pgrb2.f08.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m05.t10z.pgrb2.f08.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -27703,9 +27703,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 8,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m05.t08z.pgrb2.f08",
-          "grib_size_bytes": 440882866,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m05.t08z.pgrb2.f08.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m05.t10z.pgrb2.f08",
+          "grib_size_bytes": 440477750,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m05.t10z.pgrb2.f08.idx",
           "idx_size_bytes": 8705,
           "member": "m05",
           "overlays": {
@@ -27799,8 +27799,8 @@
           ]
         },
         "009": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m05.t08z.pgrb2.f09.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m05.t10z.pgrb2.f09.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -27969,9 +27969,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 9,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m05.t08z.pgrb2.f09",
-          "grib_size_bytes": 440582604,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m05.t08z.pgrb2.f09.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m05.t10z.pgrb2.f09",
+          "grib_size_bytes": 440266103,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m05.t10z.pgrb2.f09.idx",
           "idx_size_bytes": 8705,
           "member": "m05",
           "overlays": {
@@ -28065,8 +28065,8 @@
           ]
         },
         "010": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m05.t08z.pgrb2.f10.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m05.t10z.pgrb2.f10.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -28235,9 +28235,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 10,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m05.t08z.pgrb2.f10",
-          "grib_size_bytes": 440378408,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m05.t08z.pgrb2.f10.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m05.t10z.pgrb2.f10",
+          "grib_size_bytes": 440052512,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m05.t10z.pgrb2.f10.idx",
           "idx_size_bytes": 8869,
           "member": "m05",
           "overlays": {
@@ -28331,8 +28331,8 @@
           ]
         },
         "011": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m05.t08z.pgrb2.f11.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m05.t10z.pgrb2.f11.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -28501,9 +28501,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 11,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m05.t08z.pgrb2.f11",
-          "grib_size_bytes": 440192398,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m05.t08z.pgrb2.f11.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m05.t10z.pgrb2.f11",
+          "grib_size_bytes": 439898844,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m05.t10z.pgrb2.f11.idx",
           "idx_size_bytes": 8869,
           "member": "m05",
           "overlays": {
@@ -28597,8 +28597,8 @@
           ]
         },
         "012": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m05.t08z.pgrb2.f12.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m05.t10z.pgrb2.f12.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -28767,9 +28767,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 12,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m05.t08z.pgrb2.f12",
-          "grib_size_bytes": 440080058,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m05.t08z.pgrb2.f12.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m05.t10z.pgrb2.f12",
+          "grib_size_bytes": 439826872,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m05.t10z.pgrb2.f12.idx",
           "idx_size_bytes": 8869,
           "member": "m05",
           "overlays": {
@@ -28863,8 +28863,8 @@
           ]
         },
         "013": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m05.t08z.pgrb2.f13.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m05.t10z.pgrb2.f13.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -29033,9 +29033,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 13,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m05.t08z.pgrb2.f13",
-          "grib_size_bytes": 460973853,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m05.t08z.pgrb2.f13.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m05.t10z.pgrb2.f13",
+          "grib_size_bytes": 460895303,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m05.t10z.pgrb2.f13.idx",
           "idx_size_bytes": 8870,
           "member": "m05",
           "overlays": {
@@ -29129,8 +29129,8 @@
           ]
         },
         "014": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m05.t08z.pgrb2.f14.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m05.t10z.pgrb2.f14.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -29299,9 +29299,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 14,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m05.t08z.pgrb2.f14",
-          "grib_size_bytes": 460884008,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m05.t08z.pgrb2.f14.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m05.t10z.pgrb2.f14",
+          "grib_size_bytes": 460850841,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m05.t10z.pgrb2.f14.idx",
           "idx_size_bytes": 8870,
           "member": "m05",
           "overlays": {
@@ -29395,8 +29395,8 @@
           ]
         },
         "015": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m05.t08z.pgrb2.f15.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m05.t10z.pgrb2.f15.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -29565,9 +29565,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 15,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m05.t08z.pgrb2.f15",
-          "grib_size_bytes": 460799633,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m05.t08z.pgrb2.f15.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m05.t10z.pgrb2.f15",
+          "grib_size_bytes": 460752522,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m05.t10z.pgrb2.f15.idx",
           "idx_size_bytes": 8870,
           "member": "m05",
           "overlays": {
@@ -29661,8 +29661,8 @@
           ]
         },
         "016": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m05.t08z.pgrb2.f16.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m05.t10z.pgrb2.f16.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -29831,9 +29831,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 16,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m05.t08z.pgrb2.f16",
-          "grib_size_bytes": 460707669,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m05.t08z.pgrb2.f16.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m05.t10z.pgrb2.f16",
+          "grib_size_bytes": 460708666,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m05.t10z.pgrb2.f16.idx",
           "idx_size_bytes": 8870,
           "member": "m05",
           "overlays": {
@@ -29927,8 +29927,8 @@
           ]
         },
         "017": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m05.t08z.pgrb2.f17.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m05.t10z.pgrb2.f17.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -30097,9 +30097,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 17,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m05.t08z.pgrb2.f17",
-          "grib_size_bytes": 460648697,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m05.t08z.pgrb2.f17.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m05.t10z.pgrb2.f17",
+          "grib_size_bytes": 460714560,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m05.t10z.pgrb2.f17.idx",
           "idx_size_bytes": 8870,
           "member": "m05",
           "overlays": {
@@ -30193,8 +30193,8 @@
           ]
         },
         "018": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m05.t08z.pgrb2.f18.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m05.t10z.pgrb2.f18.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -30363,9 +30363,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 18,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m05.t08z.pgrb2.f18",
-          "grib_size_bytes": 460704996,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m05.t08z.pgrb2.f18.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m05.t10z.pgrb2.f18",
+          "grib_size_bytes": 460794047,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m05.t10z.pgrb2.f18.idx",
           "idx_size_bytes": 8870,
           "member": "m05",
           "overlays": {
@@ -30485,8 +30485,8 @@
       "forecast_hour_count": 19,
       "forecast_hour_details": {
         "000": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m06.t08z.pgrb2.f00.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m06.t10z.pgrb2.f00.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -30655,9 +30655,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 0,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m06.t08z.pgrb2.f00",
-          "grib_size_bytes": 266511193,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m06.t08z.pgrb2.f00.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m06.t10z.pgrb2.f00",
+          "grib_size_bytes": 266148395,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m06.t10z.pgrb2.f00.idx",
           "idx_size_bytes": 7367,
           "member": "m06",
           "overlays": {
@@ -30751,8 +30751,8 @@
           ]
         },
         "001": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m06.t08z.pgrb2.f01.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m06.t10z.pgrb2.f01.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -30921,9 +30921,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 1,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m06.t08z.pgrb2.f01",
-          "grib_size_bytes": 407410683,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m06.t08z.pgrb2.f01.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m06.t10z.pgrb2.f01",
+          "grib_size_bytes": 407157218,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m06.t10z.pgrb2.f01.idx",
           "idx_size_bytes": 8703,
           "member": "m06",
           "overlays": {
@@ -31017,8 +31017,8 @@
           ]
         },
         "002": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m06.t08z.pgrb2.f02.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m06.t10z.pgrb2.f02.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -31187,9 +31187,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 2,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m06.t08z.pgrb2.f02",
-          "grib_size_bytes": 407566365,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m06.t08z.pgrb2.f02.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m06.t10z.pgrb2.f02",
+          "grib_size_bytes": 407349608,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m06.t10z.pgrb2.f02.idx",
           "idx_size_bytes": 8703,
           "member": "m06",
           "overlays": {
@@ -31283,8 +31283,8 @@
           ]
         },
         "003": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m06.t08z.pgrb2.f03.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m06.t10z.pgrb2.f03.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -31453,9 +31453,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 3,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m06.t08z.pgrb2.f03",
-          "grib_size_bytes": 407675405,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m06.t08z.pgrb2.f03.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m06.t10z.pgrb2.f03",
+          "grib_size_bytes": 407401774,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m06.t10z.pgrb2.f03.idx",
           "idx_size_bytes": 8703,
           "member": "m06",
           "overlays": {
@@ -31549,8 +31549,8 @@
           ]
         },
         "004": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m06.t08z.pgrb2.f04.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m06.t10z.pgrb2.f04.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -31719,9 +31719,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 4,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m06.t08z.pgrb2.f04",
-          "grib_size_bytes": 407842923,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m06.t08z.pgrb2.f04.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m06.t10z.pgrb2.f04",
+          "grib_size_bytes": 407439649,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m06.t10z.pgrb2.f04.idx",
           "idx_size_bytes": 8703,
           "member": "m06",
           "overlays": {
@@ -31815,8 +31815,8 @@
           ]
         },
         "005": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m06.t08z.pgrb2.f05.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m06.t10z.pgrb2.f05.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -31985,9 +31985,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 5,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m06.t08z.pgrb2.f05",
-          "grib_size_bytes": 407816872,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m06.t08z.pgrb2.f05.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m06.t10z.pgrb2.f05",
+          "grib_size_bytes": 407375870,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m06.t10z.pgrb2.f05.idx",
           "idx_size_bytes": 8703,
           "member": "m06",
           "overlays": {
@@ -32081,8 +32081,8 @@
           ]
         },
         "006": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m06.t08z.pgrb2.f06.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m06.t10z.pgrb2.f06.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -32251,9 +32251,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 6,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m06.t08z.pgrb2.f06",
-          "grib_size_bytes": 407704582,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m06.t08z.pgrb2.f06.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m06.t10z.pgrb2.f06",
+          "grib_size_bytes": 407294967,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m06.t10z.pgrb2.f06.idx",
           "idx_size_bytes": 8703,
           "member": "m06",
           "overlays": {
@@ -32347,8 +32347,8 @@
           ]
         },
         "007": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m06.t08z.pgrb2.f07.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m06.t10z.pgrb2.f07.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -32517,9 +32517,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 7,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m06.t08z.pgrb2.f07",
-          "grib_size_bytes": 440935663,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m06.t08z.pgrb2.f07.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m06.t10z.pgrb2.f07",
+          "grib_size_bytes": 440689398,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m06.t10z.pgrb2.f07.idx",
           "idx_size_bytes": 8705,
           "member": "m06",
           "overlays": {
@@ -32613,8 +32613,8 @@
           ]
         },
         "008": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m06.t08z.pgrb2.f08.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m06.t10z.pgrb2.f08.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -32783,9 +32783,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 8,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m06.t08z.pgrb2.f08",
-          "grib_size_bytes": 440768707,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m06.t08z.pgrb2.f08.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m06.t10z.pgrb2.f08",
+          "grib_size_bytes": 440545417,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m06.t10z.pgrb2.f08.idx",
           "idx_size_bytes": 8705,
           "member": "m06",
           "overlays": {
@@ -32879,8 +32879,8 @@
           ]
         },
         "009": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m06.t08z.pgrb2.f09.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m06.t10z.pgrb2.f09.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -33049,9 +33049,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 9,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m06.t08z.pgrb2.f09",
-          "grib_size_bytes": 440505427,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m06.t08z.pgrb2.f09.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m06.t10z.pgrb2.f09",
+          "grib_size_bytes": 440275609,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m06.t10z.pgrb2.f09.idx",
           "idx_size_bytes": 8705,
           "member": "m06",
           "overlays": {
@@ -33145,8 +33145,8 @@
           ]
         },
         "010": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m06.t08z.pgrb2.f10.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m06.t10z.pgrb2.f10.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -33315,9 +33315,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 10,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m06.t08z.pgrb2.f10",
-          "grib_size_bytes": 440312648,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m06.t08z.pgrb2.f10.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m06.t10z.pgrb2.f10",
+          "grib_size_bytes": 440006363,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m06.t10z.pgrb2.f10.idx",
           "idx_size_bytes": 8869,
           "member": "m06",
           "overlays": {
@@ -33411,8 +33411,8 @@
           ]
         },
         "011": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m06.t08z.pgrb2.f11.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m06.t10z.pgrb2.f11.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -33581,9 +33581,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 11,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m06.t08z.pgrb2.f11",
-          "grib_size_bytes": 440210400,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m06.t08z.pgrb2.f11.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m06.t10z.pgrb2.f11",
+          "grib_size_bytes": 439990083,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m06.t10z.pgrb2.f11.idx",
           "idx_size_bytes": 8869,
           "member": "m06",
           "overlays": {
@@ -33677,8 +33677,8 @@
           ]
         },
         "012": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m06.t08z.pgrb2.f12.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m06.t10z.pgrb2.f12.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -33847,9 +33847,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 12,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m06.t08z.pgrb2.f12",
-          "grib_size_bytes": 440193245,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m06.t08z.pgrb2.f12.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m06.t10z.pgrb2.f12",
+          "grib_size_bytes": 439953757,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m06.t10z.pgrb2.f12.idx",
           "idx_size_bytes": 8869,
           "member": "m06",
           "overlays": {
@@ -33943,8 +33943,8 @@
           ]
         },
         "013": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m06.t08z.pgrb2.f13.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m06.t10z.pgrb2.f13.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -34113,9 +34113,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 13,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m06.t08z.pgrb2.f13",
-          "grib_size_bytes": 461062209,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m06.t08z.pgrb2.f13.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m06.t10z.pgrb2.f13",
+          "grib_size_bytes": 460897525,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m06.t10z.pgrb2.f13.idx",
           "idx_size_bytes": 8870,
           "member": "m06",
           "overlays": {
@@ -34209,8 +34209,8 @@
           ]
         },
         "014": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m06.t08z.pgrb2.f14.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m06.t10z.pgrb2.f14.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -34379,9 +34379,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 14,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m06.t08z.pgrb2.f14",
-          "grib_size_bytes": 460989443,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m06.t08z.pgrb2.f14.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m06.t10z.pgrb2.f14",
+          "grib_size_bytes": 460758417,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m06.t10z.pgrb2.f14.idx",
           "idx_size_bytes": 8870,
           "member": "m06",
           "overlays": {
@@ -34475,8 +34475,8 @@
           ]
         },
         "015": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m06.t08z.pgrb2.f15.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m06.t10z.pgrb2.f15.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -34645,9 +34645,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 15,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m06.t08z.pgrb2.f15",
-          "grib_size_bytes": 460893350,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m06.t08z.pgrb2.f15.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m06.t10z.pgrb2.f15",
+          "grib_size_bytes": 460683289,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m06.t10z.pgrb2.f15.idx",
           "idx_size_bytes": 8870,
           "member": "m06",
           "overlays": {
@@ -34741,8 +34741,8 @@
           ]
         },
         "016": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m06.t08z.pgrb2.f16.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m06.t10z.pgrb2.f16.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -34911,9 +34911,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 16,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m06.t08z.pgrb2.f16",
-          "grib_size_bytes": 460745510,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m06.t08z.pgrb2.f16.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m06.t10z.pgrb2.f16",
+          "grib_size_bytes": 460675639,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m06.t10z.pgrb2.f16.idx",
           "idx_size_bytes": 8870,
           "member": "m06",
           "overlays": {
@@ -35007,8 +35007,8 @@
           ]
         },
         "017": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m06.t08z.pgrb2.f17.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m06.t10z.pgrb2.f17.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -35177,9 +35177,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 17,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m06.t08z.pgrb2.f17",
-          "grib_size_bytes": 460661863,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m06.t08z.pgrb2.f17.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m06.t10z.pgrb2.f17",
+          "grib_size_bytes": 460673766,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m06.t10z.pgrb2.f17.idx",
           "idx_size_bytes": 8870,
           "member": "m06",
           "overlays": {
@@ -35273,8 +35273,8 @@
           ]
         },
         "018": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m06.t08z.pgrb2.f18.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m06.t10z.pgrb2.f18.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -35443,9 +35443,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 18,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m06.t08z.pgrb2.f18",
-          "grib_size_bytes": 460656976,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m06.t08z.pgrb2.f18.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m06.t10z.pgrb2.f18",
+          "grib_size_bytes": 460640649,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m06.t10z.pgrb2.f18.idx",
           "idx_size_bytes": 8870,
           "member": "m06",
           "overlays": {
@@ -35565,8 +35565,8 @@
       "forecast_hour_count": 19,
       "forecast_hour_details": {
         "000": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m07.t08z.pgrb2.f00.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m07.t10z.pgrb2.f00.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -35735,9 +35735,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 0,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m07.t08z.pgrb2.f00",
-          "grib_size_bytes": 266511193,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m07.t08z.pgrb2.f00.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m07.t10z.pgrb2.f00",
+          "grib_size_bytes": 266148395,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m07.t10z.pgrb2.f00.idx",
           "idx_size_bytes": 7367,
           "member": "m07",
           "overlays": {
@@ -35831,8 +35831,8 @@
           ]
         },
         "001": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m07.t08z.pgrb2.f01.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m07.t10z.pgrb2.f01.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -36001,9 +36001,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 1,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m07.t08z.pgrb2.f01",
-          "grib_size_bytes": 407317095,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m07.t08z.pgrb2.f01.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m07.t10z.pgrb2.f01",
+          "grib_size_bytes": 407109889,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m07.t10z.pgrb2.f01.idx",
           "idx_size_bytes": 8703,
           "member": "m07",
           "overlays": {
@@ -36097,8 +36097,8 @@
           ]
         },
         "002": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m07.t08z.pgrb2.f02.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m07.t10z.pgrb2.f02.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -36267,9 +36267,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 2,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m07.t08z.pgrb2.f02",
-          "grib_size_bytes": 407481926,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m07.t08z.pgrb2.f02.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m07.t10z.pgrb2.f02",
+          "grib_size_bytes": 407322860,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m07.t10z.pgrb2.f02.idx",
           "idx_size_bytes": 8703,
           "member": "m07",
           "overlays": {
@@ -36363,8 +36363,8 @@
           ]
         },
         "003": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m07.t08z.pgrb2.f03.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m07.t10z.pgrb2.f03.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -36533,9 +36533,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 3,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m07.t08z.pgrb2.f03",
-          "grib_size_bytes": 407734282,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m07.t08z.pgrb2.f03.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m07.t10z.pgrb2.f03",
+          "grib_size_bytes": 407537528,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m07.t10z.pgrb2.f03.idx",
           "idx_size_bytes": 8703,
           "member": "m07",
           "overlays": {
@@ -36629,8 +36629,8 @@
           ]
         },
         "004": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m07.t08z.pgrb2.f04.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m07.t10z.pgrb2.f04.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -36799,9 +36799,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 4,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m07.t08z.pgrb2.f04",
-          "grib_size_bytes": 407821479,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m07.t08z.pgrb2.f04.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m07.t10z.pgrb2.f04",
+          "grib_size_bytes": 407513092,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m07.t10z.pgrb2.f04.idx",
           "idx_size_bytes": 8703,
           "member": "m07",
           "overlays": {
@@ -36895,8 +36895,8 @@
           ]
         },
         "005": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m07.t08z.pgrb2.f05.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m07.t10z.pgrb2.f05.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -37065,9 +37065,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 5,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m07.t08z.pgrb2.f05",
-          "grib_size_bytes": 407910101,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m07.t08z.pgrb2.f05.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m07.t10z.pgrb2.f05",
+          "grib_size_bytes": 407442357,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m07.t10z.pgrb2.f05.idx",
           "idx_size_bytes": 8703,
           "member": "m07",
           "overlays": {
@@ -37161,8 +37161,8 @@
           ]
         },
         "006": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m07.t08z.pgrb2.f06.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m07.t10z.pgrb2.f06.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -37331,9 +37331,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 6,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m07.t08z.pgrb2.f06",
-          "grib_size_bytes": 407877371,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m07.t08z.pgrb2.f06.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m07.t10z.pgrb2.f06",
+          "grib_size_bytes": 407291311,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m07.t10z.pgrb2.f06.idx",
           "idx_size_bytes": 8703,
           "member": "m07",
           "overlays": {
@@ -37427,8 +37427,8 @@
           ]
         },
         "007": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m07.t08z.pgrb2.f07.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m07.t10z.pgrb2.f07.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -37597,9 +37597,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 7,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m07.t08z.pgrb2.f07",
-          "grib_size_bytes": 441140602,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m07.t08z.pgrb2.f07.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m07.t10z.pgrb2.f07",
+          "grib_size_bytes": 440745949,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m07.t10z.pgrb2.f07.idx",
           "idx_size_bytes": 8705,
           "member": "m07",
           "overlays": {
@@ -37693,8 +37693,8 @@
           ]
         },
         "008": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m07.t08z.pgrb2.f08.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m07.t10z.pgrb2.f08.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -37863,9 +37863,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 8,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m07.t08z.pgrb2.f08",
-          "grib_size_bytes": 440849493,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m07.t08z.pgrb2.f08.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m07.t10z.pgrb2.f08",
+          "grib_size_bytes": 440612333,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m07.t10z.pgrb2.f08.idx",
           "idx_size_bytes": 8705,
           "member": "m07",
           "overlays": {
@@ -37959,8 +37959,8 @@
           ]
         },
         "009": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m07.t08z.pgrb2.f09.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m07.t10z.pgrb2.f09.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -38129,9 +38129,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 9,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m07.t08z.pgrb2.f09",
-          "grib_size_bytes": 440670747,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m07.t08z.pgrb2.f09.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m07.t10z.pgrb2.f09",
+          "grib_size_bytes": 440365830,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m07.t10z.pgrb2.f09.idx",
           "idx_size_bytes": 8705,
           "member": "m07",
           "overlays": {
@@ -38225,8 +38225,8 @@
           ]
         },
         "010": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m07.t08z.pgrb2.f10.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m07.t10z.pgrb2.f10.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -38395,9 +38395,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 10,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m07.t08z.pgrb2.f10",
-          "grib_size_bytes": 440520109,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m07.t08z.pgrb2.f10.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m07.t10z.pgrb2.f10",
+          "grib_size_bytes": 440083699,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m07.t10z.pgrb2.f10.idx",
           "idx_size_bytes": 8869,
           "member": "m07",
           "overlays": {
@@ -38491,8 +38491,8 @@
           ]
         },
         "011": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m07.t08z.pgrb2.f11.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m07.t10z.pgrb2.f11.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -38661,9 +38661,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 11,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m07.t08z.pgrb2.f11",
-          "grib_size_bytes": 440321468,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m07.t08z.pgrb2.f11.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m07.t10z.pgrb2.f11",
+          "grib_size_bytes": 440035209,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m07.t10z.pgrb2.f11.idx",
           "idx_size_bytes": 8869,
           "member": "m07",
           "overlays": {
@@ -38757,8 +38757,8 @@
           ]
         },
         "012": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m07.t08z.pgrb2.f12.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m07.t10z.pgrb2.f12.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -38927,9 +38927,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 12,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m07.t08z.pgrb2.f12",
-          "grib_size_bytes": 440183515,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m07.t08z.pgrb2.f12.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m07.t10z.pgrb2.f12",
+          "grib_size_bytes": 439938930,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m07.t10z.pgrb2.f12.idx",
           "idx_size_bytes": 8869,
           "member": "m07",
           "overlays": {
@@ -39023,8 +39023,8 @@
           ]
         },
         "013": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m07.t08z.pgrb2.f13.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m07.t10z.pgrb2.f13.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -39193,9 +39193,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 13,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m07.t08z.pgrb2.f13",
-          "grib_size_bytes": 461123137,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m07.t08z.pgrb2.f13.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m07.t10z.pgrb2.f13",
+          "grib_size_bytes": 460991350,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m07.t10z.pgrb2.f13.idx",
           "idx_size_bytes": 8870,
           "member": "m07",
           "overlays": {
@@ -39289,8 +39289,8 @@
           ]
         },
         "014": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m07.t08z.pgrb2.f14.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m07.t10z.pgrb2.f14.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -39459,9 +39459,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 14,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m07.t08z.pgrb2.f14",
-          "grib_size_bytes": 461043481,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m07.t08z.pgrb2.f14.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m07.t10z.pgrb2.f14",
+          "grib_size_bytes": 460957640,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m07.t10z.pgrb2.f14.idx",
           "idx_size_bytes": 8870,
           "member": "m07",
           "overlays": {
@@ -39555,8 +39555,8 @@
           ]
         },
         "015": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m07.t08z.pgrb2.f15.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m07.t10z.pgrb2.f15.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -39725,9 +39725,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 15,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m07.t08z.pgrb2.f15",
-          "grib_size_bytes": 460853489,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m07.t08z.pgrb2.f15.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m07.t10z.pgrb2.f15",
+          "grib_size_bytes": 460819176,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m07.t10z.pgrb2.f15.idx",
           "idx_size_bytes": 8870,
           "member": "m07",
           "overlays": {
@@ -39821,8 +39821,8 @@
           ]
         },
         "016": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m07.t08z.pgrb2.f16.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m07.t10z.pgrb2.f16.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -39991,9 +39991,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 16,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m07.t08z.pgrb2.f16",
-          "grib_size_bytes": 460773559,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m07.t08z.pgrb2.f16.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m07.t10z.pgrb2.f16",
+          "grib_size_bytes": 460804522,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m07.t10z.pgrb2.f16.idx",
           "idx_size_bytes": 8870,
           "member": "m07",
           "overlays": {
@@ -40087,8 +40087,8 @@
           ]
         },
         "017": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m07.t08z.pgrb2.f17.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m07.t10z.pgrb2.f17.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -40257,9 +40257,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 17,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m07.t08z.pgrb2.f17",
-          "grib_size_bytes": 460697181,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m07.t08z.pgrb2.f17.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m07.t10z.pgrb2.f17",
+          "grib_size_bytes": 460845420,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m07.t10z.pgrb2.f17.idx",
           "idx_size_bytes": 8870,
           "member": "m07",
           "overlays": {
@@ -40353,8 +40353,8 @@
           ]
         },
         "018": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m07.t08z.pgrb2.f18.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m07.t10z.pgrb2.f18.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -40523,9 +40523,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 18,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m07.t08z.pgrb2.f18",
-          "grib_size_bytes": 460709506,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m07.t08z.pgrb2.f18.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m07.t10z.pgrb2.f18",
+          "grib_size_bytes": 460793277,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m07.t10z.pgrb2.f18.idx",
           "idx_size_bytes": 8870,
           "member": "m07",
           "overlays": {
@@ -40645,8 +40645,8 @@
       "forecast_hour_count": 19,
       "forecast_hour_details": {
         "000": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m08.t08z.pgrb2.f00.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m08.t10z.pgrb2.f00.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -40815,9 +40815,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 0,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m08.t08z.pgrb2.f00",
-          "grib_size_bytes": 266511193,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m08.t08z.pgrb2.f00.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m08.t10z.pgrb2.f00",
+          "grib_size_bytes": 266148395,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m08.t10z.pgrb2.f00.idx",
           "idx_size_bytes": 7367,
           "member": "m08",
           "overlays": {
@@ -40911,8 +40911,8 @@
           ]
         },
         "001": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m08.t08z.pgrb2.f01.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m08.t10z.pgrb2.f01.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -41081,9 +41081,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 1,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m08.t08z.pgrb2.f01",
-          "grib_size_bytes": 407374095,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m08.t08z.pgrb2.f01.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m08.t10z.pgrb2.f01",
+          "grib_size_bytes": 407167895,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m08.t10z.pgrb2.f01.idx",
           "idx_size_bytes": 8703,
           "member": "m08",
           "overlays": {
@@ -41177,8 +41177,8 @@
           ]
         },
         "002": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m08.t08z.pgrb2.f02.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m08.t10z.pgrb2.f02.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -41347,9 +41347,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 2,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m08.t08z.pgrb2.f02",
-          "grib_size_bytes": 407655448,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m08.t08z.pgrb2.f02.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m08.t10z.pgrb2.f02",
+          "grib_size_bytes": 407410338,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m08.t10z.pgrb2.f02.idx",
           "idx_size_bytes": 8703,
           "member": "m08",
           "overlays": {
@@ -41443,8 +41443,8 @@
           ]
         },
         "003": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m08.t08z.pgrb2.f03.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m08.t10z.pgrb2.f03.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -41613,9 +41613,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 3,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m08.t08z.pgrb2.f03",
-          "grib_size_bytes": 407812219,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m08.t08z.pgrb2.f03.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m08.t10z.pgrb2.f03",
+          "grib_size_bytes": 407439195,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m08.t10z.pgrb2.f03.idx",
           "idx_size_bytes": 8703,
           "member": "m08",
           "overlays": {
@@ -41709,8 +41709,8 @@
           ]
         },
         "004": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m08.t08z.pgrb2.f04.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m08.t10z.pgrb2.f04.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -41879,9 +41879,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 4,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m08.t08z.pgrb2.f04",
-          "grib_size_bytes": 407873703,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m08.t08z.pgrb2.f04.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m08.t10z.pgrb2.f04",
+          "grib_size_bytes": 407545800,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m08.t10z.pgrb2.f04.idx",
           "idx_size_bytes": 8703,
           "member": "m08",
           "overlays": {
@@ -41975,8 +41975,8 @@
           ]
         },
         "005": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m08.t08z.pgrb2.f05.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m08.t10z.pgrb2.f05.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -42145,9 +42145,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 5,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m08.t08z.pgrb2.f05",
-          "grib_size_bytes": 407928419,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m08.t08z.pgrb2.f05.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m08.t10z.pgrb2.f05",
+          "grib_size_bytes": 407539507,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m08.t10z.pgrb2.f05.idx",
           "idx_size_bytes": 8703,
           "member": "m08",
           "overlays": {
@@ -42241,8 +42241,8 @@
           ]
         },
         "006": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m08.t08z.pgrb2.f06.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m08.t10z.pgrb2.f06.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -42411,9 +42411,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 6,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m08.t08z.pgrb2.f06",
-          "grib_size_bytes": 407809945,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m08.t08z.pgrb2.f06.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m08.t10z.pgrb2.f06",
+          "grib_size_bytes": 407386662,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m08.t10z.pgrb2.f06.idx",
           "idx_size_bytes": 8703,
           "member": "m08",
           "overlays": {
@@ -42507,8 +42507,8 @@
           ]
         },
         "007": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m08.t08z.pgrb2.f07.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m08.t10z.pgrb2.f07.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -42677,9 +42677,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 7,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m08.t08z.pgrb2.f07",
-          "grib_size_bytes": 441192217,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m08.t08z.pgrb2.f07.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m08.t10z.pgrb2.f07",
+          "grib_size_bytes": 440727653,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m08.t10z.pgrb2.f07.idx",
           "idx_size_bytes": 8705,
           "member": "m08",
           "overlays": {
@@ -42773,8 +42773,8 @@
           ]
         },
         "008": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m08.t08z.pgrb2.f08.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m08.t10z.pgrb2.f08.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -42943,9 +42943,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 8,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m08.t08z.pgrb2.f08",
-          "grib_size_bytes": 440873382,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m08.t08z.pgrb2.f08.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m08.t10z.pgrb2.f08",
+          "grib_size_bytes": 440471661,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m08.t10z.pgrb2.f08.idx",
           "idx_size_bytes": 8705,
           "member": "m08",
           "overlays": {
@@ -43039,8 +43039,8 @@
           ]
         },
         "009": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m08.t08z.pgrb2.f09.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m08.t10z.pgrb2.f09.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -43209,9 +43209,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 9,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m08.t08z.pgrb2.f09",
-          "grib_size_bytes": 440573266,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m08.t08z.pgrb2.f09.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m08.t10z.pgrb2.f09",
+          "grib_size_bytes": 440268724,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m08.t10z.pgrb2.f09.idx",
           "idx_size_bytes": 8705,
           "member": "m08",
           "overlays": {
@@ -43305,8 +43305,8 @@
           ]
         },
         "010": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m08.t08z.pgrb2.f10.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m08.t10z.pgrb2.f10.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -43475,9 +43475,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 10,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m08.t08z.pgrb2.f10",
-          "grib_size_bytes": 440378032,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m08.t08z.pgrb2.f10.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m08.t10z.pgrb2.f10",
+          "grib_size_bytes": 440121849,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m08.t10z.pgrb2.f10.idx",
           "idx_size_bytes": 8869,
           "member": "m08",
           "overlays": {
@@ -43571,8 +43571,8 @@
           ]
         },
         "011": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m08.t08z.pgrb2.f11.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m08.t10z.pgrb2.f11.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -43741,9 +43741,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 11,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m08.t08z.pgrb2.f11",
-          "grib_size_bytes": 440243743,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m08.t08z.pgrb2.f11.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m08.t10z.pgrb2.f11",
+          "grib_size_bytes": 440005113,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m08.t10z.pgrb2.f11.idx",
           "idx_size_bytes": 8869,
           "member": "m08",
           "overlays": {
@@ -43837,8 +43837,8 @@
           ]
         },
         "012": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m08.t08z.pgrb2.f12.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m08.t10z.pgrb2.f12.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -44007,9 +44007,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 12,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m08.t08z.pgrb2.f12",
-          "grib_size_bytes": 440259697,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m08.t08z.pgrb2.f12.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m08.t10z.pgrb2.f12",
+          "grib_size_bytes": 439911903,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m08.t10z.pgrb2.f12.idx",
           "idx_size_bytes": 8869,
           "member": "m08",
           "overlays": {
@@ -44103,8 +44103,8 @@
           ]
         },
         "013": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m08.t08z.pgrb2.f13.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m08.t10z.pgrb2.f13.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -44273,9 +44273,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 13,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m08.t08z.pgrb2.f13",
-          "grib_size_bytes": 461100721,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m08.t08z.pgrb2.f13.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m08.t10z.pgrb2.f13",
+          "grib_size_bytes": 461047938,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m08.t10z.pgrb2.f13.idx",
           "idx_size_bytes": 8870,
           "member": "m08",
           "overlays": {
@@ -44369,8 +44369,8 @@
           ]
         },
         "014": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m08.t08z.pgrb2.f14.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m08.t10z.pgrb2.f14.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -44539,9 +44539,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 14,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m08.t08z.pgrb2.f14",
-          "grib_size_bytes": 461020469,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m08.t08z.pgrb2.f14.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m08.t10z.pgrb2.f14",
+          "grib_size_bytes": 460921727,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m08.t10z.pgrb2.f14.idx",
           "idx_size_bytes": 8870,
           "member": "m08",
           "overlays": {
@@ -44635,8 +44635,8 @@
           ]
         },
         "015": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m08.t08z.pgrb2.f15.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m08.t10z.pgrb2.f15.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -44805,9 +44805,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 15,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m08.t08z.pgrb2.f15",
-          "grib_size_bytes": 460854448,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m08.t08z.pgrb2.f15.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m08.t10z.pgrb2.f15",
+          "grib_size_bytes": 460783450,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m08.t10z.pgrb2.f15.idx",
           "idx_size_bytes": 8870,
           "member": "m08",
           "overlays": {
@@ -44901,8 +44901,8 @@
           ]
         },
         "016": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m08.t08z.pgrb2.f16.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m08.t10z.pgrb2.f16.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -45071,9 +45071,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 16,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m08.t08z.pgrb2.f16",
-          "grib_size_bytes": 460812730,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m08.t08z.pgrb2.f16.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m08.t10z.pgrb2.f16",
+          "grib_size_bytes": 460846381,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m08.t10z.pgrb2.f16.idx",
           "idx_size_bytes": 8870,
           "member": "m08",
           "overlays": {
@@ -45167,8 +45167,8 @@
           ]
         },
         "017": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m08.t08z.pgrb2.f17.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m08.t10z.pgrb2.f17.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -45337,9 +45337,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 17,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m08.t08z.pgrb2.f17",
-          "grib_size_bytes": 460780141,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m08.t08z.pgrb2.f17.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m08.t10z.pgrb2.f17",
+          "grib_size_bytes": 460926195,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m08.t10z.pgrb2.f17.idx",
           "idx_size_bytes": 8870,
           "member": "m08",
           "overlays": {
@@ -45433,8 +45433,8 @@
           ]
         },
         "018": {
-          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\08\\hrrrcast.m08.t08z.pgrb2.f18.idx",
-          "cycle_hour": "08",
+          "cached_idx_path": "data\\raw\\noaa\\HRRRCast\\20260328\\10\\hrrrcast.m08.t10z.pgrb2.f18.idx",
+          "cycle_hour": "10",
           "field_count": 164,
           "field_keys": [
             "APCP:surface",
@@ -45603,9 +45603,9 @@
             "WIND:10 m above ground"
           ],
           "forecast_hour": 18,
-          "grib_key": "HRRRCast/20260328/08/hrrrcast.m08.t08z.pgrb2.f18",
-          "grib_size_bytes": 460812283,
-          "idx_key": "HRRRCast/20260328/08/hrrrcast.m08.t08z.pgrb2.f18.idx",
+          "grib_key": "HRRRCast/20260328/10/hrrrcast.m08.t10z.pgrb2.f18",
+          "grib_size_bytes": 460858660,
+          "idx_key": "HRRRCast/20260328/10/hrrrcast.m08.t10z.pgrb2.f18.idx",
           "idx_size_bytes": 8870,
           "member": "m08",
           "overlays": {
@@ -45723,7 +45723,7 @@
     }
   },
   "run": {
-    "cycle_hour": "08",
+    "cycle_hour": "10",
     "date": "20260328",
     "forecast_hours": [
       0,
@@ -45759,8 +45759,8 @@
       "m08"
     ],
     "overlay_ready_slots": 1197,
-    "prefix": "HRRRCast/20260328/08/",
-    "run_id": "2026032808",
+    "prefix": "HRRRCast/20260328/10/",
+    "run_id": "2026032810",
     "status": "ready",
     "status_reasons": [
       "All discovered members meet the configured Phase 1 completeness thresholds."

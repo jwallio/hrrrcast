@@ -1,0 +1,56 @@
+{
+  "asset_version": "2026032810",
+  "bbox": [
+    -127.0,
+    23.0,
+    -66.0,
+    50.0
+  ],
+  "category_map": {
+    "0": "none",
+    "1": "rain",
+    "3": "freezing_rain"
+  },
+  "display_path": "2026032810/m00/ptype/f001/conus",
+  "domain_id": "conus",
+  "forecast_hour": 1,
+  "member": "m00",
+  "mobile_preview_url": "./static-api/products/2026032810/m00/ptype/f001/conus.mobile.webp",
+  "netcdf_path": "data\\processed\\products\\2026032810\\m00\\ptype\\f001\\conus.nc",
+  "notes": "Current HRRRCast-derived precip type only distinguishes none, rain, and freezing rain.",
+  "overlay_id": "ptype",
+  "preview_url": "./static-api/products/2026032810/m00/ptype/f001/conus.preview.png",
+  "run_id": "2026032810",
+  "shape": [
+    1,
+    1059,
+    1799
+  ],
+  "static_export": true,
+  "stats": {
+    "max": 1.0,
+    "min": 0.0
+  },
+  "status": "built",
+  "style": {
+    "items": [
+      {
+        "color": "#000000",
+        "label": "None"
+      },
+      {
+        "color": "#41b05d",
+        "label": "Rain"
+      },
+      {
+        "color": "#de5c3c",
+        "label": "Freezing Rain"
+      }
+    ],
+    "note": "Current HRRRCast derivation only distinguishes none, rain, and freezing rain.",
+    "rawUnits": "categories",
+    "type": "categorical",
+    "units": "categories"
+  },
+  "variable_name": "PTYPE_surface"
+}
