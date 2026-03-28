@@ -1,0 +1,49 @@
+{
+  "asset_version": "2026032808",
+  "bbox": [
+    -127.0,
+    23.0,
+    -66.0,
+    50.0
+  ],
+  "clipped_grib_path": "data\\processed\\products\\2026032808\\m00\\ceiling\\f013\\conus.grib2",
+  "display_path": "2026032808/m00/ceiling/f013/conus",
+  "domain_id": "conus",
+  "field_key": "HGT:cloud ceiling",
+  "forecast_hour": 13,
+  "long_name": "Geopotential Height",
+  "member": "m00",
+  "mobile_preview_url": "./static-api/products/2026032808/m00/ceiling/f013/conus.mobile.webp",
+  "native": false,
+  "netcdf_path": "data\\processed\\products\\2026032808\\m00\\ceiling\\f013\\conus.nc",
+  "overlay_id": "ceiling",
+  "preview_url": "./static-api/products/2026032808/m00/ceiling/f013/conus.preview.png",
+  "run_id": "2026032808",
+  "shape": [
+    1,
+    1059,
+    1799
+  ],
+  "static_export": true,
+  "stats": {
+    "max": 17490.380859375,
+    "min": 0.7799999713897705
+  },
+  "style": {
+    "colors": [
+      "#16381a",
+      "#4b7f31",
+      "#b7b76f",
+      "#b08b61",
+      "#ffffff"
+    ],
+    "labels": null,
+    "palette": "terrain",
+    "range": null,
+    "rawUnits": "m",
+    "type": "continuous",
+    "units": "m"
+  },
+  "units": "m",
+  "variable_name": "HGT_cloudceiling"
+}

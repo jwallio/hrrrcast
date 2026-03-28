@@ -1,0 +1,59 @@
+{
+  "asset_version": "2026032808",
+  "bbox": [
+    -127.0,
+    23.0,
+    -66.0,
+    50.0
+  ],
+  "clipped_grib_path": "data\\processed\\products\\2026032808\\m00\\dewpoint_2m\\f018\\conus.grib2",
+  "display_path": "2026032808/m00/dewpoint_2m/f018/conus",
+  "domain_id": "conus",
+  "field_key": "DPT:2 m above ground",
+  "forecast_hour": 18,
+  "long_name": "Dew Point Temperature",
+  "member": "m00",
+  "mobile_preview_url": "./static-api/products/2026032808/m00/dewpoint_2m/f018/conus.mobile.webp",
+  "native": false,
+  "netcdf_path": "data\\processed\\products\\2026032808\\m00\\dewpoint_2m\\f018\\conus.nc",
+  "overlay_id": "dewpoint_2m",
+  "preview_url": "./static-api/products/2026032808/m00/dewpoint_2m/f018/conus.preview.png",
+  "run_id": "2026032808",
+  "shape": [
+    1,
+    1059,
+    1799
+  ],
+  "static_export": true,
+  "stats": {
+    "max": 297.260009765625,
+    "min": 223.02000427246094
+  },
+  "style": {
+    "colors": [
+      "#213875",
+      "#4a90e2",
+      "#f6f6c6",
+      "#e67b3a",
+      "#93210b"
+    ],
+    "labels": [
+      "-10",
+      "10",
+      "32",
+      "60",
+      "90"
+    ],
+    "palette": "temperature",
+    "range": [
+      250.0,
+      315.0
+    ],
+    "rawUnits": "K",
+    "transform": "kelvin_to_fahrenheit",
+    "type": "continuous",
+    "units": "F"
+  },
+  "units": "K",
+  "variable_name": "DPT_2maboveground"
+}
