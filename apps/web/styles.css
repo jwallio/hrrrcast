@@ -1,21 +1,18 @@
 :root {
   color-scheme: light;
-  --page-bg: #eef2f6;
+  --page-bg: #edf2f7;
   --panel-bg: #ffffff;
-  --panel-border: #c7d2de;
-  --panel-shadow: 0 8px 20px rgba(17, 33, 51, 0.08);
-  --ink: #17283a;
-  --ink-soft: #5d7085;
-  --navy: #21354c;
-  --navy-deep: #172738;
-  --blue: #3a7fd5;
-  --blue-soft: #d8e8ff;
-  --track: #d7dfe8;
-  --track-active: #4f8ae2;
-  --accent: #f3a43b;
-  --radius-sm: 10px;
-  --radius-md: 14px;
-  --radius-lg: 18px;
+  --panel-border: #c4cfda;
+  --panel-shadow: 0 6px 16px rgba(17, 33, 51, 0.06);
+  --ink: #142433;
+  --ink-soft: #617283;
+  --navy: #24384d;
+  --navy-deep: #18283a;
+  --blue: #2f6fbe;
+  --accent: #e79a37;
+  --radius-sm: 8px;
+  --radius-md: 10px;
+  --radius-lg: 12px;
   --frame-aspect: 1.698;
   font-family: "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
@@ -28,7 +25,7 @@ html,
 body {
   margin: 0;
   padding: 0;
-  background: linear-gradient(180deg, #f4f7fb 0%, #e7edf3 100%);
+  background: var(--page-bg);
   color: var(--ink);
 }
 
@@ -47,21 +44,19 @@ button {
 }
 
 .app-shell {
-  width: min(1120px, calc(100vw - 24px));
-  margin: 14px auto 28px;
+  width: min(1100px, calc(100vw - 16px));
+  margin: 8px auto 18px;
 }
 
 .site-bar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
-  padding: 10px 14px;
-  border: 1px solid #2e4660;
+  gap: 10px;
+  padding: 8px 12px;
+  border: 1px solid #30465d;
   border-radius: var(--radius-md);
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0)),
-    linear-gradient(180deg, #2a415c 0%, #1a2d42 100%);
+  background: linear-gradient(180deg, #2b4159 0%, #1b2d41 100%);
   box-shadow: var(--panel-shadow);
   color: #f5f8fc;
 }
@@ -69,29 +64,29 @@ button {
 .brand-block {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 1px;
 }
 
 .brand-mark {
-  font-size: 1.55rem;
+  font-size: 1.35rem;
   font-weight: 800;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.03em;
   text-transform: uppercase;
 }
 
 .brand-note {
-  font-size: 0.82rem;
-  letter-spacing: 0.08em;
+  font-size: 0.7rem;
+  letter-spacing: 0.07em;
   text-transform: uppercase;
   color: rgba(245, 248, 252, 0.78);
 }
 
 .run-badge {
-  padding: 8px 12px;
+  padding: 6px 10px;
   border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.08);
-  font-size: 0.8rem;
+  background: rgba(255, 255, 255, 0.06);
+  font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -99,19 +94,18 @@ button {
 }
 
 .viewer-shell {
-  margin-top: 12px;
-  padding: 12px;
+  margin-top: 8px;
+  padding: 8px;
   border: 1px solid var(--panel-border);
   border-radius: var(--radius-lg);
-  background: #f8fbfd;
-  box-shadow: var(--panel-shadow);
+  background: #f6f9fc;
 }
 
 .family-strip {
   display: flex;
-  gap: 8px;
+  gap: 4px;
   overflow-x: auto;
-  padding-bottom: 6px;
+  padding-bottom: 4px;
   scrollbar-width: none;
 }
 
@@ -121,23 +115,23 @@ button {
 
 .family-button {
   flex: 0 0 auto;
-  min-width: 110px;
-  padding: 11px 14px;
-  border: 1px solid #344a63;
-  border-radius: 12px 12px 0 0;
-  background: linear-gradient(180deg, #33485f 0%, #23364b 100%);
+  min-width: 88px;
+  padding: 8px 10px;
+  border: 1px solid #31465d;
+  border-radius: 8px 8px 0 0;
+  background: linear-gradient(180deg, #31475f 0%, #24384d 100%);
   color: #ebf2f9;
-  font-size: 0.82rem;
+  font-size: 0.71rem;
   font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
 
 .family-button[aria-pressed="true"] {
-  background: linear-gradient(180deg, #fefefe 0%, #ecf2f8 100%);
+  background: #ffffff;
   color: var(--navy-deep);
   border-color: var(--panel-border);
-  box-shadow: inset 0 -3px 0 var(--blue);
+  box-shadow: inset 0 -2px 0 var(--blue);
 }
 
 .family-button:disabled {
@@ -148,21 +142,21 @@ button {
 .toolbar {
   display: grid;
   grid-template-columns: 1.05fr 1fr 1fr 2.1fr;
-  gap: 10px;
-  padding: 12px;
+  gap: 8px;
+  padding: 8px;
   border: 1px solid var(--panel-border);
   border-radius: 0 var(--radius-md) var(--radius-md) var(--radius-md);
-  background: linear-gradient(180deg, #fbfcfe 0%, #f1f5f8 100%);
+  background: #ffffff;
 }
 
 .field {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 4px;
 }
 
 .field span {
-  font-size: 0.72rem;
+  font-size: 0.64rem;
   font-weight: 700;
   letter-spacing: 0.07em;
   text-transform: uppercase;
@@ -172,8 +166,8 @@ button {
 .field select,
 .speed-field select {
   width: 100%;
-  min-height: 42px;
-  padding: 10px 12px;
+  min-height: 36px;
+  padding: 7px 10px;
   border: 1px solid #c4cfdb;
   border-radius: var(--radius-sm);
   background: #ffffff;
@@ -185,7 +179,7 @@ button {
 }
 
 .product-shell {
-  margin-top: 12px;
+  margin-top: 8px;
   border: 1px solid var(--panel-border);
   border-radius: var(--radius-lg);
   background: var(--panel-bg);
@@ -196,10 +190,10 @@ button {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 12px;
-  padding: 14px 16px 10px;
+  gap: 10px;
+  padding: 10px 12px 8px;
   border-bottom: 1px solid #d9e1ea;
-  background: linear-gradient(180deg, #f9fbfd 0%, #eff4f8 100%);
+  background: #f8fbfd;
 }
 
 .title-block {
@@ -207,9 +201,9 @@ button {
 }
 
 .product-kicker {
-  margin: 0 0 4px;
+  margin: 0 0 2px;
   color: var(--blue);
-  font-size: 0.76rem;
+  font-size: 0.66rem;
   font-weight: 800;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -217,25 +211,25 @@ button {
 
 .product-title {
   margin: 0;
-  font-size: clamp(1.1rem, 2vw, 1.85rem);
-  line-height: 1.12;
+  font-size: clamp(1rem, 1.7vw, 1.5rem);
+  line-height: 1.08;
 }
 
 .product-stamp {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;
-  gap: 8px;
+  gap: 6px;
   max-width: 42%;
 }
 
 .product-stamp span {
-  padding: 8px 10px;
+  padding: 5px 8px;
   border: 1px solid #d3dde8;
   border-radius: 999px;
   background: #ffffff;
   color: var(--ink-soft);
-  font-size: 0.76rem;
+  font-size: 0.66rem;
   font-weight: 700;
   letter-spacing: 0.04em;
   white-space: nowrap;
@@ -246,7 +240,7 @@ button {
   width: 100%;
   aspect-ratio: var(--frame-aspect);
   background:
-    radial-gradient(circle at top left, rgba(255, 255, 255, 0.28), transparent 36%),
+    radial-gradient(circle at top left, rgba(255, 255, 255, 0.22), transparent 34%),
     linear-gradient(180deg, #0d1825 0%, #1a2939 100%);
 }
 
@@ -258,13 +252,13 @@ button {
 
 .image-loading {
   position: absolute;
-  top: 12px;
-  right: 12px;
-  padding: 7px 10px;
+  top: 10px;
+  right: 10px;
+  padding: 6px 9px;
   border-radius: 999px;
   background: rgba(18, 31, 46, 0.86);
   color: #f7fbff;
-  font-size: 0.75rem;
+  font-size: 0.68rem;
   font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -273,18 +267,18 @@ button {
 .legend-rail {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  padding: 12px 14px 14px;
+  gap: 7px;
+  padding: 8px 10px 10px;
   border-top: 1px solid #d9e1ea;
-  background: #f6f9fb;
+  background: #f7fafc;
 }
 
 .legend-topline {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
-  font-size: 0.82rem;
+  gap: 10px;
+  font-size: 0.74rem;
 }
 
 .legend-topline span:first-child {
@@ -301,14 +295,14 @@ button {
 .legend-scale {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 5px;
 }
 
 .legend-bar {
   display: grid;
   grid-template-columns: repeat(var(--stop-count), minmax(0, 1fr));
   width: 100%;
-  min-height: 16px;
+  min-height: 12px;
   overflow: hidden;
   border: 1px solid #c8d2dc;
   border-radius: 999px;
@@ -316,16 +310,16 @@ button {
 }
 
 .legend-stop {
-  min-height: 14px;
+  min-height: 10px;
 }
 
 .legend-ticks {
   display: grid;
   grid-template-columns: repeat(var(--tick-count), minmax(0, 1fr));
   width: 100%;
-  gap: 6px;
+  gap: 4px;
   color: var(--ink-soft);
-  font-size: 0.72rem;
+  font-size: 0.66rem;
   font-weight: 700;
 }
 
@@ -340,13 +334,13 @@ button {
 .legend-chip {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 7px 10px;
+  gap: 6px;
+  padding: 5px 8px;
   border: 1px solid #cdd7e0;
   border-radius: 999px;
   background: #ffffff;
   color: var(--ink);
-  font-size: 0.78rem;
+  font-size: 0.7rem;
   font-weight: 700;
 }
 
@@ -358,8 +352,8 @@ button {
 }
 
 .timeline-shell {
-  margin-top: 12px;
-  padding: 12px;
+  margin-top: 8px;
+  padding: 10px;
   border: 1px solid #31465c;
   border-radius: var(--radius-lg);
   background: linear-gradient(180deg, #27384c 0%, #182738 100%);
@@ -370,40 +364,41 @@ button {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: 10px;
 }
 
 .transport {
   display: inline-flex;
-  gap: 8px;
+  gap: 6px;
 }
 
 .transport button {
-  min-width: 72px;
-  padding: 10px 12px;
+  min-width: 60px;
+  padding: 8px 10px;
   border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: var(--radius-sm);
   background: linear-gradient(180deg, #364b63 0%, #22364c 100%);
   color: #f8fbff;
+  font-size: 0.72rem;
   font-weight: 800;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
 }
 
 .transport button.is-active {
-  border-color: rgba(243, 164, 59, 0.55);
+  border-color: rgba(231, 154, 55, 0.55);
   box-shadow: inset 0 -2px 0 var(--accent);
 }
 
 .speed-field {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   margin-left: auto;
 }
 
 .speed-field span {
-  font-size: 0.72rem;
+  font-size: 0.64rem;
   font-weight: 800;
   letter-spacing: 0.07em;
   text-transform: uppercase;
@@ -411,8 +406,8 @@ button {
 }
 
 .speed-field select {
-  min-width: 110px;
-  min-height: 40px;
+  min-width: 94px;
+  min-height: 34px;
   border-color: rgba(255, 255, 255, 0.14);
   background: #eef4fa;
 }
@@ -421,31 +416,31 @@ button {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 2px;
+  gap: 1px;
   text-align: right;
 }
 
 .timeline-summary span:first-child {
-  font-size: 1.05rem;
+  font-size: 0.92rem;
   font-weight: 800;
   letter-spacing: 0.05em;
 }
 
 .timeline-summary span:last-child {
   color: rgba(238, 243, 248, 0.8);
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   font-weight: 700;
 }
 
 .hour-range {
   width: 100%;
-  margin: 14px 0 12px;
+  margin: 10px 0 8px;
   accent-color: var(--accent);
 }
 
 .hour-chips {
   display: flex;
-  gap: 8px;
+  gap: 6px;
   overflow-x: auto;
   padding-bottom: 2px;
   scrollbar-width: none;
@@ -457,19 +452,19 @@ button {
 
 .hour-chip {
   flex: 0 0 auto;
-  min-width: 66px;
-  padding: 9px 12px;
+  min-width: 54px;
+  padding: 7px 9px;
   border: 1px solid rgba(255, 255, 255, 0.16);
   border-radius: 12px;
   background: rgba(255, 255, 255, 0.06);
   color: #eef3f8;
-  font-size: 0.86rem;
+  font-size: 0.72rem;
   font-weight: 800;
 }
 
 .hour-chip.is-active {
-  border-color: rgba(243, 164, 59, 0.6);
-  background: rgba(243, 164, 59, 0.15);
+  border-color: rgba(231, 154, 55, 0.6);
+  background: rgba(231, 154, 55, 0.15);
   color: #fff5e9;
 }
 
@@ -511,39 +506,39 @@ button {
 
 @media (max-width: 640px) {
   .app-shell {
-    width: min(100vw - 10px, 100%);
-    margin: 6px auto 20px;
+    width: min(100vw - 8px, 100%);
+    margin: 4px auto 14px;
   }
 
   .site-bar {
-    padding: 9px 10px;
-    border-radius: 12px;
+    padding: 7px 9px;
+    border-radius: 10px;
   }
 
   .brand-mark {
-    font-size: 1.18rem;
+    font-size: 1rem;
   }
 
   .brand-note,
   .run-badge {
-    font-size: 0.68rem;
+    font-size: 0.62rem;
   }
 
   .viewer-shell {
-    padding: 8px;
-    border-radius: 14px;
+    padding: 6px;
+    border-radius: 10px;
   }
 
   .family-button {
-    min-width: 92px;
-    padding: 9px 10px;
-    font-size: 0.72rem;
+    min-width: 78px;
+    padding: 7px 8px;
+    font-size: 0.64rem;
   }
 
   .toolbar {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 8px;
-    padding: 10px;
+    gap: 6px;
+    padding: 7px;
   }
 
   .field-product {
@@ -552,29 +547,29 @@ button {
 
   .field select,
   .speed-field select {
-    min-height: 40px;
-    padding: 9px 10px;
+    min-height: 34px;
+    padding: 7px 8px;
   }
 
   .product-head {
-    padding: 10px 12px 8px;
+    padding: 8px 9px 7px;
   }
 
   .product-title {
-    font-size: 1.14rem;
+    font-size: 0.96rem;
   }
 
   .product-stamp span {
-    padding: 6px 8px;
-    font-size: 0.68rem;
+    padding: 4px 6px;
+    font-size: 0.6rem;
   }
 
   .legend-rail {
-    padding: 10px 12px 12px;
+    padding: 7px 8px 8px;
   }
 
   .timeline-shell {
-    padding: 10px;
+    padding: 8px;
   }
 
   .transport {
@@ -584,8 +579,8 @@ button {
   .transport button {
     flex: 1 1 0;
     min-width: 0;
-    padding: 9px 8px;
-    font-size: 0.77rem;
+    padding: 7px 6px;
+    font-size: 0.67rem;
   }
 
   .speed-field {
@@ -594,7 +589,7 @@ button {
   }
 
   .speed-field select {
-    max-width: 160px;
+    max-width: 126px;
   }
 
   .timeline-summary {
@@ -602,9 +597,8 @@ button {
   }
 
   .hour-chip {
-    min-width: 58px;
-    padding: 8px 10px;
-    font-size: 0.78rem;
+    min-width: 48px;
+    padding: 6px 8px;
+    font-size: 0.68rem;
   }
-
 }
