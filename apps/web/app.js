@@ -44,9 +44,10 @@
 
   const dom = {
     runBadge: document.getElementById("runBadge"),
-    familyStrip: document.getElementById("familyStrip"),
-    modeStrip: document.getElementById("modeStrip"),
-    regionStrip: document.getElementById("regionStrip"),
+    runSelect: document.getElementById("runSelect"),
+    memberSelect: document.getElementById("memberSelect"),
+    domainSelect: document.getElementById("domainSelect"),
+    familySelect: document.getElementById("familySelect"),
     overlaySelect: document.getElementById("overlaySelect"),
     overlayFamilyLabel: document.getElementById("overlayFamilyLabel"),
     productTitle: document.getElementById("productTitle"),
@@ -131,6 +132,33 @@
   }
 
   function bindEvents() {
+    dom.runSelect.addEventListener("change", () => {
+      state.runId = dom.runSelect.value;
+      state.member = null;
+      state.overlayId = null;
+      ensureConsistentState();
+      renderAll();
+    });
+
+    dom.memberSelect.addEventListener("change", () => {
+      state.member = dom.memberSelect.value;
+      ensureConsistentState();
+      renderAll();
+    });
+
+    dom.domainSelect.addEventListener("change", () => {
+      state.domainId = dom.domainSelect.value;
+      renderHeader();
+      renderFrame();
+      updateUrl();
+    });
+
+    dom.familySelect.addEventListener("change", () => {
+      state.familyId = dom.familySelect.value;
+      ensureConsistentState();
+      renderAll();
+    });
+
     dom.overlaySelect.addEventListener("change", () => {
       state.overlayId = dom.overlaySelect.value;
       const family = FAMILY_CONFIG.find((item) => item.match(refs.layerMap.get(state.overlayId) || {}));
@@ -236,9 +264,10 @@
   }
 
   function renderAll() {
-    renderFamilyStrip();
-    renderModeStrip();
-    renderRegionStrip();
+    renderRunOptions();
+    renderMemberOptions();
+    renderDomainOptions();
+    renderFamilyOptions();
     renderOverlayOptions();
     renderHeader();
     renderLegend();
@@ -247,57 +276,51 @@
     updateUrl();
   }
 
-  function renderFamilyStrip() {
-    dom.familyStrip.innerHTML = "";
-    for (const family of FAMILY_CONFIG) {
-      const enabled = getOverlaysForFamily(state.runId, state.member, family.id).length > 0;
-      const button = document.createElement("button");
-      button.type = "button";
-      button.className = "family-button";
-      button.textContent = family.label;
-      button.disabled = !enabled;
-      button.setAttribute("aria-pressed", String(state.familyId === family.id));
-      button.addEventListener("click", () => {
-        state.familyId = family.id;
-        ensureConsistentState();
-        renderAll();
-      });
-      dom.familyStrip.appendChild(button);
+  function renderRunOptions() {
+    dom.runSelect.innerHTML = "";
+    for (const run of refs.runs) {
+      const option = document.createElement("option");
+      option.value = run.run_id;
+      option.textContent = `${formatRunStamp(run.run_id)}${run.status === "ready" ? "" : " partial"}`;
+      option.selected = run.run_id === state.runId;
+      dom.runSelect.appendChild(option);
     }
   }
 
-  function renderModeStrip() {
-    dom.modeStrip.innerHTML = "";
+  function renderMemberOptions() {
+    dom.memberSelect.innerHTML = "";
     for (const member of getAvailableMembers(state.runId)) {
-      const button = document.createElement("button");
-      button.type = "button";
-      button.className = "chip-button";
-      button.textContent = MEMBER_LABELS[member] || member.toUpperCase();
-      button.setAttribute("aria-pressed", String(member === state.member));
-      button.addEventListener("click", () => {
-        state.member = member;
-        ensureConsistentState();
-        renderAll();
-      });
-      dom.modeStrip.appendChild(button);
+      const option = document.createElement("option");
+      option.value = member;
+      option.textContent = MEMBER_LABELS[member] || member.toUpperCase();
+      option.selected = member === state.member;
+      dom.memberSelect.appendChild(option);
     }
   }
 
-  function renderRegionStrip() {
-    dom.regionStrip.innerHTML = "";
+  function renderDomainOptions() {
+    dom.domainSelect.innerHTML = "";
     for (const domain of refs.domainMap.values()) {
-      const button = document.createElement("button");
-      button.type = "button";
-      button.className = "chip-button";
-      button.textContent = domain.label;
-      button.setAttribute("aria-pressed", String(domain.id === state.domainId));
-      button.addEventListener("click", () => {
-        state.domainId = domain.id;
-        renderHeader();
-        renderFrame();
-        updateUrl();
-      });
-      dom.regionStrip.appendChild(button);
+      const option = document.createElement("option");
+      option.value = domain.id;
+      option.textContent = domain.label;
+      option.selected = domain.id === state.domainId;
+      dom.domainSelect.appendChild(option);
+    }
+  }
+
+  function renderFamilyOptions() {
+    dom.familySelect.innerHTML = "";
+    for (const family of FAMILY_CONFIG) {
+      const overlays = getOverlaysForFamily(state.runId, state.member, family.id);
+      if (!overlays.length) {
+        continue;
+      }
+      const option = document.createElement("option");
+      option.value = family.id;
+      option.textContent = family.label;
+      option.selected = family.id === state.familyId;
+      dom.familySelect.appendChild(option);
     }
   }
 

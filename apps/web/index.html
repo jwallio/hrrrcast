@@ -21,27 +21,6 @@
       </header>
 
       <main class="viewer-shell">
-        <nav class="family-strip" id="familyStrip" aria-label="Product families"></nav>
-
-        <section class="selection-rails" aria-label="Quick selection">
-          <div class="selection-row">
-            <span class="selection-label">Mode</span>
-            <nav class="chip-strip" id="modeStrip" aria-label="Forecast mode"></nav>
-          </div>
-
-          <div class="selection-row">
-            <span class="selection-label">Region</span>
-            <nav class="chip-strip" id="regionStrip" aria-label="Forecast region"></nav>
-          </div>
-        </section>
-
-        <section class="toolbar" aria-label="Primary controls">
-          <label class="field field-product">
-            <span>Field</span>
-            <select id="overlaySelect"></select>
-          </label>
-        </section>
-
         <section class="product-shell" aria-label="Forecast product">
           <div class="product-head">
             <div class="title-block">
@@ -104,6 +83,33 @@
           />
 
           <div class="hour-chips" id="hourChips" aria-label="Forecast hour quick picks"></div>
+        </section>
+
+        <section class="toolbar" aria-label="Viewer controls">
+          <label class="field">
+            <span>Run</span>
+            <select id="runSelect"></select>
+          </label>
+
+          <label class="field">
+            <span>Mode</span>
+            <select id="memberSelect"></select>
+          </label>
+
+          <label class="field">
+            <span>Region</span>
+            <select id="domainSelect"></select>
+          </label>
+
+          <label class="field">
+            <span>Family</span>
+            <select id="familySelect"></select>
+          </label>
+
+          <label class="field field-wide">
+            <span>Field</span>
+            <select id="overlaySelect"></select>
+          </label>
         </section>
 
       </main>
