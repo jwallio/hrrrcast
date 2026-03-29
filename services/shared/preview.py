@@ -66,7 +66,12 @@ def render_preview_png(
 
     rgb = apply_palette(normalized, palette_for_style(overlay_id, style))
     rgb[mask] = (0, 0, 0)
-    image = Image.fromarray(rgb, mode="RGB")
+    if is_probability_overlay(overlay_id):
+        alpha = probability_alpha(values, mask, normalized)
+        rgba = np.dstack((rgb, alpha))
+        image = Image.fromarray(rgba, mode="RGBA")
+    else:
+        image = Image.fromarray(rgb, mode="RGB")
     image.thumbnail((max_dimension, max_dimension))
     buffer = BytesIO()
     image.save(buffer, format="PNG")
@@ -92,6 +97,16 @@ def render_ptype(values: np.ndarray) -> np.ndarray:
     return rgb
 
 
+def probability_alpha(values: np.ndarray, mask: np.ndarray, normalized: np.ndarray) -> np.ndarray:
+    alpha = np.zeros(values.shape, dtype=np.uint8)
+    finite_nonzero = (~mask) & (values > 0.0)
+    if not np.any(finite_nonzero):
+        return alpha
+    scaled = np.interp(normalized[finite_nonzero], [0.0, 0.15, 1.0], [0.0, 168.0, 255.0])
+    alpha[finite_nonzero] = np.clip(scaled, 0.0, 255.0).astype(np.uint8)
+    return alpha
+
+
 def resolve_style(overlay_id: str, metadata: dict[str, object] | None = None) -> dict[str, object]:
     if metadata and metadata.get("style"):
         return dict(metadata["style"])
@@ -109,3 +124,7 @@ def palette_for_style(overlay_id: str, style: dict[str, object]) -> list[tuple[i
 def hex_to_rgb(value: str) -> tuple[int, int, int]:
     stripped = value.lstrip("#")
     return tuple(int(stripped[index : index + 2], 16) for index in (0, 2, 4))
+
+
+def is_probability_overlay(overlay_id: str) -> bool:
+    return "_probability_" in overlay_id
