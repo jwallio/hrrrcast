@@ -93,10 +93,11 @@ button {
 
 .query-shell,
 .station-shell,
-.chart-section {
+.chart-section,
+.browser-shell {
   padding: 12px;
   border: 1px solid var(--panel-border);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   background: var(--panel-bg);
 }
 
@@ -220,6 +221,42 @@ button {
   gap: 8px;
 }
 
+.browser-shell {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.group-strip {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.group-strip::-webkit-scrollbar {
+  display: none;
+}
+
+.group-button {
+  flex: 0 0 auto;
+  padding: 7px 11px;
+  border: 1px solid #cdd6e0;
+  border-radius: 999px;
+  background: #f7fafc;
+  color: #173046;
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.group-button.is-active {
+  border-color: #37567a;
+  background: #26384c;
+  color: #f4f7fb;
+}
+
 .chart-section {
   display: flex;
   flex-direction: column;
@@ -272,12 +309,12 @@ button {
 
 .chart-frame {
   position: relative;
-  min-height: 220px;
+  min-height: 232px;
 }
 
 .chart-frame canvas {
   width: 100%;
-  height: 220px;
+  height: 232px;
 }
 
 .chart-empty {
@@ -305,9 +342,5 @@ button {
     flex-direction: row;
     align-items: flex-start;
     justify-content: space-between;
-  }
-
-  .chart-list {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }

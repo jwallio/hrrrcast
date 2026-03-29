@@ -3,6 +3,7 @@
 
   const CONFIG = window.HRRRCAST_STATION_VIEWER || {};
   const BACKEND_ROOT = resolveBackendRoot();
+  const DEFAULT_STATION = "KRDU";
   const SEARCH_DEBOUNCE_MS = 160;
 
   const dom = {
@@ -12,6 +13,7 @@
     suggestions: document.getElementById("suggestions"),
     runSelect: document.getElementById("runSelect"),
     memberSelect: document.getElementById("memberSelect"),
+    groupFilters: document.getElementById("groupFilters"),
     stationTitle: document.getElementById("stationTitle"),
     stationMeta: document.getElementById("stationMeta"),
     stationCopy: document.getElementById("stationCopy"),
@@ -21,13 +23,15 @@
   const state = {
     run: "latest-ready",
     member: "ens",
-    station: "",
+    station: DEFAULT_STATION,
+    group: "all",
   };
 
   const refs = {
     runs: [],
     charts: [],
     suggestionTimer: 0,
+    lastPayload: null,
   };
 
   init().catch((error) => {
@@ -40,11 +44,7 @@
     hydrateStateFromUrl();
     bindEvents();
     await loadRuns();
-    if (state.station) {
-      await loadPointSeries(state.station);
-    } else {
-      dom.statusPill.textContent = "Ready";
-    }
+    await loadPointSeries(state.station);
   }
 
   function bindEvents() {
@@ -84,20 +84,13 @@
 
     dom.runSelect.addEventListener("change", async () => {
       state.run = dom.runSelect.value;
-      if (state.station) {
-        await loadPointSeries(state.station);
-      } else {
-        updateUrl();
-      }
+      await loadPointSeries(state.station);
     });
 
     dom.memberSelect.addEventListener("change", async () => {
       state.member = dom.memberSelect.value;
-      if (state.station) {
-        await loadPointSeries(state.station);
-      } else {
-        updateUrl();
-      }
+      state.group = "all";
+      await loadPointSeries(state.station);
     });
   }
 
@@ -137,7 +130,7 @@
       button.className = "suggestion-button";
       button.innerHTML = [
         `<span class="suggestion-line"><strong>${station.id}</strong> ${station.site}</span>`,
-        `<span class="suggestion-line">${[station.state, station.country].filter(Boolean).join(", ")} • ${station.lat.toFixed(2)}, ${station.lon.toFixed(2)}</span>`,
+        `<span class="suggestion-line">${[station.state, station.country].filter(Boolean).join(", ")} | ${station.lat.toFixed(2)}, ${station.lon.toFixed(2)}</span>`,
       ].join("");
       button.addEventListener("click", async () => {
         dom.stationInput.value = station.id;
@@ -162,9 +155,14 @@
 
     const url = `${BACKEND_ROOT}/api/point-series?run=${encodeURIComponent(state.run)}&station=${encodeURIComponent(state.station)}&member=${encodeURIComponent(state.member)}`;
     const payload = await fetchJson(url);
+    refs.lastPayload = payload;
     state.member = payload.member;
+    if (!payload.chart_groups.some((group) => group.id === state.group)) {
+      state.group = "all";
+    }
     renderMemberOptions(payload.available_members || []);
     renderStation(payload);
+    renderGroupFilters(payload.chart_groups || []);
     renderCharts(payload);
     dom.statusPill.textContent = `${payload.run_id} | ${payload.member.toUpperCase()} | ${payload.station.id}`;
     updateUrl();
@@ -183,7 +181,7 @@
 
   function renderStation(payload) {
     const station = payload.station;
-    dom.stationTitle.textContent = `${station.id} · ${station.site}`;
+    dom.stationTitle.textContent = `${station.id} | ${station.site}`;
     dom.stationMeta.innerHTML = "";
     const badges = [
       station.icaoId ? `ICAO ${station.icaoId}` : null,
@@ -200,21 +198,45 @@
     dom.stationCopy.textContent = `Nearest-grid HRRRCast time series for ${station.id}. Values come from the closest processed model grid point for each forecast hour.`;
   }
 
+  function renderGroupFilters(groups) {
+    dom.groupFilters.innerHTML = "";
+    const items = [{ id: "all", title: "All Elements" }, ...groups.map((group) => ({ id: group.id, title: group.title }))];
+    for (const item of items) {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "group-button";
+      button.textContent = item.title;
+      if (item.id === state.group) {
+        button.classList.add("is-active");
+      }
+      button.addEventListener("click", () => {
+        state.group = item.id;
+        renderCharts(refs.lastPayload);
+        updateUrl();
+      });
+      dom.groupFilters.appendChild(button);
+    }
+  }
+
   function renderCharts(payload) {
     destroyCharts();
     dom.chartGroups.innerHTML = "";
-    if (!payload.chart_groups || !payload.chart_groups.length) {
+    if (!payload || !payload.chart_groups || !payload.chart_groups.length) {
       dom.chartGroups.innerHTML = '<section class="chart-section"><div class="chart-empty">No chartable products are available for this station and member.</div></section>';
       return;
     }
 
+    let renderedCharts = 0;
     for (const group of payload.chart_groups) {
+      if (state.group !== "all" && group.id !== state.group) {
+        continue;
+      }
       const section = document.createElement("section");
       section.className = "chart-section";
       section.innerHTML = `
         <div class="section-head">
           <div>
-            <p class="section-kicker">Chart Group</p>
+            <p class="section-kicker">Element Group</p>
             <h2 class="section-title">${group.title}</h2>
           </div>
         </div>
@@ -228,6 +250,7 @@
         if (!series || !series.points || !series.points.length) {
           continue;
         }
+        renderedCharts += 1;
         const card = document.createElement("article");
         card.className = "chart-card";
         card.innerHTML = `
@@ -238,17 +261,23 @@
           <div class="chart-frame"><canvas></canvas></div>
         `;
         chartList.appendChild(card);
-        const canvas = card.querySelector("canvas");
-        refs.charts.push(buildChart(canvas, series));
+        refs.charts.push(buildChart(card.querySelector("canvas"), series));
       }
-      dom.chartGroups.appendChild(section);
+
+      if (chartList.children.length) {
+        dom.chartGroups.appendChild(section);
+      }
+    }
+
+    if (!renderedCharts) {
+      dom.chartGroups.innerHTML = '<section class="chart-section"><div class="chart-empty">No charts match the selected element group.</div></section>';
     }
   }
 
   function buildChart(canvas, series) {
     const labels = series.points.map((point) => `+${String(point.forecast_hour).padStart(3, "0")}`);
     const color = chartColor(series.style, series.id);
-    const chart = new Chart(canvas.getContext("2d"), {
+    return new Chart(canvas.getContext("2d"), {
       type: "line",
       data: {
         labels,
@@ -257,11 +286,11 @@
             label: series.label,
             data: series.points.map((point) => point.value),
             borderColor: color,
-            backgroundColor: `${color}33`,
+            backgroundColor: `${color}24`,
             borderWidth: 2,
             pointRadius: 0,
             pointHitRadius: 12,
-            tension: 0.22,
+            tension: 0.18,
             fill: false,
           },
         ],
@@ -277,7 +306,7 @@
             callbacks: {
               title(items) {
                 const point = series.points[items[0].dataIndex];
-                return `${items[0].label} · ${formatLocalTime(point.valid_time_utc)}`;
+                return `${items[0].label} | ${formatLocalTime(point.valid_time_utc)}`;
               },
               label(item) {
                 const suffix = series.units ? ` ${series.units}` : "";
@@ -291,7 +320,7 @@
             ticks: {
               maxRotation: 0,
               autoSkip: true,
-              color: "#55697b",
+              color: "#566a7c",
             },
             grid: { color: "rgba(28, 42, 58, 0.08)" },
           },
@@ -299,13 +328,12 @@
             beginAtZero: shouldBeginAtZero(series.style),
             suggestedMin: rangeValue(series.style, 0),
             suggestedMax: rangeValue(series.style, 1),
-            ticks: { color: "#55697b" },
+            ticks: { color: "#566a7c" },
             grid: { color: "rgba(28, 42, 58, 0.08)" },
           },
         },
       },
     });
-    return chart;
   }
 
   function destroyCharts() {
@@ -320,9 +348,9 @@
       return style.colors[style.colors.length - 1];
     }
     if (overlayId.includes("probability")) {
-      return "#d15329";
+      return "#cb5f24";
     }
-    return "#2f6fbe";
+    return "#2b6fbe";
   }
 
   function shouldBeginAtZero(style) {
@@ -335,9 +363,10 @@
 
   function hydrateStateFromUrl() {
     const params = new URLSearchParams(window.location.search);
-    state.station = (params.get("station") || "").trim().toUpperCase();
+    state.station = (params.get("station") || DEFAULT_STATION).trim().toUpperCase();
     state.member = params.get("member") || "ens";
     state.run = params.get("run") || "latest-ready";
+    state.group = params.get("group") || "all";
   }
 
   function updateUrl() {
@@ -345,6 +374,7 @@
     params.set("station", state.station);
     params.set("member", state.member);
     params.set("run", state.run);
+    params.set("group", state.group);
     window.history.replaceState({}, "", `${window.location.pathname}?${params.toString()}`);
   }
 

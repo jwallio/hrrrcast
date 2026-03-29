@@ -25,7 +25,7 @@
           <form class="lookup-form" id="lookupForm" autocomplete="off">
             <label class="lookup-field">
               <span>Airport Code</span>
-              <input id="stationInput" name="station" type="text" placeholder="KATL, KDEN, KCLT" spellcheck="false" />
+              <input id="stationInput" name="station" type="text" placeholder="KRDU, KATL, KDEN" spellcheck="false" />
             </label>
             <button type="submit" class="primary-button">Load Charts</button>
           </form>
@@ -54,6 +54,16 @@
           <p class="station-copy" id="stationCopy">
             Search by ICAO, FAA, or IATA code to load nearest-grid HRRRCast time series.
           </p>
+        </section>
+
+        <section class="browser-shell">
+          <div class="browser-head">
+            <div>
+              <p class="section-kicker">Element Browser</p>
+              <h2 class="section-title">Chart Groups</h2>
+            </div>
+          </div>
+          <div class="group-strip" id="groupFilters"></div>
         </section>
 
         <section class="chart-groups" id="chartGroups"></section>
