@@ -1,0 +1,24 @@
+{
+  "runs": [
+    {
+      "max_forecast_hour": 18,
+      "member_count": 9,
+      "members": [
+        "m00",
+        "m01",
+        "m02",
+        "m03",
+        "m04",
+        "m05",
+        "m06",
+        "m07",
+        "m08"
+      ],
+      "run_id": "2026032820",
+      "status": "ready",
+      "status_reasons": [
+        "All discovered members meet the configured Phase 1 completeness thresholds."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,2628 @@
+{
+  "available_members": [
+    "ens",
+    "m00",
+    "m01",
+    "m02",
+    "m03",
+    "m04",
+    "m05",
+    "m06",
+    "m07",
+    "m08"
+  ],
+  "chart_groups": [
+    {
+      "id": "storm",
+      "overlays": [
+        "composite_reflectivity",
+        "qpf"
+      ],
+      "title": "Storm Signals"
+    },
+    {
+      "id": "instability",
+      "overlays": [
+        "cape",
+        "cin_surface"
+      ],
+      "title": "Instability"
+    },
+    {
+      "id": "rotation",
+      "overlays": [
+        "helicity_0_1km",
+        "helicity_0_3km"
+      ],
+      "title": "Rotation"
+    },
+    {
+      "id": "shear",
+      "overlays": [
+        "shear_0_1km_speed",
+        "shear_0_6km_speed"
+      ],
+      "title": "Shear"
+    },
+    {
+      "id": "wind",
+      "overlays": [
+        "wind_10m",
+        "gust_surface"
+      ],
+      "title": "Wind"
+    }
+  ],
+  "member": "m00",
+  "run_id": "2026032820",
+  "series": {
+    "cape": {
+      "id": "cape",
+      "label": "Surface CAPE",
+      "points": [
+        {
+          "domain_id": "conus",
+          "forecast_hour": 0,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-28T20:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 1,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-28T21:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 2,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-28T22:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 3,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-28T23:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 4,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T00:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 5,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T01:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 6,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T02:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 7,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T03:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 8,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T04:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 9,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T05:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 10,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T06:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 11,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T07:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 12,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T08:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 13,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T09:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 14,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T10:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 15,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T11:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 16,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T12:00:00+00:00",
+          "value": 0.07999999821186066
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 17,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T13:00:00+00:00",
+          "value": 0.07999999821186066
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 18,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T14:00:00+00:00",
+          "value": 0.07999999821186066
+        }
+      ],
+      "style": {
+        "colors": [
+          "#141428",
+          "#3a66ac",
+          "#55be78",
+          "#f0d649",
+          "#d15329"
+        ],
+        "labels": [
+          "0",
+          "500",
+          "1000",
+          "2500",
+          "4000"
+        ],
+        "palette": "severe",
+        "range": [
+          0.0,
+          4000.0
+        ],
+        "rawUnits": "J/kg",
+        "type": "continuous",
+        "units": "J/kg"
+      },
+      "units": "J/kg"
+    },
+    "cin_surface": {
+      "id": "cin_surface",
+      "label": "Surface CIN",
+      "points": [
+        {
+          "domain_id": "conus",
+          "forecast_hour": 0,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-28T20:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 1,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-28T21:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 2,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-28T22:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 3,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-28T23:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 4,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T00:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 5,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T01:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 6,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T02:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 7,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T03:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 8,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T04:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 9,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T05:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 10,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T06:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 11,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T07:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 12,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T08:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 13,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T09:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 14,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T10:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 15,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T11:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 16,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T12:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 17,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T13:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 18,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T14:00:00+00:00",
+          "value": 0.0
+        }
+      ],
+      "style": {
+        "colors": [
+          "#234c8c",
+          "#7aa6d8",
+          "#f2f2f2",
+          "#e8a16d",
+          "#8d2d2a"
+        ],
+        "labels": [
+          "-400",
+          "-200",
+          "-100",
+          "-25",
+          "0"
+        ],
+        "palette": "diverging",
+        "range": [
+          -400.0,
+          0.0
+        ],
+        "rawUnits": "J/kg",
+        "type": "continuous",
+        "units": "J/kg"
+      },
+      "units": "J/kg"
+    },
+    "composite_reflectivity": {
+      "id": "composite_reflectivity",
+      "label": "Composite Reflectivity",
+      "points": [
+        {
+          "domain_id": "conus",
+          "forecast_hour": 0,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-28T20:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 1,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-28T21:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 2,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-28T22:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 3,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-28T23:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 4,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T00:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 5,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T01:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 6,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T02:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 7,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T03:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 8,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T04:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 9,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T05:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 10,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T06:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 11,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T07:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 12,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T08:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 13,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T09:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 14,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T10:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 15,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T11:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 16,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T12:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 17,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T13:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 18,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T14:00:00+00:00",
+          "value": 0.0
+        }
+      ],
+      "style": {
+        "colors": [
+          "#0a0a0a",
+          "#3c781e",
+          "#b4c828",
+          "#ffa000",
+          "#d22828"
+        ],
+        "labels": [
+          "0",
+          "20",
+          "35",
+          "50",
+          "70"
+        ],
+        "palette": "reflectivity",
+        "range": [
+          0.0,
+          70.0
+        ],
+        "rawUnits": "dBZ",
+        "type": "continuous",
+        "units": "dBZ"
+      },
+      "units": "dBZ"
+    },
+    "gust_surface": {
+      "id": "gust_surface",
+      "label": "Surface Wind Gust",
+      "points": [
+        {
+          "domain_id": "conus",
+          "forecast_hour": 0,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-28T20:00:00+00:00",
+          "value": 6.800000190734863
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 1,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-28T21:00:00+00:00",
+          "value": 6.309999942779541
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 2,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-28T22:00:00+00:00",
+          "value": 6.150000095367432
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 3,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-28T23:00:00+00:00",
+          "value": 5.900000095367432
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 4,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T00:00:00+00:00",
+          "value": 6.510000228881836
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 5,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T01:00:00+00:00",
+          "value": 7.769999980926514
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 6,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T02:00:00+00:00",
+          "value": 9.170000076293945
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 7,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T03:00:00+00:00",
+          "value": 9.529999732971191
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 8,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T04:00:00+00:00",
+          "value": 10.380000114440918
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 9,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T05:00:00+00:00",
+          "value": 11.390000343322754
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 10,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T06:00:00+00:00",
+          "value": 11.899999618530273
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 11,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T07:00:00+00:00",
+          "value": 11.949999809265137
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 12,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T08:00:00+00:00",
+          "value": 11.850000381469727
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 13,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T09:00:00+00:00",
+          "value": 11.920000076293945
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 14,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T10:00:00+00:00",
+          "value": 11.75
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 15,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T11:00:00+00:00",
+          "value": 11.800000190734863
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 16,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T12:00:00+00:00",
+          "value": 11.800000190734863
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 17,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T13:00:00+00:00",
+          "value": 11.5
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 18,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T14:00:00+00:00",
+          "value": 11.079999923706055
+        }
+      ],
+      "style": {
+        "colors": [
+          "#0b1840",
+          "#3c6db5",
+          "#70b796",
+          "#facc40",
+          "#db5231"
+        ],
+        "labels": [
+          "0",
+          "15",
+          "30",
+          "50",
+          "75"
+        ],
+        "palette": "wind",
+        "range": [
+          0.0,
+          40.0
+        ],
+        "rawUnits": "m/s",
+        "transform": "mps_to_mph",
+        "type": "continuous",
+        "units": "mph"
+      },
+      "units": "mph"
+    },
+    "helicity_0_1km": {
+      "id": "helicity_0_1km",
+      "label": "0 to 1 km Helicity",
+      "points": [
+        {
+          "domain_id": "conus",
+          "forecast_hour": 0,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-28T20:00:00+00:00",
+          "value": -2.2200000286102295
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 1,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-28T21:00:00+00:00",
+          "value": -3.1500000953674316
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 2,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-28T22:00:00+00:00",
+          "value": -5.430005073547363
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 3,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-28T23:00:00+00:00",
+          "value": -8.380000114440918
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 4,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T00:00:00+00:00",
+          "value": -11.979999542236328
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 5,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T01:00:00+00:00",
+          "value": -8.020000457763672
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 6,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T02:00:00+00:00",
+          "value": -8.500004768371582
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 7,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T03:00:00+00:00",
+          "value": -8.920000076293945
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 8,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T04:00:00+00:00",
+          "value": -6.460000038146973
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 9,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T05:00:00+00:00",
+          "value": 2.619999885559082
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 10,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T06:00:00+00:00",
+          "value": 18.770000457763672
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 11,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T07:00:00+00:00",
+          "value": 32.619998931884766
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 12,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T08:00:00+00:00",
+          "value": 42.529998779296875
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 13,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T09:00:00+00:00",
+          "value": 39.279998779296875
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 14,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T10:00:00+00:00",
+          "value": 42.209991455078125
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 15,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T11:00:00+00:00",
+          "value": 52.54999923706055
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 16,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T12:00:00+00:00",
+          "value": 61.880001068115234
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 17,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T13:00:00+00:00",
+          "value": 63.20000076293945
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 18,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T14:00:00+00:00",
+          "value": 54.20000076293945
+        }
+      ],
+      "style": {
+        "colors": [
+          "#141428",
+          "#3a66ac",
+          "#55be78",
+          "#f0d649",
+          "#d15329"
+        ],
+        "labels": [
+          "0",
+          "100",
+          "200",
+          "400",
+          "600"
+        ],
+        "palette": "severe",
+        "range": [
+          0.0,
+          600.0
+        ],
+        "rawUnits": "m2/s2",
+        "type": "continuous",
+        "units": "m2/s2"
+      },
+      "units": "m2/s2"
+    },
+    "helicity_0_3km": {
+      "id": "helicity_0_3km",
+      "label": "0 to 3 km Helicity",
+      "points": [
+        {
+          "domain_id": "conus",
+          "forecast_hour": 0,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-28T20:00:00+00:00",
+          "value": 56.880001068115234
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 1,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-28T21:00:00+00:00",
+          "value": 69.37999725341797
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 2,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-28T22:00:00+00:00",
+          "value": 75.76000213623047
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 3,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-28T23:00:00+00:00",
+          "value": 82.69999694824219
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 4,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T00:00:00+00:00",
+          "value": 101.22000122070312
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 5,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T01:00:00+00:00",
+          "value": 112.44000244140625
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 6,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T02:00:00+00:00",
+          "value": 109.22000122070312
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 7,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T03:00:00+00:00",
+          "value": 129.97000122070312
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 8,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T04:00:00+00:00",
+          "value": 139.47999572753906
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 9,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T05:00:00+00:00",
+          "value": 157.1999969482422
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 10,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T06:00:00+00:00",
+          "value": 177.17999267578125
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 11,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T07:00:00+00:00",
+          "value": 186.2899932861328
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 12,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T08:00:00+00:00",
+          "value": 190.1699981689453
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 13,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T09:00:00+00:00",
+          "value": 199.52000427246094
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 14,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T10:00:00+00:00",
+          "value": 200.57000732421875
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 15,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T11:00:00+00:00",
+          "value": 210.67999267578125
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 16,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T12:00:00+00:00",
+          "value": 226.26998901367188
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 17,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T13:00:00+00:00",
+          "value": 231.30999755859375
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 18,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T14:00:00+00:00",
+          "value": 222.5399932861328
+        }
+      ],
+      "style": {
+        "colors": [
+          "#141428",
+          "#3a66ac",
+          "#55be78",
+          "#f0d649",
+          "#d15329"
+        ],
+        "labels": [
+          "0",
+          "100",
+          "200",
+          "400",
+          "600"
+        ],
+        "palette": "severe",
+        "range": [
+          0.0,
+          600.0
+        ],
+        "rawUnits": "m2/s2",
+        "type": "continuous",
+        "units": "m2/s2"
+      },
+      "units": "m2/s2"
+    },
+    "qpf": {
+      "id": "qpf",
+      "label": "Accumulated Precipitation",
+      "points": [
+        {
+          "domain_id": "conus",
+          "forecast_hour": 0,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-28T20:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 1,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-28T21:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 2,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-28T22:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 3,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-28T23:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 4,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T00:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 5,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T01:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 6,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T02:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 7,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T03:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 8,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T04:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 9,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T05:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 10,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T06:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 11,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T07:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 12,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T08:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 13,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T09:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 14,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T10:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 15,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T11:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 16,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T12:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 17,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T13:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 18,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T14:00:00+00:00",
+          "value": 0.0
+        }
+      ],
+      "style": {
+        "colors": [
+          "#f5f5f5",
+          "#c6e9b4",
+          "#7fcdbb",
+          "#41b6c4",
+          "#225ea8"
+        ],
+        "labels": [
+          "0",
+          "0.25",
+          "0.5",
+          "1.0",
+          "2.0+"
+        ],
+        "palette": "precip",
+        "range": [
+          0.0,
+          50.8
+        ],
+        "rawUnits": "mm",
+        "transform": "mm_to_inches",
+        "type": "continuous",
+        "units": "in"
+      },
+      "units": "in"
+    },
+    "shear_0_1km_speed": {
+      "id": "shear_0_1km_speed",
+      "label": "0 to 1 km Shear Speed",
+      "points": [
+        {
+          "domain_id": "conus",
+          "forecast_hour": 0,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-28T20:00:00+00:00",
+          "value": 0.000785493500918629
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 1,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-28T21:00:00+00:00",
+          "value": 0.0008386894674517042
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 2,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-28T22:00:00+00:00",
+          "value": 0.0010577340694633839
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 3,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-28T23:00:00+00:00",
+          "value": 0.0015705088380782817
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 4,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T00:00:00+00:00",
+          "value": 0.0024174779826399177
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 5,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T01:00:00+00:00",
+          "value": 0.0033298799420567638
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 6,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T02:00:00+00:00",
+          "value": 0.004480178731815964
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 7,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T03:00:00+00:00",
+          "value": 0.005724587459229293
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 8,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T04:00:00+00:00",
+          "value": 0.006600984606817674
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 9,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T05:00:00+00:00",
+          "value": 0.00789248366516896
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 10,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T06:00:00+00:00",
+          "value": 0.008701086025743926
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 11,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T07:00:00+00:00",
+          "value": 0.008994676201389868
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 12,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T08:00:00+00:00",
+          "value": 0.009099412096766615
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 13,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T09:00:00+00:00",
+          "value": 0.0087561921746479
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 14,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T10:00:00+00:00",
+          "value": 0.008665379437366864
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 15,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T11:00:00+00:00",
+          "value": 0.008938261143916318
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 16,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T12:00:00+00:00",
+          "value": 0.009044002460887057
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 17,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T13:00:00+00:00",
+          "value": 0.008211991237246257
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 18,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T14:00:00+00:00",
+          "value": 0.006739029285398741
+        }
+      ],
+      "style": {
+        "labels": [
+          "0",
+          "10",
+          "20",
+          "30",
+          "40"
+        ],
+        "range": [
+          0.0,
+          40.0
+        ],
+        "type": "continuous",
+        "units": "m s-1"
+      },
+      "units": "m s-1"
+    },
+    "shear_0_6km_speed": {
+      "id": "shear_0_6km_speed",
+      "label": "0 to 6 km Shear Speed",
+      "points": [
+        {
+          "domain_id": "conus",
+          "forecast_hour": 0,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-28T20:00:00+00:00",
+          "value": 0.003608392895552081
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 1,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-28T21:00:00+00:00",
+          "value": 0.0036804889339848426
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 2,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-28T22:00:00+00:00",
+          "value": 0.003556473173331629
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 3,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-28T23:00:00+00:00",
+          "value": 0.003380946586347483
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 4,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T00:00:00+00:00",
+          "value": 0.0032111056580463584
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 5,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T01:00:00+00:00",
+          "value": 0.003130814583391939
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 6,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T02:00:00+00:00",
+          "value": 0.003060669512247596
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 7,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T03:00:00+00:00",
+          "value": 0.003011992756088696
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 8,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T04:00:00+00:00",
+          "value": 0.0029313819493428793
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 9,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T05:00:00+00:00",
+          "value": 0.002808504980093583
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 10,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T06:00:00+00:00",
+          "value": 0.002770776019627084
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 11,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T07:00:00+00:00",
+          "value": 0.002774112548332739
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 12,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T08:00:00+00:00",
+          "value": 0.0027734633954712372
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 13,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T09:00:00+00:00",
+          "value": 0.00287939205526952
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 14,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T10:00:00+00:00",
+          "value": 0.0028647164466159333
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 15,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T11:00:00+00:00",
+          "value": 0.002833884240654583
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 16,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T12:00:00+00:00",
+          "value": 0.0028535065161359252
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 17,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T13:00:00+00:00",
+          "value": 0.0029817109569540952
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 18,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T14:00:00+00:00",
+          "value": 0.0031409712871146604
+        }
+      ],
+      "style": {
+        "labels": [
+          "0",
+          "15",
+          "30",
+          "45",
+          "60"
+        ],
+        "range": [
+          0.0,
+          60.0
+        ],
+        "type": "continuous",
+        "units": "m s-1"
+      },
+      "units": "m s-1"
+    },
+    "shear_u_0_1km": {
+      "id": "shear_u_0_1km",
+      "label": "0 to 1 km U Shear",
+      "points": [
+        {
+          "domain_id": "conus",
+          "forecast_hour": 0,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-28T20:00:00+00:00",
+          "value": -0.0002899999963119626
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 1,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-28T21:00:00+00:00",
+          "value": -0.0006500000017695129
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 2,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-28T22:00:00+00:00",
+          "value": -0.001020000665448606
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 3,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-28T23:00:00+00:00",
+          "value": -0.0015699993818998337
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 4,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T00:00:00+00:00",
+          "value": -0.002409999957308173
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 5,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T01:00:00+00:00",
+          "value": -0.003160000080242753
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 6,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T02:00:00+00:00",
+          "value": -0.004120000172406435
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 7,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T03:00:00+00:00",
+          "value": -0.0052200001664459705
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 8,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T04:00:00+00:00",
+          "value": -0.005789999850094318
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 9,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T05:00:00+00:00",
+          "value": -0.00646999990567565
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 10,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T06:00:00+00:00",
+          "value": -0.006599999964237213
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 11,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T07:00:00+00:00",
+          "value": -0.006310000084340572
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 12,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T08:00:00+00:00",
+          "value": -0.0060800001956522465
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 13,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T09:00:00+00:00",
+          "value": -0.005900000222027302
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 14,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T10:00:00+00:00",
+          "value": -0.0058200000785291195
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 15,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T11:00:00+00:00",
+          "value": -0.0057299998588860035
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 16,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T12:00:00+00:00",
+          "value": -0.005419999826699495
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 17,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T13:00:00+00:00",
+          "value": -0.004720000084489584
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 18,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T14:00:00+00:00",
+          "value": -0.0038799999747425318
+        }
+      ],
+      "style": {
+        "colors": [
+          "#141428",
+          "#3a66ac",
+          "#55be78",
+          "#f0d649",
+          "#d15329"
+        ],
+        "labels": [
+          "0",
+          "10",
+          "20",
+          "30",
+          "40"
+        ],
+        "palette": "severe",
+        "range": [
+          0.0,
+          40.0
+        ],
+        "rawUnits": "m/s",
+        "type": "continuous",
+        "units": "m/s"
+      },
+      "units": "m/s"
+    },
+    "shear_u_0_6km": {
+      "id": "shear_u_0_6km",
+      "label": "0 to 6 km U Shear",
+      "points": [
+        {
+          "domain_id": "conus",
+          "forecast_hour": 0,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-28T20:00:00+00:00",
+          "value": 0.0034099998883903027
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 1,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-28T21:00:00+00:00",
+          "value": 0.0034199999645352364
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 2,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-28T22:00:00+00:00",
+          "value": 0.003220000071451068
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 3,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-28T23:00:00+00:00",
+          "value": 0.003019999945536256
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 4,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T00:00:00+00:00",
+          "value": 0.002859999891370535
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 5,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T01:00:00+00:00",
+          "value": 0.0027799999807029963
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 6,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T02:00:00+00:00",
+          "value": 0.0026899997610598803
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 7,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T03:00:00+00:00",
+          "value": 0.0026400000788271427
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 8,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T04:00:00+00:00",
+          "value": 0.002570000011473894
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 9,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T05:00:00+00:00",
+          "value": 0.0025100000202655792
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 10,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T06:00:00+00:00",
+          "value": 0.0025599999353289604
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 11,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T07:00:00+00:00",
+          "value": 0.0026100000832229853
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 12,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T08:00:00+00:00",
+          "value": 0.002639999845996499
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 13,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T09:00:00+00:00",
+          "value": 0.0027799997478723526
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 14,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T10:00:00+00:00",
+          "value": 0.00279000005684793
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 15,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T11:00:00+00:00",
+          "value": 0.0027799999807029963
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 16,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T12:00:00+00:00",
+          "value": 0.00279999990016222
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 17,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T13:00:00+00:00",
+          "value": 0.0029100000392645597
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 18,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T14:00:00+00:00",
+          "value": 0.0030400000978261232
+        }
+      ],
+      "style": {
+        "colors": [
+          "#141428",
+          "#3a66ac",
+          "#55be78",
+          "#f0d649",
+          "#d15329"
+        ],
+        "labels": [
+          "0",
+          "10",
+          "20",
+          "30",
+          "40"
+        ],
+        "palette": "severe",
+        "range": [
+          0.0,
+          40.0
+        ],
+        "rawUnits": "m/s",
+        "type": "continuous",
+        "units": "m/s"
+      },
+      "units": "m/s"
+    },
+    "shear_v_0_1km": {
+      "id": "shear_v_0_1km",
+      "label": "0 to 1 km V Shear",
+      "points": [
+        {
+          "domain_id": "conus",
+          "forecast_hour": 0,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-28T20:00:00+00:00",
+          "value": -0.0007300000288523734
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 1,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-28T21:00:00+00:00",
+          "value": -0.0005300000193528831
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 2,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-28T22:00:00+00:00",
+          "value": -0.0002800000074785203
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 3,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-28T23:00:00+00:00",
+          "value": -3.999939144705422e-05
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 4,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T00:00:00+00:00",
+          "value": 0.0001900000061141327
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 5,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T01:00:00+00:00",
+          "value": 0.0010499999625608325
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 6,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T02:00:00+00:00",
+          "value": 0.0017600000137463212
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 7,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T03:00:00+00:00",
+          "value": 0.0023499999660998583
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 8,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T04:00:00+00:00",
+          "value": 0.003169999923557043
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 9,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T05:00:00+00:00",
+          "value": 0.004519999958574772
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 10,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T06:00:00+00:00",
+          "value": 0.005669999867677689
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 11,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T07:00:00+00:00",
+          "value": 0.006409999914467335
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 12,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T08:00:00+00:00",
+          "value": 0.006769999861717224
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 13,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T09:00:00+00:00",
+          "value": 0.00646999990567565
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 14,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T10:00:00+00:00",
+          "value": 0.0064199999906122684
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 15,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T11:00:00+00:00",
+          "value": 0.006860001012682915
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 16,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T12:00:00+00:00",
+          "value": 0.007239998783916235
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 17,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T13:00:00+00:00",
+          "value": 0.006719999946653843
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 18,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T14:00:00+00:00",
+          "value": 0.005510001443326473
+        }
+      ],
+      "style": {
+        "colors": [
+          "#141428",
+          "#3a66ac",
+          "#55be78",
+          "#f0d649",
+          "#d15329"
+        ],
+        "labels": [
+          "0",
+          "10",
+          "20",
+          "30",
+          "40"
+        ],
+        "palette": "severe",
+        "range": [
+          0.0,
+          40.0
+        ],
+        "rawUnits": "m/s",
+        "type": "continuous",
+        "units": "m/s"
+      },
+      "units": "m/s"
+    },
+    "shear_v_0_6km": {
+      "id": "shear_v_0_6km",
+      "label": "0 to 6 km V Shear",
+      "points": [
+        {
+          "domain_id": "conus",
+          "forecast_hour": 0,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-28T20:00:00+00:00",
+          "value": -0.001180000021122396
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 1,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-28T21:00:00+00:00",
+          "value": -0.0013599996455013752
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 2,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-28T22:00:00+00:00",
+          "value": -0.0015100003220140934
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 3,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-28T23:00:00+00:00",
+          "value": -0.0015200000489130616
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 4,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T00:00:00+00:00",
+          "value": -0.0014600000577047467
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 5,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T01:00:00+00:00",
+          "value": -0.0014400000218302011
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 6,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T02:00:00+00:00",
+          "value": -0.0014599997084587812
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 7,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T03:00:00+00:00",
+          "value": -0.001449999981559813
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 8,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T04:00:00+00:00",
+          "value": -0.0014100000262260437
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 9,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T05:00:00+00:00",
+          "value": -0.0012600000482052565
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 10,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T06:00:00+00:00",
+          "value": -0.0010600000387057662
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 11,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T07:00:00+00:00",
+          "value": -0.0009399999980814755
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 12,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T08:00:00+00:00",
+          "value": -0.0008500000112690032
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 13,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T09:00:00+00:00",
+          "value": -0.000750000006519258
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 14,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T10:00:00+00:00",
+          "value": -0.0006500000017695129
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 15,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T11:00:00+00:00",
+          "value": -0.0005499999970197678
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 16,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T12:00:00+00:00",
+          "value": -0.0005499999970197678
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 17,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T13:00:00+00:00",
+          "value": -0.0006500000017695129
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 18,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T14:00:00+00:00",
+          "value": -0.0007900000200606883
+        }
+      ],
+      "style": {
+        "colors": [
+          "#141428",
+          "#3a66ac",
+          "#55be78",
+          "#f0d649",
+          "#d15329"
+        ],
+        "labels": [
+          "0",
+          "10",
+          "20",
+          "30",
+          "40"
+        ],
+        "palette": "severe",
+        "range": [
+          0.0,
+          40.0
+        ],
+        "rawUnits": "m/s",
+        "type": "continuous",
+        "units": "m/s"
+      },
+      "units": "m/s"
+    },
+    "wind_10m": {
+      "id": "wind_10m",
+      "label": "10 m Wind Speed",
+      "points": [
+        {
+          "domain_id": "conus",
+          "forecast_hour": 0,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-28T20:00:00+00:00",
+          "value": 4.851607799530029
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 1,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-28T21:00:00+00:00",
+          "value": 4.508214950561523
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 2,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-28T22:00:00+00:00",
+          "value": 4.39013671875
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 3,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-28T23:00:00+00:00",
+          "value": 4.209537029266357
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 4,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T00:00:00+00:00",
+          "value": 3.9036648273468018
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 5,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T01:00:00+00:00",
+          "value": 3.8158750534057617
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 6,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T02:00:00+00:00",
+          "value": 3.7155351638793945
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 7,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T03:00:00+00:00",
+          "value": 3.676955461502075
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 8,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T04:00:00+00:00",
+          "value": 3.780172109603882
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 9,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T05:00:00+00:00",
+          "value": 3.9105114936828613
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 10,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T06:00:00+00:00",
+          "value": 3.9580044746398926
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 11,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T07:00:00+00:00",
+          "value": 4.006494522094727
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 12,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T08:00:00+00:00",
+          "value": 4.087175369262695
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 13,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T09:00:00+00:00",
+          "value": 4.405281066894531
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 14,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T10:00:00+00:00",
+          "value": 4.377956390380859
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 15,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T11:00:00+00:00",
+          "value": 4.459820747375488
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 16,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T12:00:00+00:00",
+          "value": 4.681549072265625
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 17,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T13:00:00+00:00",
+          "value": 5.200778961181641
+        },
+        {
+          "domain_id": "conus",
+          "forecast_hour": 18,
+          "grid_lat": 33.630523681640625,
+          "grid_lon": -84.4500732421875,
+          "valid_time_utc": "2026-03-29T14:00:00+00:00",
+          "value": 6.070000171661377
+        }
+      ],
+      "style": {
+        "colors": [
+          "#0b1840",
+          "#3c6db5",
+          "#70b796",
+          "#facc40",
+          "#db5231"
+        ],
+        "labels": [
+          "0",
+          "15",
+          "30",
+          "50",
+          "75"
+        ],
+        "palette": "wind",
+        "range": [
+          0.0,
+          40.0
+        ],
+        "rawUnits": "m/s",
+        "transform": "mps_to_mph",
+        "type": "continuous",
+        "units": "mph"
+      },
+      "units": "mph"
+    }
+  },
+  "station": {
+    "aliases": [
+      "KATL",
+      "ATL",
+      "ATL"
+    ],
+    "country": "US",
+    "elev": 309,
+    "faaId": "ATL",
+    "iataId": "ATL",
+    "icaoId": "KATL",
+    "id": "KATL",
+    "lat": 33.62972,
+    "lon": -84.44223,
+    "site": "Atlanta/Hartsfield-Jackson Intl",
+    "siteType": [
+      "METAR",
+      "TAF"
+    ],
+    "state": "GA"
+  }
+}
