@@ -16,6 +16,12 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from services.shared.preview import render_preview_png  # noqa: E402
+from services.shared.point_series import (  # noqa: E402
+    DEFAULT_STATION_CATALOG_PATH,
+    build_point_series,
+    get_station,
+    search_stations,
+)
 from services.shared.store import (  # noqa: E402
     DEFAULT_DATA_ROOT,
     build_layers_index,
@@ -39,6 +45,7 @@ from services.shared.tiler import (  # noqa: E402
 class BackendRequestHandler(BaseHTTPRequestHandler):
     data_root = DEFAULT_DATA_ROOT
     tile_cache_root = DEFAULT_TILE_CACHE_ROOT
+    station_catalog_path = DEFAULT_STATION_CATALOG_PATH
     domains_path = ROOT / "config" / "domains.json"
     layers_path = ROOT / "config" / "layers.json"
 
@@ -69,6 +76,19 @@ class BackendRequestHandler(BaseHTTPRequestHandler):
                 return
             if path == "/api/products-index":
                 self._json_response(build_product_index(self.data_root))
+                return
+            if path == "/api/stations/search":
+                query = parse_qs(parsed.query)
+                limit = int(query.get("limit", ["12"])[0])
+                term = query.get("q", [""])[0]
+                self._json_response({"stations": search_stations(term, limit, self.station_catalog_path)})
+                return
+            if path.startswith("/api/stations/"):
+                station_code = path[len("/api/stations/") :]
+                self._json_response(get_station(station_code, self.station_catalog_path))
+                return
+            if path == "/api/point-series":
+                self._handle_point_series_request(parsed)
                 return
             if path.startswith("/api/products/"):
                 self._handle_product_request(path, parsed)
@@ -118,6 +138,25 @@ class BackendRequestHandler(BaseHTTPRequestHandler):
             self._png_response(png)
             return
         self._json_response({"error": "Not found"}, status=HTTPStatus.NOT_FOUND)
+
+    def _handle_point_series_request(self, parsed) -> None:
+        query = parse_qs(parsed.query)
+        station_code = query.get("station", [""])[0]
+        member = query.get("member", ["ens"])[0]
+        run_selector = query.get("run", ["latest-ready"])[0]
+        overlays = query.get("overlay") or None
+        if not station_code:
+            self._json_response({"error": "station query parameter is required"}, status=HTTPStatus.BAD_REQUEST)
+            return
+        payload = build_point_series(
+            run_selector=run_selector,
+            station_code=station_code,
+            member=member,
+            overlays=overlays,
+            data_root=self.data_root,
+            station_catalog_path=self.station_catalog_path,
+        )
+        self._json_response(payload, cache_control="public, max-age=300")
 
     def _handle_tile_request(self, path: str) -> None:
         remainder = path[len("/tiles/") :]
@@ -223,6 +262,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--port", default=int(os.environ.get("PORT", "8080")), type=int)
     parser.add_argument("--data-root", default=str(DEFAULT_DATA_ROOT))
     parser.add_argument("--tile-cache-root", default=str(DEFAULT_TILE_CACHE_ROOT))
+    parser.add_argument("--station-catalog", default=str(DEFAULT_STATION_CATALOG_PATH))
     return parser
 
 
@@ -231,6 +271,7 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
     BackendRequestHandler.data_root = Path(args.data_root)
     BackendRequestHandler.tile_cache_root = Path(args.tile_cache_root)
+    BackendRequestHandler.station_catalog_path = Path(args.station_catalog)
     server = ThreadingHTTPServer((args.host, args.port), BackendRequestHandler)
     print(f"HRRRCast backend listening on http://{args.host}:{args.port}")
     try:
