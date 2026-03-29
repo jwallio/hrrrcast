@@ -85,6 +85,13 @@
           <div class="hour-chips" id="hourChips" aria-label="Forecast hour quick picks"></div>
         </section>
 
+        <section class="action-strip" aria-label="Share current forecast view">
+          <button type="button" class="action-button action-button-primary" id="shareImageButton">Share Image</button>
+          <button type="button" class="action-button" id="copyLinkButton">Copy Link</button>
+          <button type="button" class="action-button" id="downloadImageButton">Save PNG</button>
+          <span class="share-status" id="shareStatus" aria-live="polite"></span>
+        </section>
+
         <section class="toolbar" aria-label="Viewer controls">
           <label class="field">
             <span>Run</span>
@@ -118,13 +125,13 @@
             <div class="preset-strip" id="presetStrip"></div>
           </div>
 
-          <div class="insight-copy">
-            <span class="insight-kicker">What This Shows</span>
+          <details class="insight-copy insight-details" open>
+            <summary class="insight-summary">About This Field</summary>
             <p class="insight-text" id="fieldDescription">
               Loading severe-weather field description.
             </p>
             <p class="insight-hint" id="fieldHint"></p>
-          </div>
+          </details>
         </section>
 
       </main>

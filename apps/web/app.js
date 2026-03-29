@@ -39,8 +39,8 @@
     cape_probability_gt_1000: { family: "instability", order: 21, featured: true, description: "Share of ensemble members reaching at least 1000 J/kg of CAPE.", hint: "Use with storm and shear fields to see whether storms also have enough fuel." },
     cape: { family: "instability", order: 22, featured: true, description: "Single-member surface-based CAPE.", hint: "High CAPE alone does not guarantee severe weather. Pair it with storm and shear signals." },
     cin_surface: { family: "instability", order: 23, description: "Single-member convective inhibition.", hint: "More negative values suggest a cap that may suppress storm initiation." },
-    helicity_0_1km_probability_gt_100: { family: "rotation", order: 31, featured: true, description: "Share of ensemble members exceeding 100 m²/s² of 0 to 1 km helicity.", hint: "Most useful when storms are already expected nearby." },
-    helicity_0_3km_probability_gt_250: { family: "rotation", order: 32, description: "Share of ensemble members exceeding 250 m²/s² of 0 to 3 km helicity.", hint: "Shows whether rotation support extends through a deeper layer." },
+    helicity_0_1km_probability_gt_100: { family: "rotation", order: 31, featured: true, description: "Share of ensemble members exceeding 100 m^2/s^2 of 0 to 1 km helicity.", hint: "Most useful when storms are already expected nearby." },
+    helicity_0_3km_probability_gt_250: { family: "rotation", order: 32, description: "Share of ensemble members exceeding 250 m^2/s^2 of 0 to 3 km helicity.", hint: "Shows whether rotation support extends through a deeper layer." },
     helicity_0_1km: { family: "rotation", order: 33, featured: true, description: "Single-member 0 to 1 km storm-relative helicity.", hint: "Useful for low-level rotation support, but only meaningful where storms exist." },
     helicity_0_3km: { family: "rotation", order: 34, description: "Single-member 0 to 3 km storm-relative helicity.", hint: "Shows broader rotation support beyond the lowest kilometer." },
     relative_vorticity_0_1km: { family: "rotation", order: 35, description: "Single-member 0 to 1 km relative vorticity.", hint: "Advanced field. Treat it as a supplement to helicity, not the main public product." },
@@ -109,6 +109,10 @@
     validLabel: document.getElementById("validLabel"),
     hourRange: document.getElementById("hourRange"),
     hourChips: document.getElementById("hourChips"),
+    shareImageButton: document.getElementById("shareImageButton"),
+    copyLinkButton: document.getElementById("copyLinkButton"),
+    downloadImageButton: document.getElementById("downloadImageButton"),
+    shareStatus: document.getElementById("shareStatus"),
   };
 
   const ctx = dom.canvas.getContext("2d");
@@ -233,6 +237,10 @@
       renderFrame();
       updateUrl();
     });
+
+    dom.shareImageButton.addEventListener("click", shareCurrentImage);
+    dom.copyLinkButton.addEventListener("click", copyCurrentLink);
+    dom.downloadImageButton.addEventListener("click", downloadCurrentImage);
   }
 
   function hydrateStateFromUrl() {
@@ -407,7 +415,7 @@
     const overlay = refs.layerMap.get(state.overlayId);
     const domain = refs.domainMap.get(state.domainId);
 
-    dom.runBadge.textContent = `Latest ready · ${formatRunStamp(state.runId)}${run && run.status !== "ready" ? " partial" : ""}`;
+    dom.runBadge.textContent = `Latest ready | ${formatRunStamp(state.runId)}${run && run.status !== "ready" ? " partial" : ""}`;
     dom.overlayFamilyLabel.textContent = familyLabel(state.familyId);
     dom.productTitle.textContent = overlay ? `${overlay.label} | ${domain ? domain.label : "CONUS"}` : "Forecast product";
     dom.metaInit.textContent = `${formatRunStamp(state.runId)} init`;
@@ -518,7 +526,7 @@
     dom.fieldDescription.textContent = meta.description || `${overlay.label} from the latest ready HRRRCast severe snapshot.`;
     dom.fieldHint.textContent = meta.hint || (isProbabilityOverlay(overlay.id)
       ? "Probability fields show the share of ensemble members exceeding the labeled threshold."
-      : "Single-member fields show one member’s solution and can be noisier than ensemble probabilities.");
+      : "Single-member fields show one member's solution and can be noisier than ensemble probabilities.");
   }
 
   function renderFrame() {
@@ -751,6 +759,7 @@
 
     const image = new Image();
     image.decoding = "async";
+    image.crossOrigin = "anonymous";
     const promise = new Promise((resolve, reject) => {
       image.onload = () => resolve(image);
       image.onerror = () => reject(new Error(`Unable to load ${key}`));
@@ -846,6 +855,64 @@
     });
   }
 
+  async function shareCurrentImage() {
+    try {
+      const blob = await canvasToBlob("image/png");
+      const file = new File([blob], currentViewFilename("png"), { type: "image/png" });
+      const shareData = {
+        title: currentShareTitle(),
+        text: currentShareTitle(),
+        url: currentViewUrl(),
+      };
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        await navigator.share({ ...shareData, files: [file] });
+        setShareStatus("Image shared");
+        return;
+      }
+      if (navigator.share) {
+        await navigator.share(shareData);
+        setShareStatus("Link shared");
+        return;
+      }
+      await writeClipboard(currentViewUrl());
+      setShareStatus("Link copied");
+    } catch (error) {
+      if (error && error.name === "AbortError") {
+        return;
+      }
+      console.error(error);
+      setShareStatus("Share unavailable");
+    }
+  }
+
+  async function copyCurrentLink() {
+    try {
+      await writeClipboard(currentViewUrl());
+      setShareStatus("Link copied");
+    } catch (error) {
+      console.error(error);
+      setShareStatus("Copy failed");
+    }
+  }
+
+  async function downloadCurrentImage() {
+    try {
+      const blob = await canvasToBlob("image/png");
+      const url = URL.createObjectURL(blob);
+      const anchor = document.createElement("a");
+      anchor.href = url;
+      anchor.download = currentViewFilename("png");
+      document.body.appendChild(anchor);
+      anchor.click();
+      anchor.remove();
+      window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+      setShareStatus("PNG saved");
+    } catch (error) {
+      console.error(error);
+      setShareStatus("Save failed");
+    }
+  }
+
   function updateUrl() {
     const params = new URLSearchParams();
     params.set("run", state.runId);
@@ -855,6 +922,57 @@
     params.set("fhr", String(state.hour));
     params.set("family", state.familyId);
     window.history.replaceState({}, "", `${window.location.pathname}?${params.toString()}`);
+  }
+
+  function currentViewUrl() {
+    return window.location.href;
+  }
+
+  function currentShareTitle() {
+    const overlay = refs.layerMap.get(state.overlayId);
+    const domain = refs.domainMap.get(state.domainId);
+    return `${overlay ? overlay.label : "Forecast"} | ${domain ? domain.label : "CONUS"} | ${formatValidStamp(state.runId, state.hour)}`;
+  }
+
+  function currentViewFilename(extension) {
+    const safeOverlay = (state.overlayId || "forecast").replace(/[^a-z0-9]+/gi, "-").toLowerCase();
+    const safeDomain = (state.domainId || "conus").replace(/[^a-z0-9]+/gi, "-").toLowerCase();
+    return `hrrrcast-${safeOverlay}-${safeDomain}-f${padHour(state.hour)}.${extension}`;
+  }
+
+  function canvasToBlob(type) {
+    return new Promise((resolve, reject) => {
+      dom.canvas.toBlob((blob) => {
+        if (blob) {
+          resolve(blob);
+          return;
+        }
+        reject(new Error("Canvas export failed."));
+      }, type);
+    });
+  }
+
+  async function writeClipboard(value) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      await navigator.clipboard.writeText(value);
+      return;
+    }
+    const input = document.createElement("input");
+    input.value = value;
+    document.body.appendChild(input);
+    input.select();
+    document.execCommand("copy");
+    input.remove();
+  }
+
+  function setShareStatus(message) {
+    dom.shareStatus.textContent = message;
+    window.clearTimeout(setShareStatus.timeoutId);
+    setShareStatus.timeoutId = window.setTimeout(() => {
+      if (dom.shareStatus.textContent === message) {
+        dom.shareStatus.textContent = "";
+      }
+    }, 2600);
   }
 
   function getFrameKey(runId, member, overlayId, hour, domainId) {
