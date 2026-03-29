@@ -6,7 +6,7 @@
     <title>HRRRCast</title>
     <meta
       name="description"
-      content="Static NOAA HRRRCast forecast viewer with compact controls and fast frame stepping."
+      content="Static NOAA HRRRCast severe weather viewer with compact controls and fast frame stepping."
     />
     <link rel="stylesheet" href="./styles.css" />
   </head>
@@ -15,7 +15,7 @@
       <header class="site-bar">
         <div class="brand-block">
           <span class="brand-mark">HRRRCast</span>
-          <span class="brand-note">Static forecast viewer</span>
+          <span class="brand-note">Severe weather snapshot viewer</span>
         </div>
         <div class="run-badge" id="runBadge">Loading latest run</div>
       </header>
@@ -110,6 +110,21 @@
             <span>Field</span>
             <select id="overlaySelect"></select>
           </label>
+        </section>
+
+        <section class="insight-shell" aria-label="Field context">
+          <div class="preset-shell">
+            <span class="insight-kicker">Quick Looks</span>
+            <div class="preset-strip" id="presetStrip"></div>
+          </div>
+
+          <div class="insight-copy">
+            <span class="insight-kicker">What This Shows</span>
+            <p class="insight-text" id="fieldDescription">
+              Loading severe-weather field description.
+            </p>
+            <p class="insight-hint" id="fieldHint"></p>
+          </div>
         </section>
 
       </main>

@@ -3,20 +3,58 @@
 
   const STATIC_ROOT = "./static-api";
   const SOURCE_DOMAIN_ID = "conus";
+  const DEFAULT_DOMAIN_ID = "south_central";
   const MOBILE_BREAKPOINT = 720;
   const CACHE_LIMIT = 48;
   const SOURCE_BBOX = [-127.0, 23.0, -66.0, 50.0];
 
+  const DEFAULT_OVERLAY_BY_MEMBER = {
+    ens: "composite_reflectivity_probability_gt_40dbz",
+    m00: "composite_reflectivity",
+  };
+
   const FAMILY_CONFIG = [
-    { id: "featured", label: "Featured", match: (overlay) => overlay.featured && overlay.group !== "native" },
-    { id: "precip", label: "Precip", match: (overlay) => ["precipitation", "radar", "winter", "moisture"].includes(overlay.family) },
-    { id: "severe", label: "Severe", match: (overlay) => overlay.family === "severe" },
-    { id: "surface", label: "Surface", match: (overlay) => ["surface", "synoptic", "temperature"].includes(overlay.family) },
-    { id: "upper_air", label: "Upper", match: (overlay) => overlay.family === "upper_air" },
-    { id: "wind", label: "Wind", match: (overlay) => ["wind", "dynamics"].includes(overlay.family) },
-    { id: "clouds", label: "Clouds", match: (overlay) => overlay.family === "clouds" },
-    { id: "ensemble", label: "Ens", match: (overlay) => overlay.family === "ensemble" },
+    { id: "featured", label: "Featured" },
+    { id: "storm", label: "Storm" },
+    { id: "instability", label: "Instability" },
+    { id: "rotation", label: "Rotation" },
+    { id: "shear", label: "Shear" },
+    { id: "wind", label: "Wind" },
+    { id: "all", label: "All" },
   ];
+
+  const QUICK_PRESETS = [
+    ["Storm Signals", "ens", "storm", "composite_reflectivity_probability_gt_40dbz", "south_central"],
+    ["Instability", "ens", "instability", "cape_probability_gt_1000", "south_central"],
+    ["Low-Level Rotation", "ens", "rotation", "helicity_0_1km_probability_gt_100", "southeast"],
+    ["Deep-Layer Shear", "ens", "shear", "shear_0_6km_probability_gt_40kt", "south_central"],
+    ["Wind Risk", "ens", "wind", "wind_10m_probability_gt_25kt", "southeast"],
+    ["Member Radar", "m00", "storm", "composite_reflectivity", "south_central"],
+  ].map(([label, member, family, overlay, domain]) => ({ label, member, family, overlay, domain }));
+
+  const PUBLIC_OVERLAY_META = {
+    composite_reflectivity_probability_gt_40dbz: { family: "storm", order: 1, featured: true, description: "Share of ensemble members producing at least 40 dBZ composite reflectivity.", hint: "Best first-look storm signal for where organized convection is most likely." },
+    qpf_probability_gt_0p10: { family: "storm", order: 2, featured: true, description: "Share of ensemble members producing at least 0.10 inches of precipitation.", hint: "Good for broad rain coverage, but less specific to severe storms than reflectivity probability." },
+    composite_reflectivity: { family: "storm", order: 11, featured: true, description: "Single-member simulated composite reflectivity.", hint: "Useful for storm placement and structure, but noisier than the ensemble probability view." },
+    cape_probability_gt_1000: { family: "instability", order: 21, featured: true, description: "Share of ensemble members reaching at least 1000 J/kg of CAPE.", hint: "Use with storm and shear fields to see whether storms also have enough fuel." },
+    cape: { family: "instability", order: 22, featured: true, description: "Single-member surface-based CAPE.", hint: "High CAPE alone does not guarantee severe weather. Pair it with storm and shear signals." },
+    cin_surface: { family: "instability", order: 23, description: "Single-member convective inhibition.", hint: "More negative values suggest a cap that may suppress storm initiation." },
+    helicity_0_1km_probability_gt_100: { family: "rotation", order: 31, featured: true, description: "Share of ensemble members exceeding 100 m²/s² of 0 to 1 km helicity.", hint: "Most useful when storms are already expected nearby." },
+    helicity_0_3km_probability_gt_250: { family: "rotation", order: 32, description: "Share of ensemble members exceeding 250 m²/s² of 0 to 3 km helicity.", hint: "Shows whether rotation support extends through a deeper layer." },
+    helicity_0_1km: { family: "rotation", order: 33, featured: true, description: "Single-member 0 to 1 km storm-relative helicity.", hint: "Useful for low-level rotation support, but only meaningful where storms exist." },
+    helicity_0_3km: { family: "rotation", order: 34, description: "Single-member 0 to 3 km storm-relative helicity.", hint: "Shows broader rotation support beyond the lowest kilometer." },
+    relative_vorticity_0_1km: { family: "rotation", order: 35, description: "Single-member 0 to 1 km relative vorticity.", hint: "Advanced field. Treat it as a supplement to helicity, not the main public product." },
+    relative_vorticity_0_2km: { family: "rotation", order: 36, description: "Single-member 0 to 2 km relative vorticity.", hint: "Useful for comparing corridors of low-level spin." },
+    shear_0_6km_probability_gt_40kt: { family: "shear", order: 41, featured: true, description: "Share of ensemble members exceeding 40 kt of 0 to 6 km bulk shear.", hint: "Best summary of organized-storm support." },
+    shear_0_1km_probability_gt_20kt: { family: "shear", order: 42, description: "Share of ensemble members exceeding 20 kt of 0 to 1 km shear.", hint: "Useful for low-level wind support when storms and instability are also present." },
+    shear_u_0_1km: { family: "shear", order: 43, description: "Single-member 0 to 1 km U-shear component.", hint: "Advanced diagnostic. The threshold probability is usually clearer for public use." },
+    shear_v_0_1km: { family: "shear", order: 44, description: "Single-member 0 to 1 km V-shear component.", hint: "Advanced diagnostic. Use after checking the threshold fields first." },
+    shear_u_0_6km: { family: "shear", order: 45, description: "Single-member 0 to 6 km U-shear component.", hint: "Better as a supplement to the 40 kt probability field than a first-look product." },
+    shear_v_0_6km: { family: "shear", order: 46, description: "Single-member 0 to 6 km V-shear component.", hint: "Better as a supplement to the 40 kt probability field than a first-look product." },
+    wind_10m_probability_gt_25kt: { family: "wind", order: 51, featured: true, description: "Share of ensemble members exceeding 25 kt near-surface wind speed.", hint: "Useful for broad wind risk, but pair it with storm fields for convective interpretation." },
+    gust_surface: { family: "wind", order: 52, featured: true, description: "Single-member surface wind gust field.", hint: "Best used with reflectivity for convective wind risk and impacts." },
+    wind_10m: { family: "wind", order: 53, description: "Single-member 10 m wind speed.", hint: "Shows sustained near-surface wind rather than gust potential." },
+  };
 
   const DOMAIN_PADDING = {
     conus: { x: 0.02, y: 0.04 },
@@ -38,7 +76,7 @@
   };
 
   const MEMBER_LABELS = {
-    ens: "Ensemble",
+    ens: "Ens Probabilities",
     m00: "Member 00",
   };
 
@@ -49,11 +87,14 @@
     domainSelect: document.getElementById("domainSelect"),
     familySelect: document.getElementById("familySelect"),
     overlaySelect: document.getElementById("overlaySelect"),
+    presetStrip: document.getElementById("presetStrip"),
     overlayFamilyLabel: document.getElementById("overlayFamilyLabel"),
     productTitle: document.getElementById("productTitle"),
     metaInit: document.getElementById("metaInit"),
     metaValid: document.getElementById("metaValid"),
     metaMember: document.getElementById("metaMember"),
+    fieldDescription: document.getElementById("fieldDescription"),
+    fieldHint: document.getElementById("fieldHint"),
     imageShell: document.getElementById("imageShell"),
     canvas: document.getElementById("forecastCanvas"),
     loading: document.getElementById("imageLoading"),
@@ -77,7 +118,7 @@
     member: null,
     familyId: "featured",
     overlayId: null,
-    domainId: SOURCE_DOMAIN_ID,
+    domainId: DEFAULT_DOMAIN_ID,
     hour: 0,
     playDelay: Number(dom.speedSelect.value) || 700,
     playing: false,
@@ -142,6 +183,9 @@
 
     dom.memberSelect.addEventListener("change", () => {
       state.member = dom.memberSelect.value;
+      if (!state.overlayId || !getAvailableOverlays(state.runId, state.member).some((overlay) => overlay.id === state.overlayId)) {
+        state.overlayId = DEFAULT_OVERLAY_BY_MEMBER[state.member] || null;
+      }
       ensureConsistentState();
       renderAll();
     });
@@ -161,7 +205,7 @@
 
     dom.overlaySelect.addEventListener("change", () => {
       state.overlayId = dom.overlaySelect.value;
-      const family = FAMILY_CONFIG.find((item) => item.match(refs.layerMap.get(state.overlayId) || {}));
+      const family = FAMILY_CONFIG.find((item) => overlayMatchesFamily(state.overlayId, item.id));
       if (family) {
         state.familyId = family.id;
       }
@@ -196,7 +240,7 @@
     state.runId = params.get("run");
     state.member = params.get("member");
     state.overlayId = params.get("overlay");
-    state.domainId = params.get("proj") || SOURCE_DOMAIN_ID;
+    state.domainId = params.get("proj") || DEFAULT_DOMAIN_ID;
     state.familyId = params.get("family") || "featured";
 
     const parsedHour = Number(params.get("fhr"));
@@ -211,13 +255,13 @@
       state.runId = refs.runs[0].run_id;
     }
     if (!state.member) {
-      state.member = defaults.member || "ens";
+      state.member = DEFAULT_OVERLAY_BY_MEMBER[defaults.member] ? defaults.member : "ens";
     }
     if (!state.overlayId) {
-      state.overlayId = defaults.weatherOverlay || null;
+      state.overlayId = DEFAULT_OVERLAY_BY_MEMBER[state.member] || defaults.weatherOverlay || null;
     }
     if (!refs.domainMap.has(state.domainId)) {
-      state.domainId = SOURCE_DOMAIN_ID;
+      state.domainId = DEFAULT_DOMAIN_ID;
     }
     if (!FAMILY_CONFIG.some((item) => item.id === state.familyId)) {
       state.familyId = "featured";
@@ -234,9 +278,11 @@
     if (!members.length) {
       return;
     }
-
     if (!members.includes(state.member)) {
-      state.member = members[0];
+      state.member = members.includes("ens") ? "ens" : members[0];
+    }
+    if (!refs.domainMap.has(state.domainId)) {
+      state.domainId = DEFAULT_DOMAIN_ID;
     }
 
     let familyOverlays = getOverlaysForFamily(state.runId, state.member, state.familyId);
@@ -245,22 +291,18 @@
       state.familyId = fallback ? fallback.id : "featured";
       familyOverlays = getOverlaysForFamily(state.runId, state.member, state.familyId);
     }
-
     if (!familyOverlays.length) {
       state.overlayId = null;
       return;
     }
-
     if (!familyOverlays.some((overlay) => overlay.id === state.overlayId)) {
-      state.overlayId = familyOverlays[0].id;
+      const preferred = DEFAULT_OVERLAY_BY_MEMBER[state.member];
+      const preferredOverlay = familyOverlays.find((overlay) => overlay.id === preferred);
+      state.overlayId = preferredOverlay ? preferredOverlay.id : familyOverlays[0].id;
     }
 
     const availableHours = getOverlayHours(state.runId, state.member, state.overlayId);
     state.hour = availableHours.length ? nearestHour(availableHours, state.hour) : 0;
-
-    if (!refs.domainMap.has(state.domainId)) {
-      state.domainId = SOURCE_DOMAIN_ID;
-    }
   }
 
   function renderAll() {
@@ -269,10 +311,12 @@
     renderDomainOptions();
     renderFamilyOptions();
     renderOverlayOptions();
+    renderPresetStrip();
     renderHeader();
     renderLegend();
     renderTimeline();
     renderFrame();
+    renderInsight();
     updateUrl();
   }
 
@@ -336,12 +380,34 @@
     }
   }
 
+  function renderPresetStrip() {
+    dom.presetStrip.innerHTML = "";
+    for (const preset of QUICK_PRESETS) {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "preset-button";
+      button.textContent = preset.label;
+      if (state.member === preset.member && state.overlayId === preset.overlay && state.domainId === preset.domain) {
+        button.classList.add("is-active");
+      }
+      button.addEventListener("click", () => {
+        state.member = preset.member;
+        state.familyId = preset.family;
+        state.overlayId = preset.overlay;
+        state.domainId = preset.domain;
+        ensureConsistentState();
+        renderAll();
+      });
+      dom.presetStrip.appendChild(button);
+    }
+  }
+
   function renderHeader() {
     const run = refs.runMap.get(state.runId);
     const overlay = refs.layerMap.get(state.overlayId);
     const domain = refs.domainMap.get(state.domainId);
 
-    dom.runBadge.textContent = `Run ${formatRunStamp(state.runId)}${run && run.status !== "ready" ? " partial" : ""}`;
+    dom.runBadge.textContent = `Latest ready · ${formatRunStamp(state.runId)}${run && run.status !== "ready" ? " partial" : ""}`;
     dom.overlayFamilyLabel.textContent = familyLabel(state.familyId);
     dom.productTitle.textContent = overlay ? `${overlay.label} | ${domain ? domain.label : "CONUS"}` : "Forecast product";
     dom.metaInit.textContent = `${formatRunStamp(state.runId)} init`;
@@ -353,7 +419,7 @@
     const overlay = refs.layerMap.get(state.overlayId);
     const style = overlay && overlay.style ? overlay.style : {};
     dom.legendLabel.textContent = overlay ? overlay.label : "Legend";
-    dom.legendUnits.textContent = style.units || "";
+    dom.legendUnits.textContent = isProbabilityOverlay(state.overlayId) ? "%" : style.units || "";
     dom.legendScale.innerHTML = "";
 
     if (!overlay) {
@@ -369,7 +435,7 @@
     const isCategorical =
       style.type === "categorical" ||
       overlay.id === "ptype" ||
-      (colors.length <= 5 && labels.length === colors.length && !style.range);
+      (colors.length <= 5 && labels.length === colors.length && !style.range && !isProbabilityOverlay(overlay.id));
 
     if (isCategorical) {
       colors.forEach((color, index) => {
@@ -441,6 +507,20 @@
     }
   }
 
+  function renderInsight() {
+    const overlay = refs.layerMap.get(state.overlayId);
+    const meta = getOverlayMeta(state.overlayId);
+    if (!overlay) {
+      dom.fieldDescription.textContent = "Forecast field details unavailable.";
+      dom.fieldHint.textContent = "";
+      return;
+    }
+    dom.fieldDescription.textContent = meta.description || `${overlay.label} from the latest ready HRRRCast severe snapshot.`;
+    dom.fieldHint.textContent = meta.hint || (isProbabilityOverlay(overlay.id)
+      ? "Probability fields show the share of ensemble members exceeding the labeled threshold."
+      : "Single-member fields show one member’s solution and can be noisier than ensemble probabilities.");
+  }
+
   function renderFrame() {
     if (!state.overlayId) {
       return;
@@ -484,13 +564,12 @@
 
     const viewBBox = getViewBBox(width, height, state.domainId);
     const crop = computeCropRect(viewBBox, image.naturalWidth, image.naturalHeight);
-
     ctx.drawImage(image, crop.sx, crop.sy, crop.sw, crop.sh, 0, 0, width, height);
 
     const vignette = ctx.createLinearGradient(0, 0, 0, height);
-    vignette.addColorStop(0, "rgba(7, 16, 28, 0.06)");
+    vignette.addColorStop(0, "rgba(7, 16, 28, 0.04)");
     vignette.addColorStop(0.8, "rgba(7, 16, 28, 0)");
-    vignette.addColorStop(1, "rgba(7, 16, 28, 0.12)");
+    vignette.addColorStop(1, "rgba(7, 16, 28, 0.08)");
     ctx.fillStyle = vignette;
     ctx.fillRect(0, 0, width, height);
 
@@ -552,10 +631,9 @@
 
       const name = feature.properties ? feature.properties.name : "";
       const isHighlighted = highlightedStates.has(name);
-      const polygons =
-        feature.geometry && feature.geometry.type === "Polygon"
-          ? [feature.geometry.coordinates]
-          : (feature.geometry && feature.geometry.coordinates) || [];
+      const polygons = feature.geometry && feature.geometry.type === "Polygon"
+        ? [feature.geometry.coordinates]
+        : (feature.geometry && feature.geometry.coordinates) || [];
 
       ctx.beginPath();
       for (const polygon of polygons) {
@@ -574,16 +652,15 @@
       }
 
       if (isHighlighted) {
-        ctx.fillStyle = "rgba(231, 154, 55, 0.06)";
+        ctx.fillStyle = "rgba(231, 154, 55, 0.05)";
         ctx.fill();
       }
 
-      ctx.strokeStyle = isHighlighted ? "rgba(33, 49, 68, 0.82)" : "rgba(24, 38, 56, 0.68)";
-      ctx.lineWidth = isHighlighted ? 2.2 : 1.4;
+      ctx.strokeStyle = isHighlighted ? "rgba(28, 42, 58, 0.84)" : "rgba(27, 43, 61, 0.74)";
+      ctx.lineWidth = isHighlighted ? 2.2 : 1.5;
       ctx.stroke();
-
-      ctx.strokeStyle = isHighlighted ? "rgba(255, 250, 240, 0.98)" : "rgba(236, 242, 249, 0.8)";
-      ctx.lineWidth = isHighlighted ? 1.0 : 0.55;
+      ctx.strokeStyle = isHighlighted ? "rgba(248, 250, 252, 0.98)" : "rgba(240, 245, 251, 0.84)";
+      ctx.lineWidth = isHighlighted ? 0.95 : 0.5;
       ctx.stroke();
     }
 
@@ -591,20 +668,14 @@
   }
 
   function featureIntersectsBBox(feature, bbox) {
-    const polygons =
-      feature.geometry && feature.geometry.type === "Polygon"
-        ? [feature.geometry.coordinates]
-        : (feature.geometry && feature.geometry.coordinates) || [];
+    const polygons = feature.geometry && feature.geometry.type === "Polygon"
+      ? [feature.geometry.coordinates]
+      : (feature.geometry && feature.geometry.coordinates) || [];
 
     for (const polygon of polygons) {
       for (const ring of polygon) {
         for (const point of ring) {
-          if (
-            point[0] >= bbox[0] &&
-            point[0] <= bbox[2] &&
-            point[1] >= bbox[1] &&
-            point[1] <= bbox[3]
-          ) {
+          if (point[0] >= bbox[0] && point[0] <= bbox[2] && point[1] >= bbox[1] && point[1] <= bbox[3]) {
             return true;
           }
         }
@@ -622,9 +693,7 @@
 
     let width = maxLon - minLon;
     let height = maxLat - minLat;
-    const currentAspect = width / height;
-
-    if (currentAspect > aspect) {
+    if (width / height > aspect) {
       const targetHeight = width / aspect;
       const delta = (targetHeight - height) / 2;
       minLat -= delta;
@@ -797,7 +866,22 @@
 
   function getAvailableMembers(runId) {
     const run = refs.index[runId];
-    return run && run.members ? Object.keys(run.members) : [];
+    if (!run || !run.members) {
+      return [];
+    }
+    const members = Object.keys(run.members);
+    return members.sort((left, right) => {
+      if (left === right) {
+        return 0;
+      }
+      if (left === "ens") {
+        return -1;
+      }
+      if (right === "ens") {
+        return 1;
+      }
+      return left.localeCompare(right);
+    });
   }
 
   function getOverlayHours(runId, member, overlayId) {
@@ -805,7 +889,6 @@
     if (!run || !run.members || !run.members[member]) {
       return [];
     }
-
     const hours = [];
     const forecastHours = run.members[member].forecast_hours || {};
     for (const [hourKey, hourData] of Object.entries(forecastHours)) {
@@ -829,12 +912,14 @@
       }
     }
 
-    return [...overlayIds].map((id) => refs.layerMap.get(id)).filter(Boolean).sort(sortOverlayList);
+    return [...overlayIds]
+      .map((id) => refs.layerMap.get(id))
+      .filter((overlay) => overlay && isPublicOverlay(overlay.id))
+      .sort(sortOverlayList);
   }
 
   function getOverlaysForFamily(runId, member, familyId) {
-    const family = FAMILY_CONFIG.find((item) => item.id === familyId);
-    return family ? getAvailableOverlays(runId, member).filter((overlay) => family.match(overlay)) : [];
+    return getAvailableOverlays(runId, member).filter((overlay) => overlayMatchesFamily(overlay.id, familyId));
   }
 
   function findFirstAvailableFamily(runId, member) {
@@ -846,10 +931,40 @@
   }
 
   function sortOverlayList(left, right) {
-    if (left.featured !== right.featured) {
-      return left.featured ? -1 : 1;
+    const leftMeta = getOverlayMeta(left.id);
+    const rightMeta = getOverlayMeta(right.id);
+    const leftOrder = typeof leftMeta.order === "number" ? leftMeta.order : 999;
+    const rightOrder = typeof rightMeta.order === "number" ? rightMeta.order : 999;
+    if (leftOrder !== rightOrder) {
+      return leftOrder - rightOrder;
     }
     return left.label.localeCompare(right.label);
+  }
+
+  function getOverlayMeta(overlayId) {
+    return PUBLIC_OVERLAY_META[overlayId] || {};
+  }
+
+  function isPublicOverlay(overlayId) {
+    return Object.prototype.hasOwnProperty.call(PUBLIC_OVERLAY_META, overlayId);
+  }
+
+  function overlayMatchesFamily(overlayId, familyId) {
+    const meta = getOverlayMeta(overlayId);
+    if (!meta) {
+      return false;
+    }
+    if (familyId === "all") {
+      return true;
+    }
+    if (familyId === "featured") {
+      return Boolean(meta.featured);
+    }
+    return meta.family === familyId;
+  }
+
+  function isProbabilityOverlay(overlayId) {
+    return typeof overlayId === "string" && overlayId.includes("_probability_");
   }
 
   function nearestHour(hours, target) {
@@ -859,7 +974,6 @@
     if (hours.includes(target)) {
       return target;
     }
-
     let best = hours[0];
     let bestDistance = Math.abs(best - target);
     for (const hour of hours) {

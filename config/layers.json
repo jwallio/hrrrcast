@@ -4,7 +4,7 @@
     "baselayer": "plain_ocean",
     "stateLayer": "states_brown",
     "countryLayer": "countries_brown",
-    "weatherOverlay": "temperature_2m_mean",
+    "weatherOverlay": "composite_reflectivity_probability_gt_40dbz",
     "member": "ens",
     "viewMode": "ensemble",
     "overlayGroup": "featured"
