@@ -527,7 +527,8 @@
     }
 
     const currentTicket = ++renderTicket;
-    const key = getFrameKey(state.runId, state.member, state.overlayId, state.hour);
+    const frameDomainId = getFrameDomainId(state.runId, state.member, state.overlayId, state.hour, state.domainId);
+    const key = getFrameKey(state.runId, state.member, state.overlayId, state.hour, frameDomainId);
     dom.loading.hidden = false;
     dom.loading.textContent = "Loading frame";
 
@@ -536,7 +537,7 @@
         if (currentTicket !== renderTicket) {
           return;
         }
-        drawFrame(image);
+        drawFrame(image, frameDomainId);
         dom.loading.hidden = true;
         preloadNeighborFrames();
       })
@@ -551,7 +552,7 @@
       });
   }
 
-  function drawFrame(image) {
+  function drawFrame(image, frameDomainId) {
     const rect = dom.imageShell.getBoundingClientRect();
     const width = Math.max(1, Math.round(rect.width));
     const height = Math.max(1, Math.round(rect.height));
@@ -562,9 +563,14 @@
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.clearRect(0, 0, width, height);
 
+    const usesNativeDomainFrame = frameDomainId === state.domainId;
     const viewBBox = getViewBBox(width, height, state.domainId);
-    const crop = computeCropRect(viewBBox, image.naturalWidth, image.naturalHeight);
-    ctx.drawImage(image, crop.sx, crop.sy, crop.sw, crop.sh, 0, 0, width, height);
+    if (usesNativeDomainFrame) {
+      ctx.drawImage(image, 0, 0, width, height);
+    } else {
+      const crop = computeCropRect(viewBBox, image.naturalWidth, image.naturalHeight);
+      ctx.drawImage(image, crop.sx, crop.sy, crop.sw, crop.sh, 0, 0, width, height);
+    }
 
     const vignette = ctx.createLinearGradient(0, 0, 0, height);
     vignette.addColorStop(0, "rgba(7, 16, 28, 0.04)");
@@ -771,7 +777,8 @@
       if (target === state.hour) {
         continue;
       }
-      getImageForFrame(getFrameKey(state.runId, state.member, state.overlayId, target)).catch(() => {});
+      const frameDomainId = getFrameDomainId(state.runId, state.member, state.overlayId, target, state.domainId);
+      getImageForFrame(getFrameKey(state.runId, state.member, state.overlayId, target, frameDomainId)).catch(() => {});
     }
   }
 
@@ -850,14 +857,14 @@
     window.history.replaceState({}, "", `${window.location.pathname}?${params.toString()}`);
   }
 
-  function getFrameKey(runId, member, overlayId, hour) {
-    return [runId, member, overlayId, padHour(hour), prefersMobilePreview() ? "mobile" : "desktop"].join("|");
+  function getFrameKey(runId, member, overlayId, hour, domainId) {
+    return [runId, member, overlayId, padHour(hour), domainId, prefersMobilePreview() ? "mobile" : "desktop"].join("|");
   }
 
   function getFrameUrlFromKey(key) {
-    const [runId, member, overlayId, hour, variant] = key.split("|");
+    const [runId, member, overlayId, hour, domainId, variant] = key.split("|");
     const suffix = variant === "mobile" ? ".mobile.webp" : ".preview.png";
-    return `${STATIC_ROOT}/products/${runId}/${member}/${overlayId}/f${hour}/${SOURCE_DOMAIN_ID}${suffix}?v=${runId}`;
+    return `${STATIC_ROOT}/products/${runId}/${member}/${overlayId}/f${hour}/${domainId}${suffix}?v=${runId}`;
   }
 
   function prefersMobilePreview() {
@@ -897,6 +904,31 @@
       }
     }
     return hours.sort((left, right) => left - right);
+  }
+
+  function getFrameDomainId(runId, member, overlayId, forecastHour, requestedDomainId) {
+    const domains = getOverlayDomains(runId, member, overlayId, forecastHour);
+    if (domains.includes(requestedDomainId)) {
+      return requestedDomainId;
+    }
+    if (domains.includes(SOURCE_DOMAIN_ID)) {
+      return SOURCE_DOMAIN_ID;
+    }
+    return domains[0] || SOURCE_DOMAIN_ID;
+  }
+
+  function getOverlayDomains(runId, member, overlayId, forecastHour) {
+    const run = refs.index[runId];
+    if (!run || !run.members || !run.members[member]) {
+      return [];
+    }
+    const forecastHours = run.members[member].forecast_hours || {};
+    const hourToken = `f${padHour(forecastHour)}`;
+    const hourData = forecastHours[hourToken];
+    if (!hourData || !hourData.overlays || !hourData.overlays[overlayId]) {
+      return [];
+    }
+    return hourData.overlays[overlayId].slice();
   }
 
   function getAvailableOverlays(runId, member) {

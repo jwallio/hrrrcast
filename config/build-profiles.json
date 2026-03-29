@@ -140,10 +140,9 @@
     {
       "id": "pages_snapshot",
       "label": "Pages Snapshot",
-      "description": "Minimal CONUS-only member inputs required to derive the public ensemble snapshot on GitHub Pages.",
+      "description": "Minimal severe-weather member inputs required to derive the public ensemble snapshot on GitHub Pages across public regions.",
       "overlayIds": [
         "composite_reflectivity",
-        "temperature_2m",
         "qpf",
         "cape",
         "wind_10m",
@@ -156,34 +155,26 @@
       ],
       "includeEnsembleDerived": true,
       "domains": [
-        "conus"
+        "conus",
+        "southeast",
+        "northeast",
+        "south_central",
+        "northwest",
+        "southwest",
+        "carolinas"
       ],
       "hourMode": "all_available"
     },
     {
       "id": "pages_member_snapshot",
       "label": "Pages Member Snapshot",
-      "description": "Curated CONUS-only member overlays exported for the public GitHub Pages snapshot.",
+      "description": "Curated severe-weather member overlays exported for the public GitHub Pages snapshot across public regions.",
       "overlayIds": [
         "composite_reflectivity",
-        "temperature_2m",
-        "dewpoint_2m",
-        "rh_2m",
-        "ptype",
-        "mslp",
-        "surface_pressure",
-        "qpf",
-        "pwat",
         "cape",
         "cin_surface",
         "wind_10m",
         "gust_surface",
-        "visibility",
-        "cloud_cover_total",
-        "ceiling",
-        "height_500mb",
-        "temperature_850mb",
-        "wind_500mb",
         "helicity_0_1km",
         "helicity_0_3km",
         "shear_u_0_1km",
@@ -193,7 +184,13 @@
         "relative_vorticity_0_1km"
       ],
       "domains": [
-        "conus"
+        "conus",
+        "southeast",
+        "northeast",
+        "south_central",
+        "northwest",
+        "southwest",
+        "carolinas"
       ],
       "hourMode": "all_available"
     },

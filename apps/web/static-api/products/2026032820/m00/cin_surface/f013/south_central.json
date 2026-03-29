@@ -1,0 +1,58 @@
+{
+  "asset_version": "2026032820",
+  "bbox": [
+    -109.0,
+    24.0,
+    -87.0,
+    39.0
+  ],
+  "clipped_grib_path": "data\\processed\\products\\2026032820\\m00\\cin_surface\\f013\\south_central.grib2",
+  "display_path": "2026032820/m00/cin_surface/f013/south_central",
+  "domain_id": "south_central",
+  "field_key": "CIN:surface",
+  "forecast_hour": 13,
+  "long_name": "Convective Inhibition",
+  "member": "m00",
+  "mobile_preview_url": "./static-api/products/2026032820/m00/cin_surface/f013/south_central.mobile.webp",
+  "native": false,
+  "netcdf_path": "data\\processed\\products\\2026032820\\m00\\cin_surface\\f013\\south_central.nc",
+  "overlay_id": "cin_surface",
+  "preview_url": "./static-api/products/2026032820/m00/cin_surface/f013/south_central.preview.png",
+  "run_id": "2026032820",
+  "shape": [
+    1,
+    569,
+    766
+  ],
+  "static_export": true,
+  "stats": {
+    "max": 0.5799999833106995,
+    "min": -2016.4200439453125
+  },
+  "style": {
+    "colors": [
+      "#234c8c",
+      "#7aa6d8",
+      "#f2f2f2",
+      "#e8a16d",
+      "#8d2d2a"
+    ],
+    "labels": [
+      "-400",
+      "-200",
+      "-100",
+      "-25",
+      "0"
+    ],
+    "palette": "diverging",
+    "range": [
+      -400.0,
+      0.0
+    ],
+    "rawUnits": "J/kg",
+    "type": "continuous",
+    "units": "J/kg"
+  },
+  "units": "J/kg",
+  "variable_name": "CIN_surface"
+}

@@ -40,8 +40,8 @@ def build_parser() -> argparse.ArgumentParser:
         help="Member ids to export. Repeat to include multiple members. Defaults to ens and m00 when available.",
     )
     parser.add_argument("--output-dir", default=str(DEFAULT_OUTPUT_DIR))
-    parser.add_argument("--max-preview-dimension", type=int, default=512)
-    parser.add_argument("--mobile-preview-dimension", type=int, default=320)
+    parser.add_argument("--max-preview-dimension", type=int, default=1280)
+    parser.add_argument("--mobile-preview-dimension", type=int, default=768)
     parser.add_argument("--clean", action="store_true", help="Delete the output directory before export.")
     return parser
 

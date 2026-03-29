@@ -1,0 +1,58 @@
+{
+  "asset_version": "2026032820",
+  "bbox": [
+    -85.0,
+    31.0,
+    -74.0,
+    38.0
+  ],
+  "clipped_grib_path": "data\\processed\\products\\2026032820\\m00\\shear_u_0_1km\\f017\\carolinas.grib2",
+  "display_path": "2026032820/m00/shear_u_0_1km/f017/carolinas",
+  "domain_id": "carolinas",
+  "field_key": "VUCSH:1000-0 m above ground",
+  "forecast_hour": 17,
+  "long_name": "Vertical U-Component Shear",
+  "member": "m00",
+  "mobile_preview_url": "./static-api/products/2026032820/m00/shear_u_0_1km/f017/carolinas.mobile.webp",
+  "native": false,
+  "netcdf_path": "data\\processed\\products\\2026032820\\m00\\shear_u_0_1km\\f017\\carolinas.nc",
+  "overlay_id": "shear_u_0_1km",
+  "preview_url": "./static-api/products/2026032820/m00/shear_u_0_1km/f017/carolinas.preview.png",
+  "run_id": "2026032820",
+  "shape": [
+    1,
+    320,
+    380
+  ],
+  "static_export": true,
+  "stats": {
+    "max": 0.01355000026524067,
+    "min": -0.009060000069439411
+  },
+  "style": {
+    "colors": [
+      "#141428",
+      "#3a66ac",
+      "#55be78",
+      "#f0d649",
+      "#d15329"
+    ],
+    "labels": [
+      "0",
+      "10",
+      "20",
+      "30",
+      "40"
+    ],
+    "palette": "severe",
+    "range": [
+      0.0,
+      40.0
+    ],
+    "rawUnits": "m/s",
+    "type": "continuous",
+    "units": "m/s"
+  },
+  "units": "1/s",
+  "variable_name": "VUCSH_1000M0maboveground"
+}

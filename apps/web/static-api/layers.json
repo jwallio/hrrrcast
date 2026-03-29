@@ -23,7 +23,7 @@
     "overlayGroup": "featured",
     "stateLayer": "states_brown",
     "viewMode": "ensemble",
-    "weatherOverlay": "temperature_2m_mean"
+    "weatherOverlay": "composite_reflectivity_probability_gt_40dbz"
   },
   "nativeFieldCount": 164,
   "nativeWeatherOverlays": [

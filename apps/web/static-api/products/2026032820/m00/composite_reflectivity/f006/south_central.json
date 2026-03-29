@@ -1,0 +1,58 @@
+{
+  "asset_version": "2026032820",
+  "bbox": [
+    -109.0,
+    24.0,
+    -87.0,
+    39.0
+  ],
+  "clipped_grib_path": "data\\processed\\products\\2026032820\\m00\\composite_reflectivity\\f006\\south_central.grib2",
+  "display_path": "2026032820/m00/composite_reflectivity/f006/south_central",
+  "domain_id": "south_central",
+  "field_key": "REFC:entire atmosphere",
+  "forecast_hour": 6,
+  "long_name": "Composite reflectivity",
+  "member": "m00",
+  "mobile_preview_url": "./static-api/products/2026032820/m00/composite_reflectivity/f006/south_central.mobile.webp",
+  "native": false,
+  "netcdf_path": "data\\processed\\products\\2026032820\\m00\\composite_reflectivity\\f006\\south_central.nc",
+  "overlay_id": "composite_reflectivity",
+  "preview_url": "./static-api/products/2026032820/m00/composite_reflectivity/f006/south_central.preview.png",
+  "run_id": "2026032820",
+  "shape": [
+    1,
+    569,
+    766
+  ],
+  "static_export": true,
+  "stats": {
+    "max": 35.439998626708984,
+    "min": 0.0
+  },
+  "style": {
+    "colors": [
+      "#0a0a0a",
+      "#3c781e",
+      "#b4c828",
+      "#ffa000",
+      "#d22828"
+    ],
+    "labels": [
+      "0",
+      "20",
+      "35",
+      "50",
+      "70"
+    ],
+    "palette": "reflectivity",
+    "range": [
+      0.0,
+      70.0
+    ],
+    "rawUnits": "dBZ",
+    "type": "continuous",
+    "units": "dBZ"
+  },
+  "units": "dB",
+  "variable_name": "REFC_entireatmosphere"
+}

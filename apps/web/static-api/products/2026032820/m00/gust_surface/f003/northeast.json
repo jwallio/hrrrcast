@@ -1,0 +1,59 @@
+{
+  "asset_version": "2026032820",
+  "bbox": [
+    -85.0,
+    36.0,
+    -66.0,
+    48.5
+  ],
+  "clipped_grib_path": "data\\processed\\products\\2026032820\\m00\\gust_surface\\f003\\northeast.grib2",
+  "display_path": "2026032820/m00/gust_surface/f003/northeast",
+  "domain_id": "northeast",
+  "field_key": "GUST:surface",
+  "forecast_hour": 3,
+  "long_name": "Wind Speed (Gust)",
+  "member": "m00",
+  "mobile_preview_url": "./static-api/products/2026032820/m00/gust_surface/f003/northeast.mobile.webp",
+  "native": false,
+  "netcdf_path": "data\\processed\\products\\2026032820\\m00\\gust_surface\\f003\\northeast.nc",
+  "overlay_id": "gust_surface",
+  "preview_url": "./static-api/products/2026032820/m00/gust_surface/f003/northeast.preview.png",
+  "run_id": "2026032820",
+  "shape": [
+    1,
+    573,
+    588
+  ],
+  "static_export": true,
+  "stats": {
+    "max": 28.81999969482422,
+    "min": 6.119999885559082
+  },
+  "style": {
+    "colors": [
+      "#0b1840",
+      "#3c6db5",
+      "#70b796",
+      "#facc40",
+      "#db5231"
+    ],
+    "labels": [
+      "0",
+      "15",
+      "30",
+      "50",
+      "75"
+    ],
+    "palette": "wind",
+    "range": [
+      0.0,
+      40.0
+    ],
+    "rawUnits": "m/s",
+    "transform": "mps_to_mph",
+    "type": "continuous",
+    "units": "mph"
+  },
+  "units": "m/s",
+  "variable_name": "GUST_surface"
+}

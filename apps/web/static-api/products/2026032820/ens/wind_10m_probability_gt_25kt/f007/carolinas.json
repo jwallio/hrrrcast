@@ -1,0 +1,49 @@
+{
+  "asset_version": "2026032820",
+  "bbox": [
+    -85.0,
+    31.0,
+    -74.0,
+    38.0
+  ],
+  "display_path": "2026032820/ens/wind_10m_probability_gt_25kt/f007/carolinas",
+  "domain_id": "carolinas",
+  "ensemble_mode": "probability",
+  "forecast_hour": 7,
+  "long_name": "Probability that 10 m wind speed exceeds 25 kt.",
+  "member": "ens",
+  "mobile_preview_url": "./static-api/products/2026032820/ens/wind_10m_probability_gt_25kt/f007/carolinas.mobile.webp",
+  "netcdf_path": "data\\processed\\products\\2026032820\\ens\\wind_10m_probability_gt_25kt\\f007\\carolinas.nc",
+  "notes": "Probability that 10 m wind speed exceeds 25 kt.",
+  "overlay_id": "wind_10m_probability_gt_25kt",
+  "preview_url": "./static-api/products/2026032820/ens/wind_10m_probability_gt_25kt/f007/carolinas.preview.png",
+  "run_id": "2026032820",
+  "shape": [
+    320,
+    380
+  ],
+  "source_members": [
+    "m00",
+    "m01",
+    "m02",
+    "m03",
+    "m04",
+    "m05",
+    "m06",
+    "m07",
+    "m08"
+  ],
+  "source_overlay_id": "wind_10m",
+  "source_overlay_ids": [],
+  "static_export": true,
+  "stats": {
+    "max": 100.0,
+    "min": 0.0
+  },
+  "status": "built",
+  "threshold": 25.0,
+  "threshold_raw": 12.8611,
+  "threshold_units": "kt",
+  "units": "%",
+  "variable_name": "WIND_10M_PROBABILITY_GT_25KT"
+}

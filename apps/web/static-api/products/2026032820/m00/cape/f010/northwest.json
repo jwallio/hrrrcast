@@ -1,0 +1,58 @@
+{
+  "asset_version": "2026032820",
+  "bbox": [
+    -126.0,
+    40.0,
+    -102.0,
+    50.0
+  ],
+  "clipped_grib_path": "data\\processed\\products\\2026032820\\m00\\cape\\f010\\northwest.grib2",
+  "display_path": "2026032820/m00/cape/f010/northwest",
+  "domain_id": "northwest",
+  "field_key": "CAPE:surface",
+  "forecast_hour": 10,
+  "long_name": "Convective Available Potential Energy",
+  "member": "m00",
+  "mobile_preview_url": "./static-api/products/2026032820/m00/cape/f010/northwest.mobile.webp",
+  "native": false,
+  "netcdf_path": "data\\processed\\products\\2026032820\\m00\\cape\\f010\\northwest.nc",
+  "overlay_id": "cape",
+  "preview_url": "./static-api/products/2026032820/m00/cape/f010/northwest.preview.png",
+  "run_id": "2026032820",
+  "shape": [
+    1,
+    471,
+    687
+  ],
+  "static_export": true,
+  "stats": {
+    "max": 758.3400268554688,
+    "min": 0.0
+  },
+  "style": {
+    "colors": [
+      "#141428",
+      "#3a66ac",
+      "#55be78",
+      "#f0d649",
+      "#d15329"
+    ],
+    "labels": [
+      "0",
+      "500",
+      "1000",
+      "2500",
+      "4000"
+    ],
+    "palette": "severe",
+    "range": [
+      0.0,
+      4000.0
+    ],
+    "rawUnits": "J/kg",
+    "type": "continuous",
+    "units": "J/kg"
+  },
+  "units": "J/kg",
+  "variable_name": "CAPE_surface"
+}

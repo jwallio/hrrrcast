@@ -1,0 +1,49 @@
+{
+  "asset_version": "2026032820",
+  "bbox": [
+    -127.0,
+    23.0,
+    -66.0,
+    50.0
+  ],
+  "clipped_grib_path": "data\\processed\\products\\2026032820\\m00\\relative_vorticity_0_1km\\f002\\conus.grib2",
+  "display_path": "2026032820/m00/relative_vorticity_0_1km/f002/conus",
+  "domain_id": "conus",
+  "field_key": "RELV:1000-0 m above ground",
+  "forecast_hour": 2,
+  "long_name": "Relative Vorticity",
+  "member": "m00",
+  "mobile_preview_url": "./static-api/products/2026032820/m00/relative_vorticity_0_1km/f002/conus.mobile.webp",
+  "native": false,
+  "netcdf_path": "data\\processed\\products\\2026032820\\m00\\relative_vorticity_0_1km\\f002\\conus.nc",
+  "overlay_id": "relative_vorticity_0_1km",
+  "preview_url": "./static-api/products/2026032820/m00/relative_vorticity_0_1km/f002/conus.preview.png",
+  "run_id": "2026032820",
+  "shape": [
+    1,
+    1059,
+    1799
+  ],
+  "static_export": true,
+  "stats": {
+    "max": 0.003889999818056822,
+    "min": -0.0024900001008063555
+  },
+  "style": {
+    "colors": [
+      "#234c8c",
+      "#7aa6d8",
+      "#f2f2f2",
+      "#e8a16d",
+      "#8d2d2a"
+    ],
+    "labels": null,
+    "palette": "diverging",
+    "range": null,
+    "rawUnits": "1/s",
+    "type": "continuous",
+    "units": "1/s"
+  },
+  "units": "1/s",
+  "variable_name": "RELV_1000M0maboveground"
+}

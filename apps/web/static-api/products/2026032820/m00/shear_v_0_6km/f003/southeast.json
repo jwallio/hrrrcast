@@ -1,0 +1,58 @@
+{
+  "asset_version": "2026032820",
+  "bbox": [
+    -96.0,
+    24.0,
+    -73.0,
+    39.0
+  ],
+  "clipped_grib_path": "data\\processed\\products\\2026032820\\m00\\shear_v_0_6km\\f003\\southeast.grib2",
+  "display_path": "2026032820/m00/shear_v_0_6km/f003/southeast",
+  "domain_id": "southeast",
+  "field_key": "VVCSH:6000-0 m above ground",
+  "forecast_hour": 3,
+  "long_name": "Vertical V-Component Shear",
+  "member": "m00",
+  "mobile_preview_url": "./static-api/products/2026032820/m00/shear_v_0_6km/f003/southeast.mobile.webp",
+  "native": false,
+  "netcdf_path": "data\\processed\\products\\2026032820\\m00\\shear_v_0_6km\\f003\\southeast.nc",
+  "overlay_id": "shear_v_0_6km",
+  "preview_url": "./static-api/products/2026032820/m00/shear_v_0_6km/f003/southeast.preview.png",
+  "run_id": "2026032820",
+  "shape": [
+    1,
+    641,
+    802
+  ],
+  "static_export": true,
+  "stats": {
+    "max": 0.005499999970197678,
+    "min": -0.0035500000230968
+  },
+  "style": {
+    "colors": [
+      "#141428",
+      "#3a66ac",
+      "#55be78",
+      "#f0d649",
+      "#d15329"
+    ],
+    "labels": [
+      "0",
+      "10",
+      "20",
+      "30",
+      "40"
+    ],
+    "palette": "severe",
+    "range": [
+      0.0,
+      40.0
+    ],
+    "rawUnits": "m/s",
+    "type": "continuous",
+    "units": "m/s"
+  },
+  "units": "1/s",
+  "variable_name": "VVCSH_6000M0maboveground"
+}

@@ -1,0 +1,49 @@
+{
+  "asset_version": "2026032820",
+  "bbox": [
+    -126.0,
+    40.0,
+    -102.0,
+    50.0
+  ],
+  "display_path": "2026032820/ens/cape_probability_gt_1000/f001/northwest",
+  "domain_id": "northwest",
+  "ensemble_mode": "probability",
+  "forecast_hour": 1,
+  "long_name": "Probability that surface CAPE exceeds 1000 J/kg.",
+  "member": "ens",
+  "mobile_preview_url": "./static-api/products/2026032820/ens/cape_probability_gt_1000/f001/northwest.mobile.webp",
+  "netcdf_path": "data\\processed\\products\\2026032820\\ens\\cape_probability_gt_1000\\f001\\northwest.nc",
+  "notes": "Probability that surface CAPE exceeds 1000 J/kg.",
+  "overlay_id": "cape_probability_gt_1000",
+  "preview_url": "./static-api/products/2026032820/ens/cape_probability_gt_1000/f001/northwest.preview.png",
+  "run_id": "2026032820",
+  "shape": [
+    471,
+    687
+  ],
+  "source_members": [
+    "m00",
+    "m01",
+    "m02",
+    "m03",
+    "m04",
+    "m05",
+    "m06",
+    "m07",
+    "m08"
+  ],
+  "source_overlay_id": "cape",
+  "source_overlay_ids": [],
+  "static_export": true,
+  "stats": {
+    "max": 44.4444465637207,
+    "min": 0.0
+  },
+  "status": "built",
+  "threshold": 1000.0,
+  "threshold_raw": 1000.0,
+  "threshold_units": "J/kg",
+  "units": "%",
+  "variable_name": "CAPE_PROBABILITY_GT_1000"
+}

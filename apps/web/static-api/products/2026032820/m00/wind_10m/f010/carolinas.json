@@ -1,0 +1,56 @@
+{
+  "asset_version": "2026032820",
+  "bbox": [
+    -85.0,
+    31.0,
+    -74.0,
+    38.0
+  ],
+  "display_path": "2026032820/m00/wind_10m/f010/carolinas",
+  "domain_id": "carolinas",
+  "forecast_hour": 10,
+  "member": "m00",
+  "mobile_preview_url": "./static-api/products/2026032820/m00/wind_10m/f010/carolinas.mobile.webp",
+  "netcdf_path": "data\\processed\\products\\2026032820\\m00\\wind_10m\\f010\\carolinas.nc",
+  "overlay_id": "wind_10m",
+  "preview_url": "./static-api/products/2026032820/m00/wind_10m/f010/carolinas.preview.png",
+  "run_id": "2026032820",
+  "shape": [
+    1,
+    320,
+    380
+  ],
+  "static_export": true,
+  "stats": {
+    "max": 16.160755157470703,
+    "min": 0.0
+  },
+  "status": "built",
+  "style": {
+    "colors": [
+      "#0b1840",
+      "#3c6db5",
+      "#70b796",
+      "#facc40",
+      "#db5231"
+    ],
+    "labels": [
+      "0",
+      "15",
+      "30",
+      "50",
+      "75"
+    ],
+    "palette": "wind",
+    "range": [
+      0.0,
+      40.0
+    ],
+    "rawUnits": "m/s",
+    "transform": "mps_to_mph",
+    "type": "continuous",
+    "units": "mph"
+  },
+  "units": "m s-1",
+  "variable_name": "WINDSPD_10maboveground"
+}
