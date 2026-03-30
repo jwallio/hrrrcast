@@ -43,13 +43,60 @@ DEFAULT_MEMBER_OVERLAYS: dict[str, list[str]] = {
     ],
 }
 
+ENSEMBLE_SPREAD_OVERLAYS: dict[str, dict[str, object]] = {
+    "composite_reflectivity_member_spread": {"source": "composite_reflectivity", "label": "Composite Reflectivity Member Spread"},
+    "qpf_member_spread": {"source": "qpf", "label": "Accumulated Precipitation Member Spread"},
+    "cape_member_spread": {"source": "cape", "label": "Surface CAPE Member Spread"},
+    "helicity_0_1km_member_spread": {"source": "helicity_0_1km", "label": "0 to 1 km Helicity Member Spread"},
+    "helicity_0_3km_member_spread": {"source": "helicity_0_3km", "label": "0 to 3 km Helicity Member Spread"},
+    "shear_0_1km_speed_member_spread": {"source": "shear_0_1km_speed", "label": "0 to 1 km Shear Member Spread"},
+    "shear_0_6km_speed_member_spread": {"source": "shear_0_6km_speed", "label": "0 to 6 km Shear Member Spread"},
+    "wind_10m_member_spread": {"source": "wind_10m", "label": "10 m Wind Member Spread"},
+    "gust_surface_member_spread": {"source": "gust_surface", "label": "Surface Gust Member Spread"},
+}
+
 CHART_GROUPS: dict[str, list[dict[str, object]]] = {
     "ens": [
-        {"id": "storm", "title": "Storm Signals", "overlays": ["composite_reflectivity_probability_gt_40dbz", "qpf_probability_gt_0p10"]},
-        {"id": "instability", "title": "Instability", "overlays": ["cape_probability_gt_1000"]},
-        {"id": "rotation", "title": "Rotation", "overlays": ["helicity_0_1km_probability_gt_100", "helicity_0_3km_probability_gt_250"]},
-        {"id": "shear", "title": "Shear", "overlays": ["shear_0_1km_probability_gt_20kt", "shear_0_6km_probability_gt_40kt"]},
-        {"id": "wind", "title": "Wind", "overlays": ["wind_10m_probability_gt_25kt"]},
+        {
+            "id": "storm",
+            "title": "Storm Signals",
+            "overlays": [
+                "composite_reflectivity_probability_gt_40dbz",
+                "qpf_probability_gt_0p10",
+                "composite_reflectivity_member_spread",
+                "qpf_member_spread",
+            ],
+        },
+        {"id": "instability", "title": "Instability", "overlays": ["cape_probability_gt_1000", "cape_member_spread"]},
+        {
+            "id": "rotation",
+            "title": "Rotation",
+            "overlays": [
+                "helicity_0_1km_probability_gt_100",
+                "helicity_0_3km_probability_gt_250",
+                "helicity_0_1km_member_spread",
+                "helicity_0_3km_member_spread",
+            ],
+        },
+        {
+            "id": "shear",
+            "title": "Shear",
+            "overlays": [
+                "shear_0_1km_probability_gt_20kt",
+                "shear_0_6km_probability_gt_40kt",
+                "shear_0_1km_speed_member_spread",
+                "shear_0_6km_speed_member_spread",
+            ],
+        },
+        {
+            "id": "wind",
+            "title": "Wind",
+            "overlays": [
+                "wind_10m_probability_gt_25kt",
+                "wind_10m_member_spread",
+                "gust_surface_member_spread",
+            ],
+        },
     ],
     "m00": [
         {"id": "storm", "title": "Storm Signals", "overlays": ["composite_reflectivity", "qpf"]},
@@ -143,10 +190,12 @@ def build_point_series(
     run_payload = product_index["runs"].get(run_id)
     if not run_payload:
         raise FileNotFoundError(f"No built products found for run {run_id}")
-    if member not in run_payload["members"]:
+    has_deterministic_members = any(member_id.startswith("m") for member_id in run_payload["members"].keys())
+    if member not in run_payload["members"] and not (member == "ens" and has_deterministic_members):
         raise FileNotFoundError(f"Member {member} not found for run {run_id}")
 
-    available_overlay_ids = collect_member_overlays(run_payload["members"][member])
+    member_payload = run_payload["members"].get(member, {})
+    available_overlay_ids = collect_member_overlays(member_payload)
     requested_overlays = overlays or DEFAULT_MEMBER_OVERLAYS.get(member, [])
     selected_overlay_ids = [overlay_id for overlay_id in requested_overlays if overlay_id in available_overlay_ids]
 
@@ -162,6 +211,11 @@ def build_point_series(
             right = series_payload.get(config["components"][1])
             if left and right:
                 series_payload[derived_overlay_id] = derive_vector_magnitude(derived_overlay_id, left, right)
+    elif member == "ens":
+        for derived_overlay_id in ENSEMBLE_SPREAD_OVERLAYS:
+            points = build_ensemble_distribution_series(run_id, derived_overlay_id, station, data_root, run_payload)
+            if points:
+                series_payload[derived_overlay_id] = ensemble_distribution_payload(derived_overlay_id, points)
 
     chart_groups = []
     for group in CHART_GROUPS.get(member, []):
@@ -233,6 +287,8 @@ def overlay_payload(overlay_id: str, points: list[dict[str, object]]) -> dict[st
 
 
 def overlay_label(overlay_id: str) -> str:
+    if overlay_id in ENSEMBLE_SPREAD_OVERLAYS:
+        return str(ENSEMBLE_SPREAD_OVERLAYS[overlay_id]["label"])
     if overlay_id in DERIVED_POINT_OVERLAYS:
         return str(DERIVED_POINT_OVERLAYS[overlay_id]["label"])
     overlay = curated_overlay_map().get(overlay_id)
@@ -242,6 +298,8 @@ def overlay_label(overlay_id: str) -> str:
 
 
 def overlay_units(overlay_id: str) -> str:
+    if overlay_id in ENSEMBLE_SPREAD_OVERLAYS:
+        return overlay_units(str(ENSEMBLE_SPREAD_OVERLAYS[overlay_id]["source"]))
     if overlay_id in DERIVED_POINT_OVERLAYS:
         return str(DERIVED_POINT_OVERLAYS[overlay_id]["units"])
     style = style_for_overlay_id(overlay_id)
@@ -249,6 +307,8 @@ def overlay_units(overlay_id: str) -> str:
 
 
 def overlay_style(overlay_id: str) -> dict[str, object]:
+    if overlay_id in ENSEMBLE_SPREAD_OVERLAYS:
+        return style_for_overlay_id(str(ENSEMBLE_SPREAD_OVERLAYS[overlay_id]["source"]))
     if overlay_id in DERIVED_POINT_OVERLAYS:
         return dict(DERIVED_POINT_OVERLAYS[overlay_id]["style"])
     return style_for_overlay_id(overlay_id)
@@ -292,6 +352,34 @@ def summarize_points(points: list[dict[str, object]]) -> dict[str, object]:
     }
 
 
+def summarize_distribution(points: list[dict[str, object]]) -> dict[str, object]:
+    if not points:
+        return {"count": 0, "min": None, "max": None, "latest": None, "all_zero": False}
+    median_values = [float(point["median"]) for point in points]
+    min_values = [float(point["min"]) for point in points]
+    max_values = [float(point["max"]) for point in points]
+    return {
+        "count": len(points),
+        "min": float(min(min_values)),
+        "max": float(max(max_values)),
+        "latest": float(points[-1]["median"]),
+        "all_zero": all(abs(value) < 1e-6 for value in median_values) and all(abs(value) < 1e-6 for value in max_values),
+    }
+
+
+def ensemble_distribution_payload(overlay_id: str, points: list[dict[str, object]]) -> dict[str, object]:
+    style = overlay_style(overlay_id)
+    return {
+        "id": overlay_id,
+        "label": overlay_label(overlay_id),
+        "units": overlay_units(overlay_id),
+        "style": style,
+        "chart_type": "distribution",
+        "points": points,
+        "summary": summarize_distribution(points),
+    }
+
+
 def derive_vector_magnitude(
     overlay_id: str,
     left: dict[str, object],
@@ -318,16 +406,79 @@ def derive_vector_magnitude(
     return overlay_payload(overlay_id, derived_points)
 
 
-def sample_netcdf_point(netcdf_path: str | Path, station_lat: float, station_lon: float) -> dict[str, float | None]:
-    with xr.open_dataset(netcdf_path) as dataset:
-        variable_name = list(dataset.data_vars)[0]
-        data_array = dataset[variable_name]
-        if "time" in data_array.dims:
-            data_array = data_array.isel(time=0)
-        values = np.asarray(data_array.values, dtype=np.float32)
-        latitude = np.asarray(dataset["latitude"].values, dtype=np.float32)
-        longitude = np.asarray(dataset["longitude"].values, dtype=np.float32)
+def build_ensemble_distribution_series(
+    run_id: str,
+    overlay_id: str,
+    station: dict[str, object],
+    data_root: str | Path,
+    run_payload: dict[str, object],
+) -> list[dict[str, object]]:
+    source_overlay = str(ENSEMBLE_SPREAD_OVERLAYS[overlay_id]["source"])
+    member_ids = [member_id for member_id in sorted(run_payload["members"].keys()) if member_id.startswith("m")]
+    hour_values: dict[int, list[float]] = {}
+    representative_points: dict[int, dict[str, object]] = {}
+    for member_id in member_ids:
+        member_points = build_member_source_series(run_id, member_id, source_overlay, station, data_root, run_payload)
+        for point in member_points:
+            forecast_hour = int(point["forecast_hour"])
+            hour_values.setdefault(forecast_hour, []).append(float(point["value"]))
+            representative_points.setdefault(
+                forecast_hour,
+                {
+                    "forecast_hour": forecast_hour,
+                    "valid_time_utc": point["valid_time_utc"],
+                    "domain_id": point["domain_id"],
+                    "grid_lat": point["grid_lat"],
+                    "grid_lon": point["grid_lon"],
+                },
+            )
 
+    distribution_points: list[dict[str, object]] = []
+    for forecast_hour in sorted(hour_values):
+        values = hour_values[forecast_hour]
+        if len(values) < 2:
+            continue
+        array = np.asarray(values, dtype=np.float32)
+        q0, q1, q2, q3, q4 = np.percentile(array, [0, 25, 50, 75, 100])
+        distribution_points.append(
+            {
+                **representative_points[forecast_hour],
+                "count": int(array.size),
+                "min": float(q0),
+                "q1": float(q1),
+                "median": float(q2),
+                "q3": float(q3),
+                "max": float(q4),
+                "mean": float(np.mean(array)),
+            }
+        )
+    return distribution_points
+
+
+def build_member_source_series(
+    run_id: str,
+    member_id: str,
+    source_overlay: str,
+    station: dict[str, object],
+    data_root: str | Path,
+    run_payload: dict[str, object],
+) -> list[dict[str, object]]:
+    if source_overlay in DERIVED_POINT_OVERLAYS:
+        config = DERIVED_POINT_OVERLAYS[source_overlay]
+        left_points = build_overlay_series(run_id, member_id, str(config["components"][0]), station, data_root, run_payload)
+        right_points = build_overlay_series(run_id, member_id, str(config["components"][1]), station, data_root, run_payload)
+        if not left_points or not right_points:
+            return []
+        return derive_vector_magnitude(
+            source_overlay,
+            overlay_payload(str(config["components"][0]), left_points),
+            overlay_payload(str(config["components"][1]), right_points),
+        )["points"]
+    return build_overlay_series(run_id, member_id, source_overlay, station, data_root, run_payload)
+
+
+def sample_netcdf_point(netcdf_path: str | Path, station_lat: float, station_lon: float) -> dict[str, float | None]:
+    values, latitude, longitude = load_netcdf_point_arrays(netcdf_path)
     target_lon = normalize_longitude(station_lon, longitude)
     finite_mask = np.isfinite(values)
     if not np.any(finite_mask):
@@ -341,6 +492,19 @@ def sample_netcdf_point(netcdf_path: str | Path, station_lat: float, station_lon
         "grid_lat": float(latitude[y_index, x_index]),
         "grid_lon": normalize_longitude_back(float(longitude[y_index, x_index])),
     }
+
+
+@lru_cache(maxsize=256)
+def load_netcdf_point_arrays(netcdf_path: str | Path) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+    with xr.open_dataset(netcdf_path) as dataset:
+        variable_name = list(dataset.data_vars)[0]
+        data_array = dataset[variable_name]
+        if "time" in data_array.dims:
+            data_array = data_array.isel(time=0)
+        values = np.asarray(data_array.values, dtype=np.float32)
+        latitude = np.asarray(dataset["latitude"].values, dtype=np.float32)
+        longitude = np.asarray(dataset["longitude"].values, dtype=np.float32)
+    return values, latitude, longitude
 
 
 def normalize_longitude(lon: float, longitude_grid: np.ndarray) -> float:

@@ -6,8 +6,10 @@
   const STATIC_MODE = Boolean(STATIC_ROOT);
   const BACKEND_ROOT = STATIC_MODE ? "" : resolveBackendRoot();
   const DEFAULT_STATION = "KRDU";
-  const DEFAULT_MEMBER = "m00";
+  const DEFAULT_MEMBER = "ens";
   const SEARCH_DEBOUNCE_MS = 160;
+  const CHART_TICK_COLOR = "#8fa4b8";
+  const CHART_GRID_COLOR = "rgba(143, 164, 184, 0.12)";
 
   const dom = {
     statusPill: document.getElementById("statusPill"),
@@ -37,6 +39,8 @@
     lastPayload: null,
     staticStations: [],
   };
+
+  registerDistributionPlugin();
 
   init().catch((error) => {
     console.error(error);
@@ -184,7 +188,7 @@
     for (const member of availableMembers) {
       const option = document.createElement("option");
       option.value = member;
-      option.textContent = member === "ens" ? "Ens Probabilities" : member.toUpperCase();
+      option.textContent = member === "ens" ? "Ens Spread + Probabilities" : member.toUpperCase();
       option.selected = member === state.member;
       dom.memberSelect.appendChild(option);
     }
@@ -206,7 +210,10 @@
       chip.textContent = text;
       dom.stationMeta.appendChild(chip);
     }
-    dom.stationCopy.textContent = `Nearest-grid HRRRCast time series for ${station.id}. Values come from the closest processed model grid point for each forecast hour.`;
+    const modeCopy = payload.member === "ens"
+      ? "Ensemble mode shows severe probabilities plus member spread charts with median, quartiles, and whiskers."
+      : "Deterministic mode shows nearest-grid HRRRCast time series from the selected member.";
+    dom.stationCopy.textContent = `${modeCopy} Values come from the closest processed model grid point for each forecast hour.`;
   }
 
   function renderGroupFilters(groups) {
@@ -266,9 +273,7 @@
         card.className = "chart-card";
         const summary = summarizeSeries(series);
         const summaryHtml = renderChartSummary(summary, series.units || "");
-        const noteHtml = summary.allZero
-          ? '<p class="chart-note">All forecast hours are currently zero for this element at this station.</p>'
-          : "";
+        const noteHtml = renderChartNote(series, summary);
         card.innerHTML = `
           <div class="chart-card-head">
             <h3 class="chart-title">${series.label}</h3>
@@ -293,6 +298,9 @@
   }
 
   function buildChart(canvas, series, summary) {
+    if (series.chart_type === "distribution") {
+      return buildDistributionChart(canvas, series, summary);
+    }
     const labels = series.points.map((point) => `+${String(point.forecast_hour).padStart(3, "0")}`);
     const color = chartColor(series.style, series.id);
     const allZero = Boolean(summary && summary.allZero);
@@ -339,9 +347,9 @@
             ticks: {
               maxRotation: 0,
               autoSkip: true,
-              color: "#566a7c",
+              color: CHART_TICK_COLOR,
             },
-            grid: { color: "rgba(28, 42, 58, 0.08)" },
+            grid: { color: CHART_GRID_COLOR },
           },
           y: {
             beginAtZero: shouldBeginAtZero(series.style),
@@ -349,12 +357,100 @@
             suggestedMin: allZero ? undefined : rangeValue(series.style, 0),
             suggestedMax: allZero ? Math.max(rangeValue(series.style, 1) || 5, 5) : rangeValue(series.style, 1),
             ticks: {
-              color: "#566a7c",
+              color: CHART_TICK_COLOR,
               callback(value) {
                 return series.units === "%" ? `${value}%` : value;
               },
             },
-            grid: { color: "rgba(28, 42, 58, 0.08)" },
+            grid: { color: CHART_GRID_COLOR },
+          },
+        },
+      },
+    });
+  }
+
+  function buildDistributionChart(canvas, series) {
+    const labels = series.points.map((point) => `+${String(point.forecast_hour).padStart(3, "0")}`);
+    const color = chartColor(series.style, series.id);
+    return new Chart(canvas.getContext("2d"), {
+      type: "line",
+      data: {
+        labels,
+        datasets: [
+          {
+            label: `${series.label} Median`,
+            data: series.points.map((point) => point.median),
+            borderColor: color,
+            borderWidth: 2.2,
+            pointRadius: labels.length <= 24 ? 1.75 : 0,
+            pointHitRadius: 12,
+            tension: 0.12,
+            fill: false,
+          },
+          {
+            label: `${series.label} Mean`,
+            data: series.points.map((point) => point.mean),
+            borderColor: hexWithAlpha(color, 0.72),
+            borderDash: [5, 4],
+            borderWidth: 1.4,
+            pointRadius: 0,
+            pointHitRadius: 12,
+            tension: 0.12,
+            fill: false,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        animation: false,
+        interaction: { mode: "index", intersect: false },
+        plugins: {
+          legend: { display: false },
+          distributionBoxWhisker: {
+            points: series.points,
+            color,
+          },
+          tooltip: {
+            callbacks: {
+              title(items) {
+                const point = series.points[items[0].dataIndex];
+                return `${items[0].label} | ${formatLocalTime(point.valid_time_utc)}`;
+              },
+              label(item) {
+                const point = series.points[item.dataIndex];
+                const suffix = series.units ? ` ${series.units}` : "";
+                return [
+                  `Median: ${formatValue(point.median)}${suffix}`,
+                  `Mean: ${formatValue(point.mean)}${suffix}`,
+                  `IQR: ${formatValue(point.q1)}${suffix} to ${formatValue(point.q3)}${suffix}`,
+                  `Range: ${formatValue(point.min)}${suffix} to ${formatValue(point.max)}${suffix}`,
+                  `Members: ${point.count}`,
+                ];
+              },
+            },
+          },
+        },
+        scales: {
+          x: {
+            ticks: {
+              maxRotation: 0,
+              autoSkip: true,
+              color: CHART_TICK_COLOR,
+            },
+            grid: { color: CHART_GRID_COLOR },
+          },
+          y: {
+            beginAtZero: shouldBeginAtZero(series.style),
+            suggestedMin: rangeValue(series.style, 0),
+            suggestedMax: rangeValue(series.style, 1),
+            ticks: {
+              color: CHART_TICK_COLOR,
+              callback(value) {
+                return series.units === "%" ? `${value}%` : value;
+              },
+            },
+            grid: { color: CHART_GRID_COLOR },
           },
         },
       },
@@ -490,6 +586,15 @@
   }
 
   function summarizeSeries(series) {
+    if (series && series.chart_type === "distribution" && series.summary) {
+      return {
+        count: Number(series.summary.count || 0),
+        min: normalizeNumber(series.summary.min),
+        max: normalizeNumber(series.summary.max),
+        latest: normalizeNumber(series.summary.latest),
+        allZero: Boolean(series.summary.all_zero),
+      };
+    }
     if (series && series.summary) {
       return {
         count: Number(series.summary.count || 0),
@@ -525,8 +630,94 @@
     `;
   }
 
+  function renderChartNote(series, summary) {
+    if (series.chart_type === "distribution") {
+      return '<p class="chart-note">Boxes show the 25th to 75th percentile member spread, whiskers show min to max, solid line is median, dashed line is mean.</p>';
+    }
+    if (summary.allZero) {
+      return '<p class="chart-note">All forecast hours are currently zero for this element at this station.</p>';
+    }
+    return "";
+  }
+
   function normalizeNumber(value) {
     const numeric = Number(value);
     return Number.isFinite(numeric) ? numeric : null;
+  }
+
+  function hexWithAlpha(hex, alpha) {
+    const clean = String(hex || "").replace("#", "");
+    if (clean.length !== 6) {
+      return hex;
+    }
+    const a = Math.max(0, Math.min(255, Math.round(alpha * 255)));
+    return `#${clean}${a.toString(16).padStart(2, "0")}`;
+  }
+
+  function registerDistributionPlugin() {
+    if (!window.Chart || Chart.registry.plugins.get("distributionBoxWhisker")) {
+      return;
+    }
+    Chart.register({
+      id: "distributionBoxWhisker",
+      afterDatasetsDraw(chart, _args, pluginOptions) {
+        if (!pluginOptions || !Array.isArray(pluginOptions.points) || !pluginOptions.points.length) {
+          return;
+        }
+        const xScale = chart.scales.x;
+        const yScale = chart.scales.y;
+        if (!xScale || !yScale) {
+          return;
+        }
+        const ctx = chart.ctx;
+        const color = pluginOptions.color || "#49a7ff";
+        const fill = hexWithAlpha(color, 0.18);
+        const points = pluginOptions.points;
+        const boxWidth = Math.max(8, Math.min(22, xStepEstimate(xScale, points.length) * 0.42));
+
+        ctx.save();
+        ctx.lineWidth = 1.25;
+        ctx.strokeStyle = hexWithAlpha(color, 0.95);
+        ctx.fillStyle = fill;
+        for (let index = 0; index < points.length; index += 1) {
+          const point = points[index];
+          const x = xScale.getPixelForValue(index);
+          const yMin = yScale.getPixelForValue(point.min);
+          const yQ1 = yScale.getPixelForValue(point.q1);
+          const yMedian = yScale.getPixelForValue(point.median);
+          const yQ3 = yScale.getPixelForValue(point.q3);
+          const yMax = yScale.getPixelForValue(point.max);
+          ctx.beginPath();
+          ctx.moveTo(x, yMin);
+          ctx.lineTo(x, yMax);
+          ctx.stroke();
+
+          ctx.fillRect(x - boxWidth / 2, Math.min(yQ1, yQ3), boxWidth, Math.max(2, Math.abs(yQ3 - yQ1)));
+          ctx.strokeRect(x - boxWidth / 2, Math.min(yQ1, yQ3), boxWidth, Math.max(2, Math.abs(yQ3 - yQ1)));
+
+          ctx.beginPath();
+          ctx.moveTo(x - boxWidth / 2, yMedian);
+          ctx.lineTo(x + boxWidth / 2, yMedian);
+          ctx.stroke();
+
+          ctx.beginPath();
+          ctx.moveTo(x - boxWidth * 0.3, yMin);
+          ctx.lineTo(x + boxWidth * 0.3, yMin);
+          ctx.moveTo(x - boxWidth * 0.3, yMax);
+          ctx.lineTo(x + boxWidth * 0.3, yMax);
+          ctx.stroke();
+        }
+        ctx.restore();
+      },
+    });
+  }
+
+  function xStepEstimate(xScale, count) {
+    if (!xScale || count < 2) {
+      return 18;
+    }
+    const first = xScale.getPixelForValue(0);
+    const second = xScale.getPixelForValue(1);
+    return Math.abs(second - first) || 18;
   }
 })();

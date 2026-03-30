@@ -173,6 +173,58 @@ class PointSeriesTests(unittest.TestCase):
         self.assertAlmostEqual(series["summary"]["max"], 25.0, places=4)
         self.assertFalse(series["summary"]["all_zero"])
 
+    def test_build_point_series_adds_ensemble_distribution_series(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            data_root = Path(tmpdir) / "data" / "processed"
+            catalog_path = Path(tmpdir) / "stations.json"
+            catalog_path.write_text(
+                json.dumps(
+                    {
+                        "stations": [
+                            {
+                                "id": "KRDU",
+                                "aliases": ["RDU"],
+                                "site": "Raleigh-Durham",
+                                "lat": 35.9,
+                                "lon": -78.8,
+                                "elev": 132,
+                                "state": "NC",
+                                "country": "US",
+                            }
+                        ]
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            for member_id, value in [("m00", 100.0), ("m01", 200.0), ("m02", 300.0)]:
+                write_product_asset(
+                    data_root,
+                    run_id="2026032820",
+                    member=member_id,
+                    overlay_id="cape",
+                    forecast_hour=0,
+                    variable_name="cape",
+                    values=np.array([[0.0, value], [0.0, 0.0]], dtype=np.float32),
+                    field_key="CAPE:surface",
+                )
+
+            payload = build_point_series(
+                "2026032820",
+                "KRDU",
+                "ens",
+                data_root=data_root,
+                station_catalog_path=catalog_path,
+            )
+
+        series = payload["series"]["cape_member_spread"]
+        self.assertEqual(series["chart_type"], "distribution")
+        self.assertEqual(len(series["points"]), 1)
+        point = series["points"][0]
+        self.assertAlmostEqual(point["median"], 200.0, places=4)
+        self.assertAlmostEqual(point["min"], 100.0, places=4)
+        self.assertAlmostEqual(point["max"], 300.0, places=4)
+
 
 if __name__ == "__main__":
     unittest.main()
