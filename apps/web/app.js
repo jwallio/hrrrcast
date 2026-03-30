@@ -1,1184 +1,723 @@
 (function () {
   "use strict";
 
-  const STATIC_ROOT = "./static-api";
-  const SOURCE_DOMAIN_ID = "conus";
-  const DEFAULT_DOMAIN_ID = "south_central";
-  const MOBILE_BREAKPOINT = 720;
-  const CACHE_LIMIT = 48;
-  const SOURCE_BBOX = [-127.0, 23.0, -66.0, 50.0];
-
-  const DEFAULT_OVERLAY_BY_MEMBER = {
-    ens: "composite_reflectivity_probability_gt_40dbz",
-    m00: "composite_reflectivity",
-  };
-
-  const FAMILY_CONFIG = [
-    { id: "featured", label: "Featured" },
-    { id: "storm", label: "Storm" },
-    { id: "instability", label: "Instability" },
-    { id: "rotation", label: "Rotation" },
-    { id: "shear", label: "Shear" },
-    { id: "wind", label: "Wind" },
-    { id: "all", label: "All" },
-  ];
-
-  const QUICK_PRESETS = [
-    ["Storm Signals", "ens", "storm", "composite_reflectivity_probability_gt_40dbz", "south_central"],
-    ["Instability", "ens", "instability", "cape_probability_gt_1000", "south_central"],
-    ["Low-Level Rotation", "ens", "rotation", "helicity_0_1km_probability_gt_100", "southeast"],
-    ["Deep-Layer Shear", "ens", "shear", "shear_0_6km_probability_gt_40kt", "south_central"],
-    ["Wind Risk", "ens", "wind", "wind_10m_probability_gt_25kt", "southeast"],
-    ["Member Radar", "m00", "storm", "composite_reflectivity", "south_central"],
-  ].map(([label, member, family, overlay, domain]) => ({ label, member, family, overlay, domain }));
-
-  const PUBLIC_OVERLAY_META = {
-    composite_reflectivity_probability_gt_40dbz: { family: "storm", order: 1, featured: true, description: "Share of ensemble members producing at least 40 dBZ composite reflectivity.", hint: "Best first-look storm signal for where organized convection is most likely." },
-    qpf_probability_gt_0p10: { family: "storm", order: 2, featured: true, description: "Share of ensemble members producing at least 0.10 inches of precipitation.", hint: "Good for broad rain coverage, but less specific to severe storms than reflectivity probability." },
-    composite_reflectivity: { family: "storm", order: 11, featured: true, description: "Single-member simulated composite reflectivity.", hint: "Useful for storm placement and structure, but noisier than the ensemble probability view." },
-    cape_probability_gt_1000: { family: "instability", order: 21, featured: true, description: "Share of ensemble members reaching at least 1000 J/kg of CAPE.", hint: "Use with storm and shear fields to see whether storms also have enough fuel." },
-    cape: { family: "instability", order: 22, featured: true, description: "Single-member surface-based CAPE.", hint: "High CAPE alone does not guarantee severe weather. Pair it with storm and shear signals." },
-    cin_surface: { family: "instability", order: 23, description: "Single-member convective inhibition.", hint: "More negative values suggest a cap that may suppress storm initiation." },
-    helicity_0_1km_probability_gt_100: { family: "rotation", order: 31, featured: true, description: "Share of ensemble members exceeding 100 m^2/s^2 of 0 to 1 km helicity.", hint: "Most useful when storms are already expected nearby." },
-    helicity_0_3km_probability_gt_250: { family: "rotation", order: 32, description: "Share of ensemble members exceeding 250 m^2/s^2 of 0 to 3 km helicity.", hint: "Shows whether rotation support extends through a deeper layer." },
-    helicity_0_1km: { family: "rotation", order: 33, featured: true, description: "Single-member 0 to 1 km storm-relative helicity.", hint: "Useful for low-level rotation support, but only meaningful where storms exist." },
-    helicity_0_3km: { family: "rotation", order: 34, description: "Single-member 0 to 3 km storm-relative helicity.", hint: "Shows broader rotation support beyond the lowest kilometer." },
-    relative_vorticity_0_1km: { family: "rotation", order: 35, description: "Single-member 0 to 1 km relative vorticity.", hint: "Advanced field. Treat it as a supplement to helicity, not the main public product." },
-    relative_vorticity_0_2km: { family: "rotation", order: 36, description: "Single-member 0 to 2 km relative vorticity.", hint: "Useful for comparing corridors of low-level spin." },
-    shear_0_6km_probability_gt_40kt: { family: "shear", order: 41, featured: true, description: "Share of ensemble members exceeding 40 kt of 0 to 6 km bulk shear.", hint: "Best summary of organized-storm support." },
-    shear_0_1km_probability_gt_20kt: { family: "shear", order: 42, description: "Share of ensemble members exceeding 20 kt of 0 to 1 km shear.", hint: "Useful for low-level wind support when storms and instability are also present." },
-    shear_u_0_1km: { family: "shear", order: 43, description: "Single-member 0 to 1 km U-shear component.", hint: "Advanced diagnostic. The threshold probability is usually clearer for public use." },
-    shear_v_0_1km: { family: "shear", order: 44, description: "Single-member 0 to 1 km V-shear component.", hint: "Advanced diagnostic. Use after checking the threshold fields first." },
-    shear_u_0_6km: { family: "shear", order: 45, description: "Single-member 0 to 6 km U-shear component.", hint: "Better as a supplement to the 40 kt probability field than a first-look product." },
-    shear_v_0_6km: { family: "shear", order: 46, description: "Single-member 0 to 6 km V-shear component.", hint: "Better as a supplement to the 40 kt probability field than a first-look product." },
-    wind_10m_probability_gt_25kt: { family: "wind", order: 51, featured: true, description: "Share of ensemble members exceeding 25 kt near-surface wind speed.", hint: "Useful for broad wind risk, but pair it with storm fields for convective interpretation." },
-    gust_surface: { family: "wind", order: 52, featured: true, description: "Single-member surface wind gust field.", hint: "Best used with reflectivity for convective wind risk and impacts." },
-    wind_10m: { family: "wind", order: 53, description: "Single-member 10 m wind speed.", hint: "Shows sustained near-surface wind rather than gust potential." },
-  };
-
-  const DOMAIN_PADDING = {
-    conus: { x: 0.02, y: 0.04 },
-    southeast: { x: 0.1, y: 0.14 },
-    northeast: { x: 0.12, y: 0.15 },
-    south_central: { x: 0.12, y: 0.16 },
-    northwest: { x: 0.12, y: 0.14 },
-    southwest: { x: 0.12, y: 0.14 },
-    carolinas: { x: 0.2, y: 0.2 },
-  };
-
-  const REGION_STATE_NAMES = {
-    southeast: ["Alabama", "Florida", "Georgia", "Mississippi", "North Carolina", "South Carolina", "Tennessee"],
-    northeast: ["Connecticut", "Delaware", "Maine", "Maryland", "Massachusetts", "New Hampshire", "New Jersey", "New York", "Pennsylvania", "Rhode Island", "Vermont", "Virginia", "West Virginia"],
-    south_central: ["Arkansas", "Kansas", "Louisiana", "Missouri", "New Mexico", "Oklahoma", "Texas"],
-    northwest: ["Idaho", "Montana", "Oregon", "Washington", "Wyoming"],
-    southwest: ["Arizona", "California", "Colorado", "Nevada", "New Mexico", "Utah"],
-    carolinas: ["North Carolina", "South Carolina"],
-  };
-
-  const MEMBER_LABELS = {
-    ens: "Ens Probabilities",
-    m00: "Member 00",
-  };
+  const CONFIG = window.HRRRCAST_STATION_VIEWER || {};
+  const STATIC_ROOT = resolveStaticRoot();
+  const STATIC_MODE = Boolean(STATIC_ROOT);
+  const BACKEND_ROOT = STATIC_MODE ? "" : resolveBackendRoot();
+  const DEFAULT_STATION = "KRDU";
+  const DEFAULT_MEMBER = "ens";
+  const SEARCH_DEBOUNCE_MS = 160;
+  const CHART_TICK_COLOR = "#8fa4b8";
+  const CHART_GRID_COLOR = "rgba(143, 164, 184, 0.12)";
 
   const dom = {
-    runBadge: document.getElementById("runBadge"),
+    statusPill: document.getElementById("statusPill"),
+    lookupForm: document.getElementById("lookupForm"),
+    stationInput: document.getElementById("stationInput"),
+    suggestions: document.getElementById("suggestions"),
     runSelect: document.getElementById("runSelect"),
     memberSelect: document.getElementById("memberSelect"),
-    domainSelect: document.getElementById("domainSelect"),
-    familySelect: document.getElementById("familySelect"),
-    overlaySelect: document.getElementById("overlaySelect"),
-    presetStrip: document.getElementById("presetStrip"),
-    overlayFamilyLabel: document.getElementById("overlayFamilyLabel"),
-    productTitle: document.getElementById("productTitle"),
-    metaInit: document.getElementById("metaInit"),
-    metaValid: document.getElementById("metaValid"),
-    metaMember: document.getElementById("metaMember"),
-    fieldDescription: document.getElementById("fieldDescription"),
-    fieldHint: document.getElementById("fieldHint"),
-    imageShell: document.getElementById("imageShell"),
-    canvas: document.getElementById("forecastCanvas"),
-    loading: document.getElementById("imageLoading"),
-    legendLabel: document.getElementById("legendLabel"),
-    legendUnits: document.getElementById("legendUnits"),
-    legendScale: document.getElementById("legendScale"),
-    prevHourButton: document.getElementById("prevHourButton"),
-    playButton: document.getElementById("playButton"),
-    nextHourButton: document.getElementById("nextHourButton"),
-    speedSelect: document.getElementById("speedSelect"),
-    hourLabel: document.getElementById("hourLabel"),
-    validLabel: document.getElementById("validLabel"),
-    hourRange: document.getElementById("hourRange"),
-    hourChips: document.getElementById("hourChips"),
-    shareImageButton: document.getElementById("shareImageButton"),
-    copyLinkButton: document.getElementById("copyLinkButton"),
-    downloadImageButton: document.getElementById("downloadImageButton"),
-    shareStatus: document.getElementById("shareStatus"),
+    groupFilters: document.getElementById("groupFilters"),
+    stationTitle: document.getElementById("stationTitle"),
+    stationMeta: document.getElementById("stationMeta"),
+    stationCopy: document.getElementById("stationCopy"),
+    chartGroups: document.getElementById("chartGroups"),
   };
 
-  const ctx = dom.canvas.getContext("2d");
-
   const state = {
-    runId: null,
-    member: null,
-    familyId: "featured",
-    overlayId: null,
-    domainId: DEFAULT_DOMAIN_ID,
-    hour: 0,
-    playDelay: Number(dom.speedSelect.value) || 700,
-    playing: false,
-    lastHour: 0,
+    run: "latest-ready",
+    member: DEFAULT_MEMBER,
+    station: DEFAULT_STATION,
+    group: "all",
   };
 
   const refs = {
     runs: [],
-    runMap: new Map(),
-    layerMap: new Map(),
-    domainMap: new Map(),
-    index: null,
-    statesGeo: [],
+    charts: [],
+    suggestionTimer: 0,
+    lastPayload: null,
+    staticStations: [],
   };
 
-  const imageCache = new Map();
-  let playTimer = null;
-  let renderTicket = 0;
-  let resizeFrame = 0;
+  registerDistributionPlugin();
 
   init().catch((error) => {
     console.error(error);
-    dom.runBadge.textContent = "Snapshot load failed";
-    dom.loading.hidden = false;
-    dom.loading.textContent = "Snapshot load failed";
+    dom.statusPill.textContent = "Viewer load failed";
+    dom.stationCopy.textContent = "Unable to load the station viewer.";
   });
 
   async function init() {
-    const [runsPayload, layersPayload, domainsPayload, indexPayload, statesPayload] = await Promise.all([
-      loadJson(`${STATIC_ROOT}/runs.json`),
-      loadJson(`${STATIC_ROOT}/layers.json`),
-      loadJson(`${STATIC_ROOT}/domains.json`),
-      loadJson(`${STATIC_ROOT}/products-index.json`),
-      loadJson("./us-states.geojson"),
-    ]);
-
-    refs.runs = Array.isArray(runsPayload.runs) ? runsPayload.runs.slice() : [];
-    refs.runMap = new Map(refs.runs.map((run) => [run.run_id, run]));
-    refs.layerMap = new Map((layersPayload.weatherOverlays || []).map((overlay) => [overlay.id, overlay]));
-    refs.domainMap = new Map((domainsPayload.domains || []).map((domain) => [domain.id, domain]));
-    refs.index = indexPayload.runs || {};
-    refs.statesGeo = (statesPayload.features || []).filter((feature) => {
-      const name = feature && feature.properties ? feature.properties.name : "";
-      return !["Alaska", "Hawaii", "Puerto Rico"].includes(name);
-    });
-
     hydrateStateFromUrl();
-    seedDefaults(layersPayload.defaults || {});
     bindEvents();
-    renderAll();
-    window.addEventListener("resize", handleResize);
+    if (STATIC_MODE) {
+      refs.staticStations = await loadStaticStations();
+    }
+    await loadRuns();
+    await loadPointSeries(state.station);
   }
 
   function bindEvents() {
-    dom.runSelect.addEventListener("change", () => {
-      state.runId = dom.runSelect.value;
-      state.member = null;
-      state.overlayId = null;
-      ensureConsistentState();
-      renderAll();
+    dom.lookupForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const code = dom.stationInput.value.trim().toUpperCase();
+      if (!code) {
+        return;
+      }
+      await loadPointSeries(code);
     });
 
-    dom.memberSelect.addEventListener("change", () => {
+    dom.stationInput.addEventListener("input", () => {
+      const query = dom.stationInput.value.trim();
+      window.clearTimeout(refs.suggestionTimer);
+      if (!query) {
+        hideSuggestions();
+        return;
+      }
+      refs.suggestionTimer = window.setTimeout(() => {
+        searchStations(query).catch((error) => console.error(error));
+      }, SEARCH_DEBOUNCE_MS);
+    });
+
+    dom.stationInput.addEventListener("focus", () => {
+      const query = dom.stationInput.value.trim();
+      if (query) {
+        searchStations(query).catch((error) => console.error(error));
+      }
+    });
+
+    document.addEventListener("click", (event) => {
+      if (!dom.suggestions.contains(event.target) && event.target !== dom.stationInput) {
+        hideSuggestions();
+      }
+    });
+
+    dom.runSelect.addEventListener("change", async () => {
+      state.run = dom.runSelect.value;
+      await loadPointSeries(state.station);
+    });
+
+    dom.memberSelect.addEventListener("change", async () => {
       state.member = dom.memberSelect.value;
-      if (!state.overlayId || !getAvailableOverlays(state.runId, state.member).some((overlay) => overlay.id === state.overlayId)) {
-        state.overlayId = DEFAULT_OVERLAY_BY_MEMBER[state.member] || null;
-      }
-      ensureConsistentState();
-      renderAll();
+      state.group = "all";
+      await loadPointSeries(state.station);
     });
-
-    dom.domainSelect.addEventListener("change", () => {
-      state.domainId = dom.domainSelect.value;
-      renderHeader();
-      renderFrame();
-      updateUrl();
-    });
-
-    dom.familySelect.addEventListener("change", () => {
-      state.familyId = dom.familySelect.value;
-      ensureConsistentState();
-      renderAll();
-    });
-
-    dom.overlaySelect.addEventListener("change", () => {
-      state.overlayId = dom.overlaySelect.value;
-      const family = FAMILY_CONFIG.find((item) => overlayMatchesFamily(state.overlayId, item.id));
-      if (family) {
-        state.familyId = family.id;
-      }
-      ensureConsistentState();
-      renderAll();
-    });
-
-    dom.prevHourButton.addEventListener("click", () => stepHour(-1));
-    dom.nextHourButton.addEventListener("click", () => stepHour(1));
-    dom.playButton.addEventListener("click", togglePlayback);
-
-    dom.speedSelect.addEventListener("change", () => {
-      state.playDelay = Number(dom.speedSelect.value) || 700;
-      if (state.playing) {
-        stopPlayback();
-        startPlayback();
-      }
-    });
-
-    dom.hourRange.addEventListener("input", () => {
-      state.hour = Number(dom.hourRange.value);
-      ensureConsistentState();
-      renderHeader();
-      renderTimeline();
-      renderFrame();
-      updateUrl();
-    });
-
-    dom.shareImageButton.addEventListener("click", shareCurrentImage);
-    dom.copyLinkButton.addEventListener("click", copyCurrentLink);
-    dom.downloadImageButton.addEventListener("click", downloadCurrentImage);
   }
 
-  function hydrateStateFromUrl() {
-    const params = new URLSearchParams(window.location.search);
-    state.runId = params.get("run");
-    state.member = params.get("member");
-    state.overlayId = params.get("overlay");
-    state.domainId = params.get("proj") || DEFAULT_DOMAIN_ID;
-    state.familyId = params.get("family") || "featured";
-
-    const parsedHour = Number(params.get("fhr"));
-    if (Number.isFinite(parsedHour) && parsedHour >= 0) {
-      state.hour = parsedHour;
-      state.lastHour = parsedHour;
-    }
-  }
-
-  function seedDefaults(defaults) {
-    if (!state.runId && refs.runs.length) {
-      state.runId = refs.runs[0].run_id;
-    }
-    if (!state.member) {
-      state.member = DEFAULT_OVERLAY_BY_MEMBER[defaults.member] ? defaults.member : "ens";
-    }
-    if (!state.overlayId) {
-      state.overlayId = DEFAULT_OVERLAY_BY_MEMBER[state.member] || defaults.weatherOverlay || null;
-    }
-    if (!refs.domainMap.has(state.domainId)) {
-      state.domainId = DEFAULT_DOMAIN_ID;
-    }
-    if (!FAMILY_CONFIG.some((item) => item.id === state.familyId)) {
-      state.familyId = "featured";
-    }
-    ensureConsistentState();
-  }
-
-  function ensureConsistentState() {
-    if (!refs.runMap.has(state.runId) && refs.runs.length) {
-      state.runId = refs.runs[0].run_id;
-    }
-
-    const members = getAvailableMembers(state.runId);
-    if (!members.length) {
-      return;
-    }
-    if (!members.includes(state.member)) {
-      state.member = members.includes("ens") ? "ens" : members[0];
-    }
-    if (!refs.domainMap.has(state.domainId)) {
-      state.domainId = DEFAULT_DOMAIN_ID;
-    }
-
-    let familyOverlays = getOverlaysForFamily(state.runId, state.member, state.familyId);
-    if (!familyOverlays.length) {
-      const fallback = findFirstAvailableFamily(state.runId, state.member);
-      state.familyId = fallback ? fallback.id : "featured";
-      familyOverlays = getOverlaysForFamily(state.runId, state.member, state.familyId);
-    }
-    if (!familyOverlays.length) {
-      state.overlayId = null;
-      return;
-    }
-    if (!familyOverlays.some((overlay) => overlay.id === state.overlayId)) {
-      const preferred = DEFAULT_OVERLAY_BY_MEMBER[state.member];
-      const preferredOverlay = familyOverlays.find((overlay) => overlay.id === preferred);
-      state.overlayId = preferredOverlay ? preferredOverlay.id : familyOverlays[0].id;
-    }
-
-    const availableHours = getOverlayHours(state.runId, state.member, state.overlayId);
-    state.hour = availableHours.length ? nearestHour(availableHours, state.hour) : 0;
-  }
-
-  function renderAll() {
+  async function loadRuns() {
+    const payload = STATIC_MODE
+      ? await fetchJson(`${STATIC_ROOT}/runs.json`)
+      : await fetchJson(`${BACKEND_ROOT}/api/runs`);
+    refs.runs = Array.isArray(payload.runs) ? payload.runs : [];
     renderRunOptions();
-    renderMemberOptions();
-    renderDomainOptions();
-    renderFamilyOptions();
-    renderOverlayOptions();
-    renderPresetStrip();
-    renderHeader();
-    renderLegend();
-    renderTimeline();
-    renderFrame();
-    renderInsight();
-    updateUrl();
   }
 
   function renderRunOptions() {
     dom.runSelect.innerHTML = "";
-    for (const run of refs.runs) {
+    const latestReady = document.createElement("option");
+    latestReady.value = "latest-ready";
+    latestReady.textContent = "Latest Ready";
+    latestReady.selected = state.run === "latest-ready";
+    dom.runSelect.appendChild(latestReady);
+    for (const run of refs.runs.slice().reverse()) {
       const option = document.createElement("option");
       option.value = run.run_id;
       option.textContent = `${formatRunStamp(run.run_id)}${run.status === "ready" ? "" : " partial"}`;
-      option.selected = run.run_id === state.runId;
+      option.selected = run.run_id === state.run;
       dom.runSelect.appendChild(option);
     }
   }
 
-  function renderMemberOptions() {
+  async function searchStations(query) {
+    const stations = STATIC_MODE
+      ? searchStaticStations(query, 8)
+      : await fetchBackendStations(query);
+    if (!stations.length) {
+      hideSuggestions();
+      return;
+    }
+    dom.suggestions.innerHTML = "";
+    for (const station of stations) {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "suggestion-button";
+      button.innerHTML = [
+        `<span class="suggestion-line"><strong>${station.id}</strong> ${station.site}</span>`,
+        `<span class="suggestion-line">${[station.state, station.country].filter(Boolean).join(", ")} | ${station.lat.toFixed(2)}, ${station.lon.toFixed(2)}</span>`,
+      ].join("");
+      button.addEventListener("click", async () => {
+        dom.stationInput.value = station.id;
+        hideSuggestions();
+        await loadPointSeries(station.id);
+      });
+      dom.suggestions.appendChild(button);
+    }
+    dom.suggestions.hidden = false;
+  }
+
+  function hideSuggestions() {
+    dom.suggestions.hidden = true;
+    dom.suggestions.innerHTML = "";
+  }
+
+  async function loadPointSeries(stationCode) {
+    state.station = stationCode.toUpperCase();
+    dom.stationInput.value = state.station;
+    dom.statusPill.textContent = `Loading ${state.station}`;
+    hideSuggestions();
+
+    const payload = STATIC_MODE
+      ? await fetchStaticPointSeries(state.run, state.member, state.station)
+      : await fetchJson(`${BACKEND_ROOT}/api/point-series?run=${encodeURIComponent(state.run)}&station=${encodeURIComponent(state.station)}&member=${encodeURIComponent(state.member)}`);
+    refs.lastPayload = payload;
+    state.member = payload.member;
+    if (!payload.chart_groups.some((group) => group.id === state.group)) {
+      state.group = "all";
+    }
+    renderMemberOptions(payload.available_members || []);
+    renderStation(payload);
+    renderGroupFilters(payload.chart_groups || []);
+    renderCharts(payload);
+    dom.statusPill.textContent = `${payload.run_id} | ${payload.member.toUpperCase()} | ${payload.station.id}`;
+    updateUrl();
+  }
+
+  function renderMemberOptions(availableMembers) {
     dom.memberSelect.innerHTML = "";
-    for (const member of getAvailableMembers(state.runId)) {
+    for (const member of availableMembers) {
       const option = document.createElement("option");
       option.value = member;
-      option.textContent = MEMBER_LABELS[member] || member.toUpperCase();
+      option.textContent = member === "ens" ? "Ens Spread + Probabilities" : member.toUpperCase();
       option.selected = member === state.member;
       dom.memberSelect.appendChild(option);
     }
   }
 
-  function renderDomainOptions() {
-    dom.domainSelect.innerHTML = "";
-    for (const domain of refs.domainMap.values()) {
-      const option = document.createElement("option");
-      option.value = domain.id;
-      option.textContent = domain.label;
-      option.selected = domain.id === state.domainId;
-      dom.domainSelect.appendChild(option);
+  function renderStation(payload) {
+    const station = payload.station;
+    dom.stationTitle.textContent = `${station.id} | ${station.site}`;
+    dom.stationMeta.innerHTML = "";
+    const badges = [
+      station.icaoId ? `ICAO ${station.icaoId}` : null,
+      station.faaId ? `FAA ${station.faaId}` : null,
+      station.iataId ? `IATA ${station.iataId}` : null,
+      `${station.lat.toFixed(2)}, ${station.lon.toFixed(2)}`,
+      station.elev ? `${station.elev} m` : null,
+    ].filter(Boolean);
+    for (const text of badges) {
+      const chip = document.createElement("span");
+      chip.textContent = text;
+      dom.stationMeta.appendChild(chip);
     }
+    const modeCopy = payload.member === "ens"
+      ? "Ensemble mode shows severe probabilities plus member spread charts with median, quartiles, and whiskers."
+      : "Deterministic mode shows nearest-grid HRRRCast time series from the selected member.";
+    dom.stationCopy.textContent = `${modeCopy} Values come from the closest processed model grid point for each forecast hour.`;
   }
 
-  function renderFamilyOptions() {
-    dom.familySelect.innerHTML = "";
-    for (const family of FAMILY_CONFIG) {
-      const overlays = getOverlaysForFamily(state.runId, state.member, family.id);
-      if (!overlays.length) {
-        continue;
-      }
-      const option = document.createElement("option");
-      option.value = family.id;
-      option.textContent = family.label;
-      option.selected = family.id === state.familyId;
-      dom.familySelect.appendChild(option);
-    }
-  }
-
-  function renderOverlayOptions() {
-    const overlays = getOverlaysForFamily(state.runId, state.member, state.familyId);
-    dom.overlaySelect.innerHTML = "";
-    for (const overlay of overlays) {
-      const option = document.createElement("option");
-      option.value = overlay.id;
-      option.textContent = overlay.label;
-      option.selected = overlay.id === state.overlayId;
-      dom.overlaySelect.appendChild(option);
-    }
-  }
-
-  function renderPresetStrip() {
-    dom.presetStrip.innerHTML = "";
-    for (const preset of QUICK_PRESETS) {
+  function renderGroupFilters(groups) {
+    dom.groupFilters.innerHTML = "";
+    const items = [{ id: "all", title: "All Elements" }, ...groups.map((group) => ({ id: group.id, title: group.title }))];
+    for (const item of items) {
       const button = document.createElement("button");
       button.type = "button";
-      button.className = "preset-button";
-      button.textContent = preset.label;
-      if (state.member === preset.member && state.overlayId === preset.overlay && state.domainId === preset.domain) {
+      button.className = "group-button";
+      button.textContent = item.title;
+      if (item.id === state.group) {
         button.classList.add("is-active");
       }
       button.addEventListener("click", () => {
-        state.member = preset.member;
-        state.familyId = preset.family;
-        state.overlayId = preset.overlay;
-        state.domainId = preset.domain;
-        ensureConsistentState();
-        renderAll();
-      });
-      dom.presetStrip.appendChild(button);
-    }
-  }
-
-  function renderHeader() {
-    const run = refs.runMap.get(state.runId);
-    const overlay = refs.layerMap.get(state.overlayId);
-    const domain = refs.domainMap.get(state.domainId);
-
-    dom.runBadge.textContent = `Latest ready | ${formatRunStamp(state.runId)}${run && run.status !== "ready" ? " partial" : ""}`;
-    dom.overlayFamilyLabel.textContent = familyLabel(state.familyId);
-    dom.productTitle.textContent = overlay ? `${overlay.label} | ${domain ? domain.label : "CONUS"}` : "Forecast product";
-    dom.metaInit.textContent = `${formatRunStamp(state.runId)} init`;
-    dom.metaValid.textContent = `${formatValidStamp(state.runId, state.hour)} valid`;
-    dom.metaMember.textContent = MEMBER_LABELS[state.member] || state.member.toUpperCase();
-  }
-
-  function renderLegend() {
-    const overlay = refs.layerMap.get(state.overlayId);
-    const style = overlay && overlay.style ? overlay.style : {};
-    dom.legendLabel.textContent = overlay ? overlay.label : "Legend";
-    dom.legendUnits.textContent = isProbabilityOverlay(state.overlayId) ? "%" : style.units || "";
-    dom.legendScale.innerHTML = "";
-
-    if (!overlay) {
-      return;
-    }
-
-    const colors = Array.isArray(style.colors) ? style.colors : [];
-    const labels = Array.isArray(style.labels) ? style.labels : [];
-    if (!colors.length) {
-      return;
-    }
-
-    const isCategorical =
-      style.type === "categorical" ||
-      overlay.id === "ptype" ||
-      (colors.length <= 5 && labels.length === colors.length && !style.range && !isProbabilityOverlay(overlay.id));
-
-    if (isCategorical) {
-      colors.forEach((color, index) => {
-        const chip = document.createElement("div");
-        chip.className = "legend-chip";
-        chip.innerHTML = `<span class="legend-swatch" style="background:${color}"></span><span>${labels[index] || ""}</span>`;
-        dom.legendScale.appendChild(chip);
-      });
-      return;
-    }
-
-    const bar = document.createElement("div");
-    bar.className = "legend-bar";
-    bar.style.setProperty("--stop-count", String(colors.length));
-    colors.forEach((color) => {
-      const stop = document.createElement("span");
-      stop.className = "legend-stop";
-      stop.style.background = color;
-      bar.appendChild(stop);
-    });
-
-    const ticks = document.createElement("div");
-    ticks.className = "legend-ticks";
-    const tickValues = labels.length
-      ? [labels[0], labels[Math.floor((labels.length - 1) / 2)], labels[labels.length - 1]]
-      : [formatNumber(style.range && style.range[0]), "", formatNumber(style.range && style.range[1])];
-    ticks.style.setProperty("--tick-count", String(tickValues.length));
-    tickValues.forEach((value) => {
-      const span = document.createElement("span");
-      span.textContent = value || "";
-      ticks.appendChild(span);
-    });
-
-    dom.legendScale.appendChild(bar);
-    dom.legendScale.appendChild(ticks);
-  }
-
-  function renderTimeline() {
-    const hours = getOverlayHours(state.runId, state.member, state.overlayId);
-    const minHour = hours.length ? hours[0] : 0;
-    const maxHour = hours.length ? hours[hours.length - 1] : 0;
-
-    dom.hourRange.min = String(minHour);
-    dom.hourRange.max = String(maxHour);
-    dom.hourRange.value = String(state.hour);
-    dom.hourLabel.textContent = `F${padHour(state.hour)}`;
-    dom.validLabel.textContent = formatValidStamp(state.runId, state.hour);
-    dom.playButton.classList.toggle("is-active", state.playing);
-    dom.playButton.textContent = state.playing ? "Pause" : "Play";
-
-    dom.hourChips.innerHTML = "";
-    for (const hour of hours) {
-      const chip = document.createElement("button");
-      chip.type = "button";
-      chip.className = "hour-chip";
-      chip.textContent = `+${padHour(hour)}`;
-      if (hour === state.hour) {
-        chip.classList.add("is-active");
-      }
-      chip.addEventListener("click", () => {
-        state.hour = hour;
-        stopPlayback();
-        renderHeader();
-        renderTimeline();
-        renderFrame();
+        state.group = item.id;
+        renderCharts(refs.lastPayload);
         updateUrl();
       });
-      dom.hourChips.appendChild(chip);
+      dom.groupFilters.appendChild(button);
     }
   }
 
-  function renderInsight() {
-    const overlay = refs.layerMap.get(state.overlayId);
-    const meta = getOverlayMeta(state.overlayId);
-    if (!overlay) {
-      dom.fieldDescription.textContent = "Forecast field details unavailable.";
-      dom.fieldHint.textContent = "";
-      return;
-    }
-    dom.fieldDescription.textContent = meta.description || `${overlay.label} from the latest ready HRRRCast severe snapshot.`;
-    dom.fieldHint.textContent = meta.hint || (isProbabilityOverlay(overlay.id)
-      ? "Probability fields show the share of ensemble members exceeding the labeled threshold."
-      : "Single-member fields show one member's solution and can be noisier than ensemble probabilities.");
-  }
-
-  function renderFrame() {
-    if (!state.overlayId) {
+  function renderCharts(payload) {
+    destroyCharts();
+    dom.chartGroups.innerHTML = "";
+    if (!payload || !payload.chart_groups || !payload.chart_groups.length) {
+      dom.chartGroups.innerHTML = '<section class="chart-section"><div class="chart-empty">No chartable products are available for this station and member.</div></section>';
       return;
     }
 
-    const currentTicket = ++renderTicket;
-    const frameDomainId = getFrameDomainId(state.runId, state.member, state.overlayId, state.hour, state.domainId);
-    const key = getFrameKey(state.runId, state.member, state.overlayId, state.hour, frameDomainId);
-    dom.loading.hidden = false;
-    dom.loading.textContent = "Loading frame";
-
-    getImageForFrame(key)
-      .then((image) => {
-        if (currentTicket !== renderTicket) {
-          return;
-        }
-        drawFrame(image, frameDomainId);
-        dom.loading.hidden = true;
-        preloadNeighborFrames();
-      })
-      .catch((error) => {
-        console.error(error);
-        if (currentTicket !== renderTicket) {
-          return;
-        }
-        clearCanvas();
-        dom.loading.hidden = false;
-        dom.loading.textContent = "Frame unavailable";
-      });
-  }
-
-  function drawFrame(image, frameDomainId) {
-    const rect = dom.imageShell.getBoundingClientRect();
-    const width = Math.max(1, Math.round(rect.width));
-    const height = Math.max(1, Math.round(rect.height));
-    const dpr = window.devicePixelRatio || 1;
-
-    dom.canvas.width = Math.max(1, Math.round(width * dpr));
-    dom.canvas.height = Math.max(1, Math.round(height * dpr));
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    ctx.clearRect(0, 0, width, height);
-
-    const usesNativeDomainFrame = frameDomainId === state.domainId;
-    const viewBBox = getViewBBox(width, height, state.domainId);
-    if (usesNativeDomainFrame) {
-      ctx.drawImage(image, 0, 0, width, height);
-    } else {
-      const crop = computeCropRect(viewBBox, image.naturalWidth, image.naturalHeight);
-      ctx.drawImage(image, crop.sx, crop.sy, crop.sw, crop.sh, 0, 0, width, height);
-    }
-
-    const vignette = ctx.createLinearGradient(0, 0, 0, height);
-    vignette.addColorStop(0, "rgba(7, 16, 28, 0.04)");
-    vignette.addColorStop(0.8, "rgba(7, 16, 28, 0)");
-    vignette.addColorStop(1, "rgba(7, 16, 28, 0.08)");
-    ctx.fillStyle = vignette;
-    ctx.fillRect(0, 0, width, height);
-
-    drawStateOverlay(viewBBox, width, height);
-  }
-
-  function clearCanvas() {
-    const rect = dom.imageShell.getBoundingClientRect();
-    const width = Math.max(1, Math.round(rect.width));
-    const height = Math.max(1, Math.round(rect.height));
-    const dpr = window.devicePixelRatio || 1;
-    dom.canvas.width = Math.max(1, Math.round(width * dpr));
-    dom.canvas.height = Math.max(1, Math.round(height * dpr));
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    ctx.clearRect(0, 0, width, height);
-    ctx.fillStyle = "#0f1925";
-    ctx.fillRect(0, 0, width, height);
-  }
-
-  function getViewBBox(viewWidth, viewHeight, domainId) {
-    const domain = refs.domainMap.get(domainId) || refs.domainMap.get(SOURCE_DOMAIN_ID);
-    const targetBBox = domain && domain.viewport ? domain.viewport.bbox : SOURCE_BBOX;
-    return fitBBoxToAspect(targetBBox, viewWidth / viewHeight, domainId, SOURCE_BBOX);
-  }
-
-  function computeCropRect(viewBBox, imageWidth, imageHeight) {
-    const sourceWidth = SOURCE_BBOX[2] - SOURCE_BBOX[0];
-    const sourceHeight = SOURCE_BBOX[3] - SOURCE_BBOX[1];
-    const left = (viewBBox[0] - SOURCE_BBOX[0]) / sourceWidth;
-    const right = (viewBBox[2] - SOURCE_BBOX[0]) / sourceWidth;
-    const top = (SOURCE_BBOX[3] - viewBBox[3]) / sourceHeight;
-    const bottom = (SOURCE_BBOX[3] - viewBBox[1]) / sourceHeight;
-
-    return {
-      sx: clamp(left, 0, 1) * imageWidth,
-      sy: clamp(top, 0, 1) * imageHeight,
-      sw: Math.max(1, (clamp(right, 0, 1) - clamp(left, 0, 1)) * imageWidth),
-      sh: Math.max(1, (clamp(bottom, 0, 1) - clamp(top, 0, 1)) * imageHeight),
-    };
-  }
-
-  function drawStateOverlay(viewBBox, width, height) {
-    if (!refs.statesGeo.length) {
-      return;
-    }
-
-    const highlightedStates = new Set(REGION_STATE_NAMES[state.domainId] || []);
-    const scaleX = width / (viewBBox[2] - viewBBox[0]);
-    const scaleY = height / (viewBBox[3] - viewBBox[1]);
-
-    ctx.save();
-    ctx.lineJoin = "round";
-    ctx.lineCap = "round";
-
-    for (const feature of refs.statesGeo) {
-      if (!featureIntersectsBBox(feature, viewBBox)) {
+    let renderedCharts = 0;
+    for (const group of payload.chart_groups) {
+      if (state.group !== "all" && group.id !== state.group) {
         continue;
       }
+      const section = document.createElement("section");
+      section.className = "chart-section";
+      section.innerHTML = `
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">Element Group</p>
+            <h2 class="section-title">${group.title}</h2>
+          </div>
+        </div>
+      `;
+      const chartList = document.createElement("div");
+      chartList.className = "chart-list";
+      section.appendChild(chartList);
 
-      const name = feature.properties ? feature.properties.name : "";
-      const isHighlighted = highlightedStates.has(name);
-      const polygons = feature.geometry && feature.geometry.type === "Polygon"
-        ? [feature.geometry.coordinates]
-        : (feature.geometry && feature.geometry.coordinates) || [];
-
-      ctx.beginPath();
-      for (const polygon of polygons) {
-        for (const ring of polygon) {
-          ring.forEach((point, index) => {
-            const x = (point[0] - viewBBox[0]) * scaleX;
-            const y = (viewBBox[3] - point[1]) * scaleY;
-            if (index === 0) {
-              ctx.moveTo(x, y);
-            } else {
-              ctx.lineTo(x, y);
-            }
-          });
-          ctx.closePath();
+      for (const overlayId of group.overlays) {
+        const series = payload.series[overlayId];
+        if (!series || !series.points || !series.points.length) {
+          continue;
         }
+        renderedCharts += 1;
+        const card = document.createElement("article");
+        card.className = "chart-card";
+        const summary = summarizeSeries(series);
+        const summaryHtml = renderChartSummary(summary, series.units || "");
+        const noteHtml = renderChartNote(series, summary);
+        card.innerHTML = `
+          <div class="chart-card-head">
+            <h3 class="chart-title">${series.label}</h3>
+            <span class="chart-units">${series.units || ""}</span>
+          </div>
+          ${summaryHtml}
+          ${noteHtml}
+          <div class="chart-frame"><canvas></canvas></div>
+        `;
+        chartList.appendChild(card);
+        refs.charts.push(buildChart(card.querySelector("canvas"), series, summary));
       }
 
-      if (isHighlighted) {
-        ctx.fillStyle = "rgba(231, 154, 55, 0.05)";
-        ctx.fill();
-      }
-
-      ctx.strokeStyle = isHighlighted ? "rgba(28, 42, 58, 0.84)" : "rgba(27, 43, 61, 0.74)";
-      ctx.lineWidth = isHighlighted ? 2.2 : 1.5;
-      ctx.stroke();
-      ctx.strokeStyle = isHighlighted ? "rgba(248, 250, 252, 0.98)" : "rgba(240, 245, 251, 0.84)";
-      ctx.lineWidth = isHighlighted ? 0.95 : 0.5;
-      ctx.stroke();
-    }
-
-    ctx.restore();
-  }
-
-  function featureIntersectsBBox(feature, bbox) {
-    const polygons = feature.geometry && feature.geometry.type === "Polygon"
-      ? [feature.geometry.coordinates]
-      : (feature.geometry && feature.geometry.coordinates) || [];
-
-    for (const polygon of polygons) {
-      for (const ring of polygon) {
-        for (const point of ring) {
-          if (point[0] >= bbox[0] && point[0] <= bbox[2] && point[1] >= bbox[1] && point[1] <= bbox[3]) {
-            return true;
-          }
-        }
+      if (chartList.children.length) {
+        dom.chartGroups.appendChild(section);
       }
     }
-    return false;
-  }
 
-  function fitBBoxToAspect(targetBBox, aspect, domainId, bounds) {
-    const pad = DOMAIN_PADDING[domainId] || DOMAIN_PADDING[SOURCE_DOMAIN_ID];
-    let minLon = targetBBox[0] - (targetBBox[2] - targetBBox[0]) * pad.x;
-    let maxLon = targetBBox[2] + (targetBBox[2] - targetBBox[0]) * pad.x;
-    let minLat = targetBBox[1] - (targetBBox[3] - targetBBox[1]) * pad.y;
-    let maxLat = targetBBox[3] + (targetBBox[3] - targetBBox[1]) * pad.y;
-
-    let width = maxLon - minLon;
-    let height = maxLat - minLat;
-    if (width / height > aspect) {
-      const targetHeight = width / aspect;
-      const delta = (targetHeight - height) / 2;
-      minLat -= delta;
-      maxLat += delta;
-    } else {
-      const targetWidth = height * aspect;
-      const delta = (targetWidth - width) / 2;
-      minLon -= delta;
-      maxLon += delta;
-    }
-
-    width = maxLon - minLon;
-    height = maxLat - minLat;
-    const boundWidth = bounds[2] - bounds[0];
-    const boundHeight = bounds[3] - bounds[1];
-
-    if (width > boundWidth) {
-      minLon = bounds[0];
-      maxLon = bounds[2];
-    } else if (minLon < bounds[0]) {
-      maxLon += bounds[0] - minLon;
-      minLon = bounds[0];
-    } else if (maxLon > bounds[2]) {
-      minLon -= maxLon - bounds[2];
-      maxLon = bounds[2];
-    }
-
-    if (height > boundHeight) {
-      minLat = bounds[1];
-      maxLat = bounds[3];
-    } else if (minLat < bounds[1]) {
-      maxLat += bounds[1] - minLat;
-      minLat = bounds[1];
-    } else if (maxLat > bounds[3]) {
-      minLat -= maxLat - bounds[3];
-      maxLat = bounds[3];
-    }
-
-    return [minLon, minLat, maxLon, maxLat];
-  }
-
-  function getImageForFrame(key) {
-    if (imageCache.has(key)) {
-      const entry = imageCache.get(key);
-      imageCache.delete(key);
-      imageCache.set(key, entry);
-      return entry.promise;
-    }
-
-    const image = new Image();
-    image.decoding = "async";
-    image.crossOrigin = "anonymous";
-    const promise = new Promise((resolve, reject) => {
-      image.onload = () => resolve(image);
-      image.onerror = () => reject(new Error(`Unable to load ${key}`));
-    });
-
-    image.src = getFrameUrlFromKey(key);
-    imageCache.set(key, { promise });
-    trimImageCache();
-    return promise;
-  }
-
-  function preloadNeighborFrames() {
-    const hours = getOverlayHours(state.runId, state.member, state.overlayId);
-    if (!hours.length) {
-      return;
-    }
-
-    const direction = state.hour >= state.lastHour ? 1 : -1;
-    state.lastHour = state.hour;
-    const offsets = direction > 0 ? [1, 2, 3, -1, 4, -2, 5, -3] : [-1, -2, -3, 1, -4, 2, -5, 3];
-
-    for (const offset of offsets) {
-      const target = nearestHour(hours, state.hour + offset);
-      if (target === state.hour) {
-        continue;
-      }
-      const frameDomainId = getFrameDomainId(state.runId, state.member, state.overlayId, target, state.domainId);
-      getImageForFrame(getFrameKey(state.runId, state.member, state.overlayId, target, frameDomainId)).catch(() => {});
+    if (!renderedCharts) {
+      dom.chartGroups.innerHTML = '<section class="chart-section"><div class="chart-empty">No charts match the selected element group.</div></section>';
     }
   }
 
-  function trimImageCache() {
-    while (imageCache.size > CACHE_LIMIT) {
-      imageCache.delete(imageCache.keys().next().value);
+  function buildChart(canvas, series, summary) {
+    if (series.chart_type === "distribution") {
+      return buildDistributionChart(canvas, series, summary);
     }
-  }
-
-  function stepHour(direction) {
-    const hours = getOverlayHours(state.runId, state.member, state.overlayId);
-    if (!hours.length) {
-      return;
-    }
-
-    const currentIndex = hours.indexOf(state.hour);
-    state.hour = hours[(currentIndex + direction + hours.length) % hours.length];
-    stopPlayback();
-    renderHeader();
-    renderTimeline();
-    renderFrame();
-    updateUrl();
-  }
-
-  function togglePlayback() {
-    if (state.playing) {
-      stopPlayback();
-      renderTimeline();
-      return;
-    }
-    startPlayback();
-    renderTimeline();
-  }
-
-  function startPlayback() {
-    stopPlayback();
-    state.playing = true;
-    playTimer = window.setInterval(() => {
-      const hours = getOverlayHours(state.runId, state.member, state.overlayId);
-      if (!hours.length) {
-        stopPlayback();
-        return;
-      }
-      const currentIndex = hours.indexOf(state.hour);
-      state.hour = hours[(currentIndex + 1) % hours.length];
-      renderHeader();
-      renderTimeline();
-      renderFrame();
-      updateUrl();
-    }, state.playDelay);
-  }
-
-  function stopPlayback() {
-    state.playing = false;
-    if (playTimer !== null) {
-      window.clearInterval(playTimer);
-      playTimer = null;
-    }
-  }
-
-  function handleResize() {
-    window.cancelAnimationFrame(resizeFrame);
-    resizeFrame = window.requestAnimationFrame(() => {
-      renderFrame();
+    const labels = series.points.map((point) => `+${String(point.forecast_hour).padStart(3, "0")}`);
+    const color = chartColor(series.style, series.id);
+    const allZero = Boolean(summary && summary.allZero);
+    return new Chart(canvas.getContext("2d"), {
+      type: "line",
+      data: {
+        labels,
+        datasets: [
+          {
+            label: series.label,
+            data: series.points.map((point) => point.value),
+            borderColor: color,
+            backgroundColor: `${color}24`,
+            borderWidth: allZero ? 2.5 : 2.25,
+            pointRadius: labels.length <= 24 ? 1.5 : 0,
+            pointHitRadius: 12,
+            tension: 0.18,
+            fill: false,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        animation: false,
+        interaction: { mode: "index", intersect: false },
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              title(items) {
+                const point = series.points[items[0].dataIndex];
+                return `${items[0].label} | ${formatLocalTime(point.valid_time_utc)}`;
+              },
+              label(item) {
+                const suffix = series.units ? ` ${series.units}` : "";
+                return `${series.label}: ${formatValue(item.parsed.y)}${suffix}`;
+              },
+            },
+          },
+        },
+        scales: {
+          x: {
+            ticks: {
+              maxRotation: 0,
+              autoSkip: true,
+              color: CHART_TICK_COLOR,
+            },
+            grid: { color: CHART_GRID_COLOR },
+          },
+          y: {
+            beginAtZero: shouldBeginAtZero(series.style),
+            min: allZero ? -5 : undefined,
+            suggestedMin: allZero ? undefined : rangeValue(series.style, 0),
+            suggestedMax: allZero ? Math.max(rangeValue(series.style, 1) || 5, 5) : rangeValue(series.style, 1),
+            ticks: {
+              color: CHART_TICK_COLOR,
+              callback(value) {
+                return series.units === "%" ? `${value}%` : value;
+              },
+            },
+            grid: { color: CHART_GRID_COLOR },
+          },
+        },
+      },
     });
   }
 
-  async function shareCurrentImage() {
-    try {
-      const blob = await canvasToBlob("image/png");
-      const file = new File([blob], currentViewFilename("png"), { type: "image/png" });
-      const shareData = {
-        title: currentShareTitle(),
-        text: currentShareTitle(),
-        url: currentViewUrl(),
-      };
-      if (navigator.canShare && navigator.canShare({ files: [file] })) {
-        await navigator.share({ ...shareData, files: [file] });
-        setShareStatus("Image shared");
-        return;
-      }
-      if (navigator.share) {
-        await navigator.share(shareData);
-        setShareStatus("Link shared");
-        return;
-      }
-      await writeClipboard(currentViewUrl());
-      setShareStatus("Link copied");
-    } catch (error) {
-      if (error && error.name === "AbortError") {
-        return;
-      }
-      console.error(error);
-      setShareStatus("Share unavailable");
-    }
+  function buildDistributionChart(canvas, series) {
+    const labels = series.points.map((point) => `+${String(point.forecast_hour).padStart(3, "0")}`);
+    const color = chartColor(series.style, series.id);
+    return new Chart(canvas.getContext("2d"), {
+      type: "line",
+      data: {
+        labels,
+        datasets: [
+          {
+            label: `${series.label} Median`,
+            data: series.points.map((point) => point.median),
+            borderColor: color,
+            borderWidth: 2.2,
+            pointRadius: labels.length <= 24 ? 1.75 : 0,
+            pointHitRadius: 12,
+            tension: 0.12,
+            fill: false,
+          },
+          {
+            label: `${series.label} Mean`,
+            data: series.points.map((point) => point.mean),
+            borderColor: hexWithAlpha(color, 0.72),
+            borderDash: [5, 4],
+            borderWidth: 1.4,
+            pointRadius: 0,
+            pointHitRadius: 12,
+            tension: 0.12,
+            fill: false,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        animation: false,
+        interaction: { mode: "index", intersect: false },
+        plugins: {
+          legend: { display: false },
+          distributionBoxWhisker: {
+            points: series.points,
+            color,
+          },
+          tooltip: {
+            callbacks: {
+              title(items) {
+                const point = series.points[items[0].dataIndex];
+                return `${items[0].label} | ${formatLocalTime(point.valid_time_utc)}`;
+              },
+              label(item) {
+                const point = series.points[item.dataIndex];
+                const suffix = series.units ? ` ${series.units}` : "";
+                return [
+                  `Median: ${formatValue(point.median)}${suffix}`,
+                  `Mean: ${formatValue(point.mean)}${suffix}`,
+                  `IQR: ${formatValue(point.q1)}${suffix} to ${formatValue(point.q3)}${suffix}`,
+                  `Range: ${formatValue(point.min)}${suffix} to ${formatValue(point.max)}${suffix}`,
+                  `Members: ${point.count}`,
+                ];
+              },
+            },
+          },
+        },
+        scales: {
+          x: {
+            ticks: {
+              maxRotation: 0,
+              autoSkip: true,
+              color: CHART_TICK_COLOR,
+            },
+            grid: { color: CHART_GRID_COLOR },
+          },
+          y: {
+            beginAtZero: shouldBeginAtZero(series.style),
+            suggestedMin: rangeValue(series.style, 0),
+            suggestedMax: rangeValue(series.style, 1),
+            ticks: {
+              color: CHART_TICK_COLOR,
+              callback(value) {
+                return series.units === "%" ? `${value}%` : value;
+              },
+            },
+            grid: { color: CHART_GRID_COLOR },
+          },
+        },
+      },
+    });
   }
 
-  async function copyCurrentLink() {
-    try {
-      await writeClipboard(currentViewUrl());
-      setShareStatus("Link copied");
-    } catch (error) {
-      console.error(error);
-      setShareStatus("Copy failed");
+  function destroyCharts() {
+    for (const chart of refs.charts) {
+      chart.destroy();
     }
+    refs.charts = [];
   }
 
-  async function downloadCurrentImage() {
-    try {
-      const blob = await canvasToBlob("image/png");
-      const url = URL.createObjectURL(blob);
-      const anchor = document.createElement("a");
-      anchor.href = url;
-      anchor.download = currentViewFilename("png");
-      document.body.appendChild(anchor);
-      anchor.click();
-      anchor.remove();
-      window.setTimeout(() => URL.revokeObjectURL(url), 1000);
-      setShareStatus("PNG saved");
-    } catch (error) {
-      console.error(error);
-      setShareStatus("Save failed");
+  function chartColor(style, overlayId) {
+    if (style && Array.isArray(style.colors) && style.colors.length) {
+      return style.colors[style.colors.length - 1];
     }
+    if (overlayId.includes("probability")) {
+      return "#cb5f24";
+    }
+    return "#2b6fbe";
+  }
+
+  function shouldBeginAtZero(style) {
+    return style && Array.isArray(style.range) ? style.range[0] >= 0 : true;
+  }
+
+  function rangeValue(style, index) {
+    return style && Array.isArray(style.range) ? style.range[index] : undefined;
+  }
+
+  function hydrateStateFromUrl() {
+    const params = new URLSearchParams(window.location.search);
+    state.station = (params.get("station") || DEFAULT_STATION).trim().toUpperCase();
+    state.member = params.get("member") || DEFAULT_MEMBER;
+    state.run = params.get("run") || "latest-ready";
+    state.group = params.get("group") || "all";
   }
 
   function updateUrl() {
     const params = new URLSearchParams();
-    params.set("run", state.runId);
+    params.set("station", state.station);
     params.set("member", state.member);
-    params.set("overlay", state.overlayId);
-    params.set("proj", state.domainId);
-    params.set("fhr", String(state.hour));
-    params.set("family", state.familyId);
+    params.set("run", state.run);
+    params.set("group", state.group);
     window.history.replaceState({}, "", `${window.location.pathname}?${params.toString()}`);
   }
 
-  function currentViewUrl() {
-    return window.location.href;
-  }
-
-  function currentShareTitle() {
-    const overlay = refs.layerMap.get(state.overlayId);
-    const domain = refs.domainMap.get(state.domainId);
-    return `${overlay ? overlay.label : "Forecast"} | ${domain ? domain.label : "CONUS"} | ${formatValidStamp(state.runId, state.hour)}`;
-  }
-
-  function currentViewFilename(extension) {
-    const safeOverlay = (state.overlayId || "forecast").replace(/[^a-z0-9]+/gi, "-").toLowerCase();
-    const safeDomain = (state.domainId || "conus").replace(/[^a-z0-9]+/gi, "-").toLowerCase();
-    return `hrrrcast-${safeOverlay}-${safeDomain}-f${padHour(state.hour)}.${extension}`;
-  }
-
-  function canvasToBlob(type) {
-    return new Promise((resolve, reject) => {
-      dom.canvas.toBlob((blob) => {
-        if (blob) {
-          resolve(blob);
-          return;
-        }
-        reject(new Error("Canvas export failed."));
-      }, type);
-    });
-  }
-
-  async function writeClipboard(value) {
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      await navigator.clipboard.writeText(value);
-      return;
+  async function fetchJson(url) {
+    const response = await fetch(url, { cache: "no-store" });
+    if (!response.ok) {
+      throw new Error(`Request failed: ${response.status} ${response.statusText}`);
     }
-    const input = document.createElement("input");
-    input.value = value;
-    document.body.appendChild(input);
-    input.select();
-    document.execCommand("copy");
-    input.remove();
+    return response.json();
   }
 
-  function setShareStatus(message) {
-    dom.shareStatus.textContent = message;
-    window.clearTimeout(setShareStatus.timeoutId);
-    setShareStatus.timeoutId = window.setTimeout(() => {
-      if (dom.shareStatus.textContent === message) {
-        dom.shareStatus.textContent = "";
-      }
-    }, 2600);
+  async function fetchBackendStations(query) {
+    const payload = await fetchJson(`${BACKEND_ROOT}/api/stations/search?q=${encodeURIComponent(query)}&limit=8`);
+    return Array.isArray(payload.stations) ? payload.stations : [];
   }
 
-  function getFrameKey(runId, member, overlayId, hour, domainId) {
-    return [runId, member, overlayId, padHour(hour), domainId, prefersMobilePreview() ? "mobile" : "desktop"].join("|");
+  async function loadStaticStations() {
+    const payload = await fetchJson(`${STATIC_ROOT}/stations.json`);
+    return Array.isArray(payload.stations) ? payload.stations : [];
   }
 
-  function getFrameUrlFromKey(key) {
-    const [runId, member, overlayId, hour, domainId, variant] = key.split("|");
-    const suffix = variant === "mobile" ? ".mobile.webp" : ".preview.png";
-    return `${STATIC_ROOT}/products/${runId}/${member}/${overlayId}/f${hour}/${domainId}${suffix}?v=${runId}`;
-  }
-
-  function prefersMobilePreview() {
-    return window.innerWidth <= MOBILE_BREAKPOINT;
-  }
-
-  function getAvailableMembers(runId) {
-    const run = refs.index[runId];
-    if (!run || !run.members) {
+  function searchStaticStations(query, limit) {
+    const text = query.trim().toUpperCase();
+    if (!text) {
       return [];
     }
-    const members = Object.keys(run.members);
-    return members.sort((left, right) => {
-      if (left === right) {
-        return 0;
-      }
-      if (left === "ens") {
-        return -1;
-      }
-      if (right === "ens") {
-        return 1;
-      }
-      return left.localeCompare(right);
-    });
-  }
-
-  function getOverlayHours(runId, member, overlayId) {
-    const run = refs.index[runId];
-    if (!run || !run.members || !run.members[member]) {
-      return [];
-    }
-    const hours = [];
-    const forecastHours = run.members[member].forecast_hours || {};
-    for (const [hourKey, hourData] of Object.entries(forecastHours)) {
-      if (hourData.overlays && overlayId in hourData.overlays) {
-        hours.push(Number(hourKey.slice(1)));
+    const prefix = [];
+    const contains = [];
+    for (const station of refs.staticStations) {
+      const tokens = [station.id, ...(station.aliases || []), station.site].filter(Boolean).map((item) => String(item).toUpperCase());
+      if (tokens.some((item) => item.startsWith(text))) {
+        prefix.push(station);
+      } else if (tokens.join(" ").includes(text)) {
+        contains.push(station);
       }
     }
-    return hours.sort((left, right) => left - right);
+    return [...prefix, ...contains].slice(0, limit);
   }
 
-  function getFrameDomainId(runId, member, overlayId, forecastHour, requestedDomainId) {
-    const domains = getOverlayDomains(runId, member, overlayId, forecastHour);
-    if (domains.includes(requestedDomainId)) {
-      return requestedDomainId;
-    }
-    if (domains.includes(SOURCE_DOMAIN_ID)) {
-      return SOURCE_DOMAIN_ID;
-    }
-    return domains[0] || SOURCE_DOMAIN_ID;
+  async function fetchStaticPointSeries(run, member, station) {
+    const runToken = run === "latest-ready" ? "latest-ready" : run;
+    return fetchJson(`${STATIC_ROOT}/point-series/${runToken}/${member}/${station}.json`);
   }
 
-  function getOverlayDomains(runId, member, overlayId, forecastHour) {
-    const run = refs.index[runId];
-    if (!run || !run.members || !run.members[member]) {
-      return [];
+  function resolveBackendRoot() {
+    const params = new URLSearchParams(window.location.search);
+    const paramRoot = params.get("backend");
+    if (paramRoot) {
+      return paramRoot.replace(/\/$/, "");
     }
-    const forecastHours = run.members[member].forecast_hours || {};
-    const hourToken = `f${padHour(forecastHour)}`;
-    const hourData = forecastHours[hourToken];
-    if (!hourData || !hourData.overlays || !hourData.overlays[overlayId]) {
-      return [];
+    if (typeof CONFIG.backend === "string" && CONFIG.backend) {
+      return CONFIG.backend.replace(/\/$/, "");
     }
-    return hourData.overlays[overlayId].slice();
+    return window.location.origin;
   }
 
-  function getAvailableOverlays(runId, member) {
-    const run = refs.index[runId];
-    if (!run || !run.members || !run.members[member]) {
-      return [];
+  function resolveStaticRoot() {
+    const params = new URLSearchParams(window.location.search);
+    const paramRoot = params.get("staticRoot");
+    if (paramRoot) {
+      return paramRoot.replace(/\/$/, "");
     }
-
-    const overlayIds = new Set();
-    for (const hourData of Object.values(run.members[member].forecast_hours || {})) {
-      for (const overlayId of Object.keys(hourData.overlays || {})) {
-        overlayIds.add(overlayId);
-      }
+    if (typeof CONFIG.staticRoot === "string" && CONFIG.staticRoot) {
+      return CONFIG.staticRoot.replace(/\/$/, "");
     }
-
-    return [...overlayIds]
-      .map((id) => refs.layerMap.get(id))
-      .filter((overlay) => overlay && isPublicOverlay(overlay.id))
-      .sort(sortOverlayList);
-  }
-
-  function getOverlaysForFamily(runId, member, familyId) {
-    return getAvailableOverlays(runId, member).filter((overlay) => overlayMatchesFamily(overlay.id, familyId));
-  }
-
-  function findFirstAvailableFamily(runId, member) {
-    return FAMILY_CONFIG.find((family) => getOverlaysForFamily(runId, member, family.id).length) || null;
-  }
-
-  function familyLabel(familyId) {
-    return (FAMILY_CONFIG.find((item) => item.id === familyId) || { label: "Featured" }).label;
-  }
-
-  function sortOverlayList(left, right) {
-    const leftMeta = getOverlayMeta(left.id);
-    const rightMeta = getOverlayMeta(right.id);
-    const leftOrder = typeof leftMeta.order === "number" ? leftMeta.order : 999;
-    const rightOrder = typeof rightMeta.order === "number" ? rightMeta.order : 999;
-    if (leftOrder !== rightOrder) {
-      return leftOrder - rightOrder;
-    }
-    return left.label.localeCompare(right.label);
-  }
-
-  function getOverlayMeta(overlayId) {
-    return PUBLIC_OVERLAY_META[overlayId] || {};
-  }
-
-  function isPublicOverlay(overlayId) {
-    return Object.prototype.hasOwnProperty.call(PUBLIC_OVERLAY_META, overlayId);
-  }
-
-  function overlayMatchesFamily(overlayId, familyId) {
-    const meta = getOverlayMeta(overlayId);
-    if (!meta) {
-      return false;
-    }
-    if (familyId === "all") {
-      return true;
-    }
-    if (familyId === "featured") {
-      return Boolean(meta.featured);
-    }
-    return meta.family === familyId;
-  }
-
-  function isProbabilityOverlay(overlayId) {
-    return typeof overlayId === "string" && overlayId.includes("_probability_");
-  }
-
-  function nearestHour(hours, target) {
-    if (!hours.length) {
-      return 0;
-    }
-    if (hours.includes(target)) {
-      return target;
-    }
-    let best = hours[0];
-    let bestDistance = Math.abs(best - target);
-    for (const hour of hours) {
-      const distance = Math.abs(hour - target);
-      if (distance < bestDistance) {
-        best = hour;
-        bestDistance = distance;
-      }
-    }
-    return best;
+    return "";
   }
 
   function formatRunStamp(runId) {
-    return formatStamp(parseRunDate(runId));
-  }
-
-  function formatValidStamp(runId, forecastHour) {
-    const date = parseRunDate(runId);
-    date.setUTCHours(date.getUTCHours() + forecastHour);
-    return formatStamp(date);
-  }
-
-  function parseRunDate(runId) {
     const year = Number(runId.slice(0, 4));
     const month = Number(runId.slice(4, 6)) - 1;
     const day = Number(runId.slice(6, 8));
     const hour = Number(runId.slice(8, 10));
-    return new Date(Date.UTC(year, month, day, hour));
+    const date = new Date(Date.UTC(year, month, day, hour));
+    return `${String(date.getUTCHours()).padStart(2, "0")}Z ${date.toLocaleString(undefined, { month: "short", day: "2-digit", timeZone: "UTC" })}`;
   }
 
-  function formatStamp(date) {
-    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    return `${String(date.getUTCHours()).padStart(2, "0")}Z ${months[date.getUTCMonth()]} ${String(date.getUTCDate()).padStart(2, "0")}`;
+  function formatLocalTime(value) {
+    const date = new Date(value);
+    return `${date.toLocaleDateString(undefined, { month: "short", day: "numeric" })} ${date.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })}`;
   }
 
-  function padHour(value) {
-    return String(value).padStart(3, "0");
-  }
-
-  function formatNumber(value) {
-    if (typeof value !== "number" || Number.isNaN(value)) {
-      return "";
+  function formatValue(value) {
+    if (!Number.isFinite(value)) {
+      return "n/a";
     }
     return Math.abs(value) >= 100 || Number.isInteger(value) ? String(Math.round(value)) : value.toFixed(1);
   }
 
-  function clamp(value, min, max) {
-    return Math.min(max, Math.max(min, value));
+  function summarizeSeries(series) {
+    if (series && series.chart_type === "distribution" && series.summary) {
+      return {
+        count: Number(series.summary.count || 0),
+        min: normalizeNumber(series.summary.min),
+        max: normalizeNumber(series.summary.max),
+        latest: normalizeNumber(series.summary.latest),
+        allZero: Boolean(series.summary.all_zero),
+      };
+    }
+    if (series && series.summary) {
+      return {
+        count: Number(series.summary.count || 0),
+        min: normalizeNumber(series.summary.min),
+        max: normalizeNumber(series.summary.max),
+        latest: normalizeNumber(series.summary.latest),
+        allZero: Boolean(series.summary.all_zero),
+      };
+    }
+    const values = (series.points || [])
+      .map((point) => normalizeNumber(point.value))
+      .filter((value) => Number.isFinite(value));
+    if (!values.length) {
+      return { count: 0, min: null, max: null, latest: null, allZero: false };
+    }
+    return {
+      count: values.length,
+      min: Math.min(...values),
+      max: Math.max(...values),
+      latest: values[values.length - 1],
+      allZero: values.every((value) => Math.abs(value) < 1e-6),
+    };
   }
 
-  async function loadJson(path) {
-    const response = await fetch(path, { cache: "default" });
-    if (!response.ok) {
-      throw new Error(`Failed to load ${path}`);
+  function renderChartSummary(summary, units) {
+    const suffix = units ? ` ${units}` : "";
+    return `
+      <div class="chart-summary">
+        <span>Latest <strong>${formatValue(summary.latest)}${suffix}</strong></span>
+        <span>Max <strong>${formatValue(summary.max)}${suffix}</strong></span>
+        <span>Min <strong>${formatValue(summary.min)}${suffix}</strong></span>
+      </div>
+    `;
+  }
+
+  function renderChartNote(series, summary) {
+    if (series.chart_type === "distribution") {
+      return '<p class="chart-note">Boxes show the 25th to 75th percentile member spread, whiskers show min to max, solid line is median, dashed line is mean.</p>';
     }
-    return response.json();
+    if (summary.allZero) {
+      return '<p class="chart-note">All forecast hours are currently zero for this element at this station.</p>';
+    }
+    return "";
+  }
+
+  function normalizeNumber(value) {
+    const numeric = Number(value);
+    return Number.isFinite(numeric) ? numeric : null;
+  }
+
+  function hexWithAlpha(hex, alpha) {
+    const clean = String(hex || "").replace("#", "");
+    if (clean.length !== 6) {
+      return hex;
+    }
+    const a = Math.max(0, Math.min(255, Math.round(alpha * 255)));
+    return `#${clean}${a.toString(16).padStart(2, "0")}`;
+  }
+
+  function registerDistributionPlugin() {
+    if (!window.Chart || Chart.registry.plugins.get("distributionBoxWhisker")) {
+      return;
+    }
+    Chart.register({
+      id: "distributionBoxWhisker",
+      afterDatasetsDraw(chart, _args, pluginOptions) {
+        if (!pluginOptions || !Array.isArray(pluginOptions.points) || !pluginOptions.points.length) {
+          return;
+        }
+        const xScale = chart.scales.x;
+        const yScale = chart.scales.y;
+        if (!xScale || !yScale) {
+          return;
+        }
+        const ctx = chart.ctx;
+        const color = pluginOptions.color || "#49a7ff";
+        const fill = hexWithAlpha(color, 0.18);
+        const points = pluginOptions.points;
+        const boxWidth = Math.max(8, Math.min(22, xStepEstimate(xScale, points.length) * 0.42));
+
+        ctx.save();
+        ctx.lineWidth = 1.25;
+        ctx.strokeStyle = hexWithAlpha(color, 0.95);
+        ctx.fillStyle = fill;
+        for (let index = 0; index < points.length; index += 1) {
+          const point = points[index];
+          const x = xScale.getPixelForValue(index);
+          const yMin = yScale.getPixelForValue(point.min);
+          const yQ1 = yScale.getPixelForValue(point.q1);
+          const yMedian = yScale.getPixelForValue(point.median);
+          const yQ3 = yScale.getPixelForValue(point.q3);
+          const yMax = yScale.getPixelForValue(point.max);
+          ctx.beginPath();
+          ctx.moveTo(x, yMin);
+          ctx.lineTo(x, yMax);
+          ctx.stroke();
+
+          ctx.fillRect(x - boxWidth / 2, Math.min(yQ1, yQ3), boxWidth, Math.max(2, Math.abs(yQ3 - yQ1)));
+          ctx.strokeRect(x - boxWidth / 2, Math.min(yQ1, yQ3), boxWidth, Math.max(2, Math.abs(yQ3 - yQ1)));
+
+          ctx.beginPath();
+          ctx.moveTo(x - boxWidth / 2, yMedian);
+          ctx.lineTo(x + boxWidth / 2, yMedian);
+          ctx.stroke();
+
+          ctx.beginPath();
+          ctx.moveTo(x - boxWidth * 0.3, yMin);
+          ctx.lineTo(x + boxWidth * 0.3, yMin);
+          ctx.moveTo(x - boxWidth * 0.3, yMax);
+          ctx.lineTo(x + boxWidth * 0.3, yMax);
+          ctx.stroke();
+        }
+        ctx.restore();
+      },
+    });
+  }
+
+  function xStepEstimate(xScale, count) {
+    if (!xScale || count < 2) {
+      return 18;
+    }
+    const first = xScale.getPixelForValue(0);
+    const second = xScale.getPixelForValue(1);
+    return Math.abs(second - first) || 18;
   }
 })();
