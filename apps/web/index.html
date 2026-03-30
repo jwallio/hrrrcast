@@ -1,149 +1,229 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="notranslate" translate="no">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>HRRRCast 1D Viewer</title>
     <meta
       name="description"
-      content="Operational HRRRCast 1D station viewer with NBM-style controls, stacked charts, and shareable URL state."
+      content="HRRRCast 1D Viewer modeled directly after the NOAA NBM 1D Viewer interaction pattern."
     />
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body data-theme="dark" data-fontsize="md">
-    <div class="app-shell">
-      <header class="topbar">
-        <div class="brand-block">
-          <div class="brand-mark">HRRRCast 1D Viewer</div>
-          <div class="brand-copy">Operational station workstation for deterministic and ensemble HRRRCast point forecasts</div>
-        </div>
-        <div class="topbar-actions">
-          <div class="status-pill" id="statusPill">Loading latest-ready run</div>
-          <button class="link-button" id="copyLinkButton" type="button">Copy Link</button>
-        </div>
-      </header>
+    <div id="wrapper">
+      <table id="logotable">
+        <tr>
+          <td>
+            <div id="logo">
+              <div class="inner">
+                <div id="blur"><span>HRRRCast 1D Viewer</span></div>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="disclaimer red">
+              * EXPERIMENTAL - Limited Distribution for Testing *
+            </div>
+          </td>
+        </tr>
+      </table>
 
-      <main class="workstation">
-        <aside class="control-rail">
-          <section class="rail-panel">
-            <div class="panel-header">
-              <div>
-                <p class="panel-kicker">Location</p>
-                <h2 class="panel-title">Station Search</h2>
-              </div>
-            </div>
-            <form class="lookup-form" id="lookupForm" autocomplete="off">
-              <label class="field">
-                <span>Airport Code</span>
-                <input id="stationInput" name="station" type="text" placeholder="KRDU, KATL, KCLT" spellcheck="false" />
-              </label>
-              <button class="primary-button" type="submit">Load</button>
-            </form>
-            <div class="suggestions" id="suggestions" hidden></div>
-          </section>
-
-          <section class="rail-panel">
-            <div class="panel-header">
-              <div>
-                <p class="panel-kicker">Controls</p>
-                <h2 class="panel-title">Run And Display</h2>
-              </div>
-            </div>
-            <div class="field-grid two-up">
-              <label class="field">
-                <span>Run</span>
-                <select id="runSelect"></select>
-              </label>
-              <label class="field">
-                <span>Member</span>
-                <select id="memberSelect"></select>
-              </label>
-              <label class="field">
-                <span>Group</span>
-                <select id="groupSelect"></select>
-              </label>
-              <label class="field">
-                <span>Timezone</span>
-                <select id="timezoneSelect">
-                  <option value="local">Browser Local</option>
-                  <option value="station">Station Local</option>
-                  <option value="utc">UTC</option>
-                </select>
-              </label>
-            </div>
-          </section>
-
-          <section class="rail-panel">
-            <div class="panel-header">
-              <div>
-                <p class="panel-kicker">Element Browser</p>
-                <h2 class="panel-title">Fields</h2>
-              </div>
-              <button class="mini-button" id="selectAllElementsButton" type="button">Select Group</button>
-            </div>
-            <div class="browser-help" id="browserHelp"></div>
-            <div class="element-browser" id="elementBrowser"></div>
-          </section>
-
-          <section class="rail-panel">
-            <div class="panel-header">
-              <div>
-                <p class="panel-kicker">Settings</p>
-                <h2 class="panel-title">Chart Options</h2>
-              </div>
-            </div>
-            <div class="settings-grid">
-              <div class="setting-block">
-                <span class="setting-label">Theme</span>
-                <label class="toggle-row"><input id="darkmodeToggle" type="checkbox" checked /> <span>Dark Mode</span></label>
-                <label class="toggle-row"><input id="colorfriendlyToggle" type="checkbox" /> <span>Alternate Colors</span></label>
-              </div>
-              <div class="setting-block">
-                <span class="setting-label">Observations</span>
-                <label class="toggle-row"><input id="obsToggle" type="checkbox" /> <span>Show Obs Overlay</span></label>
-                <p class="setting-note">Observation overlays are stubbed until point observations are added to the bundle.</p>
-              </div>
-              <div class="setting-block">
-                <span class="setting-label">Ensemble Display</span>
-                <label class="toggle-row"><input id="boxesToggle" type="checkbox" checked /> <span>Boxes</span></label>
-                <label class="toggle-row"><input id="whiskersToggle" type="checkbox" checked /> <span>Whiskers</span></label>
-                <label class="toggle-row"><input id="medianToggle" type="checkbox" checked /> <span>Median Line</span></label>
-                <label class="toggle-row"><input id="detToggle" type="checkbox" checked /> <span>Deterministic Overlay</span></label>
-              </div>
-              <div class="setting-block">
-                <span class="setting-label">Font Size</span>
-                <div class="segmented-control" id="fontSizeControl">
-                  <button class="segmented-button" data-size="sm" type="button">Small</button>
-                  <button class="segmented-button" data-size="md" type="button">Medium</button>
-                  <button class="segmented-button" data-size="lg" type="button">Large</button>
+      <div id="flex-wrapper">
+        <div id="main-content">
+          <table id="main-content-table">
+            <tr>
+              <td id="contentid" class="content">
+                <div id="slider-wrapper">
+                  <div class="slidercontainer">
+                    <div class="shorter" id="graphcoldivlabel">Width:</div>
+                    <div id="graphcoldiv" class="sliderdiv">
+                      <input id="graphcol" type="range" min="1" max="3" value="2" class="slider sliderreverse" />
+                    </div>
+                  </div>
+                  <div class="slidercontainer">
+                    <div class="shorter">Height:</div>
+                    <div id="graphhgtdiv" class="sliderdiv">
+                      <input id="graphhgt" type="range" min="0.7" max="2" value="1" step="0.1" class="slider" />
+                    </div>
+                  </div>
                 </div>
+
+                <div class="parent">
+                  <div class="dropdown menu">
+                    <button id="elementbrowserbtn" class="dropbtn">Element Browser</button>
+                    <div id="elementbrowser" class="dropdown-content browser-dropdown"></div>
+                  </div>
+                  <div class="dropdown datemenu">
+                    <button id="runbtn" class="dropbtn datemenu">Run</button>
+                    <div id="runmenu" class="dropdown-content datemenu"></div>
+                  </div>
+                  <div class="dropdown datemenu">
+                    <button id="memberbtn" class="dropbtn datemenu">Member</button>
+                    <div id="membermenu" class="dropdown-content datemenu"></div>
+                  </div>
+                  <div class="dropdown datemenu">
+                    <button id="groupbtn" class="dropbtn datemenu">Group</button>
+                    <div id="groupmenu" class="dropdown-content datemenu"></div>
+                  </div>
+                  <div class="dropdown datemenu">
+                    <button id="timezonebtn" class="dropbtn datemenu">Timezone</button>
+                    <div id="timezonemenu" class="dropdown-content datemenu"></div>
+                  </div>
+
+                  <button id="togglecharts" class="dropbtn smallbutton" title="Toggle chart view">Chart</button>
+                  <button id="cameraButton" class="dropbtn smallbutton" title="Copy current view link">Share</button>
+                  <button id="downloadButton" class="dropbtn smallbutton" title="Download current point data">Data</button>
+                  <button id="settingsbtn" class="dropbtn smallbutton" title="Settings">Settings</button>
+                </div>
+
+                <div id="titleandgraphs">
+                  <div id="titles">
+                    <div class="title-row">
+                      <input id="stationInput" class="station-input" type="text" placeholder="Airport code: KRDU" spellcheck="false" />
+                      <button id="stationSubmit" class="station-button" type="button">Load</button>
+                    </div>
+                    <div id="suggestions" class="suggestions" hidden></div>
+                    <p id="datetitle" class="dateandinfo"></p>
+                    <div id="boxwhiskerinfowrapper">
+                      <p class="boxwhiskerinfo boxwhiskerinfolink" id="boxwhiskerlabel">Box whiskers:</p>
+                      <p class="boxwhiskerinfo" id="infoboxwhiskersvalues"></p>
+                    </div>
+                  </div>
+                  <div id="main"></div>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <div id="side-drawer" class="hide-drawer">
+          <div id="main-map" class="content">
+            <div class="drawer-section">
+              <p class="drawer-title">Station Browser</p>
+              <p class="drawer-copy">Type an ICAO, FAA, or IATA code to load a station and update the chart stack.</p>
+            </div>
+            <div class="drawer-section">
+              <p class="drawer-subtitle">Quick Stations</p>
+              <div id="quickstations" class="quickstations"></div>
+            </div>
+            <div class="drawer-section">
+              <p class="drawer-subtitle">Current View</p>
+              <div id="drawerstatus" class="drawerstatus"></div>
+            </div>
+          </div>
+        </div>
+
+        <button id="map-btn" type="button">
+          <span id="map-btn-i">&#9776;</span>
+        </button>
+      </div>
+    </div>
+
+    <div id="settings" class="modal">
+      <div class="modal-content" id="settingscontent">
+        <span class="close" id="settingsclose">&times;</span>
+        <p id="settingstabletitlemain"><b>Settings</b></p>
+        <table id="settingstable">
+          <tr>
+            <td class="settingstabletitle">Option</td>
+            <td class="settingstabletitle">Hotkey</td>
+            <td class="settingstabletitle">Value</td>
+          </tr>
+          <tr>
+            <td>Zoom</td>
+            <td></td>
+            <td class="setting-copy">Zoom in: drag on a plot. Reset: click once on a plot or use the button.</td>
+          </tr>
+          <tr>
+            <td>Custom Weather Element Group</td>
+            <td><div class="border">c</div></td>
+            <td><button class="dropbtn pointer" id="customgroupbtn" type="button">set</button></td>
+          </tr>
+          <tr>
+            <td>Time Option</td>
+            <td></td>
+            <td>
+              <div class="dropdown menu">
+                <button id="timezonebtnmodal" class="dropbtn menu">Current Timezone</button>
+                <div id="timezonemenumodal" class="dropdown-content menu"></div>
               </div>
-            </div>
-          </section>
-        </aside>
-
-        <section class="content-shell">
-          <header class="content-header">
-            <div class="summary-block">
-              <p class="summary-kicker" id="summaryKicker">Airport Forecast Point</p>
-              <h1 class="summary-title" id="stationTitle">Loading station</h1>
-              <div class="summary-meta" id="stationMeta"></div>
-              <p class="summary-copy" id="stationCopy"></p>
-            </div>
-            <div class="view-tools">
-              <div class="view-chip-row" id="viewChipRow"></div>
-              <div class="view-buttons">
-                <button class="mini-button" id="resetZoomButton" type="button">Reset Zoom</button>
-                <button class="mini-button" id="restoreDefaultsButton" type="button">Defaults</button>
+            </td>
+          </tr>
+          <tr>
+            <td>Observations</td>
+            <td><div class="border">o</div></td>
+            <td><label class="switch"><input type="checkbox" id="obsonoff" /><span class="toggleswitch round"></span></label></td>
+          </tr>
+          <tr>
+            <td>Alternate Color Scheme</td>
+            <td></td>
+            <td><label class="switch"><input type="checkbox" id="colorfriendly" /><span class="toggleswitch round"></span></label></td>
+          </tr>
+          <tr>
+            <td>Font Size</td>
+            <td><div class="border">+</div><div class="border">-</div></td>
+            <td><div class="center"><input id="fontsizeslider" type="range" min="0.7" max="1.4" value="1" step="0.1" class="slider" /></div></td>
+          </tr>
+          <tr>
+            <td>Dark Mode</td>
+            <td></td>
+            <td>
+              <div class="dropdown datemenu">
+                <button id="darkmodebtn" class="dropbtn datemenu">On</button>
+                <div id="darkmodemenu" class="dropdown-content datemenu"></div>
               </div>
-            </div>
-          </header>
+            </td>
+          </tr>
+          <tr>
+            <td>Readout:</td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>&nbsp;&nbsp;&nbsp;&nbsp;Box Whiskers</td>
+            <td><div class="border">w</div></td>
+            <td><label class="switch"><input type="checkbox" id="boxwhiskersreadout" checked /><span class="toggleswitch round"></span></label></td>
+          </tr>
+          <tr>
+            <td>&nbsp;&nbsp;&nbsp;&nbsp;Boxes</td>
+            <td><div class="border">b</div></td>
+            <td><label class="switch"><input type="checkbox" id="boxreadout" checked /><span class="toggleswitch round"></span></label></td>
+          </tr>
+          <tr>
+            <td>&nbsp;&nbsp;&nbsp;&nbsp;Box Median</td>
+            <td><div class="border">m</div></td>
+            <td><label class="switch"><input type="checkbox" id="boxmedianreadout" checked /><span class="toggleswitch round"></span></label></td>
+          </tr>
+          <tr>
+            <td>&nbsp;&nbsp;&nbsp;&nbsp;Deterministic (circles)</td>
+            <td><div class="border">d</div></td>
+            <td><label class="switch"><input type="checkbox" id="deterministicreadout" checked /><span class="toggleswitch round"></span></label></td>
+          </tr>
+        </table>
+      </div>
+    </div>
 
-          <section class="info-banner" id="infoBanner" hidden></section>
+    <div id="customgroup" class="modal">
+      <div class="modal-content" id="customgroupcontent">
+        <span class="close" id="customgroupclose">&times;</span>
+        <p><b>Custom Weather Element Group</b></p>
+        <p>Selections are saved to the url so be sure bookmark this page when done.</p>
+        <div id="customgroupoptions" class="customgroupoptions"></div>
+        <div class="customgroupactions">
+          <button id="customgroupsave" class="dropbtn pointer" type="button">Use Custom Group</button>
+          <button id="customgroupclear" class="dropbtn pointer" type="button">Clear</button>
+        </div>
+      </div>
+    </div>
 
-          <section class="chart-stack" id="chartGroups"></section>
-        </section>
-      </main>
+    <div id="contactdiv" class="contact">
+      Built from HRRRCast point-series exports with an interface patterned after the NOAA NBM 1D Viewer.
+    </div>
+    <div class="disclaimer">
+      * The HRRRCast 1D Viewer is experimental and provided strictly "as-is" without any warranty or guaranty of any kind.
     </div>
 
     <script src="./chart.umd.min.js"></script>

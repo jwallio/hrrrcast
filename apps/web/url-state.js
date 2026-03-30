@@ -6,38 +6,47 @@
     run: "latest-ready",
     member: "ens",
     group: "storm",
-    darkmode: true,
+    customgroup: [],
+    darkmode: "on",
     tz: "local",
     obs: false,
-    fontsize: "md",
+    fontsize: 1,
     boxes: true,
     whiskers: true,
     median: true,
     det: true,
     colorfriendly: false,
     elements: [],
+    col: 2,
+    hgt: 1,
+    graph: "chart",
   });
 
-  const FONT_SIZES = new Set(["sm", "md", "lg"]);
   const TIMEZONES = new Set(["local", "station", "utc"]);
+  const DARKMODES = new Set(["auto", "on", "off"]);
+  const GRAPHS = new Set(["chart", "distribution"]);
 
   function parseState(search) {
     const params = new URLSearchParams(search || window.location.search);
     return {
-      station: normalizeStation(params.get("station") || DEFAULTS.station),
+      station: normalizeStation(params.get("station") || params.get("location") || DEFAULTS.station),
       run: params.get("run") || DEFAULTS.run,
       member: params.get("member") || DEFAULTS.member,
       group: params.get("group") || params.get("selectedgroup") || DEFAULTS.group,
-      darkmode: parseBoolean(params.get("darkmode"), DEFAULTS.darkmode),
+      customgroup: parseList(params.get("customgroup")),
+      darkmode: DARKMODES.has(params.get("darkmode")) ? params.get("darkmode") : DEFAULTS.darkmode,
       tz: TIMEZONES.has(params.get("tz")) ? params.get("tz") : DEFAULTS.tz,
       obs: parseBoolean(params.get("obs"), DEFAULTS.obs),
-      fontsize: FONT_SIZES.has(params.get("fontsize")) ? params.get("fontsize") : DEFAULTS.fontsize,
+      fontsize: clampNumber(params.get("fontsize"), 0.7, 1.4, DEFAULTS.fontsize),
       boxes: parseBoolean(params.get("boxes"), DEFAULTS.boxes),
       whiskers: parseBoolean(params.get("whiskers"), DEFAULTS.whiskers),
       median: parseBoolean(params.get("median"), DEFAULTS.median),
       det: parseBoolean(params.get("det"), DEFAULTS.det),
       colorfriendly: parseBoolean(params.get("colorfriendly"), DEFAULTS.colorfriendly),
       elements: parseList(params.get("elements")),
+      col: clampInt(params.get("col"), 1, 3, DEFAULTS.col),
+      hgt: clampNumber(params.get("hgt"), 0.7, 2, DEFAULTS.hgt),
+      graph: GRAPHS.has(params.get("graph")) ? params.get("graph") : DEFAULTS.graph,
     };
   }
 
@@ -47,34 +56,44 @@
       run: input.run || DEFAULTS.run,
       member: normalizeChoice(input.member, availableMembers, DEFAULTS.member),
       group: normalizeChoice(input.group, availableGroups, DEFAULTS.group),
-      darkmode: Boolean(input.darkmode),
+      customgroup: filterElements(input.customgroup, allowedElements),
+      darkmode: DARKMODES.has(input.darkmode) ? input.darkmode : DEFAULTS.darkmode,
       tz: TIMEZONES.has(input.tz) ? input.tz : DEFAULTS.tz,
       obs: Boolean(input.obs),
-      fontsize: FONT_SIZES.has(input.fontsize) ? input.fontsize : DEFAULTS.fontsize,
+      fontsize: clampNumber(input.fontsize, 0.7, 1.4, DEFAULTS.fontsize),
       boxes: Boolean(input.boxes),
       whiskers: Boolean(input.whiskers),
       median: Boolean(input.median),
       det: Boolean(input.det),
       colorfriendly: Boolean(input.colorfriendly),
       elements: filterElements(input.elements, allowedElements),
+      col: clampInt(input.col, 1, 3, DEFAULTS.col),
+      hgt: clampNumber(input.hgt, 0.7, 2, DEFAULTS.hgt),
+      graph: GRAPHS.has(input.graph) ? input.graph : DEFAULTS.graph,
     };
   }
 
   function writeState(state) {
     const params = new URLSearchParams();
-    params.set("station", normalizeStation(state.station || DEFAULTS.station));
+    params.set("location", normalizeStation(state.station || DEFAULTS.station));
     params.set("run", state.run || DEFAULTS.run);
     params.set("member", state.member || DEFAULTS.member);
-    params.set("group", state.group || DEFAULTS.group);
-    params.set("darkmode", state.darkmode ? "on" : "off");
+    params.set("selectedgroup", state.group || DEFAULTS.group);
+    params.set("darkmode", state.darkmode || DEFAULTS.darkmode);
     params.set("tz", state.tz || DEFAULTS.tz);
-    params.set("obs", state.obs ? "on" : "off");
-    params.set("fontsize", state.fontsize || DEFAULTS.fontsize);
-    params.set("boxes", state.boxes ? "on" : "off");
-    params.set("whiskers", state.whiskers ? "on" : "off");
-    params.set("median", state.median ? "on" : "off");
-    params.set("det", state.det ? "on" : "off");
-    params.set("colorfriendly", state.colorfriendly ? "on" : "off");
+    params.set("obs", state.obs ? "true" : "false");
+    params.set("fontsize", String(clampNumber(state.fontsize, 0.7, 1.4, DEFAULTS.fontsize)));
+    params.set("boxes", state.boxes ? "true" : "false");
+    params.set("whiskers", state.whiskers ? "true" : "false");
+    params.set("median", state.median ? "true" : "false");
+    params.set("det", state.det ? "true" : "false");
+    params.set("colorfriendly", state.colorfriendly ? "true" : "false");
+    params.set("col", String(clampInt(state.col, 1, 3, DEFAULTS.col)));
+    params.set("hgt", String(clampNumber(state.hgt, 0.7, 2, DEFAULTS.hgt)));
+    params.set("graph", state.graph || DEFAULTS.graph);
+    if (Array.isArray(state.customgroup) && state.customgroup.length) {
+      params.set("customgroup", state.customgroup.join(","));
+    }
     if (Array.isArray(state.elements) && state.elements.length) {
       params.set("elements", state.elements.join(","));
     }
@@ -116,6 +135,22 @@
     }
     const allowedSet = new Set(Array.isArray(allowed) ? allowed : []);
     return elements.filter((item) => allowedSet.has(item));
+  }
+
+  function clampNumber(value, min, max, fallback) {
+    const numeric = Number(value);
+    if (!Number.isFinite(numeric)) {
+      return fallback;
+    }
+    return Math.max(min, Math.min(max, numeric));
+  }
+
+  function clampInt(value, min, max, fallback) {
+    const numeric = Math.round(Number(value));
+    if (!Number.isFinite(numeric)) {
+      return fallback;
+    }
+    return Math.max(min, Math.min(max, numeric));
   }
 
   window.HRRRCAST_URL_STATE = {
