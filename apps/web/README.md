@@ -1,17 +1,19 @@
-# Web App
+# Public Viewer
 
-`apps/web` is now the public 1D station viewer.
+`apps/web` is the public HRRRCast 1D station viewer.
 
-It serves a static HRRRCast airport/station experience with:
+It is now rebuilt around an operational, NOAA NBM 1D Viewer-inspired layout:
 
-- airport lookup by code
-- `ens` severe probability and member-spread charts
-- `m00` deterministic station charts
-- a GitHub Pages-friendly static data bundle in `apps/web/static-api`
+- left control rail
+- structured element browser
+- stacked time-series charts
+- URL-restored settings and selected fields
+- ensemble spread controls for boxes, whiskers, median, and deterministic overlay
+- click-drag chart zoom with single-click reset
 
 ## Run It
 
-For the static public app:
+Serve the public static app:
 
 ```powershell
 python -m http.server 8080 -d apps/web
@@ -23,40 +25,68 @@ Then open:
 http://127.0.0.1:8080/
 ```
 
-For the live local backend version:
+## URL Parameters
 
-```powershell
-python services/backend/app.py --port 8080
-python -m http.server 8090 -d apps/station-viewer
-```
-
-Then open:
-
-```text
-http://127.0.0.1:8090/?backend=http://127.0.0.1:8080
-```
-
-## URL State
-
-Supported parameters:
+Supported public URL state:
 
 ```text
 station
-member
 run
+member
 group
+darkmode
+tz
+obs
+fontsize
+boxes
+whiskers
+median
+det
+colorfriendly
+elements
 backend
 staticRoot
 ```
 
-Example:
+Parameter notes:
+
+- `station`: ICAO / FAA / IATA-style airport code, example `KRDU`
+- `run`: `latest-ready` or a concrete run like `2026032820`
+- `member`: `ens`, `m00`, and any built member available in the payload
+- `group`: `all` or a chart group id such as `storm`, `rotation`, `shear`, `moisture`, `aviation`, `upper`
+- `darkmode`: `on` or `off`
+- `tz`: `local`, `station`, or `utc`
+- `obs`: `on` or `off`
+- `fontsize`: `sm`, `md`, or `lg`
+- `boxes`: `on` or `off`
+- `whiskers`: `on` or `off`
+- `median`: `on` or `off`
+- `det`: `on` or `off`
+- `colorfriendly`: `on` or `off`
+- `elements`: comma-separated overlay ids for a custom field selection
+
+## Example Deep Links
+
+KRDU ensemble severe setup:
 
 ```text
-http://127.0.0.1:8080/?station=KRDU&member=ens&run=latest-ready&group=all
+https://jwallio.github.io/hrrrcast/?station=KRDU&run=latest-ready&member=ens&group=storm&darkmode=on&tz=local&obs=off&fontsize=md&boxes=on&whiskers=on&median=on&det=on&colorfriendly=off
+```
+
+KATL rotation setup:
+
+```text
+https://jwallio.github.io/hrrrcast/?station=KATL&run=latest-ready&member=ens&group=rotation&darkmode=on&tz=station&obs=off&fontsize=md&boxes=on&whiskers=on&median=on&det=on&colorfriendly=off
+```
+
+KRDU deterministic moisture setup with selected elements:
+
+```text
+https://jwallio.github.io/hrrrcast/?station=KRDU&run=latest-ready&member=m00&group=moisture&darkmode=on&tz=station&obs=off&fontsize=md&boxes=on&whiskers=on&median=on&det=on&colorfriendly=off&elements=dewpoint_2m,rh_2m,pwat
 ```
 
 ## Notes
 
-- The GitHub Pages root now serves this station viewer directly.
-- `apps/web/static-api/` is station-viewer data, not the old map snapshot bundle.
-- The old public map viewer pipeline has been removed from the Pages deploy path.
+- Observation overlays are not yet present in the static bundle, so the observation setting is a clean stub for now.
+- The public site keeps GitHub Pages compatibility and uses the existing point-series payloads.
+- URL state is the primary source of truth for restore/share behavior.

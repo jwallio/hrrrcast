@@ -2,70 +2,166 @@
   "use strict";
 
   const CONFIG = window.HRRRCAST_STATION_VIEWER || {};
-  const STATIC_ROOT = resolveStaticRoot();
-  const STATIC_MODE = Boolean(STATIC_ROOT);
-  const BACKEND_ROOT = STATIC_MODE ? "" : resolveBackendRoot();
-  const DEFAULT_STATION = "KRDU";
-  const DEFAULT_MEMBER = "ens";
-  const SEARCH_DEBOUNCE_MS = 160;
-  const CHART_TICK_COLOR = "#8fa4b8";
-  const CHART_GRID_COLOR = "rgba(143, 164, 184, 0.12)";
+  const UrlState = window.HRRRCAST_URL_STATE;
+  const DataService = window.HRRRCAST_DATA;
+  const Charts = window.HRRRCAST_CHARTS;
+
+  const FIELD_LIBRARY = {
+    storm: { title: "Storm Signals", description: "Radar and precipitation markers for convective timing and coverage." },
+    instability: { title: "Instability", description: "Buoyancy and inhibition for updraft potential." },
+    rotation: { title: "Rotation", description: "Low-level rotational support and helicity signal." },
+    shear: { title: "Shear", description: "Deep-layer and low-level shear magnitude or threshold support." },
+    wind: { title: "Wind", description: "Surface wind and gust signal." },
+    moisture: { title: "Temperature / Moisture", description: "Near-surface thermodynamic fields and moisture transport." },
+    aviation: { title: "Cloud / Ceiling / Visibility", description: "Flight-category relevant ceiling and visibility trends." },
+    kinematics: { title: "Kinematics", description: "Storm motion and vorticity diagnostics." },
+    upper: { title: "Upper Air", description: "Key synoptic-level support fields." },
+  };
+
+  const ELEMENT_DESCRIPTIONS = {
+    composite_reflectivity_probability_gt_40dbz: "Probability that members exceed 40 dBZ composite reflectivity.",
+    qpf_probability_gt_0p10: "Probability that accumulation exceeds 0.10 inches.",
+    cape_probability_gt_1000: "Probability that surface CAPE exceeds 1000 J/kg.",
+    helicity_0_1km_probability_gt_100: "Probability that 0-1 km storm-relative helicity exceeds 100 m^2/s^2.",
+    helicity_0_3km_probability_gt_250: "Probability that 0-3 km storm-relative helicity exceeds 250 m^2/s^2.",
+    shear_0_1km_probability_gt_20kt: "Probability that 0-1 km shear exceeds 20 kt.",
+    shear_0_6km_probability_gt_40kt: "Probability that 0-6 km shear exceeds 40 kt.",
+    wind_10m_probability_gt_25kt: "Probability that 10 m sustained wind exceeds 25 kt.",
+    composite_reflectivity_member_spread: "Member distribution of composite reflectivity at the nearest HRRRCast grid point.",
+    qpf_member_spread: "Member distribution of accumulated precipitation.",
+    cape_member_spread: "Member distribution of surface CAPE.",
+    helicity_0_1km_member_spread: "Member distribution of 0-1 km helicity.",
+    helicity_0_3km_member_spread: "Member distribution of 0-3 km helicity.",
+    shear_0_1km_speed_member_spread: "Member distribution of 0-1 km shear magnitude.",
+    shear_0_6km_speed_member_spread: "Member distribution of 0-6 km shear magnitude.",
+    wind_10m_member_spread: "Member distribution of 10 m wind speed.",
+    gust_surface_member_spread: "Member distribution of surface gust.",
+    composite_reflectivity: "Deterministic composite reflectivity from the selected member.",
+    qpf: "Deterministic accumulated precipitation.",
+    cape: "Deterministic surface-based CAPE.",
+    cin_surface: "Deterministic convective inhibition.",
+    dewpoint_2m: "Deterministic 2 m dewpoint.",
+    rh_2m: "Deterministic 2 m relative humidity.",
+    pwat: "Deterministic precipitable water.",
+    visibility: "Deterministic visibility.",
+    ceiling: "Deterministic cloud ceiling.",
+    surface_pressure: "Deterministic surface pressure.",
+    helicity_0_1km: "Deterministic 0-1 km storm-relative helicity.",
+    helicity_0_3km: "Deterministic 0-3 km storm-relative helicity.",
+    storm_motion_u: "Deterministic storm motion U component.",
+    storm_motion_v: "Deterministic storm motion V component.",
+    relative_vorticity_0_1km: "Deterministic low-level relative vorticity.",
+    relative_vorticity_0_2km: "Deterministic 0-2 km relative vorticity.",
+    shear_0_1km_speed: "Deterministic 0-1 km shear magnitude.",
+    shear_0_6km_speed: "Deterministic 0-6 km shear magnitude.",
+    wind_10m: "Deterministic 10 m wind speed.",
+    gust_surface: "Deterministic surface gust.",
+    height_500mb: "Deterministic 500 mb height.",
+    temperature_850mb: "Deterministic 850 mb temperature.",
+    wind_500mb: "Deterministic 500 mb wind speed.",
+    vertical_velocity_500mb: "Deterministic 500 mb vertical velocity.",
+  };
+
+  const ENS_TO_DET = {
+    composite_reflectivity_member_spread: "composite_reflectivity",
+    qpf_member_spread: "qpf",
+    cape_member_spread: "cape",
+    helicity_0_1km_member_spread: "helicity_0_1km",
+    helicity_0_3km_member_spread: "helicity_0_3km",
+    shear_0_1km_speed_member_spread: "shear_0_1km_speed",
+    shear_0_6km_speed_member_spread: "shear_0_6km_speed",
+    wind_10m_member_spread: "wind_10m",
+    gust_surface_member_spread: "gust_surface",
+  };
+
+  const STATE_TIMEZONES = {
+    NC: "America/New_York",
+    GA: "America/New_York",
+    SC: "America/New_York",
+    FL: "America/New_York",
+    TN: "America/Chicago",
+    TX: "America/Chicago",
+    IL: "America/Chicago",
+    CO: "America/Denver",
+    NY: "America/New_York",
+    VA: "America/New_York",
+  };
 
   const dom = {
     statusPill: document.getElementById("statusPill"),
+    copyLinkButton: document.getElementById("copyLinkButton"),
     lookupForm: document.getElementById("lookupForm"),
     stationInput: document.getElementById("stationInput"),
     suggestions: document.getElementById("suggestions"),
     runSelect: document.getElementById("runSelect"),
     memberSelect: document.getElementById("memberSelect"),
-    groupFilters: document.getElementById("groupFilters"),
+    groupSelect: document.getElementById("groupSelect"),
+    timezoneSelect: document.getElementById("timezoneSelect"),
+    selectAllElementsButton: document.getElementById("selectAllElementsButton"),
+    elementBrowser: document.getElementById("elementBrowser"),
+    browserHelp: document.getElementById("browserHelp"),
+    darkmodeToggle: document.getElementById("darkmodeToggle"),
+    colorfriendlyToggle: document.getElementById("colorfriendlyToggle"),
+    obsToggle: document.getElementById("obsToggle"),
+    boxesToggle: document.getElementById("boxesToggle"),
+    whiskersToggle: document.getElementById("whiskersToggle"),
+    medianToggle: document.getElementById("medianToggle"),
+    detToggle: document.getElementById("detToggle"),
+    fontSizeControl: document.getElementById("fontSizeControl"),
     stationTitle: document.getElementById("stationTitle"),
     stationMeta: document.getElementById("stationMeta"),
     stationCopy: document.getElementById("stationCopy"),
+    summaryKicker: document.getElementById("summaryKicker"),
+    viewChipRow: document.getElementById("viewChipRow"),
+    resetZoomButton: document.getElementById("resetZoomButton"),
+    restoreDefaultsButton: document.getElementById("restoreDefaultsButton"),
+    infoBanner: document.getElementById("infoBanner"),
     chartGroups: document.getElementById("chartGroups"),
   };
 
-  const state = {
-    run: "latest-ready",
-    member: DEFAULT_MEMBER,
-    station: DEFAULT_STATION,
-    group: "all",
-  };
+  const service = DataService.createDataService({
+    staticRoot: resolveStaticRoot(),
+    backendRoot: resolveBackendRoot(),
+  });
 
+  const state = UrlState.parseState(window.location.search);
   const refs = {
     runs: [],
+    stations: [],
     charts: [],
     suggestionTimer: 0,
-    lastPayload: null,
-    staticStations: [],
+    payload: null,
+    detPayload: null,
+    xRange: null,
+    theme: {
+      chartGrid: "rgba(143, 164, 184, 0.12)",
+      chartTick: "#91a5b9",
+    },
   };
 
-  registerDistributionPlugin();
+  Charts.registerPlugins();
 
   init().catch((error) => {
     console.error(error);
     dom.statusPill.textContent = "Viewer load failed";
-    dom.stationCopy.textContent = "Unable to load the station viewer.";
+    dom.chartGroups.innerHTML = '<div class="chart-empty">Unable to load the HRRRCast station viewer.</div>';
   });
 
   async function init() {
-    hydrateStateFromUrl();
     bindEvents();
-    if (STATIC_MODE) {
-      refs.staticStations = await loadStaticStations();
-    }
-    await loadRuns();
-    await loadPointSeries(state.station);
+    applyShellState();
+    refs.stations = await service.loadStations();
+    refs.runs = await service.loadRuns();
+    renderRunOptions();
+    await loadCurrentPayload();
   }
 
   function bindEvents() {
     dom.lookupForm.addEventListener("submit", async (event) => {
       event.preventDefault();
-      const code = dom.stationInput.value.trim().toUpperCase();
-      if (!code) {
-        return;
-      }
-      await loadPointSeries(code);
+      state.station = dom.stationInput.value.trim().toUpperCase() || UrlState.DEFAULTS.station;
+      refs.xRange = null;
+      await loadCurrentPayload();
     });
 
     dom.stationInput.addEventListener("input", () => {
@@ -76,15 +172,8 @@
         return;
       }
       refs.suggestionTimer = window.setTimeout(() => {
-        searchStations(query).catch((error) => console.error(error));
-      }, SEARCH_DEBOUNCE_MS);
-    });
-
-    dom.stationInput.addEventListener("focus", () => {
-      const query = dom.stationInput.value.trim();
-      if (query) {
-        searchStations(query).catch((error) => console.error(error));
-      }
+        loadSuggestions(query).catch((error) => console.error(error));
+      }, 130);
     });
 
     document.addEventListener("click", (event) => {
@@ -95,44 +184,108 @@
 
     dom.runSelect.addEventListener("change", async () => {
       state.run = dom.runSelect.value;
-      await loadPointSeries(state.station);
+      refs.xRange = null;
+      await loadCurrentPayload();
     });
 
     dom.memberSelect.addEventListener("change", async () => {
       state.member = dom.memberSelect.value;
-      state.group = "all";
-      await loadPointSeries(state.station);
+      state.group = UrlState.DEFAULTS.group;
+      state.elements = [];
+      refs.xRange = null;
+      await loadCurrentPayload();
+    });
+
+    dom.groupSelect.addEventListener("change", () => {
+      state.group = dom.groupSelect.value;
+      state.elements = [];
+      refs.xRange = null;
+      renderElementBrowser();
+      renderCharts();
+      syncUrlAndChrome();
+    });
+
+    dom.timezoneSelect.addEventListener("change", () => {
+      state.tz = dom.timezoneSelect.value;
+      renderSummary();
+      renderCharts();
+      syncUrlAndChrome();
+    });
+
+    dom.copyLinkButton.addEventListener("click", async () => {
+      UrlState.writeState(state);
+      try {
+        await navigator.clipboard.writeText(window.location.href);
+        dom.statusPill.textContent = "Share link copied";
+      } catch (error) {
+        console.error(error);
+        dom.statusPill.textContent = "Unable to copy link";
+      }
+    });
+
+    dom.resetZoomButton.addEventListener("click", () => {
+      refs.xRange = null;
+      syncChartRange();
+      renderSummary();
+    });
+
+    dom.restoreDefaultsButton.addEventListener("click", async () => {
+      Object.assign(state, UrlState.parseState(""));
+      state.elements = [];
+      refs.xRange = null;
+      applyShellState();
+      await loadCurrentPayload();
+    });
+
+    dom.selectAllElementsButton.addEventListener("click", () => {
+      state.elements = activeGroups().flatMap((group) => group.overlays);
+      renderElementBrowser();
+      renderCharts();
+      syncUrlAndChrome();
+    });
+
+    dom.darkmodeToggle.addEventListener("change", () => updateSetting("darkmode", dom.darkmodeToggle.checked, true));
+    dom.colorfriendlyToggle.addEventListener("change", () => updateSetting("colorfriendly", dom.colorfriendlyToggle.checked, true));
+    dom.obsToggle.addEventListener("change", () => updateSetting("obs", dom.obsToggle.checked, true));
+    dom.boxesToggle.addEventListener("change", () => updateSetting("boxes", dom.boxesToggle.checked, true));
+    dom.whiskersToggle.addEventListener("change", () => updateSetting("whiskers", dom.whiskersToggle.checked, true));
+    dom.medianToggle.addEventListener("change", () => updateSetting("median", dom.medianToggle.checked, true));
+    dom.detToggle.addEventListener("change", async () => {
+      state.det = dom.detToggle.checked;
+      if (state.det && state.member === "ens") {
+        await ensureDeterministicOverlayPayload();
+      }
+      renderCharts();
+      syncUrlAndChrome();
+    });
+
+    dom.fontSizeControl.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-size]");
+      if (!button) {
+        return;
+      }
+      updateSetting("fontsize", button.dataset.size, true);
+    });
+
+    window.addEventListener("popstate", async () => {
+      const next = UrlState.parseState(window.location.search);
+      const shouldReload = next.station !== state.station || next.run !== state.run || next.member !== state.member;
+      Object.assign(state, next);
+      refs.xRange = null;
+      applyShellState();
+      if (shouldReload) {
+        await loadCurrentPayload();
+      } else {
+        renderElementBrowser();
+        renderSummary();
+        renderCharts();
+        syncUrlAndChrome();
+      }
     });
   }
 
-  async function loadRuns() {
-    const payload = STATIC_MODE
-      ? await fetchJson(`${STATIC_ROOT}/runs.json`)
-      : await fetchJson(`${BACKEND_ROOT}/api/runs`);
-    refs.runs = Array.isArray(payload.runs) ? payload.runs : [];
-    renderRunOptions();
-  }
-
-  function renderRunOptions() {
-    dom.runSelect.innerHTML = "";
-    const latestReady = document.createElement("option");
-    latestReady.value = "latest-ready";
-    latestReady.textContent = "Latest Ready";
-    latestReady.selected = state.run === "latest-ready";
-    dom.runSelect.appendChild(latestReady);
-    for (const run of refs.runs.slice().reverse()) {
-      const option = document.createElement("option");
-      option.value = run.run_id;
-      option.textContent = `${formatRunStamp(run.run_id)}${run.status === "ready" ? "" : " partial"}`;
-      option.selected = run.run_id === state.run;
-      dom.runSelect.appendChild(option);
-    }
-  }
-
-  async function searchStations(query) {
-    const stations = STATIC_MODE
-      ? searchStaticStations(query, 8)
-      : await fetchBackendStations(query);
+  async function loadSuggestions(query) {
+    const stations = await service.searchStations(query, refs.stations);
     if (!stations.length) {
       hideSuggestions();
       return;
@@ -142,14 +295,15 @@
       const button = document.createElement("button");
       button.type = "button";
       button.className = "suggestion-button";
-      button.innerHTML = [
-        `<span class="suggestion-line"><strong>${station.id}</strong> ${station.site}</span>`,
-        `<span class="suggestion-line">${[station.state, station.country].filter(Boolean).join(", ")} | ${station.lat.toFixed(2)}, ${station.lon.toFixed(2)}</span>`,
-      ].join("");
+      button.innerHTML = `
+        <span class="suggestion-line"><strong>${station.id}</strong> ${station.site}</span>
+        <span class="suggestion-line">${[station.state, station.country].filter(Boolean).join(", ")} | ${station.lat.toFixed(2)}, ${station.lon.toFixed(2)}</span>
+      `;
       button.addEventListener("click", async () => {
-        dom.stationInput.value = station.id;
+        state.station = station.id;
+        refs.xRange = null;
         hideSuggestions();
-        await loadPointSeries(station.id);
+        await loadCurrentPayload();
       });
       dom.suggestions.appendChild(button);
     }
@@ -161,300 +315,221 @@
     dom.suggestions.innerHTML = "";
   }
 
-  async function loadPointSeries(stationCode) {
-    state.station = stationCode.toUpperCase();
-    dom.stationInput.value = state.station;
+  async function loadCurrentPayload() {
     dom.statusPill.textContent = `Loading ${state.station}`;
+    dom.stationInput.value = state.station;
     hideSuggestions();
-
-    const payload = STATIC_MODE
-      ? await fetchStaticPointSeries(state.run, state.member, state.station)
-      : await fetchJson(`${BACKEND_ROOT}/api/point-series?run=${encodeURIComponent(state.run)}&station=${encodeURIComponent(state.station)}&member=${encodeURIComponent(state.member)}`);
-    refs.lastPayload = payload;
+    const payload = await service.loadPointSeries(state.run, state.member, state.station);
+    refs.payload = payload;
     state.member = payload.member;
-    if (!payload.chart_groups.some((group) => group.id === state.group)) {
-      state.group = "all";
+    refs.detPayload = null;
+    if (state.det && state.member === "ens") {
+      await ensureDeterministicOverlayPayload();
     }
+    normalizeGroupAndElements();
+    renderRunOptions();
     renderMemberOptions(payload.available_members || []);
-    renderStation(payload);
-    renderGroupFilters(payload.chart_groups || []);
-    renderCharts(payload);
-    dom.statusPill.textContent = `${payload.run_id} | ${payload.member.toUpperCase()} | ${payload.station.id}`;
-    updateUrl();
+    renderGroupOptions();
+    applyShellState();
+    renderSummary();
+    renderElementBrowser();
+    renderCharts();
+    syncUrlAndChrome();
   }
 
-  function renderMemberOptions(availableMembers) {
-    dom.memberSelect.innerHTML = "";
-    for (const member of availableMembers) {
-      const option = document.createElement("option");
-      option.value = member;
-      option.textContent = member === "ens" ? "Ens Spread + Probabilities" : member.toUpperCase();
-      option.selected = member === state.member;
-      dom.memberSelect.appendChild(option);
-    }
-  }
-
-  function renderStation(payload) {
-    const station = payload.station;
-    dom.stationTitle.textContent = `${station.id} | ${station.site}`;
-    dom.stationMeta.innerHTML = "";
-    const badges = [
-      station.icaoId ? `ICAO ${station.icaoId}` : null,
-      station.faaId ? `FAA ${station.faaId}` : null,
-      station.iataId ? `IATA ${station.iataId}` : null,
-      `${station.lat.toFixed(2)}, ${station.lon.toFixed(2)}`,
-      station.elev ? `${station.elev} m` : null,
-    ].filter(Boolean);
-    for (const text of badges) {
-      const chip = document.createElement("span");
-      chip.textContent = text;
-      dom.stationMeta.appendChild(chip);
-    }
-    const modeCopy = payload.member === "ens"
-      ? "Ensemble mode shows severe probabilities plus member spread charts with median, quartiles, and whiskers."
-      : "Deterministic mode shows nearest-grid HRRRCast time series from the selected member.";
-    dom.stationCopy.textContent = `${modeCopy} Values come from the closest processed model grid point for each forecast hour.`;
-  }
-
-  function renderGroupFilters(groups) {
-    dom.groupFilters.innerHTML = "";
-    const items = [{ id: "all", title: "All Elements" }, ...groups.map((group) => ({ id: group.id, title: group.title }))];
-    for (const item of items) {
-      const button = document.createElement("button");
-      button.type = "button";
-      button.className = "group-button";
-      button.textContent = item.title;
-      if (item.id === state.group) {
-        button.classList.add("is-active");
-      }
-      button.addEventListener("click", () => {
-        state.group = item.id;
-        renderCharts(refs.lastPayload);
-        updateUrl();
-      });
-      dom.groupFilters.appendChild(button);
-    }
-  }
-
-  function renderCharts(payload) {
-    destroyCharts();
-    dom.chartGroups.innerHTML = "";
-    if (!payload || !payload.chart_groups || !payload.chart_groups.length) {
-      dom.chartGroups.innerHTML = '<section class="chart-section"><div class="chart-empty">No chartable products are available for this station and member.</div></section>';
+  async function ensureDeterministicOverlayPayload() {
+    if (refs.detPayload || state.member !== "ens") {
       return;
     }
+    try {
+      refs.detPayload = await service.loadPointSeries(state.run, "m00", state.station);
+    } catch (error) {
+      console.error(error);
+      refs.detPayload = null;
+    }
+  }
 
-    let renderedCharts = 0;
-    for (const group of payload.chart_groups) {
-      if (state.group !== "all" && group.id !== state.group) {
-        continue;
-      }
-      const section = document.createElement("section");
-      section.className = "chart-section";
-      section.innerHTML = `
-        <div class="section-head">
-          <div>
-            <p class="section-kicker">Element Group</p>
-            <h2 class="section-title">${group.title}</h2>
-          </div>
-        </div>
-      `;
-      const chartList = document.createElement("div");
-      chartList.className = "chart-list";
-      section.appendChild(chartList);
+  function renderRunOptions() {
+    dom.runSelect.innerHTML = "";
+    const latest = document.createElement("option");
+    latest.value = "latest-ready";
+    latest.textContent = "Latest Ready";
+    dom.runSelect.appendChild(latest);
+    for (const run of refs.runs.slice().reverse()) {
+      const option = document.createElement("option");
+      option.value = run.run_id;
+      option.textContent = `${formatRunStamp(run.run_id)}${run.status === "ready" ? "" : " partial"}`;
+      dom.runSelect.appendChild(option);
+    }
+    dom.runSelect.value = state.run;
+  }
 
+  function renderMemberOptions(members) {
+    dom.memberSelect.innerHTML = "";
+    for (const member of members) {
+      const option = document.createElement("option");
+      option.value = member;
+      option.textContent = member === "ens" ? "Ens" : member.toUpperCase();
+      dom.memberSelect.appendChild(option);
+    }
+    dom.memberSelect.value = state.member;
+  }
+
+  function renderGroupOptions() {
+    dom.groupSelect.innerHTML = "";
+    const groups = activeGroupsRaw();
+    const allOption = document.createElement("option");
+    allOption.value = "all";
+    allOption.textContent = "All Groups";
+    dom.groupSelect.appendChild(allOption);
+    for (const group of groups) {
+      const option = document.createElement("option");
+      option.value = group.id;
+      option.textContent = groupTitle(group.id, group.title);
+      dom.groupSelect.appendChild(option);
+    }
+    dom.groupSelect.value = state.group;
+  }
+
+  function renderSummary() {
+    if (!refs.payload) {
+      return;
+    }
+    const station = refs.payload.station;
+    dom.stationTitle.textContent = `${station.id} | ${station.site}`;
+    dom.summaryKicker.textContent = refs.payload.member === "ens" ? "HRRRCast Ensemble Station Guidance" : "HRRRCast Deterministic Station Guidance";
+    dom.stationMeta.innerHTML = "";
+    const metaItems = [
+      `Run ${formatRunStamp(refs.payload.run_id)}`,
+      refs.payload.member === "ens" ? "Ensemble" : refs.payload.member.toUpperCase(),
+      `TZ ${formatTimezoneLabel(state.tz, station)}`,
+      `Lat ${station.lat.toFixed(2)}`,
+      `Lon ${station.lon.toFixed(2)}`,
+      station.elev ? `${station.elev} m` : null,
+    ].filter(Boolean);
+    for (const item of metaItems) {
+      const chip = document.createElement("span");
+      chip.textContent = item;
+      dom.stationMeta.appendChild(chip);
+    }
+
+    const group = activeGroupsRaw().find((item) => item.id === state.group);
+    const modeCopy = refs.payload.member === "ens"
+      ? "Ensemble mode emphasizes probability guidance and member spread diagnostics."
+      : "Deterministic mode shows a single selected member with station-point guidance.";
+    const groupCopy = group ? groupDescription(group.id, group.title) : "Forecast fields are organized into operational weather groups.";
+    dom.stationCopy.textContent = `${modeCopy} ${groupCopy}`;
+
+    dom.viewChipRow.innerHTML = "";
+    const chips = [
+      state.group === "all" ? "All Groups" : groupTitle(state.group),
+      `${activeOverlayIds().length} fields`,
+      state.obs ? "Obs on" : "Obs off",
+      refs.xRange ? `Zoom F${String(refs.xRange.min).padStart(3, "0")} to F${String(refs.xRange.max).padStart(3, "0")}` : "Full range",
+    ];
+    for (const text of chips) {
+      const chip = document.createElement("span");
+      chip.className = "view-chip";
+      chip.textContent = text;
+      dom.viewChipRow.appendChild(chip);
+    }
+    updateInfoBanner();
+  }
+
+  function renderElementBrowser() {
+    dom.elementBrowser.innerHTML = "";
+    for (const group of activeGroups()) {
+      const block = document.createElement("section");
+      block.className = "element-group";
+      block.innerHTML = `<h3 class="element-group-title">${groupTitle(group.id, group.title)}</h3>`;
       for (const overlayId of group.overlays) {
-        const series = payload.series[overlayId];
-        if (!series || !series.points || !series.points.length) {
+        const series = refs.payload.series[overlayId];
+        if (!series) {
           continue;
         }
-        renderedCharts += 1;
-        const card = document.createElement("article");
-        card.className = "chart-card";
-        const summary = summarizeSeries(series);
-        const summaryHtml = renderChartSummary(summary, series.units || "");
-        const noteHtml = renderChartNote(series, summary);
-        card.innerHTML = `
-          <div class="chart-card-head">
-            <h3 class="chart-title">${series.label}</h3>
-            <span class="chart-units">${series.units || ""}</span>
-          </div>
-          ${summaryHtml}
-          ${noteHtml}
-          <div class="chart-frame"><canvas></canvas></div>
+        const label = document.createElement("label");
+        label.className = "element-option";
+        label.innerHTML = `
+          <input type="checkbox" value="${overlayId}" />
+          <span class="element-copy">
+            <span class="element-name">${series.label}</span>
+            <span class="element-meta">${elementDescription(overlayId, series)}</span>
+          </span>
         `;
-        chartList.appendChild(card);
-        refs.charts.push(buildChart(card.querySelector("canvas"), series, summary));
+        const input = label.querySelector("input");
+        input.checked = isOverlaySelected(overlayId);
+        input.addEventListener("change", () => {
+          toggleOverlay(overlayId, input.checked);
+        });
+        block.appendChild(label);
       }
-
-      if (chartList.children.length) {
-        dom.chartGroups.appendChild(section);
-      }
+      dom.elementBrowser.appendChild(block);
     }
+    dom.browserHelp.textContent = state.group === "all"
+      ? "Choose any combination of elements across all available groups. Shared URL state saves custom field picks."
+      : `${groupDescription(state.group)} Toggle individual charts on or off for a custom view.`;
+  }
 
-    if (!renderedCharts) {
-      dom.chartGroups.innerHTML = '<section class="chart-section"><div class="chart-empty">No charts match the selected element group.</div></section>';
+  function renderCharts() {
+    destroyCharts();
+    dom.chartGroups.innerHTML = "";
+    const selectedIds = activeOverlayIds();
+    if (!refs.payload || !selectedIds.length) {
+      dom.chartGroups.innerHTML = '<div class="chart-empty">No chartable elements are selected for this station and configuration.</div>';
+      return;
+    }
+    for (const overlayId of selectedIds) {
+      const series = refs.payload.series[overlayId];
+      if (!series) {
+        continue;
+      }
+      const card = document.createElement("article");
+      card.className = "chart-panel";
+      const summary = summarizeSeries(series);
+      card.innerHTML = `
+        <div class="chart-panel-head">
+          <div>
+            <p class="chart-kicker">${groupTitle(groupForOverlay(overlayId))}</p>
+            <h2 class="chart-title">${series.label}</h2>
+            <p class="chart-description">${elementDescription(overlayId, series)}</p>
+          </div>
+          <div class="chart-panel-meta">
+            <span>Latest ${formatValue(summary.latest)}${series.units ? ` ${series.units}` : ""}</span>
+            <span>Max ${formatValue(summary.max)}${series.units ? ` ${series.units}` : ""}</span>
+            <span>Min ${formatValue(summary.min)}${series.units ? ` ${series.units}` : ""}</span>
+          </div>
+        </div>
+        ${series.chart_type === "distribution"
+          ? '<p class="chart-note">Drag to zoom across forecast hours. Click once on any chart to reset the shared x-axis window.</p>'
+          : ""}
+        <div class="chart-frame"><canvas></canvas></div>
+      `;
+      dom.chartGroups.appendChild(card);
+      const chart = Charts.buildChart(card.querySelector("canvas"), {
+        series,
+        detSeries: distributionDeterministicSeries(overlayId),
+        settings: state,
+        colorfriendly: state.colorfriendly,
+        fontsize: state.fontsize,
+        sharedRange: refs.xRange,
+        theme: refs.theme,
+        formatTime: formatValidTime,
+        formatValue,
+      });
+      Charts.attachZoomHandlers(chart, (range) => {
+        refs.xRange = range;
+        syncChartRange();
+        renderSummary();
+      });
+      refs.charts.push(chart);
     }
   }
 
-  function buildChart(canvas, series, summary) {
-    if (series.chart_type === "distribution") {
-      return buildDistributionChart(canvas, series, summary);
+  function syncChartRange() {
+    for (const chart of refs.charts) {
+      Charts.syncRange(chart, refs.xRange);
     }
-    const labels = series.points.map((point) => `+${String(point.forecast_hour).padStart(3, "0")}`);
-    const color = chartColor(series.style, series.id);
-    const allZero = Boolean(summary && summary.allZero);
-    return new Chart(canvas.getContext("2d"), {
-      type: "line",
-      data: {
-        labels,
-        datasets: [
-          {
-            label: series.label,
-            data: series.points.map((point) => point.value),
-            borderColor: color,
-            backgroundColor: `${color}24`,
-            borderWidth: allZero ? 2.5 : 2.25,
-            pointRadius: labels.length <= 24 ? 1.5 : 0,
-            pointHitRadius: 12,
-            tension: 0.18,
-            fill: false,
-          },
-        ],
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        animation: false,
-        interaction: { mode: "index", intersect: false },
-        plugins: {
-          legend: { display: false },
-          tooltip: {
-            callbacks: {
-              title(items) {
-                const point = series.points[items[0].dataIndex];
-                return `${items[0].label} | ${formatLocalTime(point.valid_time_utc)}`;
-              },
-              label(item) {
-                const suffix = series.units ? ` ${series.units}` : "";
-                return `${series.label}: ${formatValue(item.parsed.y)}${suffix}`;
-              },
-            },
-          },
-        },
-        scales: {
-          x: {
-            ticks: {
-              maxRotation: 0,
-              autoSkip: true,
-              color: CHART_TICK_COLOR,
-            },
-            grid: { color: CHART_GRID_COLOR },
-          },
-          y: {
-            beginAtZero: shouldBeginAtZero(series.style),
-            min: allZero ? -5 : undefined,
-            suggestedMin: allZero ? undefined : rangeValue(series.style, 0),
-            suggestedMax: allZero ? Math.max(rangeValue(series.style, 1) || 5, 5) : rangeValue(series.style, 1),
-            ticks: {
-              color: CHART_TICK_COLOR,
-              callback(value) {
-                return series.units === "%" ? `${value}%` : value;
-              },
-            },
-            grid: { color: CHART_GRID_COLOR },
-          },
-        },
-      },
-    });
-  }
-
-  function buildDistributionChart(canvas, series) {
-    const labels = series.points.map((point) => `+${String(point.forecast_hour).padStart(3, "0")}`);
-    const color = chartColor(series.style, series.id);
-    return new Chart(canvas.getContext("2d"), {
-      type: "line",
-      data: {
-        labels,
-        datasets: [
-          {
-            label: `${series.label} Median`,
-            data: series.points.map((point) => point.median),
-            borderColor: color,
-            borderWidth: 2.2,
-            pointRadius: labels.length <= 24 ? 1.75 : 0,
-            pointHitRadius: 12,
-            tension: 0.12,
-            fill: false,
-          },
-          {
-            label: `${series.label} Mean`,
-            data: series.points.map((point) => point.mean),
-            borderColor: hexWithAlpha(color, 0.72),
-            borderDash: [5, 4],
-            borderWidth: 1.4,
-            pointRadius: 0,
-            pointHitRadius: 12,
-            tension: 0.12,
-            fill: false,
-          },
-        ],
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        animation: false,
-        interaction: { mode: "index", intersect: false },
-        plugins: {
-          legend: { display: false },
-          distributionBoxWhisker: {
-            points: series.points,
-            color,
-          },
-          tooltip: {
-            callbacks: {
-              title(items) {
-                const point = series.points[items[0].dataIndex];
-                return `${items[0].label} | ${formatLocalTime(point.valid_time_utc)}`;
-              },
-              label(item) {
-                const point = series.points[item.dataIndex];
-                const suffix = series.units ? ` ${series.units}` : "";
-                return [
-                  `Median: ${formatValue(point.median)}${suffix}`,
-                  `Mean: ${formatValue(point.mean)}${suffix}`,
-                  `IQR: ${formatValue(point.q1)}${suffix} to ${formatValue(point.q3)}${suffix}`,
-                  `Range: ${formatValue(point.min)}${suffix} to ${formatValue(point.max)}${suffix}`,
-                  `Members: ${point.count}`,
-                ];
-              },
-            },
-          },
-        },
-        scales: {
-          x: {
-            ticks: {
-              maxRotation: 0,
-              autoSkip: true,
-              color: CHART_TICK_COLOR,
-            },
-            grid: { color: CHART_GRID_COLOR },
-          },
-          y: {
-            beginAtZero: shouldBeginAtZero(series.style),
-            suggestedMin: rangeValue(series.style, 0),
-            suggestedMax: rangeValue(series.style, 1),
-            ticks: {
-              color: CHART_TICK_COLOR,
-              callback(value) {
-                return series.units === "%" ? `${value}%` : value;
-              },
-            },
-            grid: { color: CHART_GRID_COLOR },
-          },
-        },
-      },
-    });
+    syncUrlAndChrome();
   }
 
   function destroyCharts() {
@@ -464,104 +539,137 @@
     refs.charts = [];
   }
 
-  function chartColor(style, overlayId) {
-    if (style && Array.isArray(style.colors) && style.colors.length) {
-      return style.colors[style.colors.length - 1];
+  function normalizeGroupAndElements() {
+    const groups = activeGroupsRaw();
+    const validGroups = ["all", ...groups.map((group) => group.id)];
+    if (!validGroups.includes(state.group)) {
+      state.group = groups.some((group) => group.id === "storm") ? "storm" : "all";
     }
-    if (overlayId.includes("probability")) {
-      return "#cb5f24";
+    const validOverlays = groups.flatMap((group) => group.overlays);
+    state.elements = state.elements.filter((overlayId) => validOverlays.includes(overlayId));
+  }
+
+  function activeGroupsRaw() {
+    return refs.payload && Array.isArray(refs.payload.chart_groups) ? refs.payload.chart_groups : [];
+  }
+
+  function activeGroups() {
+    if (state.group === "all") {
+      return activeGroupsRaw();
     }
-    return "#2b6fbe";
+    return activeGroupsRaw().filter((group) => group.id === state.group);
   }
 
-  function shouldBeginAtZero(style) {
-    return style && Array.isArray(style.range) ? style.range[0] >= 0 : true;
-  }
-
-  function rangeValue(style, index) {
-    return style && Array.isArray(style.range) ? style.range[index] : undefined;
-  }
-
-  function hydrateStateFromUrl() {
-    const params = new URLSearchParams(window.location.search);
-    state.station = (params.get("station") || DEFAULT_STATION).trim().toUpperCase();
-    state.member = params.get("member") || DEFAULT_MEMBER;
-    state.run = params.get("run") || "latest-ready";
-    state.group = params.get("group") || "all";
-  }
-
-  function updateUrl() {
-    const params = new URLSearchParams();
-    params.set("station", state.station);
-    params.set("member", state.member);
-    params.set("run", state.run);
-    params.set("group", state.group);
-    window.history.replaceState({}, "", `${window.location.pathname}?${params.toString()}`);
-  }
-
-  async function fetchJson(url) {
-    const response = await fetch(url, { cache: "no-store" });
-    if (!response.ok) {
-      throw new Error(`Request failed: ${response.status} ${response.statusText}`);
+  function activeOverlayIds() {
+    const allowed = activeGroups().flatMap((group) => group.overlays);
+    if (!state.elements.length) {
+      return allowed;
     }
-    return response.json();
+    return state.elements.filter((overlayId) => allowed.includes(overlayId));
   }
 
-  async function fetchBackendStations(query) {
-    const payload = await fetchJson(`${BACKEND_ROOT}/api/stations/search?q=${encodeURIComponent(query)}&limit=8`);
-    return Array.isArray(payload.stations) ? payload.stations : [];
+  function isOverlaySelected(overlayId) {
+    return activeOverlayIds().includes(overlayId);
   }
 
-  async function loadStaticStations() {
-    const payload = await fetchJson(`${STATIC_ROOT}/stations.json`);
-    return Array.isArray(payload.stations) ? payload.stations : [];
-  }
-
-  function searchStaticStations(query, limit) {
-    const text = query.trim().toUpperCase();
-    if (!text) {
-      return [];
+  function toggleOverlay(overlayId, enabled) {
+    const allowed = activeGroups().flatMap((group) => group.overlays);
+    const current = new Set(state.elements.length ? state.elements : allowed);
+    if (enabled) {
+      current.add(overlayId);
+    } else {
+      current.delete(overlayId);
     }
-    const prefix = [];
-    const contains = [];
-    for (const station of refs.staticStations) {
-      const tokens = [station.id, ...(station.aliases || []), station.site].filter(Boolean).map((item) => String(item).toUpperCase());
-      if (tokens.some((item) => item.startsWith(text))) {
-        prefix.push(station);
-      } else if (tokens.join(" ").includes(text)) {
-        contains.push(station);
+    state.elements = Array.from(current).filter((item) => allowed.includes(item));
+    renderElementBrowser();
+    renderCharts();
+    syncUrlAndChrome();
+  }
+
+  function groupForOverlay(overlayId) {
+    for (const group of activeGroupsRaw()) {
+      if (group.overlays.includes(overlayId)) {
+        return group.id;
       }
     }
-    return [...prefix, ...contains].slice(0, limit);
+    return "all";
   }
 
-  async function fetchStaticPointSeries(run, member, station) {
-    const runToken = run === "latest-ready" ? "latest-ready" : run;
-    return fetchJson(`${STATIC_ROOT}/point-series/${runToken}/${member}/${station}.json`);
+  function distributionDeterministicSeries(overlayId) {
+    if (!refs.detPayload) {
+      return null;
+    }
+    const sourceId = ENS_TO_DET[overlayId];
+    return sourceId ? refs.detPayload.series[sourceId] : null;
   }
 
-  function resolveBackendRoot() {
-    const params = new URLSearchParams(window.location.search);
-    const paramRoot = params.get("backend");
-    if (paramRoot) {
-      return paramRoot.replace(/\/$/, "");
+  function updateSetting(key, value, rerenderCharts) {
+    state[key] = value;
+    applyShellState();
+    if (rerenderCharts) {
+      renderSummary();
+      renderCharts();
     }
-    if (typeof CONFIG.backend === "string" && CONFIG.backend) {
-      return CONFIG.backend.replace(/\/$/, "");
-    }
-    return window.location.origin;
+    syncUrlAndChrome();
   }
 
-  function resolveStaticRoot() {
-    const params = new URLSearchParams(window.location.search);
-    const paramRoot = params.get("staticRoot");
-    if (paramRoot) {
-      return paramRoot.replace(/\/$/, "");
+  function applyShellState() {
+    document.body.dataset.theme = state.darkmode ? "dark" : "light";
+    document.body.dataset.fontsize = state.fontsize;
+    refs.theme = {
+      chartGrid: getComputedStyle(document.body).getPropertyValue("--chart-grid").trim() || "rgba(143, 164, 184, 0.12)",
+      chartTick: getComputedStyle(document.body).getPropertyValue("--chart-tick").trim() || "#91a5b9",
+    };
+    dom.stationInput.value = state.station;
+    dom.timezoneSelect.value = state.tz;
+    dom.darkmodeToggle.checked = state.darkmode;
+    dom.colorfriendlyToggle.checked = state.colorfriendly;
+    dom.obsToggle.checked = state.obs;
+    dom.boxesToggle.checked = state.boxes;
+    dom.whiskersToggle.checked = state.whiskers;
+    dom.medianToggle.checked = state.median;
+    dom.detToggle.checked = state.det;
+    for (const button of dom.fontSizeControl.querySelectorAll("[data-size]")) {
+      button.classList.toggle("is-active", button.dataset.size === state.fontsize);
     }
-    if (typeof CONFIG.staticRoot === "string" && CONFIG.staticRoot) {
-      return CONFIG.staticRoot.replace(/\/$/, "");
+  }
+
+  function syncUrlAndChrome() {
+    const next = UrlState.normalizeState(
+      state,
+      refs.payload ? refs.payload.available_members : null,
+      ["all", ...activeGroupsRaw().map((group) => group.id)],
+      activeGroupsRaw().flatMap((group) => group.overlays)
+    );
+    next.elements = normalizeElementParam(next.elements, activeGroups());
+    Object.assign(state, next);
+    UrlState.writeState(state);
+    dom.statusPill.textContent = refs.payload
+      ? `${refs.payload.run_id} | ${state.member.toUpperCase()} | ${state.station}`
+      : `Loading ${state.station}`;
+  }
+
+  function normalizeElementParam(selected, groups) {
+    const all = groups.flatMap((group) => group.overlays);
+    if (!selected.length || selected.length === all.length) {
+      return [];
     }
-    return "";
+    return selected;
+  }
+
+  function updateInfoBanner() {
+    const messages = [];
+    if (state.obs) {
+      messages.push("Observation overlays are not yet available in the published HRRRCast station bundle.");
+    }
+    if (state.member === "ens") {
+      messages.push("Ensemble spread charts support boxes, whiskers, median, and deterministic overlays from member 00.");
+    }
+    if (refs.xRange) {
+      messages.push("Click once inside any chart to reset the shared zoom window.");
+    }
+    dom.infoBanner.hidden = messages.length === 0;
+    dom.infoBanner.textContent = messages.join(" ");
   }
 
   function formatRunStamp(runId) {
@@ -570,154 +678,84 @@
     const day = Number(runId.slice(6, 8));
     const hour = Number(runId.slice(8, 10));
     const date = new Date(Date.UTC(year, month, day, hour));
-    return `${String(date.getUTCHours()).padStart(2, "0")}Z ${date.toLocaleString(undefined, { month: "short", day: "2-digit", timeZone: "UTC" })}`;
+    return `${String(date.getUTCHours()).padStart(2, "0")}Z ${date.toLocaleDateString(undefined, { month: "short", day: "2-digit", timeZone: "UTC" })}`;
   }
 
-  function formatLocalTime(value) {
+  function formatValidTime(value) {
     const date = new Date(value);
-    return `${date.toLocaleDateString(undefined, { month: "short", day: "numeric" })} ${date.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })}`;
+    const timeZone = state.tz === "utc" ? "UTC" : state.tz === "station" ? stationTimeZone(refs.payload && refs.payload.station) : undefined;
+    return `${date.toLocaleDateString(undefined, { month: "short", day: "numeric", timeZone })} ${date.toLocaleTimeString([], {
+      hour: "numeric",
+      minute: "2-digit",
+      timeZone,
+      timeZoneName: state.tz === "utc" ? "short" : undefined,
+    })}`;
   }
 
-  function formatValue(value) {
-    if (!Number.isFinite(value)) {
-      return "n/a";
+  function formatTimezoneLabel(mode, station) {
+    if (mode === "utc") {
+      return "UTC";
     }
-    return Math.abs(value) >= 100 || Number.isInteger(value) ? String(Math.round(value)) : value.toFixed(1);
+    if (mode === "station") {
+      return stationTimeZone(station).split("/").pop().replace("_", " ");
+    }
+    return "Browser";
+  }
+
+  function stationTimeZone(station) {
+    return (station && (station.timeZone || STATE_TIMEZONES[station.state])) || Intl.DateTimeFormat().resolvedOptions().timeZone;
   }
 
   function summarizeSeries(series) {
-    if (series && series.chart_type === "distribution" && series.summary) {
-      return {
-        count: Number(series.summary.count || 0),
-        min: normalizeNumber(series.summary.min),
-        max: normalizeNumber(series.summary.max),
-        latest: normalizeNumber(series.summary.latest),
-        allZero: Boolean(series.summary.all_zero),
-      };
+    if (series.summary) {
+      return series.summary;
     }
-    if (series && series.summary) {
-      return {
-        count: Number(series.summary.count || 0),
-        min: normalizeNumber(series.summary.min),
-        max: normalizeNumber(series.summary.max),
-        latest: normalizeNumber(series.summary.latest),
-        allZero: Boolean(series.summary.all_zero),
-      };
-    }
-    const values = (series.points || [])
-      .map((point) => normalizeNumber(point.value))
-      .filter((value) => Number.isFinite(value));
+    const values = (series.points || []).map((point) => Number(point.value)).filter(Number.isFinite);
     if (!values.length) {
-      return { count: 0, min: null, max: null, latest: null, allZero: false };
+      return { latest: null, max: null, min: null };
     }
     return {
-      count: values.length,
-      min: Math.min(...values),
-      max: Math.max(...values),
       latest: values[values.length - 1],
-      allZero: values.every((value) => Math.abs(value) < 1e-6),
+      max: Math.max(...values),
+      min: Math.min(...values),
     };
   }
 
-  function renderChartSummary(summary, units) {
-    const suffix = units ? ` ${units}` : "";
-    return `
-      <div class="chart-summary">
-        <span>Latest <strong>${formatValue(summary.latest)}${suffix}</strong></span>
-        <span>Max <strong>${formatValue(summary.max)}${suffix}</strong></span>
-        <span>Min <strong>${formatValue(summary.min)}${suffix}</strong></span>
-      </div>
-    `;
-  }
-
-  function renderChartNote(series, summary) {
-    if (series.chart_type === "distribution") {
-      return '<p class="chart-note">Boxes show the 25th to 75th percentile member spread, whiskers show min to max, solid line is median, dashed line is mean.</p>';
-    }
-    if (summary.allZero) {
-      return '<p class="chart-note">All forecast hours are currently zero for this element at this station.</p>';
-    }
-    return "";
-  }
-
-  function normalizeNumber(value) {
+  function formatValue(value) {
     const numeric = Number(value);
-    return Number.isFinite(numeric) ? numeric : null;
+    if (!Number.isFinite(numeric)) {
+      return "n/a";
+    }
+    return Math.abs(numeric) >= 100 || Number.isInteger(numeric) ? String(Math.round(numeric)) : numeric.toFixed(1);
   }
 
-  function hexWithAlpha(hex, alpha) {
-    const clean = String(hex || "").replace("#", "");
-    if (clean.length !== 6) {
-      return hex;
-    }
-    const a = Math.max(0, Math.min(255, Math.round(alpha * 255)));
-    return `#${clean}${a.toString(16).padStart(2, "0")}`;
+  function groupTitle(id, fallback) {
+    return (FIELD_LIBRARY[id] && FIELD_LIBRARY[id].title) || fallback || id;
   }
 
-  function registerDistributionPlugin() {
-    if (!window.Chart || Chart.registry.plugins.get("distributionBoxWhisker")) {
-      return;
-    }
-    Chart.register({
-      id: "distributionBoxWhisker",
-      afterDatasetsDraw(chart, _args, pluginOptions) {
-        if (!pluginOptions || !Array.isArray(pluginOptions.points) || !pluginOptions.points.length) {
-          return;
-        }
-        const xScale = chart.scales.x;
-        const yScale = chart.scales.y;
-        if (!xScale || !yScale) {
-          return;
-        }
-        const ctx = chart.ctx;
-        const color = pluginOptions.color || "#49a7ff";
-        const fill = hexWithAlpha(color, 0.18);
-        const points = pluginOptions.points;
-        const boxWidth = Math.max(8, Math.min(22, xStepEstimate(xScale, points.length) * 0.42));
-
-        ctx.save();
-        ctx.lineWidth = 1.25;
-        ctx.strokeStyle = hexWithAlpha(color, 0.95);
-        ctx.fillStyle = fill;
-        for (let index = 0; index < points.length; index += 1) {
-          const point = points[index];
-          const x = xScale.getPixelForValue(index);
-          const yMin = yScale.getPixelForValue(point.min);
-          const yQ1 = yScale.getPixelForValue(point.q1);
-          const yMedian = yScale.getPixelForValue(point.median);
-          const yQ3 = yScale.getPixelForValue(point.q3);
-          const yMax = yScale.getPixelForValue(point.max);
-          ctx.beginPath();
-          ctx.moveTo(x, yMin);
-          ctx.lineTo(x, yMax);
-          ctx.stroke();
-
-          ctx.fillRect(x - boxWidth / 2, Math.min(yQ1, yQ3), boxWidth, Math.max(2, Math.abs(yQ3 - yQ1)));
-          ctx.strokeRect(x - boxWidth / 2, Math.min(yQ1, yQ3), boxWidth, Math.max(2, Math.abs(yQ3 - yQ1)));
-
-          ctx.beginPath();
-          ctx.moveTo(x - boxWidth / 2, yMedian);
-          ctx.lineTo(x + boxWidth / 2, yMedian);
-          ctx.stroke();
-
-          ctx.beginPath();
-          ctx.moveTo(x - boxWidth * 0.3, yMin);
-          ctx.lineTo(x + boxWidth * 0.3, yMin);
-          ctx.moveTo(x - boxWidth * 0.3, yMax);
-          ctx.lineTo(x + boxWidth * 0.3, yMax);
-          ctx.stroke();
-        }
-        ctx.restore();
-      },
-    });
+  function groupDescription(id, fallback) {
+    return (FIELD_LIBRARY[id] && FIELD_LIBRARY[id].description) || fallback || "Grouped forecast elements.";
   }
 
-  function xStepEstimate(xScale, count) {
-    if (!xScale || count < 2) {
-      return 18;
+  function elementDescription(overlayId, series) {
+    return ELEMENT_DESCRIPTIONS[overlayId] || `${series.units || "Forecast"} field from the HRRRCast station-point bundle.`;
+  }
+
+  function resolveBackendRoot() {
+    const params = new URLSearchParams(window.location.search);
+    const value = params.get("backend");
+    if (value) {
+      return value;
     }
-    const first = xScale.getPixelForValue(0);
-    const second = xScale.getPixelForValue(1);
-    return Math.abs(second - first) || 18;
+    return typeof CONFIG.backend === "string" ? CONFIG.backend : window.location.origin;
+  }
+
+  function resolveStaticRoot() {
+    const params = new URLSearchParams(window.location.search);
+    const value = params.get("staticRoot");
+    if (value) {
+      return value;
+    }
+    return typeof CONFIG.staticRoot === "string" ? CONFIG.staticRoot : "";
   }
 })();

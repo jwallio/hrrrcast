@@ -2,7 +2,7 @@
 
 Public-facing HRRRCast project centered on a static 1D station viewer for airport-code lookups and stacked forecast charts.
 
-The public site now serves the station viewer at the GitHub Pages root:
+The public site serves the station viewer at:
 
 - [jwallio.github.io/hrrrcast](https://jwallio.github.io/hrrrcast/)
 
@@ -10,27 +10,19 @@ The public site now serves the station viewer at the GitHub Pages root:
 
 The deployed app is the static station viewer in [apps/web](/d:/weather-projects/hrrrcast-visualizer/apps/web).
 
-It includes:
+Current public experience:
 
+- operational left-rail / stacked-chart layout
 - airport lookup by ICAO / FAA / IATA code
 - `ens` severe probabilities plus member-spread charts
-- `m00` deterministic station charts
-- static data under [apps/web/static-api](/d:/weather-projects/hrrrcast-visualizer/apps/web/static-api)
+- deterministic member support such as `m00`
+- URL-restored settings and custom field selections
+- GitHub Pages-friendly static data bundle in [apps/web/static-api](/d:/weather-projects/hrrrcast-visualizer/apps/web/static-api)
 
-## Local Apps
+Viewer documentation:
 
-- [apps/web](/d:/weather-projects/hrrrcast-visualizer/apps/web)
-  Public static station viewer bundle
-- [apps/station-viewer](/d:/weather-projects/hrrrcast-visualizer/apps/station-viewer)
-  Local/live station viewer shell for backend-driven use
-
-## Backend and Data Pipeline
-
-The ingest and backend code remains in the repo to support local processing and point-series generation:
-
-- [services/backend](/d:/weather-projects/hrrrcast-visualizer/services/backend)
-- [services/shared/point_series.py](/d:/weather-projects/hrrrcast-visualizer/services/shared/point_series.py)
-- [pipelines/ingest](/d:/weather-projects/hrrrcast-visualizer/pipelines/ingest)
+- [apps/web/README.md](/d:/weather-projects/hrrrcast-visualizer/apps/web/README.md)
+- [apps/web/CHANGELOG.md](/d:/weather-projects/hrrrcast-visualizer/apps/web/CHANGELOG.md)
 
 ## Local Usage
 
@@ -40,7 +32,7 @@ Serve the public static app:
 python -m http.server 8080 -d apps/web
 ```
 
-Serve the live local station viewer against the backend:
+For local backend-driven development:
 
 ```powershell
 python services/backend/app.py --port 8080
@@ -53,7 +45,15 @@ Then open:
 http://127.0.0.1:8090/?backend=http://127.0.0.1:8080
 ```
 
+## Backend and Data Pipeline
+
+The ingest and backend code remains in the repo to support local processing and point-series generation:
+
+- [services/backend](/d:/weather-projects/hrrrcast-visualizer/services/backend)
+- [services/shared/point_series.py](/d:/weather-projects/hrrrcast-visualizer/services/shared/point_series.py)
+- [pipelines/ingest](/d:/weather-projects/hrrrcast-visualizer/pipelines/ingest)
+
 ## Notes
 
-- The old public map-viewer Pages pipeline has been removed.
-- The repo still contains model-processing code, but the deployed Pages experience is now station-viewer only.
+- The old public map-viewer pipeline is no longer part of the Pages experience.
+- The deployed Pages app is station-viewer only.

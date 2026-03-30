@@ -6,72 +6,151 @@
     <title>HRRRCast 1D Viewer</title>
     <meta
       name="description"
-      content="Airport-code HRRRCast time-series viewer with interactive severe-weather charts."
+      content="Operational HRRRCast 1D station viewer with NBM-style controls, stacked charts, and shareable URL state."
     />
     <link rel="stylesheet" href="./styles.css" />
   </head>
-  <body>
+  <body data-theme="dark" data-fontsize="md">
     <div class="app-shell">
-      <header class="site-shell">
+      <header class="topbar">
         <div class="brand-block">
-          <span class="brand-mark">HRRRCast 1D Viewer</span>
-          <span class="brand-note">Airport lookup and interactive severe-weather charts</span>
+          <div class="brand-mark">HRRRCast 1D Viewer</div>
+          <div class="brand-copy">Operational station workstation for deterministic and ensemble HRRRCast point forecasts</div>
         </div>
-        <div class="status-pill" id="statusPill">Loading latest-ready run</div>
+        <div class="topbar-actions">
+          <div class="status-pill" id="statusPill">Loading latest-ready run</div>
+          <button class="link-button" id="copyLinkButton" type="button">Copy Link</button>
+        </div>
       </header>
 
-      <main class="viewer-shell">
-        <section class="query-shell">
-          <form class="lookup-form" id="lookupForm" autocomplete="off">
-            <label class="lookup-field">
-              <span>Airport Code</span>
-              <input id="stationInput" name="station" type="text" placeholder="KRDU, KATL, KDEN" spellcheck="false" />
-            </label>
-            <button type="submit" class="primary-button">Load Charts</button>
-          </form>
-          <div class="suggestions" id="suggestions" hidden></div>
-
-          <div class="control-row">
-            <label class="field">
-              <span>Run</span>
-              <select id="runSelect"></select>
-            </label>
-            <label class="field">
-              <span>Mode</span>
-              <select id="memberSelect"></select>
-            </label>
-          </div>
-        </section>
-
-        <section class="station-shell" id="stationShell">
-          <div class="station-header">
-            <div>
-              <p class="station-kicker">Selected Point</p>
-              <h1 class="station-title" id="stationTitle">Choose an airport</h1>
+      <main class="workstation">
+        <aside class="control-rail">
+          <section class="rail-panel">
+            <div class="panel-header">
+              <div>
+                <p class="panel-kicker">Location</p>
+                <h2 class="panel-title">Station Search</h2>
+              </div>
             </div>
-            <div class="station-meta" id="stationMeta"></div>
-          </div>
-          <p class="station-copy" id="stationCopy">
-            Search by ICAO, FAA, or IATA code to load nearest-grid HRRRCast time series.
-          </p>
-        </section>
+            <form class="lookup-form" id="lookupForm" autocomplete="off">
+              <label class="field">
+                <span>Airport Code</span>
+                <input id="stationInput" name="station" type="text" placeholder="KRDU, KATL, KCLT" spellcheck="false" />
+              </label>
+              <button class="primary-button" type="submit">Load</button>
+            </form>
+            <div class="suggestions" id="suggestions" hidden></div>
+          </section>
 
-        <section class="browser-shell">
-          <div class="browser-head">
-            <div>
-              <p class="section-kicker">Element Browser</p>
-              <h2 class="section-title">Chart Groups</h2>
+          <section class="rail-panel">
+            <div class="panel-header">
+              <div>
+                <p class="panel-kicker">Controls</p>
+                <h2 class="panel-title">Run And Display</h2>
+              </div>
             </div>
-          </div>
-          <div class="group-strip" id="groupFilters"></div>
-        </section>
+            <div class="field-grid two-up">
+              <label class="field">
+                <span>Run</span>
+                <select id="runSelect"></select>
+              </label>
+              <label class="field">
+                <span>Member</span>
+                <select id="memberSelect"></select>
+              </label>
+              <label class="field">
+                <span>Group</span>
+                <select id="groupSelect"></select>
+              </label>
+              <label class="field">
+                <span>Timezone</span>
+                <select id="timezoneSelect">
+                  <option value="local">Browser Local</option>
+                  <option value="station">Station Local</option>
+                  <option value="utc">UTC</option>
+                </select>
+              </label>
+            </div>
+          </section>
 
-        <section class="chart-groups" id="chartGroups"></section>
+          <section class="rail-panel">
+            <div class="panel-header">
+              <div>
+                <p class="panel-kicker">Element Browser</p>
+                <h2 class="panel-title">Fields</h2>
+              </div>
+              <button class="mini-button" id="selectAllElementsButton" type="button">Select Group</button>
+            </div>
+            <div class="browser-help" id="browserHelp"></div>
+            <div class="element-browser" id="elementBrowser"></div>
+          </section>
+
+          <section class="rail-panel">
+            <div class="panel-header">
+              <div>
+                <p class="panel-kicker">Settings</p>
+                <h2 class="panel-title">Chart Options</h2>
+              </div>
+            </div>
+            <div class="settings-grid">
+              <div class="setting-block">
+                <span class="setting-label">Theme</span>
+                <label class="toggle-row"><input id="darkmodeToggle" type="checkbox" checked /> <span>Dark Mode</span></label>
+                <label class="toggle-row"><input id="colorfriendlyToggle" type="checkbox" /> <span>Alternate Colors</span></label>
+              </div>
+              <div class="setting-block">
+                <span class="setting-label">Observations</span>
+                <label class="toggle-row"><input id="obsToggle" type="checkbox" /> <span>Show Obs Overlay</span></label>
+                <p class="setting-note">Observation overlays are stubbed until point observations are added to the bundle.</p>
+              </div>
+              <div class="setting-block">
+                <span class="setting-label">Ensemble Display</span>
+                <label class="toggle-row"><input id="boxesToggle" type="checkbox" checked /> <span>Boxes</span></label>
+                <label class="toggle-row"><input id="whiskersToggle" type="checkbox" checked /> <span>Whiskers</span></label>
+                <label class="toggle-row"><input id="medianToggle" type="checkbox" checked /> <span>Median Line</span></label>
+                <label class="toggle-row"><input id="detToggle" type="checkbox" checked /> <span>Deterministic Overlay</span></label>
+              </div>
+              <div class="setting-block">
+                <span class="setting-label">Font Size</span>
+                <div class="segmented-control" id="fontSizeControl">
+                  <button class="segmented-button" data-size="sm" type="button">Small</button>
+                  <button class="segmented-button" data-size="md" type="button">Medium</button>
+                  <button class="segmented-button" data-size="lg" type="button">Large</button>
+                </div>
+              </div>
+            </div>
+          </section>
+        </aside>
+
+        <section class="content-shell">
+          <header class="content-header">
+            <div class="summary-block">
+              <p class="summary-kicker" id="summaryKicker">Airport Forecast Point</p>
+              <h1 class="summary-title" id="stationTitle">Loading station</h1>
+              <div class="summary-meta" id="stationMeta"></div>
+              <p class="summary-copy" id="stationCopy"></p>
+            </div>
+            <div class="view-tools">
+              <div class="view-chip-row" id="viewChipRow"></div>
+              <div class="view-buttons">
+                <button class="mini-button" id="resetZoomButton" type="button">Reset Zoom</button>
+                <button class="mini-button" id="restoreDefaultsButton" type="button">Defaults</button>
+              </div>
+            </div>
+          </header>
+
+          <section class="info-banner" id="infoBanner" hidden></section>
+
+          <section class="chart-stack" id="chartGroups"></section>
+        </section>
       </main>
     </div>
 
     <script src="./chart.umd.min.js"></script>
     <script src="./config.js"></script>
+    <script src="./url-state.js"></script>
+    <script src="./data-service.js"></script>
+    <script src="./charting.js"></script>
     <script src="./app.js"></script>
   </body>
 </html>
