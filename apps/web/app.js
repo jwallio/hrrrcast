@@ -39,7 +39,7 @@
   };
 
   const dom = grab([
-    "stationInput", "stationSubmit", "suggestions", "graphcol", "graphhgt", "elementbrowserbtn", "elementbrowser",
+    "maplocations", "stationInput", "stationSubmit", "suggestions", "graphcol", "graphhgt", "elementbrowserbtn", "elementbrowser",
     "runbtn", "runmenu", "memberbtn", "membermenu", "groupbtn", "groupmenu", "timezonebtn", "timezonemenu",
     "timezonebtnmodal", "timezonemenumodal", "darkmodebtn", "darkmodemenu", "togglecharts", "cameraButton",
     "downloadButton", "settingsbtn", "datetitle", "boxwhiskerlabel", "infoboxwhiskersvalues", "main", "side-drawer",
@@ -62,6 +62,7 @@
     bind();
     refs.stations = await service.loadStations();
     refs.runs = await service.loadRuns();
+    renderStationSelect();
     renderQuickStations();
     await loadPayload();
   }
@@ -70,6 +71,12 @@
     dom.stationSubmit.addEventListener("click", submitStation);
     dom.stationInput.addEventListener("keydown", (event) => { if (event.key === "Enter") { event.preventDefault(); submitStation(); } });
     dom.stationInput.addEventListener("input", onSearchInput);
+    dom.maplocations.addEventListener("change", async () => {
+      if (!dom.maplocations.value) { return; }
+      state.station = dom.maplocations.value;
+      refs.xRange = null;
+      await loadPayload();
+    });
     dom.graphcol.addEventListener("input", () => { state.col = Number(dom.graphcol.value); applyLayout(); syncUrl(); });
     dom.graphhgt.addEventListener("input", () => { state.hgt = Number(dom.graphhgt.value); applyLayout(); syncUrl(); });
     dom.togglecharts.addEventListener("click", () => { state.graph = state.graph === "chart" ? "distribution" : "chart"; renderChartToggle(); renderCharts(); syncUrl(); });
@@ -207,6 +214,18 @@
     }
   }
 
+  function renderStationSelect() {
+    dom.maplocations.innerHTML = "";
+    const stations = refs.stations.length ? refs.stations : [{ id: "KRDU", site: "Raleigh-Durham Intl" }];
+    for (const station of stations) {
+      const option = document.createElement("option");
+      option.value = station.id;
+      option.textContent = `${station.id} ${station.site || ""}`.trim();
+      dom.maplocations.appendChild(option);
+    }
+    dom.maplocations.value = state.station;
+  }
+
   function renderChartToggle() {
     dom.togglecharts.textContent = state.graph === "distribution" ? "Spread" : "Chart";
   }
@@ -214,6 +233,7 @@
   function updateTitleBlock() {
     if (!refs.payload) { return; }
     const station = refs.payload.station;
+    dom.maplocations.value = station.id;
     dom.datetitle.textContent = `${station.id} ${station.site} | ${refs.payload.member === "ens" ? "Ensemble" : refs.payload.member.toUpperCase()} ${groupTitle(state.group)} | ${stamp(refs.payload.run_id)} init | ${timezoneLabel(state.tz, station)}`;
     dom.infoboxwhiskersvalues.textContent = [
       state.whiskers ? "Whiskers on" : "Whiskers off",

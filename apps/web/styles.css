@@ -296,6 +296,17 @@ body[data-fontsize="lg"] {
   margin-bottom: 8px;
 }
 
+.maplocations {
+  width: min(320px, 100%);
+  padding: 8px 10px;
+  border: 1px solid var(--graphcolorlight);
+  background: var(--background1);
+  color: var(--linkcolor);
+  font-size: 1rem;
+  font-weight: 700;
+  appearance: none;
+}
+
 .station-input {
   width: min(320px, 100%);
   padding: 8px 10px;
