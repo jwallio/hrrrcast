@@ -45,7 +45,8 @@
     "downloadButton", "settingsbtn", "datetitle", "boxwhiskerlabel", "infoboxwhiskersvalues", "main", "side-drawer",
     "map-btn", "quickstations", "drawerstatus", "settings", "settingsclose", "customgroup", "customgroupbtn",
     "customgroupclose", "customgroupoptions", "customgroupsave", "customgroupclear", "obsonoff", "colorfriendly",
-    "fontsizeslider", "boxwhiskersreadout", "boxreadout", "boxmedianreadout", "deterministicreadout"
+    "fontsizeslider", "whiskerlow", "whiskerhigh", "whiskerlowvalue", "whiskerhighvalue", "boxlow", "boxhigh",
+    "boxlowvalue", "boxhighvalue", "boxwhiskersreadout", "boxreadout", "boxmedianreadout", "deterministicreadout"
   ]);
 
   const service = DataService.createDataService({ staticRoot: staticRoot(), backendRoot: backendRoot() });
@@ -97,6 +98,22 @@
     bindToggle(dom.boxmedianreadout, "median");
     bindToggle(dom.deterministicreadout, "det", true);
     dom.fontsizeslider.addEventListener("input", () => { state.fontsize = Number(dom.fontsizeslider.value); applyTheme(); renderCharts(); syncUrl(); });
+    bindPercentileSlider(dom.whiskerlow, dom.whiskerlowvalue, "whiskerlow", 0, 50, () => {
+      if (state.whiskerlow > state.boxlow) { state.boxlow = state.whiskerlow; }
+      renderPercentileLabels();
+    });
+    bindPercentileSlider(dom.whiskerhigh, dom.whiskerhighvalue, "whiskerhigh", 50, 100, () => {
+      if (state.whiskerhigh < state.boxhigh) { state.boxhigh = state.whiskerhigh; }
+      renderPercentileLabels();
+    });
+    bindPercentileSlider(dom.boxlow, dom.boxlowvalue, "boxlow", 0, 50, () => {
+      if (state.boxlow < state.whiskerlow) { state.whiskerlow = state.boxlow; }
+      renderPercentileLabels();
+    });
+    bindPercentileSlider(dom.boxhigh, dom.boxhighvalue, "boxhigh", 50, 100, () => {
+      if (state.boxhigh > state.whiskerhigh) { state.whiskerhigh = state.boxhigh; }
+      renderPercentileLabels();
+    });
     bindDropdowns();
     document.addEventListener("click", globalClick);
     document.addEventListener("keydown", hotkeys);
@@ -136,6 +153,7 @@
     dom.boxreadout.checked = state.boxes;
     dom.boxmedianreadout.checked = state.median;
     dom.deterministicreadout.checked = state.det;
+    renderPercentileLabels();
   }
 
   function renderRunMenu() {
@@ -202,6 +220,47 @@
     }
   }
 
+  function bindToggle(element, key, ensureDet) {
+    element.addEventListener("change", async () => {
+      state[key] = element.checked;
+      if (ensureDet && state.det && state.member === "ens") {
+        try {
+          refs.detPayload = await service.loadPointSeries(state.run, "m00", state.station);
+        } catch (error) {
+          console.error(error);
+        }
+      }
+      applyTheme();
+      renderCharts();
+      updateTitleBlock();
+      syncUrl();
+    });
+  }
+
+  function bindPercentileSlider(input, label, key, min, max, afterChange) {
+    input.addEventListener("input", () => {
+      state[key] = Math.max(min, Math.min(max, Number(input.value)));
+      if (typeof afterChange === "function") {
+        afterChange();
+      }
+      renderPercentileLabels();
+      renderCharts();
+      updateTitleBlock();
+      syncUrl();
+    });
+  }
+
+  function renderPercentileLabels() {
+    dom.whiskerlow.value = String(state.whiskerlow);
+    dom.whiskerhigh.value = String(state.whiskerhigh);
+    dom.boxlow.value = String(state.boxlow);
+    dom.boxhigh.value = String(state.boxhigh);
+    dom.whiskerlowvalue.textContent = `${state.whiskerlow}%`;
+    dom.whiskerhighvalue.textContent = `${state.whiskerhigh}%`;
+    dom.boxlowvalue.textContent = `${state.boxlow}%`;
+    dom.boxhighvalue.textContent = `${state.boxhigh}%`;
+  }
+
   function renderQuickStations() {
     dom.quickstations.innerHTML = "";
     const list = (refs.stations.length ? refs.stations : [{ id: "KRDU" }, { id: "KATL" }, { id: "KCLT" }, { id: "KDEN" }, { id: "KDFW" }, { id: "KJFK" }]).slice(0, 12);
@@ -240,6 +299,8 @@
       state.boxes ? "Boxes on" : "Boxes off",
       state.median ? "Median on" : "Median off",
       state.det ? "Deterministic on" : "Deterministic off",
+      `W ${state.whiskerlow}-${state.whiskerhigh}%`,
+      `B ${state.boxlow}-${state.boxhigh}%`,
     ].join(" | ");
   }
 
@@ -506,7 +567,7 @@
     for (const item of items) {
       const button = document.createElement("button");
       button.type = "button";
-      button.textContent = item.value === current ? `${item.label} ✓` : item.label;
+      button.textContent = item.value === current ? `${item.label} [Active]` : item.label;
       button.addEventListener("click", async () => {
         closeAllDropdowns();
         await onPick(item.value);
@@ -602,3 +663,4 @@
     return typeof CONFIG.staticRoot === "string" ? CONFIG.staticRoot : "";
   }
 })();
+

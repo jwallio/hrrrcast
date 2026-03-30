@@ -17,7 +17,7 @@ from services.shared.point_series import build_point_series, search_stations  # 
 from services.shared.store import build_run_summaries, latest_ready_manifest  # noqa: E402
 
 
-DEFAULT_OUTPUT_DIR = ROOT / "apps" / "web" / "station-viewer" / "static-api"
+DEFAULT_OUTPUT_DIR = ROOT / "apps" / "web" / "static-api"
 DEFAULT_STATIONS = ["KRDU", "KATL", "KCLT", "KDEN", "KDFW", "KBNA", "KJFK", "KORD"]
 DEFAULT_MEMBERS = ["ens", "m00"]
 

@@ -468,6 +468,7 @@ def build_ensemble_distribution_series(
                 "q3": float(q3),
                 "max": float(q4),
                 "mean": float(np.mean(array)),
+                "member_values": [float(value) for value in np.sort(array)],
             }
         )
     return distribution_points

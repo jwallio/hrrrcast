@@ -224,6 +224,7 @@ class PointSeriesTests(unittest.TestCase):
         self.assertAlmostEqual(point["median"], 200.0, places=4)
         self.assertAlmostEqual(point["min"], 100.0, places=4)
         self.assertAlmostEqual(point["max"], 300.0, places=4)
+        self.assertEqual(point["member_values"], [100.0, 200.0, 300.0])
 
 
 if __name__ == "__main__":

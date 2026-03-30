@@ -16,6 +16,10 @@
     median: true,
     det: true,
     colorfriendly: false,
+    whiskerlow: 0,
+    whiskerhigh: 100,
+    boxlow: 25,
+    boxhigh: 75,
     elements: [],
     col: 2,
     hgt: 1,
@@ -43,6 +47,10 @@
       median: parseBoolean(params.get("median"), DEFAULTS.median),
       det: parseBoolean(params.get("det"), DEFAULTS.det),
       colorfriendly: parseBoolean(params.get("colorfriendly"), DEFAULTS.colorfriendly),
+      whiskerlow: clampInt(params.get("whiskerlow"), 0, 50, DEFAULTS.whiskerlow),
+      whiskerhigh: clampInt(params.get("whiskerhigh"), 50, 100, DEFAULTS.whiskerhigh),
+      boxlow: clampInt(params.get("boxlow"), 0, 50, DEFAULTS.boxlow),
+      boxhigh: clampInt(params.get("boxhigh"), 50, 100, DEFAULTS.boxhigh),
       elements: parseList(params.get("elements")),
       col: clampInt(params.get("col"), 1, 3, DEFAULTS.col),
       hgt: clampNumber(params.get("hgt"), 0.7, 2, DEFAULTS.hgt),
@@ -66,6 +74,10 @@
       median: Boolean(input.median),
       det: Boolean(input.det),
       colorfriendly: Boolean(input.colorfriendly),
+      whiskerlow: clampInt(input.whiskerlow, 0, 50, DEFAULTS.whiskerlow),
+      whiskerhigh: clampInt(input.whiskerhigh, 50, 100, DEFAULTS.whiskerhigh),
+      boxlow: clampInt(input.boxlow, 0, 50, DEFAULTS.boxlow),
+      boxhigh: clampInt(input.boxhigh, 50, 100, DEFAULTS.boxhigh),
       elements: filterElements(input.elements, allowedElements),
       col: clampInt(input.col, 1, 3, DEFAULTS.col),
       hgt: clampNumber(input.hgt, 0.7, 2, DEFAULTS.hgt),
@@ -88,6 +100,10 @@
     params.set("median", state.median ? "true" : "false");
     params.set("det", state.det ? "true" : "false");
     params.set("colorfriendly", state.colorfriendly ? "true" : "false");
+    params.set("whiskerlow", String(clampInt(state.whiskerlow, 0, 50, DEFAULTS.whiskerlow)));
+    params.set("whiskerhigh", String(clampInt(state.whiskerhigh, 50, 100, DEFAULTS.whiskerhigh)));
+    params.set("boxlow", String(clampInt(state.boxlow, 0, 50, DEFAULTS.boxlow)));
+    params.set("boxhigh", String(clampInt(state.boxhigh, 50, 100, DEFAULTS.boxhigh)));
     params.set("col", String(clampInt(state.col, 1, 3, DEFAULTS.col)));
     params.set("hgt", String(clampNumber(state.hgt, 0.7, 2, DEFAULTS.hgt)));
     params.set("graph", state.graph || DEFAULTS.graph);

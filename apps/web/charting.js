@@ -139,7 +139,7 @@
   }
 
   function buildDistributionChart(canvas, config, palette, font) {
-    const distributionPoints = config.series.points;
+    const distributionPoints = config.series.points.map((point) => distributionPointWithPercentiles(point, config.settings));
     const datasets = [];
     if (config.settings.median) {
       datasets.push({
@@ -185,6 +185,8 @@
     chart.$distributionPoints = distributionPoints;
     chart.$distributionSettings = config.settings;
     chart.$distributionPalette = palette;
+    chart.$distributionUnits = config.series.units || "";
+    chart.$formatValue = config.formatValue;
     return chart;
   }
 
@@ -208,13 +210,13 @@
             },
             label(item) {
               if (config.series.chart_type === "distribution") {
-                const point = config.series.points[item.dataIndex];
+                const point = distributionPointWithPercentiles(config.series.points[item.dataIndex], config.settings);
                 const suffix = config.series.units ? ` ${config.series.units}` : "";
                 return [
                   `Median: ${config.formatValue(point.median)}${suffix}`,
                   `Mean: ${config.formatValue(point.mean)}${suffix}`,
-                  `IQR: ${config.formatValue(point.q1)} to ${config.formatValue(point.q3)}${suffix}`,
-                  `Range: ${config.formatValue(point.min)} to ${config.formatValue(point.max)}${suffix}`,
+                  `Box: ${config.formatValue(point.q1)} to ${config.formatValue(point.q3)}${suffix}`,
+                  `Whiskers: ${config.formatValue(point.min)} to ${config.formatValue(point.max)}${suffix}`,
                   `Members: ${point.count}`,
                 ];
               }
@@ -385,6 +387,54 @@
     }
     const value = Math.max(0, Math.min(255, Math.round(alpha * 255)));
     return `#${clean}${value.toString(16).padStart(2, "0")}`;
+  }
+
+  function distributionPointWithPercentiles(point, settings) {
+    const values = Array.isArray(point.member_values) && point.member_values.length
+      ? point.member_values.slice().sort((left, right) => left - right)
+      : null;
+    if (!values) {
+      return point;
+    }
+    const lowBox = clamp(settings.boxlow, 0, 50);
+    const highBox = clamp(settings.boxhigh, 50, 100);
+    const lowWhisker = clamp(settings.whiskerlow, 0, 50);
+    const highWhisker = clamp(settings.whiskerhigh, 50, 100);
+    return {
+      ...point,
+      min: percentile(values, lowWhisker),
+      q1: percentile(values, lowBox),
+      median: percentile(values, 50),
+      q3: percentile(values, highBox),
+      max: percentile(values, highWhisker),
+      mean: mean(values),
+      count: values.length,
+    };
+  }
+
+  function percentile(values, pct) {
+    if (!values.length) {
+      return NaN;
+    }
+    if (values.length === 1) {
+      return values[0];
+    }
+    const rank = (pct / 100) * (values.length - 1);
+    const lower = Math.floor(rank);
+    const upper = Math.ceil(rank);
+    if (lower === upper) {
+      return values[lower];
+    }
+    const weight = rank - lower;
+    return values[lower] * (1 - weight) + values[upper] * weight;
+  }
+
+  function mean(values) {
+    return values.reduce((sum, value) => sum + value, 0) / values.length;
+  }
+
+  function clamp(value, min, max) {
+    return Math.max(min, Math.min(max, Number(value)));
   }
 
   window.HRRRCAST_CHARTS = {

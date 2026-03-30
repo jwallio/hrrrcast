@@ -169,6 +169,42 @@
             <td><div class="center"><input id="fontsizeslider" type="range" min="0.7" max="1.4" value="1" step="0.1" class="slider" /></div></td>
           </tr>
           <tr>
+            <td>Whisker Percentiles</td>
+            <td><div class="border">&#8593;</div><div class="border">&#8595;</div></td>
+            <td>
+              <div class="percentile-controls">
+                <div class="percentile-row">
+                  <label for="whiskerlow">Low</label>
+                  <input id="whiskerlow" type="range" min="0" max="50" value="0" step="1" class="slider" />
+                  <span id="whiskerlowvalue" class="percentile-value">0%</span>
+                </div>
+                <div class="percentile-row">
+                  <label for="whiskerhigh">High</label>
+                  <input id="whiskerhigh" type="range" min="50" max="100" value="100" step="1" class="slider" />
+                  <span id="whiskerhighvalue" class="percentile-value">100%</span>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>Box Percentiles</td>
+            <td><div class="border">&#8594;</div><div class="border">&#8592;</div></td>
+            <td>
+              <div class="percentile-controls">
+                <div class="percentile-row">
+                  <label for="boxlow">Low</label>
+                  <input id="boxlow" type="range" min="0" max="50" value="25" step="1" class="slider" />
+                  <span id="boxlowvalue" class="percentile-value">25%</span>
+                </div>
+                <div class="percentile-row">
+                  <label for="boxhigh">High</label>
+                  <input id="boxhigh" type="range" min="50" max="100" value="75" step="1" class="slider" />
+                  <span id="boxhighvalue" class="percentile-value">75%</span>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr>
             <td>Dark Mode</td>
             <td></td>
             <td>
