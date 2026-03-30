@@ -138,51 +138,6 @@
       "hourMode": "all_available"
     },
     {
-      "id": "pages_snapshot",
-      "label": "Pages Snapshot",
-      "description": "Minimal severe-weather member inputs required to derive the public ensemble snapshot on GitHub Pages from CONUS products.",
-      "overlayIds": [
-        "composite_reflectivity",
-        "qpf",
-        "cape",
-        "wind_10m",
-        "helicity_0_1km",
-        "helicity_0_3km",
-        "shear_u_0_1km",
-        "shear_v_0_1km",
-        "shear_u_0_6km",
-        "shear_v_0_6km"
-      ],
-      "includeEnsembleDerived": true,
-      "domains": [
-        "conus"
-      ],
-      "hourMode": "all_available"
-    },
-    {
-      "id": "pages_member_snapshot",
-      "label": "Pages Member Snapshot",
-      "description": "Curated severe-weather member overlays exported for the public GitHub Pages snapshot from CONUS products.",
-      "overlayIds": [
-        "composite_reflectivity",
-        "cape",
-        "cin_surface",
-        "wind_10m",
-        "gust_surface",
-        "helicity_0_1km",
-        "helicity_0_3km",
-        "shear_u_0_1km",
-        "shear_v_0_1km",
-        "shear_u_0_6km",
-        "shear_v_0_6km",
-        "relative_vorticity_0_1km"
-      ],
-      "domains": [
-        "conus"
-      ],
-      "hourMode": "all_available"
-    },
-    {
       "id": "full_native_sample",
       "label": "Full Native Sample",
       "description": "All curated and native overlays for a single sample hour across all configured domains.",
