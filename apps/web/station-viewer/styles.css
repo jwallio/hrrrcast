@@ -307,6 +307,26 @@ button {
   font-weight: 700;
 }
 
+.chart-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 8px;
+  color: #53697d;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.chart-summary strong {
+  color: #20384d;
+}
+
+.chart-note {
+  margin: 0 0 8px;
+  color: #5d7286;
+  font-size: 0.75rem;
+}
+
 .chart-frame {
   position: relative;
   min-height: 232px;

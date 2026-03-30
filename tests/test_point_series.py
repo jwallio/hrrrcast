@@ -123,6 +123,56 @@ class PointSeriesTests(unittest.TestCase):
         self.assertIn("shear_0_6km_speed", m00_payload["series"])
         self.assertAlmostEqual(m00_payload["series"]["shear_0_6km_speed"]["points"][0]["value"], 5.0, places=4)
 
+    def test_build_point_series_scales_fractional_probability_to_percent(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            data_root = Path(tmpdir) / "data" / "processed"
+            catalog_path = Path(tmpdir) / "stations.json"
+            catalog_path.write_text(
+                json.dumps(
+                    {
+                        "stations": [
+                            {
+                                "id": "KRDU",
+                                "aliases": ["RDU"],
+                                "site": "Raleigh-Durham",
+                                "lat": 35.9,
+                                "lon": -78.8,
+                                "elev": 132,
+                                "state": "NC",
+                                "country": "US",
+                            }
+                        ]
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            write_product_asset(
+                data_root,
+                run_id="2026032820",
+                member="ens",
+                overlay_id="helicity_0_1km_probability_gt_100",
+                forecast_hour=0,
+                variable_name="prob",
+                values=np.array([[0.00, 0.25], [0.50, 0.75]], dtype=np.float32),
+                field_key="HLCY:1000-0 m above ground",
+            )
+
+            payload = build_point_series(
+                "2026032820",
+                "KRDU",
+                "ens",
+                overlays=["helicity_0_1km_probability_gt_100"],
+                data_root=data_root,
+                station_catalog_path=catalog_path,
+            )
+
+        series = payload["series"]["helicity_0_1km_probability_gt_100"]
+        self.assertEqual(series["units"], "%")
+        self.assertAlmostEqual(series["points"][0]["value"], 25.0, places=4)
+        self.assertAlmostEqual(series["summary"]["max"], 25.0, places=4)
+        self.assertFalse(series["summary"]["all_zero"])
+
 
 if __name__ == "__main__":
     unittest.main()

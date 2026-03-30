@@ -220,12 +220,15 @@ def build_overlay_series(
 
 
 def overlay_payload(overlay_id: str, points: list[dict[str, object]]) -> dict[str, object]:
+    style = overlay_style(overlay_id)
+    normalized_points = normalize_overlay_points(points, style)
     return {
         "id": overlay_id,
         "label": overlay_label(overlay_id),
         "units": overlay_units(overlay_id),
-        "style": overlay_style(overlay_id),
-        "points": points,
+        "style": style,
+        "points": normalized_points,
+        "summary": summarize_points(normalized_points),
     }
 
 
@@ -249,6 +252,44 @@ def overlay_style(overlay_id: str) -> dict[str, object]:
     if overlay_id in DERIVED_POINT_OVERLAYS:
         return dict(DERIVED_POINT_OVERLAYS[overlay_id]["style"])
     return style_for_overlay_id(overlay_id)
+
+
+def normalize_overlay_points(points: list[dict[str, object]], style: dict[str, object]) -> list[dict[str, object]]:
+    units = str(style.get("units") or "")
+    style_range = style.get("range") if isinstance(style, dict) else None
+    if units != "%" or not isinstance(style_range, list) or len(style_range) < 2 or float(style_range[1]) <= 1.0:
+        return points
+
+    values = [float(point["value"]) for point in points if point.get("value") is not None]
+    if not values:
+        return points
+    if max(abs(value) for value in values) > 1.0 + 1e-6:
+        return points
+
+    scaled_points: list[dict[str, object]] = []
+    for point in points:
+        value = point.get("value")
+        scaled_points.append(
+            {
+                **point,
+                "value": None if value is None else float(value) * 100.0,
+            }
+        )
+    return scaled_points
+
+
+def summarize_points(points: list[dict[str, object]]) -> dict[str, object]:
+    values = [float(point["value"]) for point in points if point.get("value") is not None]
+    if not values:
+        return {"count": 0, "min": None, "max": None, "latest": None, "all_zero": False}
+    latest_value = float(points[-1]["value"]) if points[-1].get("value") is not None else values[-1]
+    return {
+        "count": len(values),
+        "min": float(min(values)),
+        "max": float(max(values)),
+        "latest": latest_value,
+        "all_zero": all(abs(value) < 1e-6 for value in values),
+    }
 
 
 def derive_vector_magnitude(

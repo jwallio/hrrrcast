@@ -237,6 +237,13 @@
         "type": "continuous",
         "units": "J/kg"
       },
+      "summary": {
+        "all_zero": true,
+        "count": 19,
+        "latest": 0.0,
+        "max": 0.0,
+        "min": 0.0
+      },
       "units": "J/kg"
     },
     "cin_surface": {
@@ -420,6 +427,13 @@
         "type": "continuous",
         "units": "J/kg"
       },
+      "summary": {
+        "all_zero": false,
+        "count": 19,
+        "latest": 0.07999999821186066,
+        "max": 0.07999999821186066,
+        "min": 0.0
+      },
       "units": "J/kg"
     },
     "composite_reflectivity": {
@@ -602,6 +616,13 @@
         "rawUnits": "dBZ",
         "type": "continuous",
         "units": "dBZ"
+      },
+      "summary": {
+        "all_zero": true,
+        "count": 19,
+        "latest": 0.0,
+        "max": 0.0,
+        "min": 0.0
       },
       "units": "dBZ"
     },
@@ -787,6 +808,13 @@
         "type": "continuous",
         "units": "mph"
       },
+      "summary": {
+        "all_zero": false,
+        "count": 19,
+        "latest": 11.069999694824219,
+        "max": 18.549999237060547,
+        "min": 11.069999694824219
+      },
       "units": "mph"
     },
     "helicity_0_1km": {
@@ -970,6 +998,13 @@
         "type": "continuous",
         "units": "m2/s2"
       },
+      "summary": {
+        "all_zero": false,
+        "count": 19,
+        "latest": 42.06999969482422,
+        "max": 44.61000061035156,
+        "min": -3.309999942779541
+      },
       "units": "m2/s2"
     },
     "helicity_0_3km": {
@@ -1152,6 +1187,13 @@
         "rawUnits": "m2/s2",
         "type": "continuous",
         "units": "m2/s2"
+      },
+      "summary": {
+        "all_zero": false,
+        "count": 19,
+        "latest": 42.099998474121094,
+        "max": 42.099998474121094,
+        "min": -96.22000122070312
       },
       "units": "m2/s2"
     },
@@ -1337,6 +1379,13 @@
         "type": "continuous",
         "units": "in"
       },
+      "summary": {
+        "all_zero": true,
+        "count": 19,
+        "latest": 0.0,
+        "max": 0.0,
+        "min": 0.0
+      },
       "units": "in"
     },
     "shear_0_1km_speed": {
@@ -1511,6 +1560,13 @@
         "type": "continuous",
         "units": "m s-1"
       },
+      "summary": {
+        "all_zero": false,
+        "count": 19,
+        "latest": 0.004782050803614753,
+        "max": 0.004942893661258641,
+        "min": 0.0011094142707992944
+      },
       "units": "m s-1"
     },
     "shear_0_6km_speed": {
@@ -1684,6 +1740,13 @@
         ],
         "type": "continuous",
         "units": "m s-1"
+      },
+      "summary": {
+        "all_zero": false,
+        "count": 19,
+        "latest": 0.003855074620252735,
+        "max": 0.005325279057966664,
+        "min": 0.003855074620252735
       },
       "units": "m s-1"
     },
@@ -1868,6 +1931,13 @@
         "type": "continuous",
         "units": "m/s"
       },
+      "summary": {
+        "all_zero": false,
+        "count": 19,
+        "latest": 0.0029800001066178083,
+        "max": 0.0029800001066178083,
+        "min": 0.0005200000014156103
+      },
       "units": "m/s"
     },
     "shear_u_0_6km": {
@@ -2050,6 +2120,13 @@
         "rawUnits": "m/s",
         "type": "continuous",
         "units": "m/s"
+      },
+      "summary": {
+        "all_zero": false,
+        "count": 19,
+        "latest": 0.0034600000362843275,
+        "max": 0.005049999803304672,
+        "min": 0.0034600000362843275
       },
       "units": "m/s"
     },
@@ -2234,6 +2311,13 @@
         "type": "continuous",
         "units": "m/s"
       },
+      "summary": {
+        "all_zero": false,
+        "count": 19,
+        "latest": 0.0037400012370198965,
+        "max": 0.004009999800473452,
+        "min": -0.001120000029914081
+      },
       "units": "m/s"
     },
     "shear_v_0_6km": {
@@ -2416,6 +2500,13 @@
         "rawUnits": "m/s",
         "type": "continuous",
         "units": "m/s"
+      },
+      "summary": {
+        "all_zero": false,
+        "count": 19,
+        "latest": -0.0017000000225380063,
+        "max": 0.0002099999983329326,
+        "min": -0.0021299999207258224
       },
       "units": "m/s"
     },
@@ -2600,6 +2691,13 @@
         "transform": "mps_to_mph",
         "type": "continuous",
         "units": "mph"
+      },
+      "summary": {
+        "all_zero": false,
+        "count": 19,
+        "latest": 2.9280028343200684,
+        "max": 3.8010787963867188,
+        "min": 1.2865846157073975
       },
       "units": "mph"
     }

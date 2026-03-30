@@ -235,6 +235,13 @@
         "type": "continuous",
         "units": "%"
       },
+      "summary": {
+        "all_zero": true,
+        "count": 19,
+        "latest": 0.0,
+        "max": 0.0,
+        "min": 0.0
+      },
       "units": "%"
     },
     "composite_reflectivity_probability_gt_40dbz": {
@@ -417,6 +424,13 @@
         "rawUnits": "%",
         "type": "continuous",
         "units": "%"
+      },
+      "summary": {
+        "all_zero": true,
+        "count": 19,
+        "latest": 0.0,
+        "max": 0.0,
+        "min": 0.0
       },
       "units": "%"
     },
@@ -601,6 +615,13 @@
         "type": "continuous",
         "units": "%"
       },
+      "summary": {
+        "all_zero": false,
+        "count": 19,
+        "latest": 22.22222328186035,
+        "max": 88.8888931274414,
+        "min": 0.0
+      },
       "units": "%"
     },
     "helicity_0_3km_probability_gt_250": {
@@ -783,6 +804,13 @@
         "rawUnits": "%",
         "type": "continuous",
         "units": "%"
+      },
+      "summary": {
+        "all_zero": false,
+        "count": 19,
+        "latest": 0.0,
+        "max": 55.55555725097656,
+        "min": 0.0
       },
       "units": "%"
     },
@@ -967,6 +995,13 @@
         "type": "continuous",
         "units": "%"
       },
+      "summary": {
+        "all_zero": true,
+        "count": 19,
+        "latest": 0.0,
+        "max": 0.0,
+        "min": 0.0
+      },
       "units": "%"
     },
     "shear_0_1km_probability_gt_20kt": {
@@ -1149,6 +1184,13 @@
         "rawUnits": "%",
         "type": "continuous",
         "units": "%"
+      },
+      "summary": {
+        "all_zero": true,
+        "count": 19,
+        "latest": 0.0,
+        "max": 0.0,
+        "min": 0.0
       },
       "units": "%"
     },
@@ -1333,6 +1375,13 @@
         "type": "continuous",
         "units": "%"
       },
+      "summary": {
+        "all_zero": true,
+        "count": 19,
+        "latest": 0.0,
+        "max": 0.0,
+        "min": 0.0
+      },
       "units": "%"
     },
     "wind_10m_probability_gt_25kt": {
@@ -1515,6 +1564,13 @@
         "rawUnits": "%",
         "type": "continuous",
         "units": "%"
+      },
+      "summary": {
+        "all_zero": true,
+        "count": 19,
+        "latest": 0.0,
+        "max": 0.0,
+        "min": 0.0
       },
       "units": "%"
     }

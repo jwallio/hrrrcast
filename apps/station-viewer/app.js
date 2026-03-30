@@ -6,6 +6,7 @@
   const STATIC_MODE = Boolean(STATIC_ROOT);
   const BACKEND_ROOT = STATIC_MODE ? "" : resolveBackendRoot();
   const DEFAULT_STATION = "KRDU";
+  const DEFAULT_MEMBER = "m00";
   const SEARCH_DEBOUNCE_MS = 160;
 
   const dom = {
@@ -24,7 +25,7 @@
 
   const state = {
     run: "latest-ready",
-    member: "ens",
+    member: DEFAULT_MEMBER,
     station: DEFAULT_STATION,
     group: "all",
   };
@@ -263,15 +264,22 @@
         renderedCharts += 1;
         const card = document.createElement("article");
         card.className = "chart-card";
+        const summary = summarizeSeries(series);
+        const summaryHtml = renderChartSummary(summary, series.units || "");
+        const noteHtml = summary.allZero
+          ? '<p class="chart-note">All forecast hours are currently zero for this element at this station.</p>'
+          : "";
         card.innerHTML = `
           <div class="chart-card-head">
             <h3 class="chart-title">${series.label}</h3>
             <span class="chart-units">${series.units || ""}</span>
           </div>
+          ${summaryHtml}
+          ${noteHtml}
           <div class="chart-frame"><canvas></canvas></div>
         `;
         chartList.appendChild(card);
-        refs.charts.push(buildChart(card.querySelector("canvas"), series));
+        refs.charts.push(buildChart(card.querySelector("canvas"), series, summary));
       }
 
       if (chartList.children.length) {
@@ -284,9 +292,10 @@
     }
   }
 
-  function buildChart(canvas, series) {
+  function buildChart(canvas, series, summary) {
     const labels = series.points.map((point) => `+${String(point.forecast_hour).padStart(3, "0")}`);
     const color = chartColor(series.style, series.id);
+    const allZero = Boolean(summary && summary.allZero);
     return new Chart(canvas.getContext("2d"), {
       type: "line",
       data: {
@@ -297,8 +306,8 @@
             data: series.points.map((point) => point.value),
             borderColor: color,
             backgroundColor: `${color}24`,
-            borderWidth: 2,
-            pointRadius: 0,
+            borderWidth: allZero ? 2.5 : 2.25,
+            pointRadius: labels.length <= 24 ? 1.5 : 0,
             pointHitRadius: 12,
             tension: 0.18,
             fill: false,
@@ -336,9 +345,15 @@
           },
           y: {
             beginAtZero: shouldBeginAtZero(series.style),
-            suggestedMin: rangeValue(series.style, 0),
-            suggestedMax: rangeValue(series.style, 1),
-            ticks: { color: "#566a7c" },
+            min: allZero ? -5 : undefined,
+            suggestedMin: allZero ? undefined : rangeValue(series.style, 0),
+            suggestedMax: allZero ? Math.max(rangeValue(series.style, 1) || 5, 5) : rangeValue(series.style, 1),
+            ticks: {
+              color: "#566a7c",
+              callback(value) {
+                return series.units === "%" ? `${value}%` : value;
+              },
+            },
             grid: { color: "rgba(28, 42, 58, 0.08)" },
           },
         },
@@ -374,7 +389,7 @@
   function hydrateStateFromUrl() {
     const params = new URLSearchParams(window.location.search);
     state.station = (params.get("station") || DEFAULT_STATION).trim().toUpperCase();
-    state.member = params.get("member") || "ens";
+    state.member = params.get("member") || DEFAULT_MEMBER;
     state.run = params.get("run") || "latest-ready";
     state.group = params.get("group") || "all";
   }
@@ -472,5 +487,46 @@
       return "n/a";
     }
     return Math.abs(value) >= 100 || Number.isInteger(value) ? String(Math.round(value)) : value.toFixed(1);
+  }
+
+  function summarizeSeries(series) {
+    if (series && series.summary) {
+      return {
+        count: Number(series.summary.count || 0),
+        min: normalizeNumber(series.summary.min),
+        max: normalizeNumber(series.summary.max),
+        latest: normalizeNumber(series.summary.latest),
+        allZero: Boolean(series.summary.all_zero),
+      };
+    }
+    const values = (series.points || [])
+      .map((point) => normalizeNumber(point.value))
+      .filter((value) => Number.isFinite(value));
+    if (!values.length) {
+      return { count: 0, min: null, max: null, latest: null, allZero: false };
+    }
+    return {
+      count: values.length,
+      min: Math.min(...values),
+      max: Math.max(...values),
+      latest: values[values.length - 1],
+      allZero: values.every((value) => Math.abs(value) < 1e-6),
+    };
+  }
+
+  function renderChartSummary(summary, units) {
+    const suffix = units ? ` ${units}` : "";
+    return `
+      <div class="chart-summary">
+        <span>Latest <strong>${formatValue(summary.latest)}${suffix}</strong></span>
+        <span>Max <strong>${formatValue(summary.max)}${suffix}</strong></span>
+        <span>Min <strong>${formatValue(summary.min)}${suffix}</strong></span>
+      </div>
+    `;
+  }
+
+  function normalizeNumber(value) {
+    const numeric = Number(value);
+    return Number.isFinite(numeric) ? numeric : null;
   }
 })();
