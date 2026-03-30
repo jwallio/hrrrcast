@@ -2,7 +2,7 @@ name: Refresh Pages Snapshot
 
 on:
   schedule:
-    - cron: "35 * * * *"
+    - cron: "35 */3 * * *"
   workflow_dispatch:
 
 permissions:
@@ -61,9 +61,25 @@ jobs:
             "run_id=" | Out-File -FilePath $env:GITHUB_OUTPUT -Encoding utf8 -Append
           }
 
+      - name: Free workspace before build
+        shell: powershell
+        run: |
+          $targets = @(
+            "data/raw/noaa",
+            "data/processed/products",
+            "data/processed/tile_cache",
+            "data/processed/build_state"
+          )
+          foreach ($target in $targets) {
+            if (Test-Path $target) {
+              Remove-Item $target -Recurse -Force -ErrorAction SilentlyContinue
+            }
+          }
+          Get-PSDrive -PSProvider FileSystem | Select-Object Name,Free,Used
+
       - name: Build latest-ready CONUS ensemble snapshot inputs
         run: |
-          python scripts/refresh_latest_ready_workflow.py --profile pages_snapshot --skip-health-check --recent-runs-to-scan 8
+          python scripts/refresh_latest_ready_workflow.py --profile pages_snapshot --skip-health-check --recent-runs-to-scan 3 --keep-ready-runs 1 --keep-partial-runs 0
 
       - name: Build latest-ready public member snapshot inputs
         run: |
@@ -80,6 +96,23 @@ jobs:
         if: steps.latest.outputs.run_id != steps.current.outputs.run_id
         run: |
           python scripts/export_static_pages_data.py --clean --member ens --member m00 --max-preview-dimension 1280 --mobile-preview-dimension 768
+
+      - name: Free workspace after export
+        if: steps.latest.outputs.run_id != steps.current.outputs.run_id
+        shell: powershell
+        run: |
+          $targets = @(
+            "data/raw/noaa",
+            "data/processed/products",
+            "data/processed/tile_cache",
+            "data/processed/build_state"
+          )
+          foreach ($target in $targets) {
+            if (Test-Path $target) {
+              Remove-Item $target -Recurse -Force -ErrorAction SilentlyContinue
+            }
+          }
+          Get-PSDrive -PSProvider FileSystem | Select-Object Name,Free,Used
 
       - name: Commit updated snapshot
         if: steps.latest.outputs.run_id != steps.current.outputs.run_id

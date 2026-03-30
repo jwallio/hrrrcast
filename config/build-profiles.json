@@ -140,7 +140,7 @@
     {
       "id": "pages_snapshot",
       "label": "Pages Snapshot",
-      "description": "Minimal severe-weather member inputs required to derive the public ensemble snapshot on GitHub Pages across public regions.",
+      "description": "Minimal severe-weather member inputs required to derive the public ensemble snapshot on GitHub Pages from CONUS products.",
       "overlayIds": [
         "composite_reflectivity",
         "qpf",
@@ -155,20 +155,14 @@
       ],
       "includeEnsembleDerived": true,
       "domains": [
-        "conus",
-        "southeast",
-        "northeast",
-        "south_central",
-        "northwest",
-        "southwest",
-        "carolinas"
+        "conus"
       ],
       "hourMode": "all_available"
     },
     {
       "id": "pages_member_snapshot",
       "label": "Pages Member Snapshot",
-      "description": "Curated severe-weather member overlays exported for the public GitHub Pages snapshot across public regions.",
+      "description": "Curated severe-weather member overlays exported for the public GitHub Pages snapshot from CONUS products.",
       "overlayIds": [
         "composite_reflectivity",
         "cape",
@@ -184,13 +178,7 @@
         "relative_vorticity_0_1km"
       ],
       "domains": [
-        "conus",
-        "southeast",
-        "northeast",
-        "south_central",
-        "northwest",
-        "southwest",
-        "carolinas"
+        "conus"
       ],
       "hourMode": "all_available"
     },
