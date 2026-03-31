@@ -451,6 +451,11 @@ body[data-fontsize="lg"] {
   text-align: left;
 }
 
+.suggestion-button.is-active {
+  background: var(--selectcolor_hover);
+  outline: 1px solid var(--linkcolor);
+}
+
 .suggestion-line {
   display: block;
 }

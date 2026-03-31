@@ -53,7 +53,7 @@
 
   const service = DataService.createDataService({ staticRoot: staticRoot(), backendRoot: backendRoot() });
   const state = UrlState.parseState(window.location.search);
-  const refs = { runs: [], stations: [], payload: null, detPayload: null, charts: [], xRange: null, timer: 0, requestId: 0, busy: false, theme: { chartGrid: "rgba(143,164,184,0.12)", chartTick: "#91a5b9" } };
+  const refs = { runs: [], stations: [], payload: null, detPayload: null, charts: [], xRange: null, timer: 0, requestId: 0, busy: false, suggestionIndex: -1, suggestions: [], theme: { chartGrid: "rgba(143,164,184,0.12)", chartTick: "#91a5b9" } };
 
   Charts.registerPlugins();
   init().catch((error) => {
@@ -72,7 +72,7 @@
 
   function bind() {
     dom.stationSubmit.addEventListener("click", submitStation);
-    dom.stationInput.addEventListener("keydown", (event) => { if (event.key === "Enter") { event.preventDefault(); submitStation(); } });
+    dom.stationInput.addEventListener("keydown", onStationInputKeyDown);
     dom.stationInput.addEventListener("input", onSearchInput);
     dom.maplocations.addEventListener("change", async () => {
       if (!dom.maplocations.value) { return; }
@@ -596,37 +596,38 @@
   }
 
   function submitStation() {
-    const stationId = resolveStationInput(dom.stationInput.value);
-    if (!stationId) {
+    const match = resolveStationInput(dom.stationInput.value);
+    if (match.needsChoice) {
+      refs.suggestionIndex = refs.suggestions.length ? 0 : -1;
+      renderSuggestions(refs.suggestions);
+      setBusy(false, `Multiple stations match "${(dom.stationInput.value || "").trim().toUpperCase()}". Choose one from the list.`, false);
+      return;
+    }
+    if (!match.stationId) {
       setBusy(false, `Station "${(dom.stationInput.value || "").trim().toUpperCase()}" was not found in the published station list.`, true);
       return;
     }
-    state.station = stationId;
+    state.station = match.stationId;
     refs.xRange = null;
+    hideSuggestions();
     loadPayload("push").catch((error) => console.error(error));
   }
 
   function onSearchInput() {
     window.clearTimeout(refs.timer);
     const query = dom.stationInput.value.trim();
+    refs.suggestionIndex = -1;
     if (!query) { hideSuggestions(); return; }
     refs.timer = window.setTimeout(async () => {
       const stations = await service.searchStations(query, refs.stations);
       if (!stations.length) { hideSuggestions(); return; }
-      dom.suggestions.innerHTML = "";
-      for (const station of stations) {
-        const button = document.createElement("button");
-        button.type = "button";
-        button.className = "suggestion-button";
-        button.innerHTML = `<span class="suggestion-line"><strong>${station.id}</strong> ${station.site}</span><span class="suggestion-line">${[station.state, station.country].filter(Boolean).join(", ")} | ${station.lat.toFixed(2)}, ${station.lon.toFixed(2)}</span>`;
-        button.addEventListener("click", async () => { state.station = station.id; refs.xRange = null; hideSuggestions(); await loadPayload("push"); });
-        dom.suggestions.appendChild(button);
-      }
-      dom.suggestions.hidden = false;
+      renderSuggestions(stations);
     }, 130);
   }
 
   function hideSuggestions() {
+    refs.suggestions = [];
+    refs.suggestionIndex = -1;
     dom.suggestions.hidden = true;
     dom.suggestions.innerHTML = "";
   }
@@ -829,7 +830,7 @@
   function resolveStationInput(value) {
     const text = String(value || "").trim().toUpperCase();
     if (!text) {
-      return UrlState.DEFAULTS.station;
+      return { stationId: UrlState.DEFAULTS.station, needsChoice: false };
     }
     const exact = refs.stations.find((station) =>
       [station.id, station.icaoId, station.faaId, station.iataId, ...(station.aliases || [])]
@@ -837,7 +838,104 @@
         .map((item) => String(item).toUpperCase())
         .includes(text)
     );
-    return exact ? exact.id : null;
+    if (exact) {
+      return { stationId: exact.id, needsChoice: false };
+    }
+    const matches = searchStationsFromCache(text);
+    if (matches.length === 1) {
+      return { stationId: matches[0].id, needsChoice: false };
+    }
+    if (matches.length > 1) {
+      refs.suggestions = matches;
+      return { stationId: null, needsChoice: true };
+    }
+    return { stationId: null, needsChoice: false };
+  }
+
+  function onStationInputKeyDown(event) {
+    if (!refs.suggestions.length) {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        submitStation();
+      }
+      if (event.key === "Escape") {
+        hideSuggestions();
+      }
+      return;
+    }
+    if (event.key === "ArrowDown") {
+      event.preventDefault();
+      refs.suggestionIndex = Math.min(refs.suggestions.length - 1, refs.suggestionIndex + 1);
+      renderSuggestions(refs.suggestions);
+      return;
+    }
+    if (event.key === "ArrowUp") {
+      event.preventDefault();
+      refs.suggestionIndex = Math.max(0, refs.suggestionIndex - 1);
+      renderSuggestions(refs.suggestions);
+      return;
+    }
+    if (event.key === "Enter") {
+      event.preventDefault();
+      if (refs.suggestionIndex >= 0 && refs.suggestionIndex < refs.suggestions.length) {
+        selectSuggestedStation(refs.suggestions[refs.suggestionIndex].id).catch((error) => console.error(error));
+        return;
+      }
+      submitStation();
+      return;
+    }
+    if (event.key === "Escape") {
+      event.preventDefault();
+      hideSuggestions();
+    }
+  }
+
+  function searchStationsFromCache(query) {
+    const text = String(query || "").trim().toUpperCase();
+    if (!text) {
+      return [];
+    }
+    const prefix = [];
+    const contains = [];
+    for (const station of refs.stations || []) {
+      const haystack = [station.id, station.icaoId, station.faaId, station.iataId, ...(station.aliases || []), station.site]
+        .filter(Boolean)
+        .map((item) => String(item).toUpperCase());
+      if (haystack.some((item) => item.startsWith(text))) {
+        prefix.push(station);
+      } else if (haystack.join(" ").includes(text)) {
+        contains.push(station);
+      }
+    }
+    return [...prefix, ...contains].slice(0, 10);
+  }
+
+  function renderSuggestions(stations) {
+    refs.suggestions = stations.slice(0, 10);
+    if (refs.suggestionIndex >= refs.suggestions.length) {
+      refs.suggestionIndex = refs.suggestions.length ? 0 : -1;
+    }
+    dom.suggestions.innerHTML = "";
+    for (const [index, station] of refs.suggestions.entries()) {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = `suggestion-button${index === refs.suggestionIndex ? " is-active" : ""}`;
+      button.innerHTML = `<span class="suggestion-line"><strong>${station.id}</strong> ${station.site}</span><span class="suggestion-line">${[station.state, station.country].filter(Boolean).join(", ")} | ${station.lat.toFixed(2)}, ${station.lon.toFixed(2)}</span>`;
+      button.addEventListener("mouseenter", () => {
+        refs.suggestionIndex = index;
+        renderSuggestions(refs.suggestions);
+      });
+      button.addEventListener("click", async () => { await selectSuggestedStation(station.id); });
+      dom.suggestions.appendChild(button);
+    }
+    dom.suggestions.hidden = refs.suggestions.length === 0;
+  }
+
+  async function selectSuggestedStation(stationId) {
+    state.station = stationId;
+    refs.xRange = null;
+    hideSuggestions();
+    await loadPayload("push");
   }
 
   function setBusy(isBusy, message, isError) {
