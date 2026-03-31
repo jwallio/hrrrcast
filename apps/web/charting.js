@@ -37,7 +37,7 @@
     if (!window.Chart || Chart.registry.plugins.get("hrrrcastDistribution")) {
       return;
     }
-    Chart.register(distributionPlugin, selectionPlugin, crosshairPlugin);
+    Chart.register(distributionPlugin, selectionPlugin, crosshairPlugin, statusMessagePlugin);
   }
 
   function buildChart(canvas, config) {
@@ -117,7 +117,7 @@
       validTime: point.valid_time_utc,
     }));
     const color = config.series.id.includes("probability") ? palette.probability : palette.deterministic;
-    return new Chart(canvas.getContext("2d"), {
+    const chart = new Chart(canvas.getContext("2d"), {
       type: "line",
       data: {
         datasets: [
@@ -136,6 +136,8 @@
       },
       options: baseOptions(config, font, computeYBounds(config.series, points)),
     });
+    chart.$statusMessage = zeroProbabilityMessage(config.series);
+    return chart;
   }
 
   function buildDistributionChart(canvas, config, palette, font) {
@@ -188,6 +190,7 @@
     chart.$distributionPalette = palette;
     chart.$distributionUnits = config.series.units || "";
     chart.$formatValue = config.formatValue;
+    chart.$statusMessage = zeroProbabilityMessage(config.series);
     return chart;
   }
 
@@ -476,6 +479,44 @@
     },
   };
 
+  const statusMessagePlugin = {
+    id: "hrrrcastStatusMessage",
+    afterDraw(chart) {
+      if (!chart.$statusMessage) {
+        return;
+      }
+      const area = chart.chartArea;
+      if (!area) {
+        return;
+      }
+      const ctx = chart.ctx;
+      const centerX = (area.left + area.right) / 2;
+      const centerY = area.top + Math.max(28, (area.bottom - area.top) * 0.22);
+      const text = chart.$statusMessage;
+
+      ctx.save();
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.font = "600 13px Arial, sans-serif";
+
+      const boxWidth = ctx.measureText(text).width + 22;
+      const boxHeight = 28;
+      const boxLeft = centerX - boxWidth / 2;
+      const boxTop = centerY - boxHeight / 2;
+
+      ctx.fillStyle = "rgba(15, 20, 28, 0.82)";
+      ctx.strokeStyle = "rgba(147, 166, 186, 0.45)";
+      ctx.lineWidth = 1;
+      roundRect(ctx, boxLeft, boxTop, boxWidth, boxHeight, 7);
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.fillStyle = "#e6edf4";
+      ctx.fillText(text, centerX, centerY + 0.5);
+      ctx.restore();
+    },
+  };
+
   function estimateStep(xScale) {
     const first = xScale.getPixelForValue(0);
     const second = xScale.getPixelForValue(1);
@@ -489,6 +530,27 @@
     }
     const value = Math.max(0, Math.min(255, Math.round(alpha * 255)));
     return `#${clean}${value.toString(16).padStart(2, "0")}`;
+  }
+
+  function zeroProbabilityMessage(series) {
+    if (!series || !String(series.id || "").includes("probability")) {
+      return null;
+    }
+    if (!series.summary || !series.summary.all_zero) {
+      return null;
+    }
+    return "Probability remains 0% for this forecast period";
+  }
+
+  function roundRect(ctx, x, y, width, height, radius) {
+    const r = Math.min(radius, width / 2, height / 2);
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.arcTo(x + width, y, x + width, y + height, r);
+    ctx.arcTo(x + width, y + height, x, y + height, r);
+    ctx.arcTo(x, y + height, x, y, r);
+    ctx.arcTo(x, y, x + width, y, r);
+    ctx.closePath();
   }
 
   function distributionPointWithPercentiles(point, settings) {
