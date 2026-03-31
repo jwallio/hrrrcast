@@ -46,7 +46,9 @@
     "map-btn", "quickstations", "drawerstatus", "stationmap", "stationmapstatus", "settings", "settingsclose", "customgroup", "customgroupbtn",
     "customgroupclose", "customgroupoptions", "customgroupsave", "customgroupclear", "obsonoff", "colorfriendly",
     "fontsizeslider", "whiskerlow", "whiskerhigh", "whiskerlowvalue", "whiskerhighvalue", "boxlow", "boxhigh",
-    "boxlowvalue", "boxhighvalue", "boxwhiskersreadout", "boxreadout", "boxmedianreadout", "deterministicreadout"
+    "boxlowvalue", "boxhighvalue", "boxwhiskersreadout", "boxreadout", "boxmedianreadout", "deterministicreadout",
+    "boxwhiskerinfowrapper", "whiskerpercentilesrow", "boxpercentilesrow", "readoutheaderrow", "boxwhiskersrow",
+    "boxesrow", "boxmedianrow", "deterministicrow"
   ]);
 
   const service = DataService.createDataService({ staticRoot: staticRoot(), backendRoot: backendRoot() });
@@ -80,7 +82,13 @@
     });
     dom.graphcol.addEventListener("input", () => { state.col = Number(dom.graphcol.value); applyLayout(); syncUrl(); });
     dom.graphhgt.addEventListener("input", () => { state.hgt = Number(dom.graphhgt.value); applyLayout(); syncUrl(); });
-    dom.togglecharts.addEventListener("click", () => { state.graph = state.graph === "chart" ? "distribution" : "chart"; renderChartToggle(); renderCharts(); syncUrl(); });
+    dom.togglecharts.addEventListener("click", () => {
+      if (!isDistributionAvailable()) { return; }
+      state.graph = state.graph === "chart" ? "distribution" : "chart";
+      renderChartToggle();
+      renderCharts();
+      syncUrl();
+    });
     dom.cameraButton.addEventListener("click", copyLink);
     dom.downloadButton.addEventListener("click", downloadCurrentPayload);
     dom.settingsbtn.addEventListener("click", () => openModal(dom["settings"]));
@@ -145,6 +153,7 @@
   }
 
   function renderMenus() {
+    applyDistributionControls();
     renderRunMenu(); renderMemberMenu(); renderGroupMenu(); renderTimezoneMenus(); renderDarkModeMenu(); renderElementBrowser(); renderChartToggle();
     dom.stationInput.value = state.station;
     dom.obsonoff.checked = state.obs;
@@ -370,6 +379,7 @@
 
   function renderChartToggle() {
     dom.togglecharts.textContent = state.graph === "distribution" ? "Spread" : "Chart";
+    dom.togglecharts.hidden = !isDistributionAvailable();
   }
 
   function updateTitleBlock() {
@@ -377,6 +387,10 @@
     const station = refs.payload.station;
     dom.maplocations.value = station.id;
     dom.datetitle.textContent = `${station.id} ${station.site} | ${refs.payload.member === "ens" ? "Ensemble" : refs.payload.member.toUpperCase()} ${groupTitle(state.group)} | ${stamp(refs.payload.run_id)} init | ${timezoneLabel(state.tz, station)}`;
+    if (!isDistributionAvailable()) {
+      dom.infoboxwhiskersvalues.textContent = "";
+      return;
+    }
     dom.infoboxwhiskersvalues.textContent = [
       state.whiskers ? "Whiskers on" : "Whiskers off",
       state.boxes ? "Boxes on" : "Boxes off",
@@ -472,8 +486,37 @@
       activeGroupsRaw().flatMap((group) => group.overlays)
     );
     Object.assign(state, next);
+    if (!isDistributionAvailable()) {
+      state.graph = "chart";
+    }
     if (state.group === "custom" && !state.customgroup.length) { state.group = defaultGroup(); }
     if (!activeGroups().length) { state.group = defaultGroup(); }
+  }
+
+  function isDistributionAvailable() {
+    return state.member === "ens";
+  }
+
+  function applyDistributionControls() {
+    const show = isDistributionAvailable();
+    if (!show && state.graph === "distribution") {
+      state.graph = "chart";
+    }
+    const rows = [
+      dom.boxwhiskerinfowrapper,
+      dom.whiskerpercentilesrow,
+      dom.boxpercentilesrow,
+      dom.readoutheaderrow,
+      dom.boxwhiskersrow,
+      dom.boxesrow,
+      dom.boxmedianrow,
+      dom.deterministicrow,
+    ];
+    for (const row of rows) {
+      if (row) {
+        row.hidden = !show;
+      }
+    }
   }
 
   function activeGroupsRaw() {
