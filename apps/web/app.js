@@ -95,8 +95,8 @@
     dom.settingsclose.addEventListener("click", () => closeModal(dom["settings"]));
     dom.customgroupbtn.addEventListener("click", () => { renderCustomGroupModal(); openModal(dom.customgroup); });
     dom.customgroupclose.addEventListener("click", () => closeModal(dom.customgroup));
-    dom.customgroupsave.addEventListener("click", () => { state.group = "custom"; state.elements = []; closeModal(dom.customgroup); renderAll(); });
-    dom.customgroupclear.addEventListener("click", () => { state.customgroup = []; if (state.group === "custom") { state.group = defaultGroup(); } closeModal(dom.customgroup); renderAll(); });
+    dom.customgroupsave.addEventListener("click", () => { state.group = "custom"; state.elements = []; closeModal(dom.customgroup); renderSelectionView(); });
+    dom.customgroupclear.addEventListener("click", () => { state.customgroup = []; if (state.group === "custom") { state.group = defaultGroup(); } closeModal(dom.customgroup); renderSelectionView(); });
     dom["map-btn"].addEventListener("click", toggleDrawer);
     dom.boxwhiskerlabel.addEventListener("click", () => openModal(dom["settings"]));
     bindToggle(dom.obsonoff, "obs");
@@ -166,6 +166,16 @@
     syncUrl();
   }
 
+  function renderSelectionView() {
+    normalizeState();
+    renderMenus();
+    renderCustomGroupModal();
+    updateTitleBlock();
+    updateDrawerStatus();
+    renderCharts();
+    syncUrl();
+  }
+
   function renderMenus() {
     applyDistributionControls();
     renderRunMenu(); renderMemberMenu(); renderGroupMenu(); renderTimezoneMenus(); renderDarkModeMenu(); renderElementBrowser(); renderChartToggle();
@@ -192,7 +202,7 @@
 
   function renderGroupMenu() {
     const items = [{ label: "All Elements", value: "all" }, ...activeGroupsRaw().map((group) => ({ label: groupTitle(group.id), value: group.id })), { label: "Custom Group", value: "custom" }];
-    fillMenu(dom.groupmenu, items, state.group, async (value) => { state.group = value; state.elements = []; renderAll(); });
+    fillMenu(dom.groupmenu, items, state.group, async (value) => { state.group = value; state.elements = []; renderSelectionView(); });
     dom.groupbtn.textContent = groupTitle(state.group);
   }
 
