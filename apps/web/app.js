@@ -48,12 +48,12 @@
     "fontsizeslider", "whiskerlow", "whiskerhigh", "whiskerlowvalue", "whiskerhighvalue", "boxlow", "boxhigh",
     "boxlowvalue", "boxhighvalue", "boxwhiskersreadout", "boxreadout", "boxmedianreadout", "deterministicreadout",
     "boxwhiskerinfowrapper", "whiskerpercentilesrow", "boxpercentilesrow", "readoutheaderrow", "boxwhiskersrow",
-    "boxesrow", "boxmedianrow", "deterministicrow"
+    "boxesrow", "boxmedianrow", "deterministicrow", "stationsummary", "viewstatus"
   ]);
 
   const service = DataService.createDataService({ staticRoot: staticRoot(), backendRoot: backendRoot() });
   const state = UrlState.parseState(window.location.search);
-  const refs = { runs: [], stations: [], payload: null, detPayload: null, charts: [], xRange: null, timer: 0, theme: { chartGrid: "rgba(143,164,184,0.12)", chartTick: "#91a5b9" } };
+  const refs = { runs: [], stations: [], payload: null, detPayload: null, charts: [], xRange: null, timer: 0, requestId: 0, busy: false, theme: { chartGrid: "rgba(143,164,184,0.12)", chartTick: "#91a5b9" } };
 
   Charts.registerPlugins();
   init().catch((error) => {
@@ -128,15 +128,29 @@
   }
 
   async function loadPayload() {
-    refs.payload = await service.loadPointSeries(state.run, state.member, state.station);
-    state.station = refs.payload.station.id;
-    state.member = refs.payload.member;
-    refs.detPayload = null;
-    if (state.det && state.member === "ens") {
-      try { refs.detPayload = await service.loadPointSeries(state.run, "m00", state.station); } catch (error) { console.error(error); }
+    const requestId = ++refs.requestId;
+    setBusy(true, `Loading ${state.station} ${state.member === "ens" ? "ensemble" : state.member.toUpperCase()} data...`);
+    try {
+      const payload = await service.loadPointSeries(state.run, state.member, state.station);
+      if (requestId !== refs.requestId) { return; }
+      refs.payload = payload;
+      state.station = refs.payload.station.id;
+      state.member = refs.payload.member;
+      refs.detPayload = null;
+      if (state.det && state.member === "ens") {
+        try { refs.detPayload = await service.loadPointSeries(state.run, "m00", state.station); } catch (error) { console.error(error); }
+      }
+      normalizeState();
+      renderAll();
+      setBusy(false, `Loaded ${activeOverlayIds().length} ${activeOverlayIds().length === 1 ? "element" : "elements"} for ${state.station}.`);
+    } catch (error) {
+      if (requestId !== refs.requestId) { return; }
+      console.error(error);
+      setBusy(false, `Unable to load data for ${state.station}. Check the station code or selected run.`, true);
+      if (!refs.payload) {
+        dom.main.innerHTML = '<div class="chart-empty">Unable to load station data for this selection.</div>';
+      }
     }
-    normalizeState();
-    renderAll();
   }
 
   function renderAll() {
@@ -172,7 +186,7 @@
   }
 
   function renderMemberMenu() {
-    fillMenu(dom.membermenu, (refs.payload.available_members || []).map((member) => ({ label: member === "ens" ? "Ensemble" : member.toUpperCase(), value: member })), state.member, async (value) => { state.member = value; state.group = defaultGroup(); state.elements = []; refs.xRange = null; await loadPayload(); });
+    fillMenu(dom.membermenu, (refs.payload.available_members || []).map((member) => ({ label: member === "ens" ? "Ensemble" : member.toUpperCase(), value: member })), state.member, async (value) => { state.member = value; refs.xRange = null; await loadPayload(); });
     dom.memberbtn.textContent = state.member === "ens" ? "Ensemble" : state.member.toUpperCase();
   }
 
@@ -278,6 +292,7 @@
       const button = document.createElement("button");
       button.type = "button";
       button.textContent = station.id;
+      button.className = station.id === state.station ? "is-active" : "";
       button.addEventListener("click", async () => { state.station = station.id; refs.xRange = null; await loadPayload(); });
       dom.quickstations.appendChild(button);
     }
@@ -375,6 +390,7 @@
       dom.maplocations.appendChild(option);
     }
     dom.maplocations.value = state.station;
+    dom.stationInput.value = state.station;
   }
 
   function renderChartToggle() {
@@ -386,6 +402,8 @@
     if (!refs.payload) { return; }
     const station = refs.payload.station;
     dom.maplocations.value = station.id;
+    dom.stationInput.value = station.id;
+    dom.stationsummary.innerHTML = `<strong>${station.id}</strong> ${station.site} | ${station.state || ""} ${station.country || ""} | ${Number(station.lat).toFixed(2)}, ${Number(station.lon).toFixed(2)}`;
     dom.datetitle.textContent = `${station.id} ${station.site} | ${refs.payload.member === "ens" ? "Ensemble" : refs.payload.member.toUpperCase()} ${groupTitle(state.group)} | ${stamp(refs.payload.run_id)} init | ${timezoneLabel(state.tz, station)}`;
     if (!isDistributionAvailable()) {
       dom.infoboxwhiskersvalues.textContent = "";
@@ -424,9 +442,11 @@
     for (const overlayId of overlayIds) {
       const series = refs.payload.series[overlayId];
       const summary = summarize(series);
+      const modeBadge = series.chart_type === "distribution" ? '<span class="chart-badge is-spread">Ensemble Spread</span>' : '<span class="chart-badge is-line">Deterministic</span>';
+      const unitBadge = series.units ? `<span class="chart-badge">${series.units}</span>` : "";
       const panel = document.createElement("section");
       panel.className = `chart-panel${state.graph === "distribution" ? " compact" : ""}`;
-      panel.innerHTML = `<div class="chart-head"><div class="chart-head-left"><div class="chart-group-label">${groupTitle(groupForOverlay(overlayId))}</div><h3 class="chart-title">${series.label}</h3><p class="chart-description">${elementDescription(overlayId)}</p></div><div class="chart-meta"><span>Latest ${fmt(summary.latest)}${unit(series)}</span><span>Max ${fmt(summary.max)}${unit(series)}</span><span>Min ${fmt(summary.min)}${unit(series)}</span></div></div>${series.chart_type === "distribution" ? '<p class="chart-note">Drag to zoom. Click once on any plot to restore the full time range.</p>' : ""}<div class="chart-frame"><canvas></canvas></div>`;
+      panel.innerHTML = `<div class="chart-head"><div class="chart-head-left"><div class="chart-group-label">${groupTitle(groupForOverlay(overlayId))}</div><h3 class="chart-title">${series.label}</h3><div class="chart-badges">${modeBadge}${unitBadge}</div><p class="chart-description">${elementDescription(overlayId)}</p></div><div class="chart-meta"><span>Latest ${fmt(summary.latest)}${unit(series)}</span><span>Max ${fmt(summary.max)}${unit(series)}</span><span>Min ${fmt(summary.min)}${unit(series)}</span></div></div>${series.chart_type === "distribution" ? '<p class="chart-note">Drag to zoom. Click once on any plot to restore the full time range.</p>' : ""}<div class="chart-frame"><canvas></canvas></div>`;
       dom.main.appendChild(panel);
       const chart = Charts.buildChart(panel.querySelector("canvas"), {
         series,
@@ -565,7 +585,12 @@
   }
 
   function submitStation() {
-    state.station = (dom.stationInput.value || "").trim().toUpperCase() || UrlState.DEFAULTS.station;
+    const stationId = resolveStationInput(dom.stationInput.value);
+    if (!stationId) {
+      setBusy(false, `Station "${(dom.stationInput.value || "").trim().toUpperCase()}" was not found in the published station list.`, true);
+      return;
+    }
+    state.station = stationId;
     refs.xRange = null;
     loadPayload().catch((error) => console.error(error));
   }
@@ -760,6 +785,46 @@
 
   function syncUrl() {
     UrlState.writeState(state);
+  }
+
+  function resolveStationInput(value) {
+    const text = String(value || "").trim().toUpperCase();
+    if (!text) {
+      return UrlState.DEFAULTS.station;
+    }
+    const exact = refs.stations.find((station) =>
+      [station.id, station.icaoId, station.faaId, station.iataId, ...(station.aliases || [])]
+        .filter(Boolean)
+        .map((item) => String(item).toUpperCase())
+        .includes(text)
+    );
+    return exact ? exact.id : null;
+  }
+
+  function setBusy(isBusy, message, isError) {
+    refs.busy = isBusy;
+    const controls = [
+      dom.stationInput,
+      dom.stationSubmit,
+      dom.maplocations,
+      dom.runbtn,
+      dom.memberbtn,
+      dom.groupbtn,
+      dom.timezonebtn,
+      dom.darkmodebtn,
+      dom.elementbrowserbtn,
+    ];
+    for (const control of controls) {
+      if (control) {
+        control.disabled = isBusy;
+      }
+    }
+    dom.viewstatus.textContent = message || "";
+    dom.viewstatus.classList.toggle("is-loading", Boolean(isBusy));
+    dom.viewstatus.classList.toggle("is-error", Boolean(isError));
+    if (dom.main) {
+      dom.main.setAttribute("aria-busy", isBusy ? "true" : "false");
+    }
   }
 
   function projectPoint(lat, lon, width, height, pad, bounds) {

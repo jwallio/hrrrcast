@@ -170,11 +170,11 @@ body[data-fontsize="lg"] {
 }
 
 .parent {
-  text-align: center;
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 8px;
+  margin-bottom: 10px;
 }
 
 .dropdown {
@@ -294,6 +294,7 @@ body[data-fontsize="lg"] {
   gap: 8px;
   align-items: center;
   margin-bottom: 8px;
+  flex-wrap: wrap;
 }
 
 .maplocations {
@@ -329,6 +330,44 @@ body[data-fontsize="lg"] {
   gap: 4px;
   width: min(520px, 100%);
   margin-bottom: 8px;
+}
+
+.station-summary,
+.view-status {
+  min-height: 1.3em;
+  margin-bottom: 6px;
+  line-height: 1.35;
+}
+
+.station-summary {
+  font-size: 0.92rem;
+  color: var(--graphcolor);
+}
+
+.station-summary strong {
+  color: var(--fontcolor);
+}
+
+.view-status {
+  font-size: 0.84rem;
+  color: var(--linkcolor);
+}
+
+.view-status.is-error {
+  color: #d44;
+}
+
+.view-status.is-loading::before {
+  content: "";
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-right: 8px;
+  border: 2px solid rgba(127, 171, 255, 0.25);
+  border-top-color: var(--linkcolor);
+  border-radius: 50%;
+  vertical-align: -1px;
+  animation: spin 0.85s linear infinite;
 }
 
 .suggestion-button {
@@ -385,6 +424,7 @@ body[data-fontsize="lg"] {
   justify-content: space-between;
   gap: 12px;
   margin-bottom: 8px;
+  align-items: flex-start;
 }
 
 .chart-head-left {
@@ -403,6 +443,32 @@ body[data-fontsize="lg"] {
 .chart-title {
   margin: 0;
   font-size: 1.02rem;
+}
+
+.chart-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 2px;
+}
+
+.chart-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 7px;
+  border: 1px solid var(--graphcolorlight);
+  font-size: 0.72rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  background: var(--selectcolor);
+}
+
+.chart-badge.is-spread {
+  border-color: rgba(84, 163, 255, 0.45);
+}
+
+.chart-badge.is-line {
+  border-color: rgba(242, 200, 102, 0.4);
 }
 
 .chart-description {
@@ -545,6 +611,12 @@ body[data-fontsize="lg"] {
   padding: 7px 10px;
   border: 1px solid var(--graphcolorlight);
   background: var(--selectcolor);
+}
+
+.quickstations button.is-active {
+  background: var(--linkcolor);
+  color: white;
+  border-color: var(--linkcolor);
 }
 
 .drawerstatus {
@@ -726,6 +798,13 @@ input:checked + .toggleswitch:before {
   display: none !important;
 }
 
+button:disabled,
+select:disabled,
+input:disabled {
+  opacity: 0.58;
+  cursor: wait;
+}
+
 @media (max-width: 900px) {
   #main {
     grid-template-columns: 1fr;
@@ -748,5 +827,83 @@ input:checked + .toggleswitch:before {
   #map-btn {
     position: static;
     margin: 0 var(--margin) 12px;
+  }
+
+  .chart-head {
+    flex-direction: column;
+  }
+
+  .chart-meta {
+    width: 100%;
+    text-align: left;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+}
+
+@media (max-width: 720px) {
+  #contentid.content {
+    padding: 0 10px 14px;
+  }
+
+  #logo {
+    margin: 10px;
+    height: 72px;
+  }
+
+  #blur span {
+    font-size: 1.55rem;
+  }
+
+  #slider-wrapper {
+    gap: 10px;
+  }
+
+  .slidercontainer {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .sliderdiv {
+    width: min(220px, 62vw);
+  }
+
+  .parent {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .dropdown,
+  .dropbtn,
+  .dropbtn.menu,
+  .dropbtn.datemenu,
+  .dropbtn.smallbutton {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .title-row > * {
+    width: 100%;
+  }
+
+  .station-button {
+    width: 100%;
+  }
+
+  .browser-dropdown {
+    min-width: 0;
+    width: min(92vw, 420px);
+  }
+
+  .suggestions {
+    width: 100%;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
   }
 }
