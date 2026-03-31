@@ -436,6 +436,11 @@ def overlay_style(overlay_id: str) -> dict[str, object]:
 
 
 def normalize_overlay_points(points: list[dict[str, object]], style: dict[str, object]) -> list[dict[str, object]]:
+    normalized = normalize_probability_points(points, style)
+    return apply_style_transform_to_line_points(normalized, style)
+
+
+def normalize_probability_points(points: list[dict[str, object]], style: dict[str, object]) -> list[dict[str, object]]:
     units = str(style.get("units") or "")
     style_range = style.get("range") if isinstance(style, dict) else None
     if units != "%" or not isinstance(style_range, list) or len(style_range) < 2 or float(style_range[1]) <= 1.0:
@@ -457,6 +462,23 @@ def normalize_overlay_points(points: list[dict[str, object]], style: dict[str, o
             }
         )
     return scaled_points
+
+
+def apply_style_transform_to_line_points(points: list[dict[str, object]], style: dict[str, object]) -> list[dict[str, object]]:
+    transform_name = str(style.get("transform") or "")
+    if not transform_name:
+        return points
+
+    transformed: list[dict[str, object]] = []
+    for point in points:
+        value = point.get("value")
+        transformed.append(
+            {
+                **point,
+                "value": None if value is None else transform_value(float(value), transform_name),
+            }
+        )
+    return transformed
 
 
 def summarize_points(points: list[dict[str, object]]) -> dict[str, object]:
@@ -490,14 +512,15 @@ def summarize_distribution(points: list[dict[str, object]]) -> dict[str, object]
 
 def ensemble_distribution_payload(overlay_id: str, points: list[dict[str, object]]) -> dict[str, object]:
     style = overlay_style(overlay_id)
+    normalized_points = apply_style_transform_to_distribution_points(points, style)
     return {
         "id": overlay_id,
         "label": overlay_label(overlay_id),
         "units": overlay_units(overlay_id),
         "style": style,
         "chart_type": "distribution",
-        "points": points,
-        "summary": summarize_distribution(points),
+        "points": normalized_points,
+        "summary": summarize_distribution(normalized_points),
     }
 
 
@@ -525,6 +548,45 @@ def derive_vector_magnitude(
             }
         )
     return overlay_payload(overlay_id, derived_points)
+
+
+def apply_style_transform_to_distribution_points(points: list[dict[str, object]], style: dict[str, object]) -> list[dict[str, object]]:
+    transform_name = str(style.get("transform") or "")
+    if not transform_name:
+        return points
+
+    transformed_points: list[dict[str, object]] = []
+    for point in points:
+        transformed_point = dict(point)
+        for key in ("min", "q1", "median", "q3", "max", "mean"):
+            value = transformed_point.get(key)
+            if value is not None:
+                transformed_point[key] = transform_value(float(value), transform_name)
+        if isinstance(transformed_point.get("member_values"), list):
+            transformed_point["member_values"] = [
+                transform_value(float(value), transform_name)
+                for value in transformed_point["member_values"]
+            ]
+        transformed_points.append(transformed_point)
+    return transformed_points
+
+
+def transform_value(value: float, transform_name: str) -> float:
+    if transform_name == "kelvin_to_fahrenheit":
+        return ((value - 273.15) * 9.0 / 5.0) + 32.0
+    if transform_name == "kelvin_delta_to_fahrenheit":
+        return value * 9.0 / 5.0
+    if transform_name == "mps_to_mph":
+        return value * 2.2369362920544
+    if transform_name == "mm_to_inches":
+        return value / 25.4
+    if transform_name == "kgkg_to_gkg":
+        return value * 1000.0
+    if transform_name == "pa_to_hpa":
+        return value / 100.0
+    if transform_name == "m_to_miles":
+        return value / 1609.344
+    return value
 
 
 def build_ensemble_distribution_series(

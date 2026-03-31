@@ -173,6 +173,55 @@ class PointSeriesTests(unittest.TestCase):
         self.assertAlmostEqual(series["summary"]["max"], 25.0, places=4)
         self.assertFalse(series["summary"]["all_zero"])
 
+    def test_build_point_series_applies_temperature_transform(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            data_root = Path(tmpdir) / "data" / "processed"
+            catalog_path = Path(tmpdir) / "stations.json"
+            catalog_path.write_text(
+                json.dumps(
+                    {
+                        "stations": [
+                            {
+                                "id": "KRDU",
+                                "aliases": ["RDU"],
+                                "site": "Raleigh-Durham",
+                                "lat": 35.9,
+                                "lon": -78.8,
+                                "elev": 132,
+                                "state": "NC",
+                                "country": "US",
+                            }
+                        ]
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            write_product_asset(
+                data_root,
+                run_id="2026032820",
+                member="m00",
+                overlay_id="temperature_2m",
+                forecast_hour=0,
+                variable_name="tmp",
+                values=np.array([[273.15, 275.15], [276.15, 277.15]], dtype=np.float32),
+                field_key="TMP:2 m above ground",
+            )
+
+            payload = build_point_series(
+                "2026032820",
+                "KRDU",
+                "m00",
+                overlays=["temperature_2m"],
+                data_root=data_root,
+                station_catalog_path=catalog_path,
+            )
+
+        series = payload["series"]["temperature_2m"]
+        self.assertEqual(series["units"], "F")
+        self.assertAlmostEqual(series["points"][0]["value"], 35.6, places=1)
+        self.assertAlmostEqual(series["summary"]["latest"], 35.6, places=1)
+
     def test_build_point_series_adds_ensemble_distribution_series(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             data_root = Path(tmpdir) / "data" / "processed"
@@ -225,6 +274,56 @@ class PointSeriesTests(unittest.TestCase):
         self.assertAlmostEqual(point["min"], 100.0, places=4)
         self.assertAlmostEqual(point["max"], 300.0, places=4)
         self.assertEqual(point["member_values"], [100.0, 200.0, 300.0])
+
+    def test_build_point_series_applies_distribution_transform(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            data_root = Path(tmpdir) / "data" / "processed"
+            catalog_path = Path(tmpdir) / "stations.json"
+            catalog_path.write_text(
+                json.dumps(
+                    {
+                        "stations": [
+                            {
+                                "id": "KRDU",
+                                "aliases": ["RDU"],
+                                "site": "Raleigh-Durham",
+                                "lat": 35.9,
+                                "lon": -78.8,
+                                "elev": 132,
+                                "state": "NC",
+                                "country": "US",
+                            }
+                        ]
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            for member_id, value in [("m00", 273.15), ("m01", 274.15), ("m02", 275.15)]:
+                write_product_asset(
+                    data_root,
+                    run_id="2026032820",
+                    member=member_id,
+                    overlay_id="temperature_2m",
+                    forecast_hour=0,
+                    variable_name="tmp",
+                    values=np.array([[0.0, value], [0.0, 0.0]], dtype=np.float32),
+                    field_key="TMP:2 m above ground",
+                )
+
+            payload = build_point_series(
+                "2026032820",
+                "KRDU",
+                "ens",
+                data_root=data_root,
+                station_catalog_path=catalog_path,
+            )
+
+        point = payload["series"]["temperature_2m_member_spread"]["points"][0]
+        self.assertAlmostEqual(point["min"], 32.0, places=1)
+        self.assertAlmostEqual(point["median"], 33.8, places=1)
+        self.assertAlmostEqual(point["max"], 35.6, places=1)
+        self.assertAlmostEqual(point["member_values"][0], 32.0, places=1)
 
 
 if __name__ == "__main__":
