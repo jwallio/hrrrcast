@@ -79,12 +79,23 @@ ENSEMBLE_SPREAD_OVERLAYS: dict[str, dict[str, object]] = {
     "composite_reflectivity_member_spread": {"source": "composite_reflectivity", "label": "Composite Reflectivity Member Spread"},
     "qpf_member_spread": {"source": "qpf", "label": "Accumulated Precipitation Member Spread"},
     "cape_member_spread": {"source": "cape", "label": "Surface CAPE Member Spread"},
+    "temperature_2m_member_spread": {"source": "temperature_2m", "label": "2 m Temperature Member Spread"},
+    "dewpoint_2m_member_spread": {"source": "dewpoint_2m", "label": "2 m Dewpoint Member Spread"},
+    "rh_2m_member_spread": {"source": "rh_2m", "label": "2 m Relative Humidity Member Spread"},
+    "pwat_member_spread": {"source": "pwat", "label": "Precipitable Water Member Spread"},
+    "surface_pressure_member_spread": {"source": "surface_pressure", "label": "Surface Pressure Member Spread"},
+    "visibility_member_spread": {"source": "visibility", "label": "Visibility Member Spread"},
+    "ceiling_member_spread": {"source": "ceiling", "label": "Ceiling Height Member Spread"},
+    "cloud_cover_total_member_spread": {"source": "cloud_cover_total", "label": "Total Cloud Cover Member Spread"},
     "helicity_0_1km_member_spread": {"source": "helicity_0_1km", "label": "0 to 1 km Helicity Member Spread"},
     "helicity_0_3km_member_spread": {"source": "helicity_0_3km", "label": "0 to 3 km Helicity Member Spread"},
     "shear_0_1km_speed_member_spread": {"source": "shear_0_1km_speed", "label": "0 to 1 km Shear Member Spread"},
     "shear_0_6km_speed_member_spread": {"source": "shear_0_6km_speed", "label": "0 to 6 km Shear Member Spread"},
     "wind_10m_member_spread": {"source": "wind_10m", "label": "10 m Wind Member Spread"},
-    "gust_surface_member_spread": {"source": "gust_surface", "label": "Surface Gust Member Spread"},
+    "height_500mb_member_spread": {"source": "height_500mb", "label": "500 mb Height Member Spread"},
+    "temperature_850mb_member_spread": {"source": "temperature_850mb", "label": "850 mb Temperature Member Spread"},
+    "wind_500mb_member_spread": {"source": "wind_500mb", "label": "500 mb Wind Member Spread"},
+    "vertical_velocity_500mb_member_spread": {"source": "vertical_velocity_500mb", "label": "500 mb Vertical Velocity Member Spread"},
 }
 
 CHART_GROUPS: dict[str, list[dict[str, object]]] = {
@@ -100,6 +111,26 @@ CHART_GROUPS: dict[str, list[dict[str, object]]] = {
             ],
         },
         {"id": "instability", "title": "Instability", "overlays": ["cape_probability_gt_1000", "cape_member_spread"]},
+        {
+            "id": "moisture",
+            "title": "Moisture",
+            "overlays": [
+                "temperature_2m_member_spread",
+                "dewpoint_2m_member_spread",
+                "rh_2m_member_spread",
+                "pwat_member_spread",
+                "surface_pressure_member_spread",
+            ],
+        },
+        {
+            "id": "aviation",
+            "title": "Aviation",
+            "overlays": [
+                "visibility_member_spread",
+                "ceiling_member_spread",
+                "cloud_cover_total_member_spread",
+            ],
+        },
         {
             "id": "rotation",
             "title": "Rotation",
@@ -126,7 +157,16 @@ CHART_GROUPS: dict[str, list[dict[str, object]]] = {
             "overlays": [
                 "wind_10m_probability_gt_25kt",
                 "wind_10m_member_spread",
-                "gust_surface_member_spread",
+            ],
+        },
+        {
+            "id": "upper",
+            "title": "Upper Air",
+            "overlays": [
+                "height_500mb_member_spread",
+                "temperature_850mb_member_spread",
+                "wind_500mb_member_spread",
+                "vertical_velocity_500mb_member_spread",
             ],
         },
     ],
