@@ -134,7 +134,7 @@
           },
         ],
       },
-      options: baseOptions(config, font),
+      options: baseOptions(config, font, computeYBounds(config.series, points)),
     });
   }
 
@@ -177,10 +177,11 @@
         tension: 0.08,
       });
     }
+    const yBounds = computeDistributionYBounds(config.series, distributionPoints, config.detSeries, config.settings);
     const chart = new Chart(canvas.getContext("2d"), {
       type: "line",
       data: { datasets },
-      options: baseOptions(config, font),
+      options: baseOptions(config, font, yBounds),
     });
     chart.$distributionPoints = distributionPoints;
     chart.$distributionSettings = config.settings;
@@ -190,7 +191,7 @@
     return chart;
   }
 
-  function baseOptions(config, font) {
+  function baseOptions(config, font, yBounds) {
     return {
       responsive: true,
       maintainAspectRatio: false,
@@ -249,9 +250,11 @@
           },
         },
         y: {
-          beginAtZero: shouldBeginAtZero(config.series.style),
-          suggestedMin: rangeValue(config.series.style, 0),
-          suggestedMax: rangeValue(config.series.style, 1),
+          beginAtZero: false,
+          min: yBounds ? yBounds.min : undefined,
+          max: yBounds ? yBounds.max : undefined,
+          suggestedMin: yBounds ? undefined : rangeValue(config.series.style, 0),
+          suggestedMax: yBounds ? undefined : rangeValue(config.series.style, 1),
           ticks: {
             color: config.theme.chartTick,
             font: { size: font.tick },
@@ -279,6 +282,105 @@
 
   function rangeValue(style, index) {
     return style && Array.isArray(style.range) ? Number(style.range[index]) : undefined;
+  }
+
+  function computeYBounds(series, points) {
+    const values = points
+      .map((point) => Number(point.y))
+      .filter(Number.isFinite);
+    return normalizeBounds(values, series.style, series.units);
+  }
+
+  function computeDistributionYBounds(series, distributionPoints, detSeries, settings) {
+    const values = [];
+    for (const point of distributionPoints) {
+      if (settings.whiskers) {
+        values.push(point.min, point.max);
+      }
+      if (settings.boxes) {
+        values.push(point.q1, point.q3);
+      }
+      if (settings.median) {
+        values.push(point.median);
+      }
+      values.push(point.mean);
+    }
+    if (settings.det && detSeries && Array.isArray(detSeries.points)) {
+      for (const point of detSeries.points) {
+        values.push(point.value);
+      }
+    }
+    return normalizeBounds(values, series.style, series.units);
+  }
+
+  function normalizeBounds(values, style, units) {
+    const numeric = values.map(Number).filter(Number.isFinite);
+    if (!numeric.length) {
+      if (style && Array.isArray(style.range)) {
+        return { min: Number(style.range[0]), max: Number(style.range[1]) };
+      }
+      return null;
+    }
+
+    let min = Math.min(...numeric);
+    let max = Math.max(...numeric);
+
+    if (min === max) {
+      const singlePad = Math.max(Math.abs(max) * 0.1, units === "%" ? 2 : 1);
+      min -= singlePad;
+      max += singlePad;
+    } else {
+      const span = max - min;
+      const pad = Math.max(span * 0.08, units === "%" ? 1 : span * 0.03);
+      min -= pad;
+      max += pad;
+    }
+
+    const positivePreferred = shouldBeginAtZero(style);
+    if (positivePreferred && min > 0) {
+      const originalMin = Math.min(...numeric);
+      if (originalMin <= max * 0.15) {
+        min = 0;
+      }
+    }
+
+    if (units === "%") {
+      min = Math.max(0, min);
+      max = Math.min(100, max);
+    }
+
+    if (style && Array.isArray(style.range)) {
+      const [styleMin, styleMax] = style.range.map(Number);
+      if (Number.isFinite(styleMin) && Number.isFinite(styleMax)) {
+        if (numeric.every((value) => value >= styleMin && value <= styleMax)) {
+          min = Math.max(min, styleMin);
+          max = Math.min(max, styleMax);
+        }
+      }
+    }
+
+    if (min >= max) {
+      max = min + 1;
+    }
+
+    return {
+      min: roundBound(min),
+      max: roundBound(max),
+    };
+  }
+
+  function roundBound(value) {
+    if (!Number.isFinite(value)) {
+      return value;
+    }
+    const magnitude = Math.abs(value);
+    if (magnitude >= 100) {
+      return Math.round(value);
+    }
+    if (magnitude >= 10) {
+      return Math.round(value * 10) / 10;
+    }
+    return Math.round(value * 100) / 100;
   }
 
   const distributionPlugin = {
