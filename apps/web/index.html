@@ -103,8 +103,12 @@
         <div id="side-drawer" class="hide-drawer">
           <div id="main-map" class="content">
             <div class="drawer-section">
-              <p class="drawer-title">Station Browser</p>
-              <p class="drawer-copy">Type an ICAO, FAA, or IATA code to load a station and update the chart stack.</p>
+              <p class="drawer-title">Station Map</p>
+              <p class="drawer-copy">Pick a station from the quick map to update the chart stack.</p>
+              <div id="stationmapwrap" class="stationmapwrap">
+                <svg id="stationmap" class="stationmap" viewBox="0 0 360 220" role="img" aria-label="Station selection map"></svg>
+              </div>
+              <div id="stationmapstatus" class="stationmapstatus"></div>
             </div>
             <div class="drawer-section">
               <p class="drawer-subtitle">Quick Stations</p>

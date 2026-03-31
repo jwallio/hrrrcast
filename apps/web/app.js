@@ -43,7 +43,7 @@
     "runbtn", "runmenu", "memberbtn", "membermenu", "groupbtn", "groupmenu", "timezonebtn", "timezonemenu",
     "timezonebtnmodal", "timezonemenumodal", "darkmodebtn", "darkmodemenu", "togglecharts", "cameraButton",
     "downloadButton", "settingsbtn", "datetitle", "boxwhiskerlabel", "infoboxwhiskersvalues", "main", "side-drawer",
-    "map-btn", "quickstations", "drawerstatus", "settings", "settingsclose", "customgroup", "customgroupbtn",
+    "map-btn", "quickstations", "drawerstatus", "stationmap", "stationmapstatus", "settings", "settingsclose", "customgroup", "customgroupbtn",
     "customgroupclose", "customgroupoptions", "customgroupsave", "customgroupclear", "obsonoff", "colorfriendly",
     "fontsizeslider", "whiskerlow", "whiskerhigh", "whiskerlowvalue", "whiskerhighvalue", "boxlow", "boxhigh",
     "boxlowvalue", "boxhighvalue", "boxwhiskersreadout", "boxreadout", "boxmedianreadout", "deterministicreadout"
@@ -136,6 +136,7 @@
     applyLayout();
     renderMenus();
     renderQuickStations();
+    renderStationMap();
     renderCustomGroupModal();
     updateTitleBlock();
     updateDrawerStatus();
@@ -271,6 +272,88 @@
       button.addEventListener("click", async () => { state.station = station.id; refs.xRange = null; await loadPayload(); });
       dom.quickstations.appendChild(button);
     }
+  }
+
+  function renderStationMap() {
+    if (!dom.stationmap) { return; }
+    const svg = dom.stationmap;
+    svg.innerHTML = "";
+    const width = 360;
+    const height = 220;
+    const pad = { left: 26, right: 14, top: 16, bottom: 18 };
+    const bounds = { west: -125, east: -66, south: 24, north: 50 };
+    const stations = refs.stations.length ? refs.stations : [{ id: "KRDU", lat: 35.89, lon: -78.78, site: "Raleigh-Durham Intl" }];
+    const selected = stations.find((station) => station.id === state.station) || refs.payload?.station || stations[0];
+
+    appendSvg(svg, "rect", {
+      x: pad.left,
+      y: pad.top,
+      width: width - pad.left - pad.right,
+      height: height - pad.top - pad.bottom,
+      rx: 4,
+      class: "stationmap-frame",
+    });
+
+    for (const lon of [-120, -110, -100, -90, -80, -70]) {
+      const point = projectPoint(35, lon, width, height, pad, bounds);
+      appendSvg(svg, "line", {
+        x1: point.x,
+        y1: pad.top,
+        x2: point.x,
+        y2: height - pad.bottom,
+        class: "stationmap-grid",
+      });
+      appendSvg(svg, "text", {
+        x: point.x,
+        y: height - 4,
+        class: "stationmap-label",
+        "text-anchor": "middle",
+      }, `${Math.abs(lon)}W`);
+    }
+
+    for (const lat of [25, 30, 35, 40, 45, 50]) {
+      const point = projectPoint(lat, -96, width, height, pad, bounds);
+      appendSvg(svg, "line", {
+        x1: pad.left,
+        y1: point.y,
+        x2: width - pad.right,
+        y2: point.y,
+        class: "stationmap-grid",
+      });
+      appendSvg(svg, "text", {
+        x: 6,
+        y: point.y + 3,
+        class: "stationmap-label",
+      }, `${lat}N`);
+    }
+
+    for (const station of stations) {
+      if (!Number.isFinite(Number(station.lat)) || !Number.isFinite(Number(station.lon))) { continue; }
+      const point = projectPoint(Number(station.lat), Number(station.lon), width, height, pad, bounds);
+      const active = station.id === selected.id;
+      const marker = appendSvg(svg, "circle", {
+        cx: point.x,
+        cy: point.y,
+        r: active ? 6 : 4,
+        class: active ? "stationmap-marker is-active" : "stationmap-marker",
+      });
+      marker.addEventListener("click", async () => {
+        state.station = station.id;
+        refs.xRange = null;
+        await loadPayload();
+      });
+      appendSvg(marker, "title", {}, `${station.id} ${station.site || ""}`.trim());
+
+      if (active) {
+        appendSvg(svg, "text", {
+          x: point.x + 8,
+          y: point.y - 8,
+          class: "stationmap-text",
+        }, station.id);
+      }
+    }
+
+    dom.stationmapstatus.textContent = `${selected.id} ${selected.site || ""} | ${selected.state || ""} ${selected.country || ""}`.trim();
   }
 
   function renderStationSelect() {
@@ -636,6 +719,14 @@
     UrlState.writeState(state);
   }
 
+  function projectPoint(lat, lon, width, height, pad, bounds) {
+    const xSpan = bounds.east - bounds.west;
+    const ySpan = bounds.north - bounds.south;
+    const x = pad.left + ((lon - bounds.west) / xSpan) * (width - pad.left - pad.right);
+    const y = pad.top + ((bounds.north - lat) / ySpan) * (height - pad.top - pad.bottom);
+    return { x, y };
+  }
+
   function grab(ids) {
     const output = {};
     for (const id of ids) { output[id] = document.getElementById(id); }
@@ -646,6 +737,18 @@
     const node = document.createElement(tag);
     if (className) { node.className = className; }
     if (text != null) { node.textContent = text; }
+    return node;
+  }
+
+  function appendSvg(parent, tag, attrs, text) {
+    const node = document.createElementNS("http://www.w3.org/2000/svg", tag);
+    for (const [key, value] of Object.entries(attrs || {})) {
+      node.setAttribute(key, String(value));
+    }
+    if (text != null) {
+      node.textContent = text;
+    }
+    parent.appendChild(node);
     return node;
   }
 

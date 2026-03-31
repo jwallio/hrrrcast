@@ -462,6 +462,68 @@ body[data-fontsize="lg"] {
   margin-bottom: 18px;
 }
 
+.stationmapwrap {
+  border: 1px solid var(--graphcolorlight);
+  background:
+    linear-gradient(180deg, rgba(83, 123, 168, 0.14) 0%, rgba(83, 123, 168, 0.04) 100%),
+    var(--background1);
+}
+
+.stationmap {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.stationmap-grid {
+  stroke: var(--graphcolorlight);
+  stroke-width: 1;
+  stroke-dasharray: 4 6;
+  opacity: 0.6;
+}
+
+.stationmap-frame {
+  fill: rgba(93, 133, 179, 0.08);
+  stroke: var(--graphcolorlight);
+  stroke-width: 1.2;
+}
+
+.stationmap-label {
+  fill: var(--graphcolor);
+  font-size: 10px;
+  opacity: 0.7;
+}
+
+.stationmap-marker {
+  fill: #8ec8ff;
+  stroke: #0d1a24;
+  stroke-width: 1.2;
+  cursor: pointer;
+}
+
+.stationmap-marker.is-active {
+  fill: #ffbf52;
+  stroke: #241406;
+  stroke-width: 1.6;
+}
+
+.stationmap-text {
+  fill: var(--fontcolor);
+  font-size: 10px;
+  font-weight: 700;
+  paint-order: stroke;
+  stroke: var(--background1);
+  stroke-width: 3px;
+  stroke-linejoin: round;
+}
+
+.stationmapstatus {
+  margin-top: 8px;
+  font-size: 0.85rem;
+  line-height: 1.35;
+  opacity: 0.86;
+}
+
 .drawer-title {
   font-size: 1.1rem;
   font-weight: 700;
