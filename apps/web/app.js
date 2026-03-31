@@ -445,8 +445,8 @@
       const modeBadge = series.chart_type === "distribution" ? '<span class="chart-badge is-spread">Ensemble Spread</span>' : '<span class="chart-badge is-line">Deterministic</span>';
       const unitBadge = series.units ? `<span class="chart-badge">${series.units}</span>` : "";
       const panel = document.createElement("section");
-      panel.className = `chart-panel${state.graph === "distribution" ? " compact" : ""}`;
-      panel.innerHTML = `<div class="chart-head"><div class="chart-head-left"><div class="chart-group-label">${groupTitle(groupForOverlay(overlayId))}</div><h3 class="chart-title">${series.label}</h3><div class="chart-badges">${modeBadge}${unitBadge}</div><p class="chart-description">${elementDescription(overlayId)}</p></div><div class="chart-meta"><span>Latest ${fmt(summary.latest)}${unit(series)}</span><span>Max ${fmt(summary.max)}${unit(series)}</span><span>Min ${fmt(summary.min)}${unit(series)}</span></div></div>${series.chart_type === "distribution" ? '<p class="chart-note">Drag to zoom. Click once on any plot to restore the full time range.</p>' : ""}<div class="chart-frame"><canvas></canvas></div>`;
+      panel.className = `chart-panel${state.graph === "distribution" ? " compact" : ""} ${series.chart_type === "distribution" ? "is-distribution" : "is-deterministic"}`;
+      panel.innerHTML = `<div class="chart-head"><div class="chart-head-left"><div class="chart-group-label">${groupTitle(groupForOverlay(overlayId))}</div><h3 class="chart-title">${series.label}</h3><div class="chart-badges">${modeBadge}${unitBadge}</div><p class="chart-description">${chartSubtitle(series)}</p></div><div class="chart-meta"><span>Latest ${fmt(summary.latest)}${unit(series)}</span><span>Max ${fmt(summary.max)}${unit(series)}</span><span>Min ${fmt(summary.min)}${unit(series)}</span></div></div>${series.chart_type === "distribution" ? '<p class="chart-note">Drag to zoom. Click once on any plot to restore the full time range.</p>' : ""}<div class="chart-frame"><canvas></canvas></div>`;
       dom.main.appendChild(panel);
       const chart = Charts.buildChart(panel.querySelector("canvas"), {
         series,
@@ -733,6 +733,17 @@
 
   function elementDescription(overlayId) {
     return overlayId.replaceAll("_", " ");
+  }
+
+  function chartSubtitle(series) {
+    const unitsText = series.units ? ` in ${series.units}` : "";
+    if (series.chart_type === "distribution") {
+      return `Ensemble member spread over time${unitsText}. Median and mean are plotted with configurable box and whiskers.`;
+    }
+    if (String(series.id || "").includes("probability")) {
+      return `Probability trace over time${unitsText}.`;
+    }
+    return `Deterministic forecast trace over time${unitsText}.`;
   }
 
   function summarize(series) {

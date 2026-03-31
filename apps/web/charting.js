@@ -207,20 +207,27 @@
         tooltip: {
           bodyFont: { size: font.tooltip },
           titleFont: { size: font.tooltip },
+          footerFont: { size: font.tooltip },
           callbacks: {
             title(items) {
               const datum = items[0].raw;
-              return `F${String(datum.x).padStart(3, "0")} | ${config.formatTime(datum.validTime)}`;
+              return `Forecast Hour F${String(datum.x).padStart(3, "0")}`;
+            },
+            footer(items) {
+              const datum = items[0].raw;
+              return `Valid ${config.formatTime(datum.validTime)}`;
             },
             label(item) {
               if (config.series.chart_type === "distribution") {
                 const point = distributionPointWithPercentiles(config.series.points[item.dataIndex], config.settings);
                 const suffix = config.series.units ? ` ${config.series.units}` : "";
+                const boxLabel = `Box (${config.settings.boxlow}-${config.settings.boxhigh}%)`;
+                const whiskerLabel = `Whiskers (${config.settings.whiskerlow}-${config.settings.whiskerhigh}%)`;
                 return [
                   `Median: ${config.formatValue(point.median)}${suffix}`,
                   `Mean: ${config.formatValue(point.mean)}${suffix}`,
-                  `Box: ${config.formatValue(point.q1)} to ${config.formatValue(point.q3)}${suffix}`,
-                  `Whiskers: ${config.formatValue(point.min)} to ${config.formatValue(point.max)}${suffix}`,
+                  `${boxLabel}: ${config.formatValue(point.q1)} to ${config.formatValue(point.q3)}${suffix}`,
+                  `${whiskerLabel}: ${config.formatValue(point.min)} to ${config.formatValue(point.max)}${suffix}`,
                   `Members: ${point.count}`,
                 ];
               }
@@ -238,6 +245,7 @@
           ticks: {
             color: config.theme.chartTick,
             font: { size: font.tick },
+            maxTicksLimit: 9,
             callback(value) {
               return `F${String(Math.round(value)).padStart(3, "0")}`;
             },
@@ -270,7 +278,7 @@
           },
           title: {
             display: true,
-            text: config.series.units || "Value",
+            text: axisTitle(config.series),
             color: config.theme.chartTick,
             font: { size: font.title, weight: "600" },
           },
@@ -349,6 +357,7 @@
 
     if (units === "%") {
       min = Math.max(0, min);
+      max = probabilityUpperBound(max, numeric);
       max = Math.min(100, max);
     }
 
@@ -384,6 +393,27 @@
       return Math.round(value * 10) / 10;
     }
     return Math.round(value * 100) / 100;
+  }
+
+  function probabilityUpperBound(currentMax, values) {
+    const maxValue = Math.max(...values);
+    if (maxValue <= 0) {
+      return Math.max(2, currentMax);
+    }
+    if (maxValue <= 1) {
+      return Math.max(2, roundProbabilityStep(currentMax, 0.5));
+    }
+    if (maxValue <= 5) {
+      return Math.max(5, roundProbabilityStep(currentMax, 1));
+    }
+    if (maxValue <= 20) {
+      return Math.max(10, roundProbabilityStep(currentMax, 5));
+    }
+    return currentMax;
+  }
+
+  function roundProbabilityStep(value, step) {
+    return Math.ceil(value / step) * step;
   }
 
   const distributionPlugin = {
@@ -537,9 +567,26 @@
       return null;
     }
     if (!series.summary || !series.summary.all_zero) {
-      return null;
+      const maximum = Number(series.summary && series.summary.max);
+      if (!Number.isFinite(maximum) || maximum <= 0 || maximum > 5) {
+        return null;
+      }
+      return `Probabilities stay below ${maximum <= 1 ? "1%" : "5%"} for this forecast period`;
     }
     return "Probability remains 0% for this forecast period";
+  }
+
+  function axisTitle(series) {
+    if (!series) {
+      return "Value";
+    }
+    if (series.units === "%") {
+      return "Probability (%)";
+    }
+    if (series.units) {
+      return `Value (${series.units})`;
+    }
+    return "Value";
   }
 
   function roundRect(ctx, x, y, width, height, radius) {

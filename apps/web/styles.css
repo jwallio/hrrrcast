@@ -406,17 +406,26 @@ body[data-fontsize="lg"] {
 #main {
   display: grid;
   grid-template-columns: repeat(var(--chart-columns, 2), minmax(0, 1fr));
-  gap: 12px;
+  gap: 16px;
 }
 
 .chart-panel {
   border: 1px solid var(--graphcolorlight);
   background: var(--background1);
-  padding: 10px;
+  padding: 12px;
+  border-top-width: 3px;
 }
 
 .chart-panel.compact {
-  padding-bottom: 6px;
+  padding-bottom: 8px;
+}
+
+.chart-panel.is-deterministic {
+  border-top-color: rgba(242, 200, 102, 0.55);
+}
+
+.chart-panel.is-distribution {
+  border-top-color: rgba(84, 163, 255, 0.55);
 }
 
 .chart-head {
@@ -442,7 +451,8 @@ body[data-fontsize="lg"] {
 
 .chart-title {
   margin: 0;
-  font-size: 1.02rem;
+  font-size: 1.06rem;
+  line-height: 1.25;
 }
 
 .chart-badges {
@@ -472,17 +482,18 @@ body[data-fontsize="lg"] {
 }
 
 .chart-description {
-  margin: 0;
-  opacity: 0.78;
-  font-size: 0.88rem;
+  margin: 2px 0 0;
+  opacity: 0.8;
+  font-size: 0.84rem;
+  line-height: 1.4;
 }
 
 .chart-meta {
   text-align: right;
-  font-size: 0.84rem;
+  font-size: 0.82rem;
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 4px;
 }
 
 .chart-frame {
@@ -496,9 +507,9 @@ body[data-fontsize="lg"] {
 }
 
 .chart-note {
-  margin: 0 0 8px;
-  font-size: 0.84rem;
-  opacity: 0.78;
+  margin: 2px 0 10px;
+  font-size: 0.82rem;
+  opacity: 0.72;
 }
 
 .chart-empty {
