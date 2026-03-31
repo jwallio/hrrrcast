@@ -85,7 +85,7 @@
     };
   }
 
-  function writeState(state) {
+  function writeState(state, mode) {
     const params = new URLSearchParams();
     params.set("location", normalizeStation(state.station || DEFAULTS.station));
     params.set("run", state.run || DEFAULTS.run);
@@ -113,7 +113,16 @@
     if (Array.isArray(state.elements) && state.elements.length) {
       params.set("elements", state.elements.join(","));
     }
-    window.history.replaceState({}, "", `${window.location.pathname}?${params.toString()}`);
+    const nextUrl = `${window.location.pathname}?${params.toString()}`;
+    const currentUrl = `${window.location.pathname}${window.location.search}`;
+    if (nextUrl === currentUrl) {
+      return;
+    }
+    if (mode === "push") {
+      window.history.pushState({}, "", nextUrl);
+      return;
+    }
+    window.history.replaceState({}, "", nextUrl);
   }
 
   function parseBoolean(value, fallback) {

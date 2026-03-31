@@ -67,7 +67,7 @@
     refs.runs = await service.loadRuns();
     renderStationSelect();
     renderQuickStations();
-    await loadPayload();
+    await loadPayload("replace");
   }
 
   function bind() {
@@ -78,16 +78,16 @@
       if (!dom.maplocations.value) { return; }
       state.station = dom.maplocations.value;
       refs.xRange = null;
-      await loadPayload();
+      await loadPayload("push");
     });
-    dom.graphcol.addEventListener("input", () => { state.col = Number(dom.graphcol.value); applyLayout(); syncUrl(); });
-    dom.graphhgt.addEventListener("input", () => { state.hgt = Number(dom.graphhgt.value); applyLayout(); syncUrl(); });
+    dom.graphcol.addEventListener("input", () => { state.col = Number(dom.graphcol.value); applyLayout(); syncUrl("replace"); });
+    dom.graphhgt.addEventListener("input", () => { state.hgt = Number(dom.graphhgt.value); applyLayout(); syncUrl("replace"); });
     dom.togglecharts.addEventListener("click", () => {
       if (!isDistributionAvailable()) { return; }
       state.graph = state.graph === "chart" ? "distribution" : "chart";
       renderChartToggle();
       renderCharts();
-      syncUrl();
+      syncUrl("replace");
     });
     dom.cameraButton.addEventListener("click", copyLink);
     dom.downloadButton.addEventListener("click", downloadCurrentPayload);
@@ -95,8 +95,8 @@
     dom.settingsclose.addEventListener("click", () => closeModal(dom["settings"]));
     dom.customgroupbtn.addEventListener("click", () => { renderCustomGroupModal(); openModal(dom.customgroup); });
     dom.customgroupclose.addEventListener("click", () => closeModal(dom.customgroup));
-    dom.customgroupsave.addEventListener("click", () => { state.group = "custom"; state.elements = []; closeModal(dom.customgroup); renderSelectionView(); });
-    dom.customgroupclear.addEventListener("click", () => { state.customgroup = []; if (state.group === "custom") { state.group = defaultGroup(); } closeModal(dom.customgroup); renderSelectionView(); });
+    dom.customgroupsave.addEventListener("click", () => { state.group = "custom"; state.elements = []; closeModal(dom.customgroup); renderSelectionView("push"); });
+    dom.customgroupclear.addEventListener("click", () => { state.customgroup = []; if (state.group === "custom") { state.group = defaultGroup(); } closeModal(dom.customgroup); renderSelectionView("push"); });
     dom["map-btn"].addEventListener("click", toggleDrawer);
     dom.boxwhiskerlabel.addEventListener("click", () => openModal(dom["settings"]));
     bindToggle(dom.obsonoff, "obs");
@@ -105,7 +105,7 @@
     bindToggle(dom.boxreadout, "boxes");
     bindToggle(dom.boxmedianreadout, "median");
     bindToggle(dom.deterministicreadout, "det", true);
-    dom.fontsizeslider.addEventListener("input", () => { state.fontsize = Number(dom.fontsizeslider.value); applyTheme(); renderCharts(); syncUrl(); });
+    dom.fontsizeslider.addEventListener("input", () => { state.fontsize = Number(dom.fontsizeslider.value); applyTheme(); renderCharts(); syncUrl("replace"); });
     bindPercentileSlider(dom.whiskerlow, dom.whiskerlowvalue, "whiskerlow", 0, 50, () => {
       if (state.whiskerlow > state.boxlow) { state.boxlow = state.whiskerlow; }
       renderPercentileLabels();
@@ -125,9 +125,10 @@
     bindDropdowns();
     document.addEventListener("click", globalClick);
     document.addEventListener("keydown", hotkeys);
+    window.addEventListener("popstate", () => { handlePopState().catch((error) => console.error(error)); });
   }
 
-  async function loadPayload() {
+  async function loadPayload(urlMode) {
     const requestId = ++refs.requestId;
     setBusy(true, `Loading ${state.station} ${state.member === "ens" ? "ensemble" : state.member.toUpperCase()} data...`);
     try {
@@ -141,7 +142,7 @@
         try { refs.detPayload = await service.loadPointSeries(state.run, "m00", state.station); } catch (error) { console.error(error); }
       }
       normalizeState();
-      renderAll();
+      renderAll(urlMode);
       setBusy(false, `Loaded ${activeOverlayIds().length} ${activeOverlayIds().length === 1 ? "element" : "elements"} for ${state.station}.`);
     } catch (error) {
       if (requestId !== refs.requestId) { return; }
@@ -153,7 +154,7 @@
     }
   }
 
-  function renderAll() {
+  function renderAll(urlMode) {
     applyTheme();
     applyLayout();
     renderMenus();
@@ -163,17 +164,17 @@
     updateTitleBlock();
     updateDrawerStatus();
     renderCharts();
-    syncUrl();
+    syncUrl(urlMode);
   }
 
-  function renderSelectionView() {
+  function renderSelectionView(urlMode) {
     normalizeState();
     renderMenus();
     renderCustomGroupModal();
     updateTitleBlock();
     updateDrawerStatus();
     renderCharts();
-    syncUrl();
+    syncUrl(urlMode);
   }
 
   function renderMenus() {
@@ -191,25 +192,25 @@
   }
 
   function renderRunMenu() {
-    fillMenu(dom.runmenu, [{ label: "Latest Ready", value: "latest-ready" }, ...refs.runs.slice().reverse().map((run) => ({ label: `${stamp(run.run_id)}${run.status === "ready" ? "" : " partial"}`, value: run.run_id }))], state.run, async (value) => { state.run = value; refs.xRange = null; await loadPayload(); });
+    fillMenu(dom.runmenu, [{ label: "Latest Ready", value: "latest-ready" }, ...refs.runs.slice().reverse().map((run) => ({ label: `${stamp(run.run_id)}${run.status === "ready" ? "" : " partial"}`, value: run.run_id }))], state.run, async (value) => { state.run = value; refs.xRange = null; await loadPayload("push"); });
     dom.runbtn.textContent = state.run === "latest-ready" ? "Latest Ready" : stamp(state.run);
   }
 
   function renderMemberMenu() {
-    fillMenu(dom.membermenu, (refs.payload.available_members || []).map((member) => ({ label: member === "ens" ? "Ensemble" : member.toUpperCase(), value: member })), state.member, async (value) => { state.member = value; refs.xRange = null; await loadPayload(); });
+    fillMenu(dom.membermenu, (refs.payload.available_members || []).map((member) => ({ label: member === "ens" ? "Ensemble" : member.toUpperCase(), value: member })), state.member, async (value) => { state.member = value; refs.xRange = null; await loadPayload("push"); });
     dom.memberbtn.textContent = state.member === "ens" ? "Ensemble" : state.member.toUpperCase();
   }
 
   function renderGroupMenu() {
     const items = [{ label: "All Elements", value: "all" }, ...activeGroupsRaw().map((group) => ({ label: groupTitle(group.id), value: group.id })), { label: "Custom Group", value: "custom" }];
-    fillMenu(dom.groupmenu, items, state.group, async (value) => { state.group = value; state.elements = []; renderSelectionView(); });
+    fillMenu(dom.groupmenu, items, state.group, async (value) => { state.group = value; state.elements = []; renderSelectionView("push"); });
     dom.groupbtn.textContent = groupTitle(state.group);
   }
 
   function renderTimezoneMenus() {
     const items = [{ label: "Current Timezone", value: "local" }, { label: "Timezone of Point", value: "station" }, { label: "UTC", value: "utc" }];
-    fillMenu(dom.timezonemenu, items, state.tz, (value) => { state.tz = value; updateTitleBlock(); renderCharts(); syncUrl(); });
-    fillMenu(dom.timezonemenumodal, items, state.tz, (value) => { state.tz = value; updateTitleBlock(); renderCharts(); syncUrl(); });
+    fillMenu(dom.timezonemenu, items, state.tz, (value) => { state.tz = value; updateTitleBlock(); renderCharts(); syncUrl("replace"); });
+    fillMenu(dom.timezonemenumodal, items, state.tz, (value) => { state.tz = value; updateTitleBlock(); renderCharts(); syncUrl("replace"); });
     const label = items.find((item) => item.value === state.tz)?.label || "Current Timezone";
     dom.timezonebtn.textContent = label;
     dom.timezonebtnmodal.textContent = label;
@@ -217,7 +218,7 @@
 
   function renderDarkModeMenu() {
     const items = [{ label: "Auto", value: "auto" }, { label: "On", value: "on" }, { label: "Off", value: "off" }];
-    fillMenu(dom.darkmodemenu, items, state.darkmode, (value) => { state.darkmode = value; applyTheme(); renderCharts(); syncUrl(); });
+    fillMenu(dom.darkmodemenu, items, state.darkmode, (value) => { state.darkmode = value; applyTheme(); renderCharts(); syncUrl("replace"); });
     dom.darkmodebtn.textContent = items.find((item) => item.value === state.darkmode)?.label || "On";
   }
 
@@ -248,7 +249,7 @@
       label.innerHTML = `<input type="checkbox" value="${overlayId}" ${state.customgroup.includes(overlayId) ? "checked" : ""} /><span><strong>${refs.payload.series[overlayId].label}</strong><br /><span class="browser-option-meta">${elementDescription(overlayId)}</span></span>`;
       label.querySelector("input").addEventListener("change", (event) => {
         state.customgroup = event.target.checked ? [...new Set([...state.customgroup, overlayId])] : state.customgroup.filter((item) => item !== overlayId);
-        syncUrl();
+        syncUrl("replace");
       });
       dom.customgroupoptions.appendChild(label);
     }
@@ -267,7 +268,7 @@
       applyTheme();
       renderCharts();
       updateTitleBlock();
-      syncUrl();
+      syncUrl("replace");
     });
   }
 
@@ -280,7 +281,7 @@
       renderPercentileLabels();
       renderCharts();
       updateTitleBlock();
-      syncUrl();
+      syncUrl("replace");
     });
   }
 
@@ -303,7 +304,7 @@
       button.type = "button";
       button.textContent = station.id;
       button.className = station.id === state.station ? "is-active" : "";
-      button.addEventListener("click", async () => { state.station = station.id; refs.xRange = null; await loadPayload(); });
+      button.addEventListener("click", async () => { state.station = station.id; refs.xRange = null; await loadPayload("push"); });
       dom.quickstations.appendChild(button);
     }
   }
@@ -479,7 +480,7 @@
       Charts.syncRange(chart, refs.xRange);
     }
     updateTitleBlock();
-    syncUrl();
+    syncUrl("replace");
   }
 
   function destroyCharts() {
@@ -574,7 +575,7 @@
     renderElementBrowser();
     renderCharts();
     updateDrawerStatus();
-    syncUrl();
+    syncUrl("replace");
   }
 
   function groupForOverlay(overlayId) {
@@ -602,7 +603,7 @@
     }
     state.station = stationId;
     refs.xRange = null;
-    loadPayload().catch((error) => console.error(error));
+    loadPayload("push").catch((error) => console.error(error));
   }
 
   function onSearchInput() {
@@ -618,7 +619,7 @@
         button.type = "button";
         button.className = "suggestion-button";
         button.innerHTML = `<span class="suggestion-line"><strong>${station.id}</strong> ${station.site}</span><span class="suggestion-line">${[station.state, station.country].filter(Boolean).join(", ")} | ${station.lat.toFixed(2)}, ${station.lon.toFixed(2)}</span>`;
-        button.addEventListener("click", async () => { state.station = station.id; refs.xRange = null; hideSuggestions(); await loadPayload(); });
+        button.addEventListener("click", async () => { state.station = station.id; refs.xRange = null; hideSuggestions(); await loadPayload("push"); });
         dom.suggestions.appendChild(button);
       }
       dom.suggestions.hidden = false;
@@ -631,7 +632,7 @@
   }
 
   async function copyLink() {
-    syncUrl();
+    syncUrl("replace");
     try {
       await navigator.clipboard.writeText(window.location.href);
       dom.cameraButton.textContent = "Copied";
@@ -679,12 +680,12 @@
       case "=":
         dom.fontsizeslider.value = String(Math.min(1.4, Number(dom.fontsizeslider.value) + 0.1));
         state.fontsize = Number(dom.fontsizeslider.value);
-        applyTheme(); renderCharts(); syncUrl();
+        applyTheme(); renderCharts(); syncUrl("replace");
         break;
       case "-":
         dom.fontsizeslider.value = String(Math.max(0.7, Number(dom.fontsizeslider.value) - 0.1));
         state.fontsize = Number(dom.fontsizeslider.value);
-        applyTheme(); renderCharts(); syncUrl();
+        applyTheme(); renderCharts(); syncUrl("replace");
         break;
       case "escape":
         closeAllDropdowns(); closeModal(dom["settings"]); closeModal(dom.customgroup);
@@ -804,8 +805,25 @@
     return (station && (station.timeZone || STATE_TIMEZONES[station.state])) || Intl.DateTimeFormat().resolvedOptions().timeZone;
   }
 
-  function syncUrl() {
-    UrlState.writeState(state);
+  function syncUrl(mode) {
+    if (!mode) {
+      return;
+    }
+    UrlState.writeState(state, mode);
+  }
+
+  async function handlePopState() {
+    const nextState = UrlState.parseState(window.location.search);
+    const payloadChanged = nextState.station !== state.station || nextState.run !== state.run || nextState.member !== state.member;
+    Object.assign(state, nextState);
+    refs.xRange = null;
+    if (payloadChanged) {
+      await loadPayload();
+      return;
+    }
+    applyTheme();
+    applyLayout();
+    renderSelectionView();
   }
 
   function resolveStationInput(value) {
