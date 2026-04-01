@@ -751,13 +751,15 @@
   function chartSubtitle(series) {
     if (series.chart_type === "distribution") {
       if (isTemperatureFamily(series)) {
-        return "Ensemble near-surface temperature spread in degrees Fahrenheit with configurable box and whiskers.";
+        return "Ensemble 2 m temperature spread in degrees Fahrenheit with configurable box and whiskers.";
       }
       if (isWindFamily(series)) {
-        return "Ensemble wind-speed spread in miles per hour with configurable box and whiskers.";
+        return String(series.id || "").includes("gust")
+          ? "Ensemble surface gust spread in miles per hour with configurable box and whiskers."
+          : "Ensemble wind-speed spread in miles per hour with configurable box and whiskers.";
       }
       if (isPrecipFamily(series)) {
-        return "Ensemble accumulated precipitation spread in inches with configurable box and whiskers.";
+        return "Ensemble accumulated precipitation spread in inches through the forecast period.";
       }
       if (isVisibilityFamily(series)) {
         return "Ensemble visibility spread in statute miles with configurable box and whiskers.";
@@ -768,16 +770,20 @@
       return "Ensemble member spread over time with configurable box and whiskers.";
     }
     if (String(series.id || "").includes("probability")) {
-      return "Probability of exceeding the field threshold over the forecast period.";
+      return "Chance that the forecast exceeds the stated threshold at each forecast hour.";
     }
     if (isTemperatureFamily(series)) {
-      return "Near-surface temperature trend in degrees Fahrenheit.";
+      return String(series.id || "").includes("dewpoint")
+        ? "2 m dewpoint forecast in degrees Fahrenheit."
+        : "2 m temperature forecast in degrees Fahrenheit.";
     }
     if (isWindFamily(series)) {
-      return "Wind or gust trend in miles per hour.";
+      return String(series.id || "").includes("gust")
+        ? "Surface gust forecast in miles per hour."
+        : "Wind-speed forecast in miles per hour.";
     }
     if (isPrecipFamily(series)) {
-      return "Accumulated precipitation through forecast time in inches.";
+      return "Accumulated precipitation through each forecast hour in inches.";
     }
     if (isVisibilityFamily(series)) {
       return "Forecast visibility in statute miles.";
@@ -817,7 +823,10 @@
       if (Math.abs(numeric) < 10) { return numeric.toFixed(1); }
       return String(Math.round(numeric));
     }
-    if (isTemperatureFamily(series) || isWindFamily(series) || isCeilingFamily(series)) {
+    if (isCeilingFamily(series)) {
+      return Math.round(numeric).toLocaleString();
+    }
+    if (isTemperatureFamily(series) || isWindFamily(series)) {
       return String(Math.round(numeric));
     }
     if (isVisibilityFamily(series)) {

@@ -211,11 +211,11 @@
           callbacks: {
             title(items) {
               const datum = items[0].raw;
-              return `Forecast Hour F${String(datum.x).padStart(3, "0")}`;
+              return `${tooltipSeriesLabel(config.series)} | F${String(datum.x).padStart(3, "0")}`;
             },
             footer(items) {
               const datum = items[0].raw;
-              return `Valid ${config.formatTime(datum.validTime)}`;
+              return `Valid Time: ${config.formatTime(datum.validTime)}`;
             },
             label(item) {
               if (config.series.chart_type === "distribution") {
@@ -232,7 +232,7 @@
                 ];
               }
               const suffix = config.series.units ? ` ${config.series.units}` : "";
-              return `${config.series.label}: ${config.formatValue(item.raw.y)}${suffix}`;
+              return `${tooltipValueLabel(config.series)}: ${config.formatValue(item.raw.y)}${suffix}`;
             },
           },
         },
@@ -270,7 +270,7 @@
             color: config.theme.chartTick,
             font: { size: font.tick },
             callback(value) {
-              return config.series.units === "%" ? `${config.formatValue(value, "axis")}%` : config.formatValue(value, "axis");
+              return formatAxisTick(config.series, config.formatValue, value);
             },
           },
           grid: {
@@ -580,35 +580,70 @@
     if (!series) {
       return "Value";
     }
-    const id = String(series.id || "");
-    if (series.units === "%" || id.includes("probability")) {
-      return "Exceedance Probability (%)";
-    }
-    if (series.units === "F" && id.includes("temperature")) {
-      return "Air Temperature (F)";
-    }
-    if (series.units === "F" && id.includes("dewpoint")) {
-      return "Dewpoint (F)";
-    }
-    if (series.units === "mph" && id.includes("gust")) {
-      return "Wind Gust (mph)";
-    }
-    if (series.units === "mph" && (id.includes("wind") || id.includes("shear"))) {
-      return "Wind Speed (mph)";
-    }
-    if (series.units === "in" && (id.includes("qpf") || id.includes("precip"))) {
-      return "Accumulated Precipitation (in)";
-    }
-    if (series.units === "mi" && id.includes("visibility")) {
-      return "Visibility (mi)";
-    }
-    if (series.units === "m" && id.includes("ceiling")) {
-      return "Ceiling Height (m)";
-    }
+    const family = seriesFamily(series);
+    if (family === "probability") { return "Probability of Exceedance (%)"; }
+    if (family === "temperature") { return "2 m Temperature (F)"; }
+    if (family === "dewpoint") { return "2 m Dewpoint (F)"; }
+    if (family === "gust") { return "Surface Gust (mph)"; }
+    if (family === "wind") { return "Wind Speed (mph)"; }
+    if (family === "precip") { return "QPF / Accumulated Precipitation (in)"; }
+    if (family === "visibility") { return "Visibility (mi)"; }
+    if (family === "ceiling") { return "Ceiling Height (m)"; }
     if (series.units) {
       return `Value (${series.units})`;
     }
     return "Value";
+  }
+
+  function formatAxisTick(series, formatValue, value) {
+    const family = seriesFamily(series);
+    if (family === "probability") {
+      return `${formatValue(value, "axis")}%`;
+    }
+    if (family === "ceiling") {
+      return Number(value).toLocaleString(undefined, { maximumFractionDigits: 0 });
+    }
+    return formatValue(value, "axis");
+  }
+
+  function seriesFamily(series) {
+    const id = String(series && series.id || "");
+    const units = String(series && series.units || "");
+    if (units === "%" || id.includes("probability")) { return "probability"; }
+    if (units === "F" && id.includes("dewpoint")) { return "dewpoint"; }
+    if (units === "F" && id.includes("temperature")) { return "temperature"; }
+    if (units === "mph" && id.includes("gust")) { return "gust"; }
+    if (units === "mph" && (id.includes("wind") || id.includes("shear"))) { return "wind"; }
+    if (units === "in" && (id.includes("qpf") || id.includes("precip"))) { return "precip"; }
+    if (units === "mi" && id.includes("visibility")) { return "visibility"; }
+    if (units === "m" && id.includes("ceiling")) { return "ceiling"; }
+    return "default";
+  }
+
+  function tooltipSeriesLabel(series) {
+    const family = seriesFamily(series);
+    if (family === "probability") { return "Probability"; }
+    if (family === "temperature") { return "Temperature"; }
+    if (family === "dewpoint") { return "Dewpoint"; }
+    if (family === "gust") { return "Wind Gust"; }
+    if (family === "wind") { return "Wind"; }
+    if (family === "precip") { return "Precipitation"; }
+    if (family === "visibility") { return "Visibility"; }
+    if (family === "ceiling") { return "Ceiling"; }
+    return series && series.label ? series.label : "Forecast";
+  }
+
+  function tooltipValueLabel(series) {
+    const family = seriesFamily(series);
+    if (family === "probability") { return "Exceedance Probability"; }
+    if (family === "temperature") { return "2 m Temperature"; }
+    if (family === "dewpoint") { return "2 m Dewpoint"; }
+    if (family === "gust") { return "Surface Gust"; }
+    if (family === "wind") { return "Wind Speed"; }
+    if (family === "precip") { return "Accumulated Precipitation"; }
+    if (family === "visibility") { return "Visibility"; }
+    if (family === "ceiling") { return "Ceiling Height"; }
+    return series && series.label ? series.label : "Value";
   }
 
   function roundRect(ctx, x, y, width, height, radius) {
