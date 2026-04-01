@@ -142,64 +142,12 @@ body[data-fontsize="lg"] {
   padding: 0 var(--margin) 16px;
 }
 
-.workstation-toolbar {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-bottom: 14px;
-  padding: 12px;
-  border: 1px solid var(--graphcolorlight);
-  background:
-    linear-gradient(180deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0) 100%),
-    var(--background1);
-}
-
-.toolbar-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  align-items: flex-start;
-}
-
-.toolbar-row-primary {
-  align-items: stretch;
-}
-
-.toolbar-block {
-  min-width: 0;
-}
-
-.toolbar-block-station {
-  flex: 1 1 420px;
-}
-
-.toolbar-block-forecast {
-  flex: 2 1 480px;
-}
-
-.toolbar-block-display {
-  flex: 1 1 320px;
-}
-
-.toolbar-block-utilities {
-  flex: 1 1 420px;
-}
-
-.toolbar-block-label {
-  margin-bottom: 6px;
-  font-size: 0.76rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--linkcolor);
-}
-
 #slider-wrapper {
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
   align-items: center;
-  margin: 0;
+  margin: 0 0 12px;
 }
 
 .slidercontainer {
@@ -226,16 +174,7 @@ body[data-fontsize="lg"] {
   flex-wrap: wrap;
   justify-content: flex-start;
   gap: 8px;
-  margin-bottom: 0;
-}
-
-.parent-primary,
-.parent-secondary {
-  padding: 0;
-}
-
-.workstation-station-row {
-  margin-bottom: 0;
+  margin-bottom: 10px;
 }
 
 .dropdown {
@@ -263,19 +202,6 @@ body[data-fontsize="lg"] {
 
 .dropbtn.smallbutton {
   min-width: 66px;
-}
-
-.toolbar-block-forecast .dropbtn.datemenu,
-.toolbar-block-forecast .dropbtn.menu {
-  min-width: 118px;
-}
-
-.toolbar-block-utilities .dropbtn,
-.toolbar-block-display .slidercontainer,
-.toolbar-block-station .maplocations,
-.toolbar-block-station .station-input,
-.toolbar-block-station .station-button {
-  box-shadow: none;
 }
 
 .dropbtn:hover,
@@ -356,7 +282,7 @@ body[data-fontsize="lg"] {
 }
 
 #titleandgraphs {
-  margin-top: 0;
+  margin-top: 14px;
 }
 
 #titles {
@@ -919,15 +845,6 @@ input:disabled {
     margin: 0 var(--margin) 12px;
   }
 
-  .toolbar-row {
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .toolbar-block {
-    width: 100%;
-  }
-
   .chart-head {
     flex-direction: column;
   }
@@ -957,8 +874,6 @@ input:disabled {
 
   #slider-wrapper {
     gap: 10px;
-    flex-direction: column;
-    align-items: stretch;
   }
 
   .slidercontainer {
@@ -974,15 +889,6 @@ input:disabled {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 8px;
-  }
-
-  .workstation-toolbar {
-    padding: 10px;
-    gap: 8px;
-  }
-
-  .toolbar-block-label {
-    margin-bottom: 5px;
   }
 
   .dropdown,

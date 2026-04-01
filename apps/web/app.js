@@ -375,7 +375,7 @@
       marker.addEventListener("click", async () => {
         state.station = station.id;
         refs.xRange = null;
-        await loadPayload();
+        await loadPayload("push");
       });
       appendSvg(marker, "title", {}, `${station.id} ${station.site || ""}`.trim());
 

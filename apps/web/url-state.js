@@ -31,7 +31,7 @@
   const GRAPHS = new Set(["chart", "distribution"]);
 
   function parseState(search) {
-    const params = new URLSearchParams(search || window.location.search);
+    const params = new URLSearchParams(search != null ? search : window.location.search);
     return {
       station: normalizeStation(params.get("station") || params.get("location") || DEFAULTS.station),
       run: params.get("run") || DEFAULTS.run,
@@ -163,6 +163,9 @@
   }
 
   function clampNumber(value, min, max, fallback) {
+    if (value == null || value === "") {
+      return fallback;
+    }
     const numeric = Number(value);
     if (!Number.isFinite(numeric)) {
       return fallback;
@@ -171,6 +174,9 @@
   }
 
   function clampInt(value, min, max, fallback) {
+    if (value == null || value === "") {
+      return fallback;
+    }
     const numeric = Math.round(Number(value));
     if (!Number.isFinite(numeric)) {
       return fallback;

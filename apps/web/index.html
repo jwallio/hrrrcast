@@ -29,74 +29,56 @@
           <table id="main-content-table">
             <tr>
               <td id="contentid" class="content">
-                <div class="workstation-toolbar">
-                  <div class="toolbar-row toolbar-row-primary">
-                    <div class="toolbar-block toolbar-block-station">
-                      <div class="toolbar-block-label">Station</div>
-                      <div class="title-row workstation-station-row">
-                        <select id="maplocations" class="maplocations"></select>
-                        <input id="stationInput" class="station-input" type="text" placeholder="Airport code: KRDU" spellcheck="false" />
-                        <button id="stationSubmit" class="station-button" type="button">Load</button>
-                      </div>
-                    </div>
-                    <div class="toolbar-block toolbar-block-forecast">
-                      <div class="toolbar-block-label">Forecast Controls</div>
-                      <div class="parent parent-primary">
-                        <div class="dropdown menu">
-                          <button id="runbtn" class="dropbtn datemenu">Run</button>
-                          <div id="runmenu" class="dropdown-content datemenu"></div>
-                        </div>
-                        <div class="dropdown datemenu">
-                          <button id="memberbtn" class="dropbtn datemenu">Member</button>
-                          <div id="membermenu" class="dropdown-content datemenu"></div>
-                        </div>
-                        <div class="dropdown datemenu">
-                          <button id="groupbtn" class="dropbtn datemenu">Group</button>
-                          <div id="groupmenu" class="dropdown-content datemenu"></div>
-                        </div>
-                        <div class="dropdown menu">
-                          <button id="elementbrowserbtn" class="dropbtn">Element Browser</button>
-                          <div id="elementbrowser" class="dropdown-content browser-dropdown"></div>
-                        </div>
-                      </div>
+                <div id="slider-wrapper">
+                  <div class="slidercontainer">
+                    <div class="shorter" id="graphcoldivlabel">Width:</div>
+                    <div id="graphcoldiv" class="sliderdiv">
+                      <input id="graphcol" type="range" min="1" max="3" value="2" class="slider sliderreverse" />
                     </div>
                   </div>
-                  <div class="toolbar-row toolbar-row-secondary">
-                    <div class="toolbar-block toolbar-block-display">
-                      <div class="toolbar-block-label">Display</div>
-                      <div id="slider-wrapper">
-                        <div class="slidercontainer">
-                          <div class="shorter" id="graphcoldivlabel">Width:</div>
-                          <div id="graphcoldiv" class="sliderdiv">
-                            <input id="graphcol" type="range" min="1" max="3" value="2" class="slider sliderreverse" />
-                          </div>
-                        </div>
-                        <div class="slidercontainer">
-                          <div class="shorter">Height:</div>
-                          <div id="graphhgtdiv" class="sliderdiv">
-                            <input id="graphhgt" type="range" min="0.7" max="2" value="1" step="0.1" class="slider" />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="toolbar-block toolbar-block-utilities">
-                      <div class="toolbar-block-label">View Tools</div>
-                      <div class="parent parent-secondary">
-                        <div class="dropdown datemenu">
-                          <button id="timezonebtn" class="dropbtn datemenu">Timezone</button>
-                          <div id="timezonemenu" class="dropdown-content datemenu"></div>
-                        </div>
-                        <button id="togglecharts" class="dropbtn smallbutton" title="Toggle chart view">Chart</button>
-                        <button id="cameraButton" class="dropbtn smallbutton" title="Copy current view link">Share</button>
-                        <button id="downloadButton" class="dropbtn smallbutton" title="Download current point data">Data</button>
-                        <button id="settingsbtn" class="dropbtn smallbutton" title="Settings">Settings</button>
-                      </div>
+                  <div class="slidercontainer">
+                    <div class="shorter">Height:</div>
+                    <div id="graphhgtdiv" class="sliderdiv">
+                      <input id="graphhgt" type="range" min="0.7" max="2" value="1" step="0.1" class="slider" />
                     </div>
                   </div>
                 </div>
 
+                <div class="parent">
+                  <div class="dropdown menu">
+                    <button id="elementbrowserbtn" class="dropbtn">Element Browser</button>
+                    <div id="elementbrowser" class="dropdown-content browser-dropdown"></div>
+                  </div>
+                  <div class="dropdown datemenu">
+                    <button id="runbtn" class="dropbtn datemenu">Run</button>
+                    <div id="runmenu" class="dropdown-content datemenu"></div>
+                  </div>
+                  <div class="dropdown datemenu">
+                    <button id="memberbtn" class="dropbtn datemenu">Member</button>
+                    <div id="membermenu" class="dropdown-content datemenu"></div>
+                  </div>
+                  <div class="dropdown datemenu">
+                    <button id="groupbtn" class="dropbtn datemenu">Group</button>
+                    <div id="groupmenu" class="dropdown-content datemenu"></div>
+                  </div>
+                  <div class="dropdown datemenu">
+                    <button id="timezonebtn" class="dropbtn datemenu">Timezone</button>
+                    <div id="timezonemenu" class="dropdown-content datemenu"></div>
+                  </div>
+
+                  <button id="togglecharts" class="dropbtn smallbutton" title="Toggle chart view">Chart</button>
+                  <button id="cameraButton" class="dropbtn smallbutton" title="Copy current view link">Share</button>
+                  <button id="downloadButton" class="dropbtn smallbutton" title="Download current point data">Data</button>
+                  <button id="settingsbtn" class="dropbtn smallbutton" title="Settings">Settings</button>
+                </div>
+
                 <div id="titleandgraphs">
                   <div id="titles">
+                    <div class="title-row">
+                      <select id="maplocations" class="maplocations"></select>
+                      <input id="stationInput" class="station-input" type="text" placeholder="Airport code: KRDU" spellcheck="false" />
+                      <button id="stationSubmit" class="station-button" type="button">Load</button>
+                    </div>
                     <div id="suggestions" class="suggestions" hidden></div>
                     <div id="stationsummary" class="station-summary"></div>
                     <div id="viewstatus" class="view-status" aria-live="polite"></div>
