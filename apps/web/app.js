@@ -63,6 +63,7 @@
 
   async function init() {
     bind();
+    initA11y();
     refs.stations = await service.loadStations();
     refs.runs = await service.loadRuns();
     renderStationSelect();
@@ -91,14 +92,22 @@
     });
     dom.cameraButton.addEventListener("click", copyLink);
     dom.downloadButton.addEventListener("click", downloadCurrentPayload);
-    dom.settingsbtn.addEventListener("click", () => openModal(dom["settings"]));
+    dom.settingsbtn.addEventListener("click", () => openModal(dom["settings"], dom.settingsbtn));
     dom.settingsclose.addEventListener("click", () => closeModal(dom["settings"]));
-    dom.customgroupbtn.addEventListener("click", () => { renderCustomGroupModal(); openModal(dom.customgroup); });
+    dom.settingsclose.addEventListener("keydown", onCloseKeyDown);
+    dom.customgroupbtn.addEventListener("click", () => { renderCustomGroupModal(); openModal(dom.customgroup, dom.customgroupbtn); });
     dom.customgroupclose.addEventListener("click", () => closeModal(dom.customgroup));
+    dom.customgroupclose.addEventListener("keydown", onCloseKeyDown);
     dom.customgroupsave.addEventListener("click", () => { state.group = "custom"; state.elements = []; closeModal(dom.customgroup); renderSelectionView("push"); });
     dom.customgroupclear.addEventListener("click", () => { state.customgroup = []; if (state.group === "custom") { state.group = defaultGroup(); } closeModal(dom.customgroup); renderSelectionView("push"); });
     dom["map-btn"].addEventListener("click", toggleDrawer);
-    dom.boxwhiskerlabel.addEventListener("click", () => openModal(dom["settings"]));
+    dom.boxwhiskerlabel.addEventListener("click", () => openModal(dom["settings"], dom.boxwhiskerlabel));
+    dom.boxwhiskerlabel.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        openModal(dom["settings"], dom.boxwhiskerlabel);
+      }
+    });
     bindToggle(dom.obsonoff, "obs");
     bindToggle(dom.colorfriendly, "colorfriendly");
     bindToggle(dom.boxwhiskersreadout, "whiskers");
@@ -181,6 +190,8 @@
     applyDistributionControls();
     renderRunMenu(); renderMemberMenu(); renderGroupMenu(); renderTimezoneMenus(); renderDarkModeMenu(); renderElementBrowser(); renderChartToggle();
     dom.stationInput.value = state.station;
+    dom.stationInput.setAttribute("aria-expanded", String(!dom.suggestions.hidden));
+    dom.stationInput.setAttribute("aria-controls", "suggestions");
     dom.obsonoff.checked = state.obs;
     dom.colorfriendly.checked = state.colorfriendly;
     dom.fontsizeslider.value = String(state.fontsize);
@@ -631,6 +642,8 @@
     refs.suggestionIndex = -1;
     dom.suggestions.hidden = true;
     dom.suggestions.innerHTML = "";
+    dom.stationInput.setAttribute("aria-expanded", "false");
+    dom.stationInput.removeAttribute("aria-activedescendant");
   }
 
   async function copyLink() {
@@ -659,6 +672,15 @@
     const open = !dom["side-drawer"].classList.contains("show-drawer");
     dom["side-drawer"].classList.toggle("show-drawer", open);
     dom["side-drawer"].classList.toggle("hide-drawer", !open);
+    dom["map-btn"].setAttribute("aria-expanded", String(open));
+    if (open) {
+      const target = dom.quickstations.querySelector("button") || dom.stationmap;
+      if (target && typeof target.focus === "function") {
+        window.setTimeout(() => target.focus(), 0);
+      }
+    } else {
+      dom["map-btn"].focus();
+    }
   }
 
   function globalClick(event) {
@@ -691,6 +713,9 @@
         break;
       case "escape":
         closeAllDropdowns(); closeModal(dom["settings"]); closeModal(dom.customgroup);
+        if (dom["side-drawer"].classList.contains("show-drawer")) {
+          toggleDrawer();
+        }
         break;
       default:
         break;
@@ -703,11 +728,16 @@
       [dom.groupbtn, dom.groupmenu], [dom.timezonebtn, dom.timezonemenu], [dom.timezonebtnmodal, dom.timezonemenumodal],
       [dom.darkmodebtn, dom.darkmodemenu],
     ].forEach(([button, menu]) => {
+      button.setAttribute("aria-haspopup", "menu");
+      button.setAttribute("aria-expanded", "false");
       button.addEventListener("click", (event) => {
         event.stopPropagation();
         const open = menu.classList.contains("is-open");
         closeAllDropdowns();
-        if (!open) { menu.classList.add("is-open"); }
+        if (!open) {
+          menu.classList.add("is-open");
+          button.setAttribute("aria-expanded", "true");
+        }
       });
     });
   }
@@ -716,14 +746,28 @@
     for (const menu of document.querySelectorAll(".dropdown-content")) {
       menu.classList.remove("is-open");
     }
+    for (const button of document.querySelectorAll(".dropbtn[aria-haspopup='menu']")) {
+      button.setAttribute("aria-expanded", "false");
+    }
   }
 
-  function openModal(modal) {
+  function openModal(modal, trigger) {
+    modal.dataset.returnFocusId = trigger && trigger.id ? trigger.id : "";
     modal.classList.add("is-open");
+    modal.setAttribute("aria-hidden", "false");
+    const target = modal.querySelector(".close, button, input, select, textarea, [tabindex]:not([tabindex='-1'])");
+    if (target) {
+      window.setTimeout(() => target.focus(), 0);
+    }
   }
 
   function closeModal(modal) {
     modal.classList.remove("is-open");
+    modal.setAttribute("aria-hidden", "true");
+    const returnFocusId = modal.dataset.returnFocusId;
+    if (returnFocusId && dom[returnFocusId]) {
+      dom[returnFocusId].focus();
+    }
   }
 
   function fillMenu(menu, items, current, onPick) {
@@ -732,6 +776,7 @@
       const button = document.createElement("button");
       button.type = "button";
       button.textContent = item.value === current ? `${item.label} [Active]` : item.label;
+      button.setAttribute("aria-current", item.value === current ? "true" : "false");
       button.addEventListener("click", async () => {
         closeAllDropdowns();
         await onPick(item.value);
@@ -1016,7 +1061,10 @@
     for (const [index, station] of refs.suggestions.entries()) {
       const button = document.createElement("button");
       button.type = "button";
+      button.id = `station-suggestion-${index}`;
       button.className = `suggestion-button${index === refs.suggestionIndex ? " is-active" : ""}`;
+      button.setAttribute("role", "option");
+      button.setAttribute("aria-selected", index === refs.suggestionIndex ? "true" : "false");
       button.innerHTML = `<span class="suggestion-line"><strong>${station.id}</strong> ${station.site}</span><span class="suggestion-line">${[station.state, station.country].filter(Boolean).join(", ")} | ${station.lat.toFixed(2)}, ${station.lon.toFixed(2)}</span>`;
       button.addEventListener("mouseenter", () => {
         refs.suggestionIndex = index;
@@ -1026,6 +1074,12 @@
       dom.suggestions.appendChild(button);
     }
     dom.suggestions.hidden = refs.suggestions.length === 0;
+    dom.stationInput.setAttribute("aria-expanded", String(refs.suggestions.length > 0));
+    if (refs.suggestionIndex >= 0) {
+      dom.stationInput.setAttribute("aria-activedescendant", `station-suggestion-${refs.suggestionIndex}`);
+    } else {
+      dom.stationInput.removeAttribute("aria-activedescendant");
+    }
   }
 
   async function selectSuggestedStation(stationId) {
@@ -1058,6 +1112,27 @@
     dom.viewstatus.classList.toggle("is-error", Boolean(isError));
     if (dom.main) {
       dom.main.setAttribute("aria-busy", isBusy ? "true" : "false");
+    }
+  }
+
+  function initA11y() {
+    dom.stationInput.setAttribute("autocomplete", "off");
+    dom.stationInput.setAttribute("aria-autocomplete", "list");
+    dom.stationInput.setAttribute("aria-controls", "suggestions");
+    dom.stationInput.setAttribute("aria-label", "Airport code search");
+    dom.maplocations.setAttribute("aria-label", "Station selector");
+    dom.boxwhiskerlabel.setAttribute("tabindex", "0");
+    dom.boxwhiskerlabel.setAttribute("role", "button");
+    dom.boxwhiskerlabel.setAttribute("aria-label", "Open box whisker settings");
+    dom["settings"].setAttribute("aria-hidden", "true");
+    dom.customgroup.setAttribute("aria-hidden", "true");
+    dom.quickstations.setAttribute("aria-label", "Quick station buttons");
+  }
+
+  function onCloseKeyDown(event) {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      event.currentTarget.click();
     }
   }
 

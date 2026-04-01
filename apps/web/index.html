@@ -8,6 +8,7 @@
       name="description"
       content="HRRRCast 1D Viewer modeled directly after the NOAA NBM 1D Viewer interaction pattern."
     />
+    <link rel="icon" href="data:," />
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body data-theme="dark" data-fontsize="md">
@@ -79,7 +80,7 @@
                       <input id="stationInput" class="station-input" type="text" placeholder="Airport code: KRDU" spellcheck="false" />
                       <button id="stationSubmit" class="station-button" type="button">Load</button>
                     </div>
-                    <div id="suggestions" class="suggestions" hidden></div>
+                    <div id="suggestions" class="suggestions" role="listbox" hidden></div>
                     <div id="stationsummary" class="station-summary"></div>
                     <div id="viewstatus" class="view-status" aria-live="polite"></div>
                     <p id="datetitle" class="dateandinfo"></p>
@@ -116,7 +117,7 @@
           </div>
         </div>
 
-        <button id="map-btn" type="button">
+        <button id="map-btn" type="button" aria-label="Toggle station map drawer" aria-expanded="false">
           <span id="map-btn-i">&#9776;</span>
         </button>
       </div>
@@ -124,7 +125,7 @@
 
     <div id="settings" class="modal">
       <div class="modal-content" id="settingscontent">
-        <span class="close" id="settingsclose">&times;</span>
+        <span class="close" id="settingsclose" tabindex="0" role="button" aria-label="Close settings">&times;</span>
         <p id="settingstabletitlemain"><b>Settings</b></p>
         <table id="settingstable">
           <tr>
@@ -244,7 +245,7 @@
 
     <div id="customgroup" class="modal">
       <div class="modal-content" id="customgroupcontent">
-        <span class="close" id="customgroupclose">&times;</span>
+        <span class="close" id="customgroupclose" tabindex="0" role="button" aria-label="Close custom weather element group">&times;</span>
         <p><b>Custom Weather Element Group</b></p>
         <p>Selections are saved to the url so be sure bookmark this page when done.</p>
         <div id="customgroupoptions" class="customgroupoptions"></div>

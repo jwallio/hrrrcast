@@ -209,6 +209,38 @@ body[data-fontsize="lg"] {
   background: var(--selectcolor_hover);
 }
 
+.dropbtn:focus-visible,
+.station-button:focus-visible,
+.station-input:focus-visible,
+.maplocations:focus-visible,
+.suggestion-button:focus-visible,
+.quickstations button:focus-visible,
+#map-btn:focus-visible,
+.close:focus-visible,
+.browser-option input:focus-visible,
+.customgroup-item input:focus-visible,
+.switch input:focus-visible + .toggleswitch,
+.slider:focus-visible {
+  outline: 2px solid var(--linkcolor);
+  outline-offset: 2px;
+}
+
+.dropbtn:focus-visible,
+.station-button:focus-visible,
+.station-input:focus-visible,
+.maplocations:focus-visible,
+.suggestion-button:focus-visible,
+.quickstations button:focus-visible,
+#map-btn:focus-visible,
+.close:focus-visible,
+.browser-option input:focus-visible,
+.customgroup-item input:focus-visible,
+.switch input:focus-visible + .toggleswitch,
+.slider:focus-visible {
+  outline: 2px solid var(--linkcolor);
+  outline-offset: 2px;
+}
+
 .dropdown-content {
   display: none;
   position: absolute;
@@ -380,6 +412,14 @@ body[data-fontsize="lg"] {
 .suggestion-button.is-active {
   background: var(--selectcolor_hover);
   outline: 1px solid var(--linkcolor);
+}
+
+.suggestion-button[aria-selected="true"] {
+  background: var(--selectcolor_hover);
+}
+
+.suggestion-button[aria-selected="true"] {
+  background: var(--selectcolor_hover);
 }
 
 .suggestion-line {
@@ -633,6 +673,14 @@ body[data-fontsize="lg"] {
   background: var(--linkcolor);
   color: white;
   border-color: var(--linkcolor);
+}
+
+.quickstations button.is-active:focus-visible {
+  outline-color: white;
+}
+
+.quickstations button.is-active:focus-visible {
+  outline-color: white;
 }
 
 .drawerstatus {
