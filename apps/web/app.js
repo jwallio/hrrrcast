@@ -75,6 +75,11 @@
     dom.stationSubmit.addEventListener("click", submitStation);
     dom.stationInput.addEventListener("keydown", onStationInputKeyDown);
     dom.stationInput.addEventListener("input", onSearchInput);
+    dom.stationInput.addEventListener("focus", () => {
+      if (refs.stationSelect) {
+        refs.stationSelect.close();
+      }
+    });
     dom.maplocations.addEventListener("change", async () => {
       if (!dom.maplocations.value) { return; }
       state.station = dom.maplocations.value;
@@ -639,6 +644,10 @@
   function onSearchInput() {
     window.clearTimeout(refs.timer);
     const query = dom.stationInput.value.trim();
+    if (refs.stationSelect) {
+      refs.stationSelect.close();
+      refs.stationSelect.blur();
+    }
     refs.suggestionIndex = -1;
     if (!query) { hideSuggestions(); return; }
     refs.timer = window.setTimeout(async () => {
@@ -1178,9 +1187,36 @@
         dom.maplocations.value = value;
         dom.maplocations.dispatchEvent(new Event("change", { bubbles: true }));
       },
+      onFocus() {
+        hideSuggestions();
+        refs.stationSelect.control_input.setAttribute("aria-expanded", String(refs.stationSelect.isOpen));
+      },
+      onDropdownOpen() {
+        hideSuggestions();
+        refs.stationSelect.control_input.setAttribute("aria-expanded", "true");
+      },
+      onDropdownClose() {
+        refs.stationSelect.control_input.setAttribute("aria-expanded", "false");
+      },
     });
     refs.stationSelect.wrapper.classList.add("station-select-shell");
+    dom.maplocations.tabIndex = -1;
+    refs.stationSelect.dropdown.id = "station-select-dropdown";
     refs.stationSelect.control_input.setAttribute("aria-label", "Searchable station selector");
+    refs.stationSelect.control_input.setAttribute("aria-controls", refs.stationSelect.dropdown.id);
+    refs.stationSelect.control_input.setAttribute("aria-expanded", "false");
+    refs.stationSelect.control_input.setAttribute("aria-haspopup", "listbox");
+    refs.stationSelect.control_input.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        refs.stationSelect.close();
+        refs.stationSelect.control_input.setAttribute("aria-expanded", "false");
+        event.stopPropagation();
+        return;
+      }
+      if (event.key === "Enter" && refs.stationSelect.isOpen) {
+        hideSuggestions();
+      }
+    });
   }
 
   function syncStationSelectValue() {
