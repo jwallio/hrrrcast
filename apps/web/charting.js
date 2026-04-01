@@ -270,7 +270,7 @@
             color: config.theme.chartTick,
             font: { size: font.tick },
             callback(value) {
-              return config.series.units === "%" ? `${value}%` : config.formatValue(value);
+              return config.series.units === "%" ? `${config.formatValue(value, "axis")}%` : config.formatValue(value, "axis");
             },
           },
           grid: {
@@ -580,8 +580,30 @@
     if (!series) {
       return "Value";
     }
-    if (series.units === "%") {
-      return "Probability (%)";
+    const id = String(series.id || "");
+    if (series.units === "%" || id.includes("probability")) {
+      return "Exceedance Probability (%)";
+    }
+    if (series.units === "F" && id.includes("temperature")) {
+      return "Air Temperature (F)";
+    }
+    if (series.units === "F" && id.includes("dewpoint")) {
+      return "Dewpoint (F)";
+    }
+    if (series.units === "mph" && id.includes("gust")) {
+      return "Wind Gust (mph)";
+    }
+    if (series.units === "mph" && (id.includes("wind") || id.includes("shear"))) {
+      return "Wind Speed (mph)";
+    }
+    if (series.units === "in" && (id.includes("qpf") || id.includes("precip"))) {
+      return "Accumulated Precipitation (in)";
+    }
+    if (series.units === "mi" && id.includes("visibility")) {
+      return "Visibility (mi)";
+    }
+    if (series.units === "m" && id.includes("ceiling")) {
+      return "Ceiling Height (m)";
     }
     if (series.units) {
       return `Value (${series.units})`;
