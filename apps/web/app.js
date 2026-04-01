@@ -53,7 +53,7 @@
 
   const service = DataService.createDataService({ staticRoot: staticRoot(), backendRoot: backendRoot() });
   const state = UrlState.parseState(window.location.search);
-  const refs = { runs: [], stations: [], payload: null, detPayload: null, charts: [], xRange: null, timer: 0, requestId: 0, busy: false, suggestionIndex: -1, suggestions: [], theme: { chartGrid: "rgba(143,164,184,0.12)", chartTick: "#91a5b9" } };
+  const refs = { runs: [], stations: [], payload: null, detPayload: null, charts: [], xRange: null, timer: 0, requestId: 0, busy: false, suggestionIndex: -1, suggestions: [], stationSelect: null, theme: { chartGrid: "rgba(143,164,184,0.12)", chartTick: "#91a5b9" } };
 
   Charts.registerPlugins();
   init().catch((error) => {
@@ -190,6 +190,7 @@
     applyDistributionControls();
     renderRunMenu(); renderMemberMenu(); renderGroupMenu(); renderTimezoneMenus(); renderDarkModeMenu(); renderElementBrowser(); renderChartToggle();
     dom.stationInput.value = state.station;
+    syncStationSelectValue();
     dom.stationInput.setAttribute("aria-expanded", String(!dom.suggestions.hidden));
     dom.stationInput.setAttribute("aria-controls", "suggestions");
     dom.obsonoff.checked = state.obs;
@@ -403,15 +404,25 @@
   }
 
   function renderStationSelect() {
-    dom.maplocations.innerHTML = "";
     const stations = refs.stations.length ? refs.stations : [{ id: "KRDU", site: "Raleigh-Durham Intl" }];
-    for (const station of stations) {
-      const option = document.createElement("option");
-      option.value = station.id;
-      option.textContent = `${station.id} ${station.site || ""}`.trim();
-      dom.maplocations.appendChild(option);
+    if (refs.stationSelect) {
+      refs.stationSelect.clearOptions();
+      refs.stationSelect.addOptions(stations.map((station) => ({
+        value: station.id,
+        text: `${station.id} ${station.site || ""}`.trim(),
+      })));
+      refs.stationSelect.refreshOptions(false);
+    } else {
+      dom.maplocations.innerHTML = "";
+      for (const station of stations) {
+        const option = document.createElement("option");
+        option.value = station.id;
+        option.textContent = `${station.id} ${station.site || ""}`.trim();
+        dom.maplocations.appendChild(option);
+      }
+      initSearchableStationSelect();
     }
-    dom.maplocations.value = state.station;
+    syncStationSelectValue();
     dom.stationInput.value = state.station;
   }
 
@@ -1107,6 +1118,13 @@
         control.disabled = isBusy;
       }
     }
+    if (refs.stationSelect) {
+      if (isBusy) {
+        refs.stationSelect.disable();
+      } else {
+        refs.stationSelect.enable();
+      }
+    }
     dom.viewstatus.textContent = message || "";
     dom.viewstatus.classList.toggle("is-loading", Boolean(isBusy));
     dom.viewstatus.classList.toggle("is-error", Boolean(isError));
@@ -1134,6 +1152,43 @@
       event.preventDefault();
       event.currentTarget.click();
     }
+  }
+
+  function initSearchableStationSelect() {
+    if (!window.TomSelect || refs.stationSelect) {
+      return;
+    }
+    refs.stationSelect = new TomSelect(dom.maplocations, {
+      create: false,
+      maxItems: 1,
+      closeAfterSelect: true,
+      searchField: ["text", "value"],
+      placeholder: "Search station",
+      allowEmptyOption: false,
+      copyClassesToDropdown: false,
+      render: {
+        option(data, escape) {
+          return `<div>${escape(data.text)}</div>`;
+        },
+      },
+      onChange(value) {
+        if (!value || value === state.station) {
+          return;
+        }
+        dom.maplocations.value = value;
+        dom.maplocations.dispatchEvent(new Event("change", { bubbles: true }));
+      },
+    });
+    refs.stationSelect.wrapper.classList.add("station-select-shell");
+    refs.stationSelect.control_input.setAttribute("aria-label", "Searchable station selector");
+  }
+
+  function syncStationSelectValue() {
+    if (refs.stationSelect) {
+      refs.stationSelect.setValue(state.station, true);
+      return;
+    }
+    dom.maplocations.value = state.station;
   }
 
   function projectPoint(lat, lon, width, height, pad, bounds) {

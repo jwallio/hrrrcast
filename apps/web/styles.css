@@ -340,6 +340,47 @@ body[data-fontsize="lg"] {
   appearance: none;
 }
 
+.ts-wrapper.station-select-shell {
+  width: min(320px, 100%);
+  min-width: min(320px, 100%);
+  font-size: 1rem;
+}
+
+.ts-wrapper.station-select-shell.single .ts-control,
+.ts-wrapper.station-select-shell .ts-dropdown {
+  border: 1px solid var(--graphcolorlight);
+  border-radius: 0;
+  background: var(--background1);
+  color: var(--fontcolor);
+  box-shadow: none;
+}
+
+.ts-wrapper.station-select-shell.single .ts-control {
+  min-height: 0;
+  padding: 8px 10px;
+}
+
+.ts-wrapper.station-select-shell .ts-control input {
+  color: var(--fontcolor);
+}
+
+.ts-wrapper.station-select-shell .ts-control .item {
+  color: var(--linkcolor);
+  font-weight: 700;
+}
+
+.ts-wrapper.station-select-shell.focus .ts-control,
+.ts-wrapper.station-select-shell .ts-control:focus-within {
+  outline: 2px solid var(--linkcolor);
+  outline-offset: 2px;
+}
+
+.ts-wrapper.station-select-shell .ts-dropdown .active,
+.ts-wrapper.station-select-shell .ts-dropdown .option.active {
+  background: var(--selectcolor_hover);
+  color: var(--fontcolor);
+}
+
 .station-input {
   width: min(320px, 100%);
   padding: 8px 10px;
