@@ -356,7 +356,7 @@ def run_build_cycle(args: argparse.Namespace, manifest: dict[str, object], logge
 def export_pages_bundle(args: argparse.Namespace, manifest: dict[str, object], logger: logging.Logger) -> dict[str, object]:
     run_id = str(manifest["run"]["run_id"])
     stations = [item.upper() for item in (args.stations or DEFAULT_STATIONS)]
-    export_members = args.export_members or DEFAULT_MEMBERS
+    export_members = args.export_members or ["ens", *[str(member) for member in manifest["run"]["members"]]]
     final_dir = Path(args.pages_output)
     ensure_free_space(final_dir, args.min_free_gb, "export Pages bundle", logger)
     stage_parent = final_dir.parent

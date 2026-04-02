@@ -114,21 +114,22 @@ def build_station_payloads_from_manifest(
     station_codes = sorted(station_records)
     needed_logical = required_logical_overlays(export_members)
     needed_raw = required_raw_overlays(needed_logical)
+    deterministic_members = exported_deterministic_members(manifest, export_members)
     raw_samples = collect_raw_station_samples(
         manifest=manifest,
         raw_overlay_ids=needed_raw,
         station_records=station_records,
-        include_all_members="ens" in export_members,
+        include_all_members=bool(deterministic_members or "ens" in export_members),
         logger=logger,
     )
     logical_samples = build_logical_sample_store(raw_samples, needed_logical)
-    available_members = [member for member in ("ens", "m00") if member in export_members]
+    available_members = (["ens"] if "ens" in export_members else []) + deterministic_members
     payloads: dict[tuple[str, str], dict[str, object]] = {}
     for station_code in station_codes:
-        if "m00" in export_members:
-            payloads[("m00", station_code)] = build_member_payload_from_store(
+        for member in deterministic_members:
+            payloads[(member, station_code)] = build_member_payload_from_store(
                 run_id=run_id,
-                member="m00",
+                member=member,
                 station=station_records[station_code],
                 available_members=available_members,
                 logical_samples=logical_samples,
@@ -147,7 +148,7 @@ def build_station_payloads_from_manifest(
 
 def required_logical_overlays(export_members: list[str]) -> set[str]:
     overlays: set[str] = set()
-    if "m00" in export_members:
+    if any(member.startswith("m") for member in export_members):
         overlays.update(DEFAULT_MEMBER_OVERLAYS["m00"])
         overlays.update(
             overlay_id
@@ -157,6 +158,14 @@ def required_logical_overlays(export_members: list[str]) -> set[str]:
     if "ens" in export_members:
         overlays.update(PROBABILITY_SOURCE_OVERLAYS.values())
     return overlays
+
+
+def exported_deterministic_members(manifest: dict[str, object], export_members: list[str]) -> list[str]:
+    manifest_members = [str(member) for member in manifest["run"]["members"]]
+    if any(member.startswith("m") for member in export_members):
+        requested = {str(member) for member in export_members if str(member).startswith("m")}
+        return [member for member in manifest_members if member in requested]
+    return []
 
 
 def required_raw_overlays(logical_overlays: set[str]) -> set[str]:
@@ -483,8 +492,9 @@ def build_member_payload_from_store(
     manifest: dict[str, object],
 ) -> dict[str, object]:
     station_code = str(station["id"]).upper()
+    member_profile = "m00" if member.startswith("m") else member
     series_payload: dict[str, object] = {}
-    for overlay_id in DEFAULT_MEMBER_OVERLAYS[member]:
+    for overlay_id in DEFAULT_MEMBER_OVERLAYS[member_profile]:
         points = logical_line_points(run_id, logical_samples.get(member, {}).get(overlay_id, {}), station_code, station)
         if points:
             series_payload[overlay_id] = overlay_payload(overlay_id, points)
@@ -494,7 +504,7 @@ def build_member_payload_from_store(
             series_payload[derived_overlay_id] = overlay_payload(derived_overlay_id, points)
 
     chart_groups = []
-    for group in CHART_GROUPS.get(member, []):
+    for group in CHART_GROUPS.get(member_profile, []):
         group_overlays = [overlay_id for overlay_id in group["overlays"] if overlay_id in series_payload]
         if group_overlays:
             chart_groups.append({**group, "overlays": group_overlays})

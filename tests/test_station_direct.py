@@ -64,17 +64,20 @@ class StationDirectTests(unittest.TestCase):
             payloads = build_station_payloads_from_manifest(
                 manifest=manifest,
                 station_records=station_records,
-                export_members=["ens", "m00"],
+                export_members=["ens", "m00", "m01", "m02"],
             )
 
         m00_payload = payloads[("m00", "KRDU")]
+        m01_payload = payloads[("m01", "KRDU")]
         ens_payload = payloads[("ens", "KRDU")]
 
-        self.assertEqual(["ens", "m00"], m00_payload["available_members"])
+        self.assertEqual(["ens", "m00", "m01", "m02"], m00_payload["available_members"])
         self.assertIn("temperature_2m", m00_payload["series"])
         self.assertAlmostEqual(m00_payload["series"]["temperature_2m"]["points"][0]["value"], 32.0, places=1)
+        self.assertEqual("m01", m01_payload["member"])
+        self.assertAlmostEqual(m01_payload["series"]["temperature_2m"]["points"][0]["value"], 33.8, places=1)
 
-        self.assertEqual(["ens", "m00"], ens_payload["available_members"])
+        self.assertEqual(["ens", "m00", "m01", "m02"], ens_payload["available_members"])
         self.assertIn("qpf_probability_gt_0p10", ens_payload["series"])
         self.assertAlmostEqual(ens_payload["series"]["qpf_probability_gt_0p10"]["points"][0]["value"], 66.6666, places=3)
         self.assertFalse(any(series.get("chart_type") == "distribution" for series in ens_payload["series"].values()))

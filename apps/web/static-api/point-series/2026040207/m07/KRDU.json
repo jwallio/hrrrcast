@@ -1,0 +1,1983 @@
+{
+  "available_members": [
+    "ens",
+    "m00",
+    "m01",
+    "m02",
+    "m03",
+    "m04",
+    "m05",
+    "m06",
+    "m07",
+    "m08"
+  ],
+  "chart_groups": [
+    {
+      "id": "storm",
+      "overlays": [
+        "composite_reflectivity",
+        "qpf"
+      ],
+      "title": "Storm Signals"
+    },
+    {
+      "id": "air",
+      "overlays": [
+        "temperature_2m",
+        "dewpoint_2m",
+        "cloud_cover_total"
+      ],
+      "title": "Temperature / Clouds"
+    },
+    {
+      "id": "instability",
+      "overlays": [
+        "cape"
+      ],
+      "title": "CAPE"
+    },
+    {
+      "id": "rotation",
+      "overlays": [
+        "helicity_0_1km"
+      ],
+      "title": "Helicity"
+    },
+    {
+      "id": "shear",
+      "overlays": [
+        "shear_0_6km_speed"
+      ],
+      "title": "Shear"
+    },
+    {
+      "id": "wind",
+      "overlays": [
+        "wind_10m",
+        "gust_surface"
+      ],
+      "title": "Wind"
+    }
+  ],
+  "member": "m07",
+  "run_id": "2026040207",
+  "series": {
+    "cape": {
+      "id": "cape",
+      "label": "Surface CAPE",
+      "points": [
+        {
+          "domain_id": "point",
+          "forecast_hour": 0,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T07:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 1,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T08:00:00+00:00",
+          "value": 0.75
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 2,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T09:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 3,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T10:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 4,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T11:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 5,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T12:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 6,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T13:00:00+00:00",
+          "value": 1.3600000143051147
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 7,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T14:00:00+00:00",
+          "value": 5.130000114440918
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 8,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T15:00:00+00:00",
+          "value": 30.850000381469727
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 9,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T16:00:00+00:00",
+          "value": 122.9800033569336
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 10,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T17:00:00+00:00",
+          "value": 188.4199981689453
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 11,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T18:00:00+00:00",
+          "value": 210.02000427246094
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 12,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T19:00:00+00:00",
+          "value": 173.5
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 13,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T20:00:00+00:00",
+          "value": 46.93000030517578
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 14,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T21:00:00+00:00",
+          "value": 27.850000381469727
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 15,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T22:00:00+00:00",
+          "value": 9.029999732971191
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 16,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T23:00:00+00:00",
+          "value": 1.340000033378601
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 17,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-03T00:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 18,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-03T01:00:00+00:00",
+          "value": 0.0
+        }
+      ],
+      "style": {
+        "colors": [
+          "#141428",
+          "#3a66ac",
+          "#55be78",
+          "#f0d649",
+          "#d15329"
+        ],
+        "labels": [
+          "0",
+          "500",
+          "1000",
+          "2500",
+          "4000"
+        ],
+        "palette": "severe",
+        "range": [
+          0.0,
+          4000.0
+        ],
+        "rawUnits": "J/kg",
+        "type": "continuous",
+        "units": "J/kg"
+      },
+      "summary": {
+        "all_zero": false,
+        "count": 19,
+        "latest": 0.0,
+        "max": 210.02000427246094,
+        "min": 0.0
+      },
+      "units": "J/kg"
+    },
+    "cloud_cover_total": {
+      "id": "cloud_cover_total",
+      "label": "Total Cloud Cover",
+      "points": [
+        {
+          "domain_id": "point",
+          "forecast_hour": 0,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T07:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 1,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T08:00:00+00:00",
+          "value": 25.270000457763672
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 2,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T09:00:00+00:00",
+          "value": 56.689998626708984
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 3,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T10:00:00+00:00",
+          "value": 64.69999694824219
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 4,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T11:00:00+00:00",
+          "value": 66.69000244140625
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 5,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T12:00:00+00:00",
+          "value": 71.0199966430664
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 6,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T13:00:00+00:00",
+          "value": 91.52999877929688
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 7,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T14:00:00+00:00",
+          "value": 100.0
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 8,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T15:00:00+00:00",
+          "value": 100.0
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 9,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T16:00:00+00:00",
+          "value": 87.8499984741211
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 10,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T17:00:00+00:00",
+          "value": 75.29000091552734
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 11,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T18:00:00+00:00",
+          "value": 72.18000030517578
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 12,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T19:00:00+00:00",
+          "value": 72.12999725341797
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 13,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T20:00:00+00:00",
+          "value": 100.0
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 14,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T21:00:00+00:00",
+          "value": 100.0
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 15,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T22:00:00+00:00",
+          "value": 100.0
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 16,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T23:00:00+00:00",
+          "value": 96.7300033569336
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 17,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-03T00:00:00+00:00",
+          "value": 97.29000091552734
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 18,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-03T01:00:00+00:00",
+          "value": 92.63999938964844
+        }
+      ],
+      "style": {
+        "colors": [
+          "#0f1720",
+          "#5f7893",
+          "#a7bccf",
+          "#dbe6f0",
+          "#f8fbff"
+        ],
+        "labels": [
+          "0",
+          "25",
+          "50",
+          "75",
+          "100"
+        ],
+        "palette": "clouds",
+        "range": [
+          0.0,
+          100.0
+        ],
+        "rawUnits": "%",
+        "type": "continuous",
+        "units": "%"
+      },
+      "summary": {
+        "all_zero": false,
+        "count": 19,
+        "latest": 92.63999938964844,
+        "max": 100.0,
+        "min": 0.0
+      },
+      "units": "%"
+    },
+    "composite_reflectivity": {
+      "id": "composite_reflectivity",
+      "label": "Composite Reflectivity",
+      "points": [
+        {
+          "domain_id": "point",
+          "forecast_hour": 0,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T07:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 1,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T08:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 2,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T09:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 3,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T10:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 4,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T11:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 5,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T12:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 6,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T13:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 7,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T14:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 8,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T15:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 9,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T16:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 10,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T17:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 11,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T18:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 12,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T19:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 13,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T20:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 14,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T21:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 15,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T22:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 16,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T23:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 17,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-03T00:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 18,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-03T01:00:00+00:00",
+          "value": 0.0
+        }
+      ],
+      "style": {
+        "colors": [
+          "#0a0a0a",
+          "#3c781e",
+          "#b4c828",
+          "#ffa000",
+          "#d22828"
+        ],
+        "labels": [
+          "0",
+          "20",
+          "35",
+          "50",
+          "70"
+        ],
+        "palette": "reflectivity",
+        "range": [
+          0.0,
+          70.0
+        ],
+        "rawUnits": "dBZ",
+        "type": "continuous",
+        "units": "dBZ"
+      },
+      "summary": {
+        "all_zero": true,
+        "count": 19,
+        "latest": 0.0,
+        "max": 0.0,
+        "min": 0.0
+      },
+      "units": "dBZ"
+    },
+    "dewpoint_2m": {
+      "id": "dewpoint_2m",
+      "label": "2 m Dewpoint",
+      "points": [
+        {
+          "domain_id": "point",
+          "forecast_hour": 0,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T07:00:00+00:00",
+          "value": 58.71198242187504
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 1,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T08:00:00+00:00",
+          "value": 60.115980224609416
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 2,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T09:00:00+00:00",
+          "value": 58.568006591796916
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 3,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T10:00:00+00:00",
+          "value": 58.748017578125044
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 4,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T11:00:00+00:00",
+          "value": 58.873975830078166
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 5,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T12:00:00+00:00",
+          "value": 59.61198242187504
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 6,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T13:00:00+00:00",
+          "value": 60.60201538085941
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 7,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T14:00:00+00:00",
+          "value": 60.710010986328165
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 8,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T15:00:00+00:00",
+          "value": 60.49401977539067
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 9,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T16:00:00+00:00",
+          "value": 61.19599121093754
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 10,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T17:00:00+00:00",
+          "value": 61.26800659179692
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 11,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T18:00:00+00:00",
+          "value": 60.79998901367192
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 12,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T19:00:00+00:00",
+          "value": 59.64801757812504
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 13,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T20:00:00+00:00",
+          "value": 58.92797363281254
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 14,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T21:00:00+00:00",
+          "value": 57.91997802734379
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 15,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T22:00:00+00:00",
+          "value": 57.19998901367192
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 16,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T23:00:00+00:00",
+          "value": 56.28202636718754
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 17,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-03T00:00:00+00:00",
+          "value": 56.94801757812504
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 18,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-03T01:00:00+00:00",
+          "value": 57.54199340820317
+        }
+      ],
+      "style": {
+        "colors": [
+          "#213875",
+          "#4a90e2",
+          "#f6f6c6",
+          "#e67b3a",
+          "#93210b"
+        ],
+        "labels": [
+          "-10",
+          "10",
+          "32",
+          "60",
+          "90"
+        ],
+        "palette": "temperature",
+        "range": [
+          250.0,
+          315.0
+        ],
+        "rawUnits": "K",
+        "transform": "kelvin_to_fahrenheit",
+        "type": "continuous",
+        "units": "F"
+      },
+      "summary": {
+        "all_zero": false,
+        "count": 19,
+        "latest": 57.54199340820317,
+        "max": 61.26800659179692,
+        "min": 56.28202636718754
+      },
+      "units": "F"
+    },
+    "gust_surface": {
+      "id": "gust_surface",
+      "label": "Surface Wind Gust",
+      "points": [
+        {
+          "domain_id": "point",
+          "forecast_hour": 0,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T07:00:00+00:00",
+          "value": 30.06442282655531
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 1,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T08:00:00+00:00",
+          "value": 29.013064305272
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 2,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T09:00:00+00:00",
+          "value": 27.31299221131657
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 3,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T10:00:00+00:00",
+          "value": 24.740516328777485
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 4,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T11:00:00+00:00",
+          "value": 23.37598382530674
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 5,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T12:00:00+00:00",
+          "value": 22.078560946579884
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 6,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T13:00:00+00:00",
+          "value": 21.27326464943143
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 7,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T14:00:00+00:00",
+          "value": 15.54670680311634
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 8,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T15:00:00+00:00",
+          "value": 14.51771602343897
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 9,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T16:00:00+00:00",
+          "value": 14.719040631053256
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 10,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T17:00:00+00:00",
+          "value": 15.703292727555713
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 11,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T18:00:00+00:00",
+          "value": 15.591445486291255
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 12,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T19:00:00+00:00",
+          "value": 15.501968119941427
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 13,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T20:00:00+00:00",
+          "value": 16.553328774533426
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 14,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T21:00:00+00:00",
+          "value": 17.179670338982227
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 15,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T22:00:00+00:00",
+          "value": 17.71653560373554
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 16,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T23:00:00+00:00",
+          "value": 17.604688362471084
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 17,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-03T00:00:00+00:00",
+          "value": 19.52845280564674
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 18,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-03T01:00:00+00:00",
+          "value": 19.52845280564674
+        }
+      ],
+      "style": {
+        "colors": [
+          "#0b1840",
+          "#3c6db5",
+          "#70b796",
+          "#facc40",
+          "#db5231"
+        ],
+        "labels": [
+          "0",
+          "15",
+          "30",
+          "50",
+          "75"
+        ],
+        "palette": "wind",
+        "range": [
+          0.0,
+          40.0
+        ],
+        "rawUnits": "m/s",
+        "transform": "mps_to_mph",
+        "type": "continuous",
+        "units": "mph"
+      },
+      "summary": {
+        "all_zero": false,
+        "count": 19,
+        "latest": 19.52845280564674,
+        "max": 30.06442282655531,
+        "min": 14.51771602343897
+      },
+      "units": "mph"
+    },
+    "helicity_0_1km": {
+      "id": "helicity_0_1km",
+      "label": "0 to 1 km Helicity",
+      "points": [
+        {
+          "domain_id": "point",
+          "forecast_hour": 0,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T07:00:00+00:00",
+          "value": 108.63999938964844
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 1,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T08:00:00+00:00",
+          "value": 90.55000305175781
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 2,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T09:00:00+00:00",
+          "value": 71.83999633789062
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 3,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T10:00:00+00:00",
+          "value": 54.72999954223633
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 4,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T11:00:00+00:00",
+          "value": 44.029998779296875
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 5,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T12:00:00+00:00",
+          "value": 36.880001068115234
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 6,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T13:00:00+00:00",
+          "value": 21.649999618530273
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 7,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T14:00:00+00:00",
+          "value": 20.530000686645508
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 8,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T15:00:00+00:00",
+          "value": 17.969999313354492
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 9,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T16:00:00+00:00",
+          "value": 23.3799991607666
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 10,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T17:00:00+00:00",
+          "value": 23.510000228881836
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 11,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T18:00:00+00:00",
+          "value": 24.969999313354492
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 12,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T19:00:00+00:00",
+          "value": 27.8799991607666
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 13,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T20:00:00+00:00",
+          "value": 33.619998931884766
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 14,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T21:00:00+00:00",
+          "value": 31.25
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 15,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T22:00:00+00:00",
+          "value": 27.350000381469727
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 16,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T23:00:00+00:00",
+          "value": 17.360000610351562
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 17,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-03T00:00:00+00:00",
+          "value": 1.340000033378601
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 18,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-03T01:00:00+00:00",
+          "value": -4.289999961853027
+        }
+      ],
+      "style": {
+        "colors": [
+          "#141428",
+          "#3a66ac",
+          "#55be78",
+          "#f0d649",
+          "#d15329"
+        ],
+        "labels": [
+          "0",
+          "100",
+          "200",
+          "400",
+          "600"
+        ],
+        "palette": "severe",
+        "range": [
+          0.0,
+          600.0
+        ],
+        "rawUnits": "m2/s2",
+        "type": "continuous",
+        "units": "m2/s2"
+      },
+      "summary": {
+        "all_zero": false,
+        "count": 19,
+        "latest": -4.289999961853027,
+        "max": 108.63999938964844,
+        "min": -4.289999961853027
+      },
+      "units": "m2/s2"
+    },
+    "qpf": {
+      "id": "qpf",
+      "label": "Accumulated Precipitation",
+      "points": [
+        {
+          "domain_id": "point",
+          "forecast_hour": 0,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T07:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 1,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T08:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 2,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T09:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 3,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T10:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 4,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T11:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 5,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T12:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 6,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T13:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 7,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T14:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 8,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T15:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 9,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T16:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 10,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T17:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 11,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T18:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 12,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T19:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 13,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T20:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 14,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T21:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 15,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T22:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 16,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T23:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 17,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-03T00:00:00+00:00",
+          "value": 0.0
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 18,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-03T01:00:00+00:00",
+          "value": 0.0
+        }
+      ],
+      "style": {
+        "colors": [
+          "#f5f5f5",
+          "#c6e9b4",
+          "#7fcdbb",
+          "#41b6c4",
+          "#225ea8"
+        ],
+        "labels": [
+          "0",
+          "0.25",
+          "0.5",
+          "1.0",
+          "2.0+"
+        ],
+        "palette": "precip",
+        "range": [
+          0.0,
+          50.8
+        ],
+        "rawUnits": "mm",
+        "transform": "mm_to_inches",
+        "type": "continuous",
+        "units": "in"
+      },
+      "summary": {
+        "all_zero": true,
+        "count": 19,
+        "latest": 0.0,
+        "max": 0.0,
+        "min": 0.0
+      },
+      "units": "in"
+    },
+    "shear_0_6km_speed": {
+      "id": "shear_0_6km_speed",
+      "label": "0 to 6 km Shear Speed",
+      "points": [
+        {
+          "domain_id": "point",
+          "forecast_hour": 0,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T07:00:00+00:00",
+          "value": 0.0007280109635409398
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 1,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T08:00:00+00:00",
+          "value": 0.000764787544153529
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 2,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T09:00:00+00:00",
+          "value": 0.0007267049199095549
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 3,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T10:00:00+00:00",
+          "value": 0.0007723341081369241
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 4,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T11:00:00+00:00",
+          "value": 0.0007234638870185837
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 5,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T12:00:00+00:00",
+          "value": 0.0005635601335410312
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 6,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T13:00:00+00:00",
+          "value": 0.0002570992138363987
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 7,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T14:00:00+00:00",
+          "value": 0.0002640075704952704
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 8,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T15:00:00+00:00",
+          "value": 0.0002545584450862279
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 9,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T16:00:00+00:00",
+          "value": 0.00026400757187325315
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 10,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T17:00:00+00:00",
+          "value": 0.000375366501069492
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 11,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T18:00:00+00:00",
+          "value": 0.0004036087250070484
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 12,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T19:00:00+00:00",
+          "value": 0.0004123105567340904
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 13,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T20:00:00+00:00",
+          "value": 0.0005099019595966756
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 14,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T21:00:00+00:00",
+          "value": 0.000587281856901373
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 15,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T22:00:00+00:00",
+          "value": 0.0005966573712644416
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 16,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T23:00:00+00:00",
+          "value": 0.000636553228265243
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 17,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-03T00:00:00+00:00",
+          "value": 0.0007349829875996095
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 18,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-03T01:00:00+00:00",
+          "value": 0.0007462573432036915
+        }
+      ],
+      "style": {
+        "labels": [
+          "0",
+          "15",
+          "30",
+          "45",
+          "60"
+        ],
+        "range": [
+          0.0,
+          60.0
+        ],
+        "type": "continuous",
+        "units": "m s-1"
+      },
+      "summary": {
+        "all_zero": false,
+        "count": 19,
+        "latest": 0.0007462573432036915,
+        "max": 0.0007723341081369241,
+        "min": 0.0002545584450862279
+      },
+      "units": "m s-1"
+    },
+    "temperature_2m": {
+      "id": "temperature_2m",
+      "label": "2 m Temperature",
+      "points": [
+        {
+          "domain_id": "point",
+          "forecast_hour": 0,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T07:00:00+00:00",
+          "value": 65.98399780273442
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 1,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T08:00:00+00:00",
+          "value": 66.2539868164063
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 2,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T09:00:00+00:00",
+          "value": 65.22797363281254
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 3,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T10:00:00+00:00",
+          "value": 64.16598022460941
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 4,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T11:00:00+00:00",
+          "value": 63.66198242187504
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 5,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T12:00:00+00:00",
+          "value": 64.86800659179691
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 6,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T13:00:00+00:00",
+          "value": 69.49401977539067
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 7,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T14:00:00+00:00",
+          "value": 72.69801757812505
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 8,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T15:00:00+00:00",
+          "value": 75.75798461914067
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 9,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T16:00:00+00:00",
+          "value": 78.24199340820317
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 10,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T17:00:00+00:00",
+          "value": 80.11400878906254
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 11,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T18:00:00+00:00",
+          "value": 81.28399780273442
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 12,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T19:00:00+00:00",
+          "value": 82.58000000000004
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 13,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T20:00:00+00:00",
+          "value": 83.28202636718754
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 14,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T21:00:00+00:00",
+          "value": 82.84998901367192
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 15,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T22:00:00+00:00",
+          "value": 81.06800659179692
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 16,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T23:00:00+00:00",
+          "value": 78.18799560546879
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 17,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-03T00:00:00+00:00",
+          "value": 75.99199340820317
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 18,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-03T01:00:00+00:00",
+          "value": 74.46198242187504
+        }
+      ],
+      "style": {
+        "colors": [
+          "#213875",
+          "#4a90e2",
+          "#f6f6c6",
+          "#e67b3a",
+          "#93210b"
+        ],
+        "labels": [
+          "-10",
+          "10",
+          "32",
+          "60",
+          "90"
+        ],
+        "palette": "temperature",
+        "range": [
+          250.0,
+          315.0
+        ],
+        "rawUnits": "K",
+        "transform": "kelvin_to_fahrenheit",
+        "type": "continuous",
+        "units": "F"
+      },
+      "summary": {
+        "all_zero": false,
+        "count": 19,
+        "latest": 74.46198242187504,
+        "max": 83.28202636718754,
+        "min": 63.66198242187504
+      },
+      "units": "F"
+    },
+    "wind_10m": {
+      "id": "wind_10m",
+      "label": "10 m Wind Speed",
+      "points": [
+        {
+          "domain_id": "point",
+          "forecast_hour": 0,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T07:00:00+00:00",
+          "value": 5.819517561703652
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 1,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T08:00:00+00:00",
+          "value": 3.913679792351976
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 2,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T09:00:00+00:00",
+          "value": 3.9507740068502417
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 3,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T10:00:00+00:00",
+          "value": 3.4096956921674413
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 4,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T11:00:00+00:00",
+          "value": 3.091912193435461
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 5,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T12:00:00+00:00",
+          "value": 4.270849771095077
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 6,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T13:00:00+00:00",
+          "value": 8.644188475004503
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 7,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T14:00:00+00:00",
+          "value": 9.815971234156391
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 8,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T15:00:00+00:00",
+          "value": 10.375719734424566
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 9,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T16:00:00+00:00",
+          "value": 10.024495045849008
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 10,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T17:00:00+00:00",
+          "value": 10.08855787030242
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 11,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T18:00:00+00:00",
+          "value": 9.753555150653959
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 12,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T19:00:00+00:00",
+          "value": 9.444667024476523
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 13,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T20:00:00+00:00",
+          "value": 9.237924229876466
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 14,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T21:00:00+00:00",
+          "value": 7.9593764133895775
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 15,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T22:00:00+00:00",
+          "value": 6.271724600980123
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 16,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-02T23:00:00+00:00",
+          "value": 4.7148440043123925
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 17,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-03T00:00:00+00:00",
+          "value": 4.698418219361521
+        },
+        {
+          "domain_id": "point",
+          "forecast_hour": 18,
+          "grid_lat": 35.89228,
+          "grid_lon": -78.78196,
+          "valid_time_utc": "2026-04-03T01:00:00+00:00",
+          "value": 3.8440174340370827
+        }
+      ],
+      "style": {
+        "colors": [
+          "#0b1840",
+          "#3c6db5",
+          "#70b796",
+          "#facc40",
+          "#db5231"
+        ],
+        "labels": [
+          "0",
+          "15",
+          "30",
+          "50",
+          "75"
+        ],
+        "palette": "wind",
+        "range": [
+          0.0,
+          40.0
+        ],
+        "rawUnits": "m/s",
+        "transform": "mps_to_mph",
+        "type": "continuous",
+        "units": "mph"
+      },
+      "summary": {
+        "all_zero": false,
+        "count": 19,
+        "latest": 3.8440174340370827,
+        "max": 10.375719734424566,
+        "min": 3.091912193435461
+      },
+      "units": "mph"
+    }
+  },
+  "station": {
+    "aliases": [
+      "KRDU",
+      "RDU",
+      "RDU"
+    ],
+    "country": "US",
+    "elev": 121,
+    "faaId": "RDU",
+    "iataId": "RDU",
+    "icaoId": "KRDU",
+    "id": "KRDU",
+    "lat": 35.89228,
+    "lon": -78.78196,
+    "site": "Raleigh-Durham Intl",
+    "siteType": [
+      "METAR",
+      "TAF"
+    ],
+    "state": "NC"
+  }
+}

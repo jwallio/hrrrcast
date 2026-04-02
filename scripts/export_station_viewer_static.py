@@ -19,7 +19,7 @@ from services.shared.store import build_run_summaries, latest_ready_manifest  # 
 
 DEFAULT_OUTPUT_DIR = ROOT / "apps" / "web" / "static-api"
 DEFAULT_STATIONS = ["KRDU", "KATL", "KCLT", "KDEN", "KDFW", "KBNA", "KJFK", "KORD"]
-DEFAULT_MEMBERS = ["ens", "m00"]
+DEFAULT_MEMBERS = ["ens"]
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -42,10 +42,9 @@ def main(argv: list[str] | None = None) -> int:
 
     run_selector = args.run
     stations = [item.upper() for item in (args.stations or DEFAULT_STATIONS)]
-    members = args.members or DEFAULT_MEMBERS
-
     latest_ready = latest_ready_manifest()
     run_id = str(latest_ready["run"]["run_id"]) if run_selector == "latest-ready" else run_selector
+    members = args.members or ["ens", *[str(member) for member in latest_ready["run"]["members"]]]
     export_runs(output_dir, run_id)
     export_station_subset(output_dir, stations)
 
