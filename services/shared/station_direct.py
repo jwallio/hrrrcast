@@ -3,25 +3,25 @@
 from __future__ import annotations
 
 from collections import defaultdict
+from concurrent.futures import ThreadPoolExecutor, as_completed
 import json
 from pathlib import Path
-import subprocess
-import tempfile
+import re
+from threading import Lock
 
 import numpy as np
+import xarray as xr
 
 from pipelines.ingest.ensemble_products import ENSEMBLE_PRODUCT_SPECS
 from pipelines.ingest.idx import parse_idx_text
-from pipelines.ingest.products import PRODUCT_SPECS, download_field_message, resolve_wgrib2_executable
+from pipelines.ingest.products import DEFAULT_FIELD_CACHE_DIR, PRODUCT_SPECS, download_field_message
 from services.shared.point_series import (
     CHART_GROUPS,
     DEFAULT_MEMBER_OVERLAYS,
     DERIVED_POINT_OVERLAYS,
-    ENSEMBLE_SPREAD_OVERLAYS,
-    ensemble_distribution_payload,
     get_station,
+    normalize_longitude,
     overlay_payload,
-    sample_netcdf_point,
     valid_time_for_hour,
 )
 
@@ -32,12 +32,14 @@ PROBABILITY_SOURCE_OVERLAYS: dict[str, str] = {
     "composite_reflectivity_probability_gt_40dbz": "composite_reflectivity",
     "cape_probability_gt_1000": "cape",
     "helicity_0_1km_probability_gt_100": "helicity_0_1km",
-    "helicity_0_3km_probability_gt_250": "helicity_0_3km",
-    "shear_0_1km_probability_gt_20kt": "shear_0_1km_speed",
     "shear_0_6km_probability_gt_40kt": "shear_0_6km_speed",
 }
 
 FIELD_RAW_PREFIX = "__field__::"
+ROOT = Path(__file__).resolve().parents[2]
+DEFAULT_STATION_SAMPLE_CACHE_ROOT = ROOT / "data" / "processed" / "station_samples"
+DEFAULT_STATION_EXPORT_WORKERS = 4
+GRIB_READ_LOCK = Lock()
 
 
 def export_station_bundle_direct(
@@ -147,10 +149,13 @@ def required_logical_overlays(export_members: list[str]) -> set[str]:
     overlays: set[str] = set()
     if "m00" in export_members:
         overlays.update(DEFAULT_MEMBER_OVERLAYS["m00"])
-        overlays.update(DERIVED_POINT_OVERLAYS)
+        overlays.update(
+            overlay_id
+            for overlay_id in DEFAULT_MEMBER_OVERLAYS["m00"]
+            if overlay_id in DERIVED_POINT_OVERLAYS
+        )
     if "ens" in export_members:
         overlays.update(PROBABILITY_SOURCE_OVERLAYS.values())
-        overlays.update(config["source"] for config in ENSEMBLE_SPREAD_OVERLAYS.values())
     return overlays
 
 
@@ -203,51 +208,141 @@ def collect_raw_station_samples(
     station_records: dict[str, dict[str, object]],
     include_all_members: bool,
     logger=None,
+    field_cache_root: Path = Path(DEFAULT_FIELD_CACHE_DIR),
+    sample_cache_root: Path = DEFAULT_STATION_SAMPLE_CACHE_ROOT,
+    max_workers: int = DEFAULT_STATION_EXPORT_WORKERS,
 ) -> dict[str, dict[str, dict[int, dict[str, float]]]]:
     run_id = str(manifest["run"]["run_id"])
     member_ids = sorted(str(member) for member in manifest["run"]["members"]) if include_all_members else ["m00"]
     station_codes = sorted(station_records)
     raw_store: dict[str, dict[str, dict[int, dict[str, float]]]] = defaultdict(lambda: defaultdict(dict))
-    with tempfile.TemporaryDirectory(prefix=f"hrrrcast_station_{run_id}_") as tempdir:
-        work_root = Path(tempdir)
-        field_cache_root = work_root / "fields"
-        netcdf_root = work_root / "netcdf"
-        field_cache_root.mkdir(parents=True, exist_ok=True)
-        netcdf_root.mkdir(parents=True, exist_ok=True)
-        for member in member_ids:
-            member_payload = manifest["members"].get(member)
-            if not member_payload:
+    total_steps = total_raw_sampling_steps(manifest, member_ids, raw_overlay_ids)
+    completed_steps = 0
+    field_cache_root = Path(field_cache_root)
+    sample_cache_root = Path(sample_cache_root)
+    field_cache_root.mkdir(parents=True, exist_ok=True)
+    sample_cache_root.mkdir(parents=True, exist_ok=True)
+    if logger:
+        logger.info(
+            "station-only export sampling %s raw overlay/hour/member steps for %s station(s)",
+            total_steps,
+            len(station_codes),
+        )
+    for member in member_ids:
+        member_payload = manifest["members"].get(member)
+        if not member_payload:
+            continue
+        if logger:
+            logger.info("station-only sampling member=%s hours=%s", member, len(member_payload["forecast_hours"]))
+        for forecast_hour in member_payload["forecast_hours"]:
+            hour_token = f"{int(forecast_hour):03d}"
+            hour_detail = member_payload["forecast_hour_details"][hour_token]
+            idx_records = parse_idx_text(Path(hour_detail["cached_idx_path"]).read_text(encoding="utf-8"))
+            grib_key = str(hour_detail["grib_key"])
+            grib_size = int(hour_detail["grib_size_bytes"])
+            available_field_keys = set(hour_detail.get("field_keys", []))
+            eligible_overlay_ids: list[str] = []
+            for overlay_id in sorted(raw_overlay_ids):
+                if not overlay_available(hour_detail, overlay_id):
+                    continue
+                field_key = field_key_for_raw_overlay_id(overlay_id)
+                if field_key not in available_field_keys:
+                    continue
+                eligible_overlay_ids.append(overlay_id)
+            if not eligible_overlay_ids:
                 continue
-            for forecast_hour in member_payload["forecast_hours"]:
-                hour_token = f"{int(forecast_hour):03d}"
-                hour_detail = member_payload["forecast_hour_details"][hour_token]
-                idx_records = parse_idx_text(Path(hour_detail["cached_idx_path"]).read_text(encoding="utf-8"))
-                grib_key = str(hour_detail["grib_key"])
-                grib_size = int(hour_detail["grib_size_bytes"])
-                available_field_keys = set(hour_detail.get("field_keys", []))
-                for overlay_id in sorted(raw_overlay_ids):
-                    if not overlay_available(hour_detail, overlay_id):
-                        continue
-                    field_key = field_key_for_raw_overlay_id(overlay_id)
-                    if field_key not in available_field_keys:
-                        continue
-                    samples = sample_raw_overlay_for_stations(
+            workers = max(1, min(int(max_workers), len(eligible_overlay_ids)))
+            with ThreadPoolExecutor(max_workers=workers) as executor:
+                future_map = {
+                    executor.submit(
+                        load_or_sample_raw_overlay_for_stations,
+                        run_id=run_id,
+                        member=member,
+                        forecast_hour=int(forecast_hour),
+                        overlay_id=overlay_id,
+                        field_key=field_key_for_raw_overlay_id(overlay_id),
                         grib_key=grib_key,
                         idx_records=idx_records,
                         grib_size_bytes=grib_size,
-                        field_key=str(field_key),
                         station_records=station_records,
                         field_cache_root=field_cache_root,
-                        netcdf_root=netcdf_root,
-                    )
+                        sample_cache_root=sample_cache_root,
+                    ): overlay_id
+                    for overlay_id in eligible_overlay_ids
+                }
+                for future in as_completed(future_map):
+                    overlay_id = future_map[future]
+                    field_key = field_key_for_raw_overlay_id(overlay_id)
+                    samples, cache_status = future.result()
+                    completed_steps += 1
                     if logger:
-                        logger.debug("sampled member=%s fh=%s overlay=%s stations=%s", member, forecast_hour, overlay_id, len(samples))
+                        logger.info(
+                            "station-only sampling step %s/%s member=%s f%03d field=%s source=%s",
+                            completed_steps,
+                            total_steps,
+                            member,
+                            int(forecast_hour),
+                            field_key,
+                            cache_status,
+                        )
                     for station_code in station_codes:
                         value = samples.get(station_code)
                         if value is None:
                             continue
                         raw_store[member][overlay_id].setdefault(int(forecast_hour), {})[station_code] = float(value)
     return raw_store
+
+
+def load_or_sample_raw_overlay_for_stations(
+    run_id: str,
+    member: str,
+    forecast_hour: int,
+    overlay_id: str,
+    field_key: str,
+    grib_key: str,
+    idx_records: list[object],
+    grib_size_bytes: int,
+    station_records: dict[str, dict[str, object]],
+    field_cache_root: Path,
+    sample_cache_root: Path,
+) -> tuple[dict[str, float | None], str]:
+    cache_path = station_sample_cache_path(sample_cache_root, run_id, member, forecast_hour, overlay_id)
+    if cache_path.exists():
+        payload = json.loads(cache_path.read_text(encoding="utf-8"))
+        return {key: (None if value is None else float(value)) for key, value in payload["samples"].items()}, "cache"
+    samples = sample_raw_overlay_for_stations(
+        grib_key=grib_key,
+        idx_records=idx_records,
+        grib_size_bytes=grib_size_bytes,
+        field_key=field_key,
+        station_records=station_records,
+        field_cache_root=field_cache_root,
+    )
+    write_station_sample_cache(cache_path, run_id, member, forecast_hour, overlay_id, field_key, samples)
+    return samples, "sampled"
+
+
+def total_raw_sampling_steps(
+    manifest: dict[str, object],
+    member_ids: list[str],
+    raw_overlay_ids: set[str],
+) -> int:
+    total = 0
+    for member in member_ids:
+        member_payload = manifest["members"].get(member)
+        if not member_payload:
+            continue
+        for forecast_hour in member_payload["forecast_hours"]:
+            hour_token = f"{int(forecast_hour):03d}"
+            hour_detail = member_payload["forecast_hour_details"][hour_token]
+            available_field_keys = set(hour_detail.get("field_keys", []))
+            for overlay_id in raw_overlay_ids:
+                if not overlay_available(hour_detail, overlay_id):
+                    continue
+                field_key = field_key_for_raw_overlay_id(overlay_id)
+                if field_key in available_field_keys:
+                    total += 1
+    return total
 
 
 def overlay_available(hour_detail: dict[str, object], overlay_id: str) -> bool:
@@ -264,7 +359,6 @@ def sample_raw_overlay_for_stations(
     field_key: str,
     station_records: dict[str, dict[str, object]],
     field_cache_root: Path,
-    netcdf_root: Path,
 ) -> dict[str, float | None]:
     grib_path = download_field_message(
         grib_key=grib_key,
@@ -273,32 +367,72 @@ def sample_raw_overlay_for_stations(
         grib_size_bytes=grib_size_bytes,
         output_root=field_cache_root,
     )
-    safe_name = field_key.replace(":", "_").replace(" ", "_").replace("/", "_")
-    netcdf_path = netcdf_root / f"{Path(grib_path).stem}_{safe_name}.nc"
-    grib_to_netcdf(grib_path, netcdf_path)
+    return sample_grib_points(Path(grib_path), station_records)
+
+
+def station_sample_cache_path(
+    sample_cache_root: Path,
+    run_id: str,
+    member: str,
+    forecast_hour: int,
+    overlay_id: str,
+) -> Path:
+    target_dir = sample_cache_root / run_id / member / f"f{forecast_hour:03d}"
+    target_dir.mkdir(parents=True, exist_ok=True)
+    return target_dir / f"{safe_id(overlay_id)}.json"
+
+
+def write_station_sample_cache(
+    cache_path: Path,
+    run_id: str,
+    member: str,
+    forecast_hour: int,
+    overlay_id: str,
+    field_key: str,
+    samples: dict[str, float | None],
+) -> None:
+    payload = {
+        "run_id": run_id,
+        "member": member,
+        "forecast_hour": forecast_hour,
+        "overlay_id": overlay_id,
+        "field_key": field_key,
+        "samples": samples,
+    }
+    cache_path.write_text(json.dumps(payload, indent=2, sort_keys=True), encoding="utf-8")
+
+
+def safe_id(value: str) -> str:
+    return re.sub(r"[^A-Za-z0-9]+", "_", value).strip("_").lower()
+
+
+def sample_grib_points(
+    grib_path: Path,
+    station_records: dict[str, dict[str, object]],
+) -> dict[str, float | None]:
+    # eccodes/cfgrib is not consistently thread-safe on Windows for concurrent reads.
+    with GRIB_READ_LOCK:
+        with xr.open_dataset(grib_path, engine="cfgrib", backend_kwargs={"indexpath": ""}) as dataset:
+            data_array = dataset[list(dataset.data_vars)[0]]
+            while data_array.ndim > 2:
+                data_array = data_array.isel({data_array.dims[0]: 0})
+            values = np.asarray(data_array.values, dtype=np.float32)
+            latitude = np.asarray(dataset["latitude"].values, dtype=np.float32)
+            longitude = np.asarray(dataset["longitude"].values, dtype=np.float32)
+
+    finite_mask = np.isfinite(values)
+    if not np.any(finite_mask):
+        return {station_code: None for station_code in station_records}
+
     samples: dict[str, float | None] = {}
-    try:
-        for station_code, station in station_records.items():
-            sample = sample_netcdf_point(netcdf_path, float(station["lat"]), float(station["lon"]))
-            samples[station_code] = sample["value"]
-    finally:
-        netcdf_path.unlink(missing_ok=True)
-        Path(grib_path).unlink(missing_ok=True)
+    for station_code, station in station_records.items():
+        target_lon = normalize_longitude(float(station["lon"]), longitude)
+        distance = ((latitude - float(station["lat"])) ** 2) + ((longitude - target_lon) ** 2)
+        distance = np.where(finite_mask, distance, np.inf)
+        y_index, x_index = np.unravel_index(int(np.argmin(distance)), distance.shape)
+        value = values[y_index, x_index]
+        samples[station_code] = None if not np.isfinite(value) else float(value)
     return samples
-
-
-def grib_to_netcdf(grib_path: Path, netcdf_path: Path) -> None:
-    result = subprocess.run(
-        [resolve_wgrib2_executable(), str(grib_path), "-netcdf", str(netcdf_path)],
-        check=False,
-        capture_output=True,
-        text=True,
-    )
-    if result.returncode != 0:
-        raise RuntimeError(
-            "wgrib2 single-field netcdf conversion failed\n"
-            f"grib={grib_path}\nstdout={result.stdout}\nstderr={result.stderr}"
-        )
 
 
 def build_logical_sample_store(
@@ -399,18 +533,6 @@ def build_ensemble_payload_from_store(
         )
         if points:
             series_payload[overlay_id] = overlay_payload(overlay_id, points)
-
-    for overlay_id, config in ENSEMBLE_SPREAD_OVERLAYS.items():
-        points = distribution_points(
-            run_id=run_id,
-            logical_samples=logical_samples,
-            source_overlay=str(config["source"]),
-            members=deterministic_members,
-            station_code=station_code,
-            station=station,
-        )
-        if points:
-            series_payload[overlay_id] = ensemble_distribution_payload(overlay_id, points)
 
     chart_groups = []
     for group in CHART_GROUPS.get("ens", []):

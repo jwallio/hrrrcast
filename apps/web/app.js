@@ -53,7 +53,7 @@
 
   const service = DataService.createDataService({ staticRoot: staticRoot(), backendRoot: backendRoot() });
   const state = UrlState.parseState(window.location.search);
-  const refs = { runs: [], stations: [], payload: null, detPayload: null, charts: [], xRange: null, timer: 0, requestId: 0, busy: false, suggestionIndex: -1, suggestions: [], stationSelect: null, theme: { chartGrid: "rgba(143,164,184,0.12)", chartTick: "#91a5b9" } };
+  const refs = { runs: [], stations: [], payload: null, detPayload: null, charts: [], hoverController: null, xRange: null, timer: 0, requestId: 0, busy: false, suggestionIndex: -1, suggestions: [], stationSelect: null, theme: { chartGrid: "rgba(143,164,184,0.12)", chartTick: "#91a5b9" } };
 
   Charts.registerPlugins();
   init().catch((error) => {
@@ -477,6 +477,7 @@
       dom.main.innerHTML = '<div class="chart-empty">No chartable fields match the current graph mode and selection.</div>';
       return;
     }
+    refs.hoverController = Charts.createHoverController();
     for (const overlayId of overlayIds) {
       const series = refs.payload.series[overlayId];
       const summary = summarize(series);
@@ -485,8 +486,9 @@
       const valueFormatter = (value, context) => formatSeriesValue(series, value, context);
       const panel = document.createElement("section");
       panel.className = `chart-panel${state.graph === "distribution" ? " compact" : ""} ${series.chart_type === "distribution" ? "is-distribution" : "is-deterministic"}`;
-      panel.innerHTML = `<div class="chart-head"><div class="chart-head-left"><div class="chart-group-label">${groupTitle(groupForOverlay(overlayId))}</div><h3 class="chart-title">${series.label}</h3><div class="chart-badges">${modeBadge}${unitBadge}</div><p class="chart-description">${chartSubtitle(series)}</p></div><div class="chart-meta"><span>Latest ${valueFormatter(summary.latest, "meta")}${unit(series)}</span><span>Max ${valueFormatter(summary.max, "meta")}${unit(series)}</span><span>Min ${valueFormatter(summary.min, "meta")}${unit(series)}</span></div></div>${series.chart_type === "distribution" ? '<p class="chart-note">Drag to zoom. Click once on any plot to restore the full time range.</p>' : ""}<div class="chart-frame"><canvas></canvas></div>`;
+      panel.innerHTML = `<div class="chart-head"><div class="chart-head-left"><div class="chart-group-label">${groupTitle(groupForOverlay(overlayId))}</div><h3 class="chart-title">${series.label}</h3><div class="chart-badges">${modeBadge}${unitBadge}</div><p class="chart-description">${chartSubtitle(series)}</p></div><div class="chart-meta"><span>Latest ${valueFormatter(summary.latest, "meta")}${unit(series)}</span><span>Max ${valueFormatter(summary.max, "meta")}${unit(series)}</span><span>Min ${valueFormatter(summary.min, "meta")}${unit(series)}</span></div></div>${series.chart_type === "distribution" ? '<p class="chart-note">Drag to zoom. Click once on any plot to restore the full time range.</p>' : ""}<div class="chart-hover-readout is-idle">Hover a forecast hour to inspect values.</div><div class="chart-frame"><canvas></canvas></div>`;
       dom.main.appendChild(panel);
+      const hoverReadout = panel.querySelector(".chart-hover-readout");
       const chart = Charts.buildChart(panel.querySelector("canvas"), {
         series,
         detSeries: deterministicSeries(overlayId),
@@ -497,8 +499,10 @@
         theme: refs.theme,
         formatTime: formatValidTime,
         formatValue: valueFormatter,
+        onHoverChange: (payload) => renderHoverReadout(hoverReadout, payload),
       });
       Charts.attachZoomHandlers(chart, (range) => { refs.xRange = range; syncChartRange(); });
+      Charts.attachHoverHandlers(chart, refs.hoverController);
       refs.charts.push(chart);
     }
   }
@@ -512,8 +516,34 @@
   }
 
   function destroyCharts() {
-    for (const chart of refs.charts) { chart.destroy(); }
+    for (const chart of refs.charts) {
+      if (refs.hoverController) {
+        refs.hoverController.unregister(chart);
+      }
+      chart.destroy();
+    }
     refs.charts = [];
+    refs.hoverController = null;
+  }
+
+  function renderHoverReadout(node, payload) {
+    if (!node) {
+      return;
+    }
+    if (!payload) {
+      node.classList.add("is-idle");
+      node.classList.remove("is-missing");
+      node.innerHTML = "Hover a forecast hour to inspect values.";
+      return;
+    }
+    const hour = `F${String(payload.hour).padStart(3, "0")}`;
+    const entries = (payload.entries || [])
+      .map((entry, index) => `${index ? '<span class="chart-hover-sep" aria-hidden="true">|</span>' : ""}<span class="chart-hover-item"><span class="chart-hover-label">${entry.label}:</span><strong>${entry.value}</strong></span>`)
+      .join("");
+    const timeText = payload.validTime ? `${hour} | ${payload.validTime}` : hour;
+    node.classList.remove("is-idle");
+    node.classList.toggle("is-missing", Boolean(payload.missing));
+    node.innerHTML = `<span class="chart-hover-time">${timeText}</span>${entries ? '<span class="chart-hover-sep" aria-hidden="true">|</span>' : ''}${entries}`;
   }
 
   function applyTheme() {
@@ -553,7 +583,10 @@
   }
 
   function isDistributionAvailable() {
-    return state.member === "ens";
+    return Boolean(
+      refs.payload &&
+      Object.values(refs.payload.series || {}).some((series) => series && series.chart_type === "distribution")
+    );
   }
 
   function applyDistributionControls() {

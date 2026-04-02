@@ -77,11 +77,7 @@ class StationDirectTests(unittest.TestCase):
         self.assertEqual(["ens", "m00"], ens_payload["available_members"])
         self.assertIn("qpf_probability_gt_0p10", ens_payload["series"])
         self.assertAlmostEqual(ens_payload["series"]["qpf_probability_gt_0p10"]["points"][0]["value"], 66.6666, places=3)
-        self.assertIn("temperature_2m_member_spread", ens_payload["series"])
-        spread_point = ens_payload["series"]["temperature_2m_member_spread"]["points"][0]
-        self.assertAlmostEqual(spread_point["min"], 32.0, places=1)
-        self.assertAlmostEqual(spread_point["median"], 33.8, places=1)
-        self.assertAlmostEqual(spread_point["max"], 35.6, places=1)
+        self.assertFalse(any(series.get("chart_type") == "distribution" for series in ens_payload["series"].values()))
 
 
 if __name__ == "__main__":

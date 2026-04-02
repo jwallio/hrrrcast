@@ -22,8 +22,6 @@ DEFAULT_MEMBER_OVERLAYS: dict[str, list[str]] = {
         "qpf_probability_gt_0p10",
         "cape_probability_gt_1000",
         "helicity_0_1km_probability_gt_100",
-        "helicity_0_3km_probability_gt_250",
-        "shear_0_1km_probability_gt_20kt",
         "shear_0_6km_probability_gt_40kt",
         "wind_10m_probability_gt_25kt",
     ],
@@ -31,47 +29,13 @@ DEFAULT_MEMBER_OVERLAYS: dict[str, list[str]] = {
         "composite_reflectivity",
         "qpf",
         "cape",
-        "cin_surface",
         "temperature_2m",
         "dewpoint_2m",
-        "rh_2m",
-        "specific_humidity_2m",
-        "temperature_potential_2m",
-        "pwat",
-        "visibility",
-        "ceiling",
         "cloud_cover_total",
-        "cloud_cover_low",
-        "cloud_cover_mid",
-        "cloud_cover_high",
-        "surface_pressure",
         "helicity_0_1km",
-        "helicity_0_3km",
-        "storm_motion_u",
-        "storm_motion_v",
-        "relative_vorticity_0_1km",
-        "relative_vorticity_0_2km",
-        "shear_u_0_1km",
-        "shear_v_0_1km",
-        "shear_u_0_6km",
-        "shear_v_0_6km",
+        "shear_0_6km_speed",
         "wind_10m",
-        "u_wind_10m",
-        "v_wind_10m",
         "gust_surface",
-        "height_500mb",
-        "height_700mb",
-        "height_850mb",
-        "temperature_850mb",
-        "temperature_700mb",
-        "temperature_925mb",
-        "specific_humidity_700mb",
-        "specific_humidity_850mb",
-        "wind_500mb",
-        "wind_700mb",
-        "wind_850mb",
-        "vertical_velocity_500mb",
-        "vertical_velocity_700mb",
     ],
 }
 
@@ -81,21 +45,11 @@ ENSEMBLE_SPREAD_OVERLAYS: dict[str, dict[str, object]] = {
     "cape_member_spread": {"source": "cape", "label": "Surface CAPE Member Spread"},
     "temperature_2m_member_spread": {"source": "temperature_2m", "label": "2 m Temperature Member Spread"},
     "dewpoint_2m_member_spread": {"source": "dewpoint_2m", "label": "2 m Dewpoint Member Spread"},
-    "rh_2m_member_spread": {"source": "rh_2m", "label": "2 m Relative Humidity Member Spread"},
-    "pwat_member_spread": {"source": "pwat", "label": "Precipitable Water Member Spread"},
-    "surface_pressure_member_spread": {"source": "surface_pressure", "label": "Surface Pressure Member Spread"},
-    "visibility_member_spread": {"source": "visibility", "label": "Visibility Member Spread"},
-    "ceiling_member_spread": {"source": "ceiling", "label": "Ceiling Height Member Spread"},
     "cloud_cover_total_member_spread": {"source": "cloud_cover_total", "label": "Total Cloud Cover Member Spread"},
     "helicity_0_1km_member_spread": {"source": "helicity_0_1km", "label": "0 to 1 km Helicity Member Spread"},
-    "helicity_0_3km_member_spread": {"source": "helicity_0_3km", "label": "0 to 3 km Helicity Member Spread"},
-    "shear_0_1km_speed_member_spread": {"source": "shear_0_1km_speed", "label": "0 to 1 km Shear Member Spread"},
     "shear_0_6km_speed_member_spread": {"source": "shear_0_6km_speed", "label": "0 to 6 km Shear Member Spread"},
     "wind_10m_member_spread": {"source": "wind_10m", "label": "10 m Wind Member Spread"},
-    "height_500mb_member_spread": {"source": "height_500mb", "label": "500 mb Height Member Spread"},
-    "temperature_850mb_member_spread": {"source": "temperature_850mb", "label": "850 mb Temperature Member Spread"},
-    "wind_500mb_member_spread": {"source": "wind_500mb", "label": "500 mb Wind Member Spread"},
-    "vertical_velocity_500mb_member_spread": {"source": "vertical_velocity_500mb", "label": "500 mb Vertical Velocity Member Spread"},
+    "gust_surface_member_spread": {"source": "gust_surface", "label": "Surface Gust Member Spread"},
 }
 
 CHART_GROUPS: dict[str, list[dict[str, object]]] = {
@@ -106,49 +60,21 @@ CHART_GROUPS: dict[str, list[dict[str, object]]] = {
             "overlays": [
                 "composite_reflectivity_probability_gt_40dbz",
                 "qpf_probability_gt_0p10",
-                "composite_reflectivity_member_spread",
-                "qpf_member_spread",
             ],
         },
-        {"id": "instability", "title": "Instability", "overlays": ["cape_probability_gt_1000", "cape_member_spread"]},
-        {
-            "id": "moisture",
-            "title": "Moisture",
-            "overlays": [
-                "temperature_2m_member_spread",
-                "dewpoint_2m_member_spread",
-                "rh_2m_member_spread",
-                "pwat_member_spread",
-                "surface_pressure_member_spread",
-            ],
-        },
-        {
-            "id": "aviation",
-            "title": "Aviation",
-            "overlays": [
-                "visibility_member_spread",
-                "ceiling_member_spread",
-                "cloud_cover_total_member_spread",
-            ],
-        },
+        {"id": "instability", "title": "CAPE", "overlays": ["cape_probability_gt_1000"]},
         {
             "id": "rotation",
-            "title": "Rotation",
+            "title": "Helicity",
             "overlays": [
                 "helicity_0_1km_probability_gt_100",
-                "helicity_0_3km_probability_gt_250",
-                "helicity_0_1km_member_spread",
-                "helicity_0_3km_member_spread",
             ],
         },
         {
             "id": "shear",
             "title": "Shear",
             "overlays": [
-                "shear_0_1km_probability_gt_20kt",
                 "shear_0_6km_probability_gt_40kt",
-                "shear_0_1km_speed_member_spread",
-                "shear_0_6km_speed_member_spread",
             ],
         },
         {
@@ -156,74 +82,27 @@ CHART_GROUPS: dict[str, list[dict[str, object]]] = {
             "title": "Wind",
             "overlays": [
                 "wind_10m_probability_gt_25kt",
-                "wind_10m_member_spread",
-            ],
-        },
-        {
-            "id": "upper",
-            "title": "Upper Air",
-            "overlays": [
-                "height_500mb_member_spread",
-                "temperature_850mb_member_spread",
-                "wind_500mb_member_spread",
-                "vertical_velocity_500mb_member_spread",
             ],
         },
     ],
     "m00": [
         {"id": "storm", "title": "Storm Signals", "overlays": ["composite_reflectivity", "qpf"]},
-        {"id": "instability", "title": "Instability", "overlays": ["cape", "cin_surface"]},
         {
-            "id": "moisture",
-            "title": "Moisture",
+            "id": "air",
+            "title": "Temperature / Clouds",
             "overlays": [
                 "temperature_2m",
                 "dewpoint_2m",
-                "rh_2m",
-                "specific_humidity_2m",
-                "temperature_potential_2m",
-                "pwat",
-                "surface_pressure",
-            ],
-        },
-        {
-            "id": "aviation",
-            "title": "Aviation",
-            "overlays": [
-                "visibility",
-                "ceiling",
                 "cloud_cover_total",
-                "cloud_cover_low",
-                "cloud_cover_mid",
-                "cloud_cover_high",
             ],
         },
-        {"id": "rotation", "title": "Rotation", "overlays": ["helicity_0_1km", "helicity_0_3km"]},
-        {"id": "kinematics", "title": "Kinematics", "overlays": ["storm_motion_u", "storm_motion_v", "relative_vorticity_0_1km", "relative_vorticity_0_2km"]},
-        {"id": "shear", "title": "Shear", "overlays": ["shear_0_1km_speed", "shear_0_6km_speed"]},
+        {"id": "instability", "title": "CAPE", "overlays": ["cape"]},
+        {"id": "rotation", "title": "Helicity", "overlays": ["helicity_0_1km"]},
+        {"id": "shear", "title": "Shear", "overlays": ["shear_0_6km_speed"]},
         {
             "id": "wind",
             "title": "Wind",
-            "overlays": ["wind_10m", "u_wind_10m", "v_wind_10m", "gust_surface"],
-        },
-        {
-            "id": "upper",
-            "title": "Upper Air",
-            "overlays": [
-                "height_500mb",
-                "height_700mb",
-                "height_850mb",
-                "temperature_850mb",
-                "temperature_700mb",
-                "temperature_925mb",
-                "specific_humidity_700mb",
-                "specific_humidity_850mb",
-                "wind_500mb",
-                "wind_700mb",
-                "wind_850mb",
-                "vertical_velocity_500mb",
-                "vertical_velocity_700mb",
-            ],
+            "overlays": ["wind_10m", "gust_surface"],
         },
     ],
 }
@@ -318,22 +197,39 @@ def build_point_series(
     member_payload = run_payload["members"].get(member, {})
     available_overlay_ids = collect_member_overlays(member_payload)
     requested_overlays = overlays or DEFAULT_MEMBER_OVERLAYS.get(member, [])
-    selected_overlay_ids = [overlay_id for overlay_id in requested_overlays if overlay_id in available_overlay_ids]
+    requested_overlay_ids = set(requested_overlays)
+    load_overlay_ids: list[str] = []
+    for overlay_id in requested_overlays:
+        if overlay_id in DERIVED_POINT_OVERLAYS:
+            load_overlay_ids.extend(str(component) for component in DERIVED_POINT_OVERLAYS[overlay_id]["components"])
+            continue
+        if overlay_id in available_overlay_ids:
+            load_overlay_ids.append(overlay_id)
 
-    series_payload: dict[str, object] = {}
-    for overlay_id in selected_overlay_ids:
+    loaded_series: dict[str, object] = {}
+    for overlay_id in sorted(dict.fromkeys(load_overlay_ids)):
         points = build_overlay_series(run_id, member, overlay_id, station, data_root, run_payload)
         if points:
-            series_payload[overlay_id] = overlay_payload(overlay_id, points)
+            loaded_series[overlay_id] = overlay_payload(overlay_id, points)
+
+    series_payload: dict[str, object] = {
+        overlay_id: payload
+        for overlay_id, payload in loaded_series.items()
+        if overlay_id in requested_overlay_ids
+    }
 
     if member == "m00":
         for derived_overlay_id, config in DERIVED_POINT_OVERLAYS.items():
-            left = series_payload.get(config["components"][0])
-            right = series_payload.get(config["components"][1])
+            if derived_overlay_id not in requested_overlay_ids:
+                continue
+            left = loaded_series.get(config["components"][0])
+            right = loaded_series.get(config["components"][1])
             if left and right:
                 series_payload[derived_overlay_id] = derive_vector_magnitude(derived_overlay_id, left, right)
     elif member == "ens":
         for derived_overlay_id in ENSEMBLE_SPREAD_OVERLAYS:
+            if derived_overlay_id not in requested_overlay_ids:
+                continue
             points = build_ensemble_distribution_series(run_id, derived_overlay_id, station, data_root, run_payload)
             if points:
                 series_payload[derived_overlay_id] = ensemble_distribution_payload(derived_overlay_id, points)

@@ -120,6 +120,7 @@ class PointSeriesTests(unittest.TestCase):
 
         self.assertIn("helicity_0_1km_probability_gt_100", ens_payload["series"])
         self.assertEqual(len(ens_payload["series"]["helicity_0_1km_probability_gt_100"]["points"]), 2)
+        self.assertFalse(any(series.get("chart_type") == "distribution" for series in ens_payload["series"].values()))
         self.assertIn("shear_0_6km_speed", m00_payload["series"])
         self.assertAlmostEqual(m00_payload["series"]["shear_0_6km_speed"]["points"][0]["value"], 5.0, places=4)
 
@@ -222,7 +223,7 @@ class PointSeriesTests(unittest.TestCase):
         self.assertAlmostEqual(series["points"][0]["value"], 35.6, places=1)
         self.assertAlmostEqual(series["summary"]["latest"], 35.6, places=1)
 
-    def test_build_point_series_adds_ensemble_distribution_series(self) -> None:
+    def test_build_point_series_adds_ensemble_distribution_series_when_requested(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             data_root = Path(tmpdir) / "data" / "processed"
             catalog_path = Path(tmpdir) / "stations.json"
@@ -262,6 +263,7 @@ class PointSeriesTests(unittest.TestCase):
                 "2026032820",
                 "KRDU",
                 "ens",
+                overlays=["cape_member_spread"],
                 data_root=data_root,
                 station_catalog_path=catalog_path,
             )
@@ -315,6 +317,7 @@ class PointSeriesTests(unittest.TestCase):
                 "2026032820",
                 "KRDU",
                 "ens",
+                overlays=["temperature_2m_member_spread"],
                 data_root=data_root,
                 station_catalog_path=catalog_path,
             )
