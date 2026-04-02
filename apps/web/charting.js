@@ -37,7 +37,7 @@
     if (!window.Chart || Chart.registry.plugins.get("hrrrcastDistribution")) {
       return;
     }
-    Chart.register(distributionPlugin, selectionPlugin, crosshairPlugin, statusMessagePlugin);
+    Chart.register(distributionPlugin, selectionPlugin, hoverOverlayPlugin, statusMessagePlugin);
   }
 
   function buildChart(canvas, config) {
@@ -110,6 +110,77 @@
     });
   }
 
+  function createHoverController() {
+    let clearTimer = 0;
+    const charts = new Set();
+    const controller = {
+      register(chart) {
+        charts.add(chart);
+        chart.$hoverController = controller;
+      },
+      unregister(chart) {
+        charts.delete(chart);
+        clearChartHover(chart);
+      },
+      setHover(hour) {
+        controller.hour = hour;
+        if (clearTimer) {
+          window.clearTimeout(clearTimer);
+          clearTimer = 0;
+        }
+        for (const chart of charts) {
+          applyChartHover(chart, hour);
+        }
+      },
+      scheduleClear() {
+        if (clearTimer) {
+          window.clearTimeout(clearTimer);
+        }
+        clearTimer = window.setTimeout(() => controller.clear(), 35);
+      },
+      clear() {
+        controller.hour = null;
+        if (clearTimer) {
+          window.clearTimeout(clearTimer);
+          clearTimer = 0;
+        }
+        for (const chart of charts) {
+          clearChartHover(chart);
+        }
+      },
+      hour: null,
+    };
+    return controller;
+  }
+
+  function attachHoverHandlers(chart, controller) {
+    if (!controller) {
+      return;
+    }
+    controller.register(chart);
+    const canvas = chart.canvas;
+    canvas.addEventListener("mousemove", (event) => {
+      if (chart.$selection) {
+        return;
+      }
+      const point = nearestHoverPoint(chart, event.offsetX);
+      if (!point) {
+        controller.scheduleClear();
+        return;
+      }
+      controller.setHover(point.forecast_hour);
+    });
+    canvas.addEventListener("mouseenter", (event) => {
+      const point = nearestHoverPoint(chart, event.offsetX);
+      if (point) {
+        controller.setHover(point.forecast_hour);
+      }
+    });
+    canvas.addEventListener("mouseleave", () => {
+      controller.scheduleClear();
+    });
+  }
+
   function buildLineChart(canvas, config, palette, font) {
     const points = config.series.points.map((point) => ({
       x: point.forecast_hour,
@@ -137,6 +208,13 @@
       options: baseOptions(config, font, computeYBounds(config.series, points)),
     });
     chart.$statusMessage = zeroProbabilityMessage(config.series);
+    chart.$hoverPoints = config.series.points;
+    chart.$hoverResolver = (hour) => resolveLineHover(chart, config, hour);
+    chart.$hoverPalette = palette;
+    chart.$formatValue = config.formatValue;
+    chart.$formatTime = config.formatTime;
+    chart.$series = config.series;
+    chart.$onHoverChange = config.onHoverChange;
     return chart;
   }
 
@@ -191,6 +269,13 @@
     chart.$distributionUnits = config.series.units || "";
     chart.$formatValue = config.formatValue;
     chart.$statusMessage = zeroProbabilityMessage(config.series);
+    chart.$hoverPoints = config.series.points;
+    chart.$hoverResolver = (hour) => resolveDistributionHover(chart, config, distributionPoints, hour);
+    chart.$hoverPalette = palette;
+    chart.$formatTime = config.formatTime;
+    chart.$series = config.series;
+    chart.$detSeries = config.detSeries;
+    chart.$onHoverChange = config.onHoverChange;
     return chart;
   }
 
@@ -223,16 +308,26 @@
                 const suffix = config.series.units ? ` ${config.series.units}` : "";
                 const boxLabel = `Box (${config.settings.boxlow}-${config.settings.boxhigh}%)`;
                 const whiskerLabel = `Whiskers (${config.settings.whiskerlow}-${config.settings.whiskerhigh}%)`;
-                return [
-                  `Median: ${config.formatValue(point.median)}${suffix}`,
-                  `Mean: ${config.formatValue(point.mean)}${suffix}`,
-                  `${boxLabel}: ${config.formatValue(point.q1)} to ${config.formatValue(point.q3)}${suffix}`,
-                  `${whiskerLabel}: ${config.formatValue(point.min)} to ${config.formatValue(point.max)}${suffix}`,
-                  `Members: ${point.count}`,
-                ];
+                const lines = [];
+                if (config.settings.median) {
+                  lines.push(`Median: ${formatHoverValue(config, point.median)}${suffix}`);
+                }
+                lines.push(`Mean: ${formatHoverValue(config, point.mean)}${suffix}`);
+                if (config.settings.det && config.detSeries && Array.isArray(config.detSeries.points)) {
+                  const detPoint = findExactPointByHour(config.detSeries.points, point.forecast_hour);
+                  lines.push(`Deterministic: ${detPoint ? `${formatHoverValue(config, detPoint.value)}${suffix}` : "n/a"}`);
+                }
+                if (config.settings.boxes) {
+                  lines.push(`${boxLabel}: ${formatHoverValue(config, point.q1)} to ${formatHoverValue(config, point.q3)}${suffix}`);
+                }
+                if (config.settings.whiskers) {
+                  lines.push(`${whiskerLabel}: ${formatHoverValue(config, point.min)} to ${formatHoverValue(config, point.max)}${suffix}`);
+                }
+                lines.push(`Members: ${point.count}`);
+                return lines;
               }
               const suffix = config.series.units ? ` ${config.series.units}` : "";
-              return `${tooltipValueLabel(config.series)}: ${config.formatValue(item.raw.y)}${suffix}`;
+              return `${tooltipValueLabel(config.series)}: ${formatHoverValue(config, item.raw.y)}${suffix}`;
             },
           },
         },
@@ -488,23 +583,27 @@
     },
   };
 
-  const crosshairPlugin = {
-    id: "hrrrcastCrosshair",
+  const hoverOverlayPlugin = {
+    id: "hrrrcastHoverOverlay",
     afterDatasetsDraw(chart) {
-      const active = chart.tooltip && chart.tooltip.getActiveElements ? chart.tooltip.getActiveElements() : [];
-      if (!active || !active.length) {
+      const hover = chart.$hoverContext;
+      if (!hover) {
         return;
       }
       const ctx = chart.ctx;
       const area = chart.chartArea;
-      const x = active[0].element.x;
+      const x = hover.x;
       ctx.save();
-      ctx.strokeStyle = DEFAULT_PALETTE.crosshair;
+      ctx.strokeStyle = (chart.$hoverPalette || DEFAULT_PALETTE).crosshair;
       ctx.lineWidth = 1;
       ctx.beginPath();
       ctx.moveTo(x, area.top);
       ctx.lineTo(x, area.bottom);
       ctx.stroke();
+      if (hover.distributionBox) {
+        drawHoveredDistributionBox(ctx, hover.distributionBox, chart.$hoverPalette || DEFAULT_PALETTE);
+      }
+      drawHoverMarkers(ctx, hover.markers || [], area, chart.$hoverPalette || DEFAULT_PALETTE);
       ctx.restore();
     },
   };
@@ -551,6 +650,306 @@
     const first = xScale.getPixelForValue(0);
     const second = xScale.getPixelForValue(1);
     return Math.abs(second - first) || 18;
+  }
+
+  function nearestHoverPoint(chart, offsetX) {
+    if (!chart.$hoverPoints || !chart.$hoverPoints.length || !chart.scales.x) {
+      return null;
+    }
+    const rawHour = chart.scales.x.getValueForPixel(offsetX);
+    if (!Number.isFinite(rawHour)) {
+      return null;
+    }
+    let nearest = chart.$hoverPoints[0];
+    let bestDistance = Math.abs(Number(nearest.forecast_hour) - rawHour);
+    for (const point of chart.$hoverPoints) {
+      const distance = Math.abs(Number(point.forecast_hour) - rawHour);
+      if (distance < bestDistance) {
+        bestDistance = distance;
+        nearest = point;
+      }
+    }
+    return nearest;
+  }
+
+  function applyChartHover(chart, hour) {
+    if (!Number.isFinite(Number(hour)) || typeof chart.$hoverResolver !== "function") {
+      clearChartHover(chart);
+      return;
+    }
+    const hover = chart.$hoverResolver(Number(hour));
+    if (!hover) {
+      clearChartHover(chart);
+      return;
+    }
+    chart.$hoverContext = hover;
+    const active = hover.activeElements || [];
+    chart.setActiveElements(active);
+    if (chart.tooltip && typeof chart.tooltip.setActiveElements === "function") {
+      chart.tooltip.setActiveElements(active, { x: hover.x, y: chart.chartArea.top + 10 });
+    }
+    if (typeof chart.$onHoverChange === "function") {
+      chart.$onHoverChange(hover.readout);
+    }
+    chart.update("none");
+  }
+
+  function clearChartHover(chart) {
+    chart.$hoverContext = null;
+    chart.setActiveElements([]);
+    if (chart.tooltip && typeof chart.tooltip.setActiveElements === "function") {
+      chart.tooltip.setActiveElements([], { x: 0, y: 0 });
+    }
+    if (typeof chart.$onHoverChange === "function") {
+      chart.$onHoverChange(null);
+    }
+    chart.update("none");
+  }
+
+  function resolveLineHover(chart, config, hour) {
+    const point = findExactPointByHour(config.series.points, hour);
+    const x = chart.scales.x.getPixelForValue(hour);
+    const suffix = config.series.units ? ` ${config.series.units}` : "";
+    if (!point || !Number.isFinite(Number(point.value))) {
+      return {
+        x,
+        activeElements: [],
+        markers: [],
+        readout: {
+          hour: Number(hour),
+          validTime: point && point.valid_time_utc ? config.formatTime(point.valid_time_utc) : "Valid time unavailable",
+          entries: [
+            {
+              label: tooltipValueLabel(config.series),
+              value: "n/a",
+            },
+          ],
+          missing: true,
+        },
+      };
+    }
+    const dataIndex = config.series.points.indexOf(point);
+    const datasetMeta = chart.getDatasetMeta(0);
+    const element = datasetMeta && datasetMeta.data ? datasetMeta.data[dataIndex] : null;
+    const y = element ? element.y : chart.scales.y.getPixelForValue(point.value);
+    const valueText = `${formatHoverValue(config, point.value)}${suffix}`;
+    return {
+      x,
+      activeElements: [{ datasetIndex: 0, index: dataIndex }],
+      markers: [
+        {
+          x,
+          y,
+          color: chart.data.datasets[0].borderColor,
+          text: valueText,
+        },
+      ],
+      readout: {
+        hour: Number(point.forecast_hour),
+        validTime: config.formatTime(point.valid_time_utc),
+        entries: [
+          {
+            label: tooltipValueLabel(config.series),
+            value: valueText,
+          },
+        ],
+      },
+    };
+  }
+
+  function resolveDistributionHover(chart, config, distributionPoints, hour) {
+    const originalPoint = findExactPointByHour(config.series.points, hour);
+    const x = chart.scales.x.getPixelForValue(hour);
+    const suffix = config.series.units ? ` ${config.series.units}` : "";
+    if (!originalPoint) {
+      return {
+        x,
+        activeElements: [],
+        markers: [],
+        readout: {
+          hour: Number(hour),
+          validTime: "Valid time unavailable",
+          entries: [
+            { label: config.series.label, value: "n/a" },
+          ],
+          missing: true,
+        },
+      };
+    }
+    const dataIndex = config.series.points.indexOf(originalPoint);
+    const point = distributionPoints[dataIndex];
+    const activeElements = [];
+    const markers = [];
+    for (let datasetIndex = 0; datasetIndex < chart.data.datasets.length; datasetIndex += 1) {
+      const dataset = chart.data.datasets[datasetIndex];
+      const datum = dataset.data[dataIndex];
+      if (!datum) {
+        continue;
+      }
+      activeElements.push({ datasetIndex, index: dataIndex });
+      const meta = chart.getDatasetMeta(datasetIndex);
+      const element = meta && meta.data ? meta.data[dataIndex] : null;
+      if (!element) {
+        continue;
+      }
+      if (String(dataset.label || "").includes("Median")) {
+        markers.push({ x: element.x, y: element.y, color: dataset.borderColor, text: `Med ${formatHoverValue(config, point.median)}${suffix}` });
+      } else if (String(dataset.label || "").includes("Mean")) {
+        markers.push({ x: element.x, y: element.y, color: dataset.borderColor, text: `Mean ${formatHoverValue(config, point.mean)}${suffix}` });
+      } else if (String(dataset.label || "").includes("Deterministic")) {
+        markers.push({ x: element.x, y: element.y, color: dataset.borderColor, text: `Det ${formatHoverValue(config, datum.y)}${suffix}` });
+      }
+    }
+    const entries = [];
+    if (config.settings.median) {
+      entries.push({ label: "Median", value: `${formatHoverValue(config, point.median)}${suffix}` });
+    }
+    entries.push({ label: "Mean", value: `${formatHoverValue(config, point.mean)}${suffix}` });
+    if (config.settings.det && config.detSeries && Array.isArray(config.detSeries.points)) {
+      const detPoint = findExactPointByHour(config.detSeries.points, hour);
+      entries.push({ label: "Deterministic", value: detPoint ? `${formatHoverValue(config, detPoint.value)}${suffix}` : "n/a" });
+    }
+    if (config.settings.boxes) {
+      entries.push({
+        label: `Box ${config.settings.boxlow}-${config.settings.boxhigh}%`,
+        value: `${formatHoverValue(config, point.q1)}${suffix} to ${formatHoverValue(config, point.q3)}${suffix}`,
+      });
+    }
+    if (config.settings.whiskers) {
+      entries.push({
+        label: `Whiskers ${config.settings.whiskerlow}-${config.settings.whiskerhigh}%`,
+        value: `${formatHoverValue(config, point.min)}${suffix} to ${formatHoverValue(config, point.max)}${suffix}`,
+      });
+    }
+    entries.push({ label: "Members", value: String(point.count) });
+    return {
+      x,
+      activeElements,
+      markers,
+      distributionBox: {
+        x,
+        minY: chart.scales.y.getPixelForValue(point.min),
+        q1Y: chart.scales.y.getPixelForValue(point.q1),
+        medianY: chart.scales.y.getPixelForValue(point.median),
+        q3Y: chart.scales.y.getPixelForValue(point.q3),
+        maxY: chart.scales.y.getPixelForValue(point.max),
+        boxWidth: Math.max(8, Math.min(20, estimateStep(chart.scales.x) * 0.42)),
+        settings: config.settings,
+      },
+      readout: {
+        hour: Number(point.forecast_hour),
+        validTime: config.formatTime(point.valid_time_utc),
+        entries,
+      },
+    };
+  }
+
+  function findPointByHour(points, hour) {
+    if (!Array.isArray(points) || !points.length) {
+      return null;
+    }
+    let nearest = points[0];
+    let bestDistance = Math.abs(Number(nearest.forecast_hour) - Number(hour));
+    for (const point of points) {
+      const distance = Math.abs(Number(point.forecast_hour) - Number(hour));
+      if (distance < bestDistance) {
+        nearest = point;
+        bestDistance = distance;
+      }
+    }
+    return nearest;
+  }
+
+  function findExactPointByHour(points, hour) {
+    if (!Array.isArray(points) || !points.length) {
+      return null;
+    }
+    return points.find((point) => Number(point.forecast_hour) === Number(hour)) || null;
+  }
+
+  function formatHoverValue(config, value) {
+    const numeric = Number(value);
+    if (!Number.isFinite(numeric)) {
+      return "n/a";
+    }
+    return config.formatValue(numeric, "hover");
+  }
+
+  function drawHoveredDistributionBox(ctx, box, palette) {
+    ctx.save();
+    ctx.strokeStyle = hexWithAlpha(palette.whisker, 0.95);
+    ctx.fillStyle = hexWithAlpha(palette.whisker, 0.2);
+    ctx.lineWidth = 1.35;
+    if (box.settings.whiskers) {
+      ctx.beginPath();
+      ctx.moveTo(box.x, box.minY);
+      ctx.lineTo(box.x, box.maxY);
+      ctx.moveTo(box.x - box.boxWidth * 0.35, box.minY);
+      ctx.lineTo(box.x + box.boxWidth * 0.35, box.minY);
+      ctx.moveTo(box.x - box.boxWidth * 0.35, box.maxY);
+      ctx.lineTo(box.x + box.boxWidth * 0.35, box.maxY);
+      ctx.stroke();
+    }
+    if (box.settings.boxes) {
+      const top = Math.min(box.q1Y, box.q3Y);
+      const height = Math.max(2, Math.abs(box.q3Y - box.q1Y));
+      ctx.fillRect(box.x - box.boxWidth / 2, top, box.boxWidth, height);
+      ctx.strokeRect(box.x - box.boxWidth / 2, top, box.boxWidth, height);
+    }
+    if (box.settings.median) {
+      ctx.strokeStyle = palette.median;
+      ctx.beginPath();
+      ctx.moveTo(box.x - box.boxWidth / 2, box.medianY);
+      ctx.lineTo(box.x + box.boxWidth / 2, box.medianY);
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  function drawHoverMarkers(ctx, markers, area, palette) {
+    if (!markers || !markers.length) {
+      return;
+    }
+    let offsetIndex = 0;
+    for (const marker of markers) {
+      if (!Number.isFinite(marker.x) || !Number.isFinite(marker.y)) {
+        continue;
+      }
+      ctx.save();
+      ctx.fillStyle = marker.color || palette.overlay;
+      ctx.strokeStyle = "#0f141c";
+      ctx.lineWidth = 1.1;
+      ctx.beginPath();
+      ctx.arc(marker.x, marker.y, 4, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+      if (marker.text) {
+        const textX = Math.min(area.right - 6, marker.x + 10);
+        const textY = Math.max(area.top + 12, Math.min(area.bottom - 12, marker.y - 10 + (offsetIndex * 14)));
+        drawHoverLabel(ctx, textX, textY, marker.text, marker.color || palette.overlay, area);
+        offsetIndex += 1;
+      }
+      ctx.restore();
+    }
+  }
+
+  function drawHoverLabel(ctx, x, y, text, accent, area) {
+    ctx.save();
+    ctx.font = "600 11px Arial, sans-serif";
+    const width = ctx.measureText(text).width + 12;
+    const height = 18;
+    const left = Math.max(area.left + 4, Math.min(area.right - width - 4, x));
+    const top = Math.max(area.top + 4, Math.min(area.bottom - height - 4, y - height));
+    ctx.fillStyle = "rgba(15, 20, 28, 0.88)";
+    ctx.strokeStyle = accent;
+    ctx.lineWidth = 1;
+    roundRect(ctx, left, top, width, height, 5);
+    ctx.fill();
+    ctx.stroke();
+    ctx.fillStyle = "#f5f9fd";
+    ctx.textBaseline = "middle";
+    ctx.fillText(text, left + 6, top + height / 2 + 0.5);
+    ctx.restore();
   }
 
   function hexWithAlpha(hex, alpha) {
@@ -710,5 +1109,7 @@
     buildChart,
     syncRange,
     attachZoomHandlers,
+    createHoverController,
+    attachHoverHandlers,
   };
 })();
