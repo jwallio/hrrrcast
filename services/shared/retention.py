@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import os
+import stat
 import shutil
 from pathlib import Path
 
@@ -43,6 +45,7 @@ def prune_processed_runs(
         "manifests": [],
         "products": [],
         "tile_cache": [],
+        "failed": [],
     }
 
     if prune_manifests:
@@ -60,15 +63,37 @@ def prune_processed_runs(
         if products_dir.exists():
             for path in sorted(products_dir.iterdir()):
                 if path.is_dir() and path.name not in keep_runs:
-                    shutil.rmtree(path)
-                    removed["products"].append(path.name)
+                    if _try_remove_tree(path):
+                        removed["products"].append(path.name)
+                    else:
+                        removed["failed"].append(str(path))
 
     if prune_tile_cache:
         tile_cache_dir = root / "tile_cache"
         if tile_cache_dir.exists():
             for path in sorted(tile_cache_dir.iterdir()):
                 if path.is_dir() and path.name not in keep_runs:
-                    shutil.rmtree(path)
-                    removed["tile_cache"].append(path.name)
+                    if _try_remove_tree(path):
+                        removed["tile_cache"].append(path.name)
+                    else:
+                        removed["failed"].append(str(path))
 
     return removed
+
+
+def _try_remove_tree(path: Path) -> bool:
+    try:
+        shutil.rmtree(path, onexc=_rmtree_onexc)
+        return True
+    except FileNotFoundError:
+        return True
+    except PermissionError:
+        return False
+
+
+def _rmtree_onexc(function, target, excinfo) -> None:
+    error = excinfo[1]
+    if not isinstance(error, PermissionError):
+        raise error
+    os.chmod(target, stat.S_IWRITE)
+    function(target)

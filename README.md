@@ -45,6 +45,25 @@ Then open:
 http://127.0.0.1:8090/?backend=http://127.0.0.1:8080
 ```
 
+## One-Command Cycle Runner
+
+To discover the newest ready HRRRCast run, build the processed products, and export the Pages station-viewer bundle in one pass:
+
+```powershell
+python scripts/run_hrrrcast_cycle.py --latest --export-pages
+```
+
+That command now defaults to a station-only Pages export path: it freezes the latest ready run, samples the required HRRRCast fields directly for the published station set, and writes the static viewer JSON without rebuilding the full raster product store.
+
+Windows wrappers:
+
+```powershell
+scripts\run_latest.bat
+scripts\run_latest.ps1
+```
+
+The runner writes timestamped logs and a summary JSON under [output/hrrrcast_cycle](/d:/weather-projects/hrrrcast-visualizer/output/hrrrcast_cycle).
+
 ## Backend and Data Pipeline
 
 The ingest and backend code remains in the repo to support local processing and point-series generation:

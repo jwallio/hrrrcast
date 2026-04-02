@@ -1,6 +1,7 @@
 from pathlib import Path
 import tempfile
 import unittest
+from unittest import mock
 
 from services.shared.retention import prune_processed_runs, select_runs_to_keep
 from services.shared.store import list_run_manifests
@@ -35,6 +36,26 @@ class RetentionTests(unittest.TestCase):
             self.assertEqual(["2026032400"], removed["products"])
             self.assertEqual(["2026032400"], removed["tile_cache"])
             self.assertTrue((root / "manifests" / "latest.json").exists())
+
+    def test_prune_processed_runs_records_failed_directory_delete(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            (root / "products" / "2026032300").mkdir(parents=True)
+            (root / "products" / "2026032400").mkdir(parents=True)
+
+            original_rmtree = __import__("shutil").rmtree
+
+            def fake_rmtree(path, *args, **kwargs):
+                if Path(path).name == "2026032400":
+                    raise PermissionError("locked")
+                return original_rmtree(path, *args, **kwargs)
+
+            with mock.patch("services.shared.retention.shutil.rmtree", side_effect=fake_rmtree):
+                removed = prune_processed_runs(root, {"2026032300"}, prune_manifests=False, prune_tile_cache=False)
+
+            self.assertEqual([], removed["products"])
+            self.assertEqual([str(root / "products" / "2026032400")], removed["failed"])
+            self.assertTrue((root / "products" / "2026032400").exists())
 
 
 if __name__ == "__main__":
