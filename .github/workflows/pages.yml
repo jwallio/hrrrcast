@@ -1,4 +1,4 @@
-name: Deploy Pages
+name: HRRRCast Viewer Publish
 
 on:
   push:
@@ -7,25 +7,80 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
 concurrency:
-  group: pages
+  group: hrrrcast-viewer-publish
   cancel-in-progress: true
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+    env:
+      ENABLE_FORGEJO_ARTIFACT_UPLOAD: ${{ github.server_url == 'https://github.com' && '1' || vars.ENABLE_FORGEJO_ARTIFACT_UPLOAD || '0' }}
+      LOCAL_HRRRCAST_PUBLISH_DIR: ${{ github.server_url != 'https://github.com' && (vars.LOCAL_HRRRCAST_PUBLISH_DIR || '') || '' }}
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
+
+      - name: Upload viewer bundle artifact
+        if: always() && env.ENABLE_FORGEJO_ARTIFACT_UPLOAD == '1'
+        uses: actions/upload-artifact@v3-node20
         with:
           path: apps/web
-      - id: deployment
-        uses: actions/deploy-pages@v4
+          name: hrrrcast-viewer-bundle
+          if-no-files-found: error
+
+      - name: List viewer bundle files when artifact upload is disabled
+        if: always() && env.ENABLE_FORGEJO_ARTIFACT_UPLOAD != '1'
+        run: |
+          echo "Artifact upload disabled; listing apps/web files instead."
+          find apps/web -maxdepth 3 -type f | sort | sed -n '1,300p'
+
+      - name: Deploy to GitHub Pages
+        if: success() && github.server_url == 'https://github.com'
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./apps/web
+
+      # TODO: To publish directly to the localhost Caddy site, bind-mount
+      # D:\weather-projects\hrrrcast-visualizer\apps\web into the Forgejo runner
+      # container and set LOCAL_HRRRCAST_PUBLISH_DIR to that in-container path.
+      - name: Publish viewer bundle to local Caddy root
+        if: success() && github.server_url != 'https://github.com' && env.LOCAL_HRRRCAST_PUBLISH_DIR != ''
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import os
+          import shutil
+
+          src = Path("apps/web")
+          dst = Path(os.environ["LOCAL_HRRRCAST_PUBLISH_DIR"])
+          if not dst.exists():
+              raise SystemExit(
+                  "Configured LOCAL_HRRRCAST_PUBLISH_DIR does not exist inside the runner: "
+                  f"{dst}\n"
+                  "Bind-mount D:/weather-projects/hrrrcast-visualizer/apps/web into the "
+                  "Forgejo runner and set LOCAL_HRRRCAST_PUBLISH_DIR to that mount path."
+              )
+
+          for child in dst.iterdir():
+              if child.is_dir():
+                  shutil.rmtree(child)
+              else:
+                  child.unlink()
+          for child in src.iterdir():
+              target = dst / child.name
+              if child.is_dir():
+                  shutil.copytree(child, target, dirs_exist_ok=True)
+              else:
+                  shutil.copy2(child, target)
+          print(f"Published {src} to {dst}")
+          PY
+
+      - name: Explain skipped local publish
+        if: success() && github.server_url != 'https://github.com' && env.LOCAL_HRRRCAST_PUBLISH_DIR == ''
+        run: |
+          echo "Local publish skipped."
+          echo "This Forgejo runner container cannot currently write to D:/weather-projects/hrrrcast-visualizer/apps/web."
+          echo "Mount that host path into the runner and set LOCAL_HRRRCAST_PUBLISH_DIR to enable direct localhost publishing."
